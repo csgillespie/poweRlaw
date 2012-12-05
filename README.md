@@ -19,11 +19,11 @@ Note Windows users have to first install [Rtools](http://cran.rstudio.com/bin/wi
 Example workflow
 ----------------
 
-### The pl_data object
+### The pl_data object 
 
 First we load the package and an example data set:
 ```r
-library(poweRlaw)
+require(poweRlaw)
 data(moby_sample)
 ```
 The `moby_sample` data set is described in its associated help file - `?moby_sample`. This dataset contains a subset of the word frequency from the novel Moby Dick. The entire data set can be loaded using `data(moby)`.
