@@ -69,8 +69,8 @@ bs = bootstrap_xmin(m, no_of_sims=100, threads=1)
 ```
 We can plot the range of plausible `xmin` and `alpha` values using:
 ```r
-hist(bs[,2])
-hist(bs[,3])
+hist(bs$bootstraps[,2])
+hist(bs$bootstraps[,3])
 ```
 
 ### Plotting distribution objects
