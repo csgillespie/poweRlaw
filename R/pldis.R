@@ -31,7 +31,7 @@ dpldis = function(x, xmin, alpha, log=FALSE) {
 #'@export
 #'@examples
 #' plot(x, ppldis(x, xmin, alpha), type="l", main="Distribution function")
-ppldis = function(q, xmin, alpha, lower.tail=FALSE) {
+ppldis = function(q, xmin, alpha, lower.tail=TRUE) {
     #x = x[x>=xmin]
     xmin = floor(xmin)
     constant = zeta(alpha)
@@ -39,9 +39,9 @@ ppldis = function(q, xmin, alpha, lower.tail=FALSE) {
         constant = constant - sum((1:(xmin-1))^(-alpha))
     cdf = 1-(constant - sapply(q, function(i) sum((xmin:i)^(-alpha))))/constant
     if(lower.tail)
-        1 - (cdf - dpldis(q, xmin, alpha)) 
-    else
         cdf
+    else
+        1 - (cdf - dpldis(q, xmin, alpha)) 
 }
 
 #'@rdname dpldis

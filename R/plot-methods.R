@@ -3,11 +3,14 @@ lseq = function(from, to, length.out) {
   ceiling(exp(seq(log(from), log(to), length.out=length.out)))    
 }
 
-get_data_cdf = function(x){ 
+get_data_cdf = function(x, lower.tail=TRUE){ 
   occur = as.vector(table(x))
   occur = occur/sum(occur)
   p = occur/sum(occur)
-  rev(cumsum(rev(p)))
+  if(lower.tail)
+      cumsum(p)
+  else
+    rev(cumsum(rev(p)))
 }
 
 #' Plotting functions
@@ -36,7 +39,7 @@ get_data_cdf = function(x){
 setMethod("plot",
           signature=signature(x="pl_data"),
           definition=function(x, plot=TRUE, ...) {
-            y = get_data_cdf(x$x)
+            y = get_data_cdf(x$x, FALSE)
             x = as.numeric(names(table(x$x)))
             if(plot)
               plot(x, y, log="xy", ...)
@@ -54,7 +57,7 @@ setMethod("plot",
             if(plot) {
               x_values = x$pl_data$x
               d = x_values[x_values >= x$xmin]
-              y = get_data_cdf(d)
+              y = get_data_cdf(d, FALSE)
               x_axs = as.numeric(names(table(d)))
             } else {
               x_axs = lseq(x$xmin, max(x_values), length.out)
