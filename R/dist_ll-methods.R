@@ -9,9 +9,11 @@ setMethod("dist_ll",
                               function(i) m$v^(-i), double(m$xmin-1)))
             else if(m$xmin > 1)
               con = con - 1
+
             log_con = log(con)
-            if(is.nan(log_con)) return(-Inf)
-            -m$n*log_con - m$slx*m$pars
+            ll = -m$n*log_con - m$slx*m$pars
+            ll[is.nan(log_con)] = -Inf
+            ll
           }
 )
  
