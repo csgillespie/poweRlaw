@@ -2,9 +2,9 @@
 \alias{bootstrap_xmin}
 \alias{estimate_xmin}
 \alias{get_KS_statistic}
-\title{Estimates the cut-off point}
+\title{Estimates the lower bound (xmin)}
 \usage{
-  bootstrap_xmin(m, no_of_sims = 1000, threads = 1)
+  bootstrap_xmin(m, no_of_sims = 100, threads = 1)
 
   get_KS_statistic(m)
 
@@ -14,34 +14,42 @@
   \item{threads}{number of concurrent threads used during
   the bootstrap}
 
-  \item{no_of_sims}{number of bootstrap simulations}
+  \item{no_of_sims}{number of bootstrap simulations. This
+  can take a while to run}
 
-  \item{m}{A reference class object that contains data}
+  \item{m}{A reference class object that contains the
+  data.}
 
   \item{pars}{default NULL. A vector of parameters used to
-  optimise over. Otherwise, for each value of xmin, the
-  density pa will be estiamted using the associated mle:
-  m$mle()}
+  optimise over. Otherwise, for each value of xmin, the mle
+  will be used, i.e. \code{m$mle}. For small samples, the
+  mle may be biased.}
 
-  \item{xmins}{a vector of possible values of xmin to
-  explore. The default, xmins=NULL, results in exploring
-  all possible xmin values.}
+  \item{xmins}{default NULL. A vector of possible values of
+  xmin to explore. The default, \code{xmins=NULL}, results
+  in exploring all possible xmin values.}
 }
 \value{
-  the mle
+  \code{estimate_xmin} returns a vector containing the
+  optimial parameter value, xmin and the associated KS
+  statistic.
 }
 \description{
-  get_KS_statistics calculates the Kolmogorov-Smirnov or KS
-  statistic. This is the maximum distance between the data
-  CDF and fitted model CDF. This corresponds to expression
-  (3.9) in the Newman, et al, 2009 paper. The
+  \code{bootstrap_xmin} estimates unncertainity in the xmin
+  and parameter values using bootstraping. This function
+  runs in parallel, with the number of threads used
+  specficied by the \code{threads} argument.
+
+  \code{get_KS_statistic} calculates the Kolmogorov-Smirnov
+  or KS statistic. This is the maximum distance between the
+  data CDF and fitted model CDF. This corresponds to
+  expression (3.9) in the Newman, et al, 2009 paper. The
   Kolmogorov-Smirnov statistic is used when estimating the
   cut-off, xmin.
 
-  estimate_xmin This function implements a goodness-of-fit
-  based approach for estimating the lower cutoff for the
-  scaling region. This method is described in Clauset,
-  Shalizi, Newman (2007)
+  \code{estimate_xmin} estimates the lower cutoff using a
+  goodness-of-fit based approach. This method is described
+  in Clauset, Shalizi, Newman (2009)
 }
 \note{
   Adapted from Laurent Dubroca's code found at

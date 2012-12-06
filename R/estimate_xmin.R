@@ -1,4 +1,5 @@
-#' @description get_KS_statistics calculates the Kolmogorov-Smirnov or KS statistic. 
+#' @description \code{get_KS_statistic} calculates the Kolmogorov-Smirnov or 
+#' KS statistic. 
 #' This is the maximum distance between the data CDF and fitted model CDF.
 #' This corresponds to expression (3.9) in the Newman, et al, 2009 paper. 
 #' The Kolmogorov-Smirnov statistic is used when estimating the cut-off, xmin.
@@ -15,17 +16,19 @@ get_KS_statistic = function(m) {
 }
 
 
-#' @title Estimates the cut-off point
+#' @title Estimates the lower bound (xmin)
 #' 
-#' @description estimate_xmin This function implements a goodness-of-fit based 
-#' approach for estimating the lower cutoff for the scaling region. 
-#' This method is described in Clauset, Shalizi, Newman (2007)
-#' @param m A reference class object that contains data
-#' @param pars default NULL. A vector of parameters used to optimise over. Otherwise, for each value of xmin, the density pa
-#' will be estiamted using the associated mle: m$mle()
-#' @param xmins a vector of possible values of xmin to explore. 
-#' The default, xmins=NULL, results in exploring all possible xmin values.
-#' @return the mle
+#' @description \code{estimate_xmin} estimates the lower cutoff using a 
+#' goodness-of-fit based approach. This method is described in
+#' Clauset, Shalizi, Newman (2009)
+#' @param m A reference class object that contains the data.
+#' @param pars default NULL. A vector of parameters used to optimise over. 
+#' Otherwise, for each value of xmin, the mle will be used, i.e. \code{m$mle}.
+#' For small samples, the mle may be biased. 
+#' @param xmins default NULL. A vector of possible values of xmin to explore. 
+#' The default, \code{xmins=NULL}, results in exploring all possible xmin values.
+#' @return \code{estimate_xmin} returns a vector containing the optimial 
+#' parameter value, xmin and the associated KS statistic.
 #' @note Adapted from Laurent Dubroca's code found at
 #' http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r
 #' @export
@@ -72,7 +75,4 @@ estimate_xmin = function (m, xmins = NULL, pars=NULL) {
   names(r) = c("KS", "xmin", "pars")
   return(r)
 }
-
-
-#estimate_xmin(moby, alphas)
 

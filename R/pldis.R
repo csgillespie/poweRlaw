@@ -1,15 +1,20 @@
 #' The discrete powerlaw distribution. 
 #' 
 #' Density, distribution function and random number generation for the discrete power law distribution with parameters xmin and alpha.
-#' @param x,q vector of quantiles. The power-law distribution is defined for x >= xmin
-#' @param xmin Lower bound of the power-law distribution. For the continuous 
-#' power-law, xmin >= 0 for the discrete distribution, xmin >0
+#' @param x,q vector of quantiles. The discrete 
+#' power-law distribution is defined for x > xmin
+#' @param xmin The lower bound of the power-law distribution. 
+#' For the continuous power-law, xmin >= 0 
+#' for the discrete distribution, xmin >0
 #' @param alpha The scaling parameter: alpha > 1
-#' @param log logical; if TRUE, log values are returned
+#' @param log logical (default FALSE) if TRUE, log values are returned
 #' @param lower.tail logical; 
 #' if TRUE (default), probabilities are \eqn{P[X \le x]}, 
 #' otherwise, \eqn{P[X > x]}.
-#' @return dplcon gives the denisty and pplcon gives the distribution function.
+#' @return dpldis returns the denisty, ppldis returns the distribution function 
+#' and rpldis return random numbers.
+#' @note The naming of these functions mirrors standard R functions, i.e. dnorm.
+#' When alpha is close to one, generating random number can be very slow.
 #' @export
 #' @examples
 #' xmin = 1; alpha = 1.5
@@ -31,6 +36,7 @@ dpldis = function(x, xmin, alpha, log=FALSE) {
 #'@export
 #'@examples
 #' plot(x, ppldis(x, xmin, alpha), type="l", main="Distribution function")
+#' rpldis(x, xmin, alpha)
 ppldis = function(q, xmin, alpha, lower.tail=TRUE) {
     #x = x[x>=xmin]
     xmin = floor(xmin)
@@ -44,43 +50,65 @@ ppldis = function(q, xmin, alpha, lower.tail=TRUE) {
         1 - (cdf - dpldis(q, xmin, alpha)) 
 }
 
-#'@rdname dpldis
-#'@param xmax upper limit for the CDF
-#'@note The function ppldis takes in a vector, q, and calculates the CDF at each of those points. Whereas, ppldis_cumsum calculates the CDF from xmin to xmax with a step size of 1. This is much quicker than passing a sequence vector to ppldis.
-#'@export
-#'@examples
-#' plot(x, ppldis(x, xmin, alpha), type="l", main="Distribution function")
-ppldis_cumsum = function(xmax, xmin, alpha) {
-    xmin = floor(xmin)
-    constant = zeta(alpha)
-    if(xmin > 1) 
-        constant = constant - sum((1:(xmin-1))^(-alpha))
-    1-(constant - cumsum((xmin:xmax)^(-alpha)))/constant
+
+my_ppldis_cumsum = function(xmin, alpha, incr) {
+  xmin = floor(xmin)
+  constant = zeta(alpha)
+  if(xmin > 1) 
+    constant = constant - sum((1:(xmin-1))^(-alpha))
+  upper = 0
+  xstart = xmin; xend = xmin + incr
+  cdf = function()  {
+    cdf = 1-(constant - cumsum((xstart:xend)^(-alpha)))/constant+ upper
+    upper <<- cdf[length(cdf)-1]
+    xstart <<- xend; xend <<- xend + 2*incr
+    return(cdf)
+  }
+  get_xstart = function() xstart
+  get_xend = function() xend
+  list(cdf = cdf, get_xstart=get_xstart, get_xend=get_xend)
+}
+
+
+rng = function(u, pp) {
+  if(!length(u))
+    return(NULL)
+  else {
+    xstart = pp$get_xstart(); xend = pp$get_xend()
+    cdf = pp$cdf()
+    rngs = colSums(sapply(u, ">", cdf)) + xstart
+    rngs[rngs == (xend+1)] = rng(u[rngs==(xend+1)], pp)
+  }
+  return(rngs)
+}
+
+#' @param n number of observations.
+#' @rdname dpldis
+#' @export
+rpldis = function(n, xmin, alpha) {
+  u = runif(n)
+  pp = my_ppldis_cumsum(xmin, alpha, 10000)
+  rng(u, pp)
 }
 
 
 
-#'@rdname dpldis
-#'@param n number of observations.
-#'@note This discrete random number generator is pretty inefficient
-#'@export
-#'@examples
-#' rpldis(100, xmin, alpha)
-rpldis = function(n, xmin, alpha, xmax=20000) {
-    u = runif(n)
-    pp = ppldis_cumsum(xmax, xmin, alpha)
-    colSums(sapply(u, ">", pp)) + xmin
-}
-
-#Simulates a single random number
-# rpldis_1 = function(xmin, alpha) {
-#     x2 = 2*xmin
-#     x1 = xmin
-#     u = runif(1)
-#     while(ppldis(x2, xmin, alpha) < u) {
-#         x1 = x2
-#         x2 = 2*x1
-#     }
-#     pp = ppldis(x1:x2, xmin, alpha) < u
-#     x1 + sum(pp)
+# 
+# 
+# ppldis_cumsum = function(xmax, xmin, alpha) {
+#     xmin = floor(xmin)
+#     constant = zeta(alpha)
+#     if(xmin > 1) 
+#         constant = constant - sum((1:(xmin-1))^(-alpha))
+#     1-(constant - cumsum((xmin:xmax)^(-alpha)))/constant
 # }
+# 
+# rpldis = function(n, xmin, alpha, xmax=20000) {
+#     u = runif(n)
+#     pp = ppldis_cumsum(xmax, xmin, alpha)
+#     colSums(sapply(u, ">", pp)) + xmin
+# }
+# 
+# 
+# 
+# 

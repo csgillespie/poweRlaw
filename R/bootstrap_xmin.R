@@ -11,13 +11,17 @@ bootstrap_helper = function (i, m, N, y) {
   estimate_xmin(m_tmp)
 }
 
+#' @description \code{bootstrap_xmin} estimates unncertainity in the xmin and
+#' parameter values using bootstraping. This function runs in parallel, with the
+#' number of threads used specficied by the \code{threads} argument. 
 #' @importFrom parallel makeCluster parSapply 
 #' @importFrom parallel clusterExport stopCluster
 #' @rdname estimate_xmin
 #' @param threads number of concurrent threads used during the bootstrap
-#' @param no_of_sims number of bootstrap simulations
+#' @param no_of_sims number of bootstrap simulations. This can take a while to
+#' run
 #' @export
-bootstrap_xmin = function (m, no_of_sims=1000, threads=1) {
+bootstrap_xmin = function (m, no_of_sims=100, threads=1) {
   m_cpy = m$copy()
   gof_v = estimate_xmin(m_cpy)
   m_cpy$xmin = gof_v["xmin"]
@@ -39,9 +43,6 @@ bootstrap_xmin = function (m, no_of_sims=1000, threads=1) {
   list(p=sum(nof >= gof_v["KS"])/length(nof), 
        gof = gof_v["KS"], 
        bootstraps = as.data.frame(t(nof)))
-  ##Calculate p-value
-  #p = sum(nof >= gof)/length(nof)
-  #return(c("p"=p, "gof"=gof))
 }
 
 
