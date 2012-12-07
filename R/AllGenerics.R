@@ -89,13 +89,14 @@ setGeneric("dist_pdf", function(m, q=NULL) standardGeneric("dist_pdf"))
 #' dist_ll(m)
 setGeneric("dist_ll", function(m) standardGeneric("dist_ll"))
 
-#' Random numbers for the distribution objects.
+#' Random number generation for the distribution objects
 #'
-#' This is generic function for distribution reference objects.
-#' This function generates N random number using the parameters 
-#' and xmin values found in the reference object.
+#' This is generic function for generating random numbers from the underlying 
+#' distribution of the distribution reference objects.
+#' This function generates \code{n} random numbers using the parameters 
+#' and xmin values found in the associated reference object.
 #'
-#' @param m The distribution reference object.
+#' @param m a distribution reference object.
 #' @param n number of observations to be generated.
 #'
 #' @return n random numbers
@@ -103,7 +104,7 @@ setGeneric("dist_ll", function(m) standardGeneric("dist_ll"))
 #' @seealso \code{\link{dist_cdf}},  \code{\link{dist_pdf}} 
 #' and \code{\link{dist_ll}}
 #' @note This method does *not* alter the internal state of
-#' the distribubtion objects.
+#' the distribubtion object.
 #' @export
 #' @docType methods
 #' @rdname dist_rand-methods
