@@ -1,4 +1,4 @@
-bootstrap_helper = function (i, m, N, y) {
+bootstrap_helper = function (i, m, N, y, xmins, pars) {
   ##Make thread safe
   m_tmp = m$copy()
   ny = length(y);  nz = N - ny; pz = nz/N
@@ -8,12 +8,12 @@ bootstrap_helper = function (i, m, N, y) {
   q2 = dist_rand(m_tmp, N-n1)
   q = c(q1, q2)
   m_tmp$pl_data = pl_data$new(q)
-  estimate_xmin(m_tmp)
+  estimate_xmin(m_tmp, xmins=xmins, pars=pars)
 }
 
 #' @description \code{bootstrap_xmin} estimates unncertainity in the xmin and
-#' parameter values using bootstraping. This function runs in parallel, with the
-#' number of threads used specficied by the \code{threads} argument. 
+#' parameter values using bootstraping. This function runs in parallel with the
+#' number of threads specficied by the \code{threads} argument. 
 #' @importFrom parallel makeCluster parSapply 
 #' @importFrom parallel clusterExport stopCluster
 #' @rdname estimate_xmin
@@ -21,7 +21,7 @@ bootstrap_helper = function (i, m, N, y) {
 #' @param no_of_sims number of bootstrap simulations. This can take a while to
 #' run
 #' @export
-bootstrap_xmin = function (m, no_of_sims=100, threads=1) {
+bootstrap_xmin = function (m, xmins=NULL, pars=NULL, no_of_sims=100, threads=1) {
   m_cpy = m$copy()
   gof_v = estimate_xmin(m_cpy)
   m_cpy$xmin = gof_v["xmin"]
@@ -37,7 +37,7 @@ bootstrap_xmin = function (m, no_of_sims=100, threads=1) {
   clusterExport(cl, c("dist_rand", "estimate_xmin", "pl_data"))
   #, environment(dist_rand))
   nof = parSapply(cl, 1:no_of_sims, 
-                  bootstrap_helper,  m_cpy, N, y)
+                  bootstrap_helper,  m_cpy, N, y, xmins, pars)
   stopCluster(cl)
   
   list(p=sum(nof >= gof_v["KS"])/length(nof), 
