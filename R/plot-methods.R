@@ -54,14 +54,15 @@ setMethod("plot",
 setMethod("plot",
           signature = signature(x="distribution"),
           definition = function(x, plot=TRUE, length.out=1000, data=TRUE,...) {
-            if(data) {
               x_values = x$pl_data$x
+            if(data) {
+              
               d = x_values[x_values >= x$xmin]
               y = get_data_cdf(d, FALSE)
               x_axs = as.numeric(names(table(d)))
             } else {
               x_axs = lseq(x$xmin, max(x_values), length.out)
-              y = m$cdf(x_axs, TRUE)
+              y = dist_cdf(m, x_axs, FALSE)
             }
             
             if(plot)
