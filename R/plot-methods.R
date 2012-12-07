@@ -54,7 +54,7 @@ setMethod("plot",
 setMethod("plot",
           signature = signature(x="distribution"),
           definition = function(x, plot=TRUE, length.out=1000, data=TRUE,...) {
-            if(plot) {
+            if(data) {
               x_values = x$pl_data$x
               d = x_values[x_values >= x$xmin]
               y = get_data_cdf(d, FALSE)
