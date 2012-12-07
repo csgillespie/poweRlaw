@@ -6,3 +6,10 @@ setMethod("dist_rand",
             rpldis(n, m$xmin, m$pars)
           }
 )
+
+setMethod("dist_rand",
+          signature = signature(m="conpl"),
+          definition = function(m, n="numeric") {
+            rplcon(n, m$xmin, m$pars)
+          }
+)

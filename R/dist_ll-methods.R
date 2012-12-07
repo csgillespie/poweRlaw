@@ -17,3 +17,12 @@ setMethod("dist_ll",
           }
 )
  
+
+setMethod("dist_ll",
+          signature = signature(m="conpl"),
+          definition = function(m) {
+            m$n*log(m$pars-1) - m$n*log(m$xmin) - m$pars *(m$slx-log(m$xmin))
+            
+          }
+)
+

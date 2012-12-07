@@ -8,14 +8,13 @@ pl_data$methods( list(
     values <<- as.numeric(names(tab))
   }))
 
-
-
-
+#######################################################
+#Power-law distributions
+#######################################################
 displ$methods( 
   list(
     initialize = function(pl_data) {
       datatype <<- "discrete"
-      
       ##Use the internal attribute for copying
       if(!missing(pl_data)) {
         internal[["cum_slx"]] <<-
@@ -28,6 +27,26 @@ displ$methods(
     
   )
 )
+
+conpl$methods( 
+  list(
+    initialize = function(pl_data) {
+      datatype <<- "continuous"
+      ##Use the internal attribute for copying
+      if(!missing(pl_data)) {
+        internal[["cum_slx"]] <<-
+          rev(cumsum(log(rev(pl_data$values))*rev(pl_data$freq)))
+        internal[["cum_n"]] <<- rev(cumsum(rev(pl_data$freq)))
+        
+        pl_data <<- pl_data
+      }
+    }
+    
+  )
+)
+
+
+
 # 
 # 
 # 

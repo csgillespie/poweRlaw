@@ -71,20 +71,72 @@ displ =
                   xmin <<- internal[["xmin"]]
                   pars <<- internal[["pars"]]
                 } else internal[["pl_data"]],
-                xmin = function(x) {
-                  if(!missing(x) && !is.null(x)) {
-                    internal[["xmin"]] <<- x
-                    .self$v = 1:(x-1)
-                    selection = min(which(pl_data$values >= x))
-                    .self$slx = internal[["cum_slx"]][selection]
-                    .self$n = internal[["cum_n"]][selection]    
-                  } else  internal[["xmin"]]
-                }, pars = function(x) {
-                  if (!missing(x) && !is.null(x)) {
-                    internal[["pars"]] <<- x
-                    .self$constant = zeta(x)
-                  } else internal[["pars"]]
-                }
+                            xmin = function(x) {
+                              if(!missing(x) && !is.null(x)) {
+                                internal[["xmin"]] <<- x
+                                .self$v = 1:(x-1)
+                                selection = min(which(pl_data$values >= x))
+                                .self$slx = internal[["cum_slx"]][selection]
+                                .self$n = internal[["cum_n"]][selection]    
+                              } else  internal[["xmin"]]
+                            }, pars = function(x) {
+                              if (!missing(x) && !is.null(x)) {
+                                internal[["pars"]] <<- x
+                                .self$constant = zeta(x)
+                              } else internal[["pars"]]
+                            }
               ))
+
+
+#' @exportClass conpl
+#' @export conpl
+conpl = 
+  setRefClass("conpl", 
+              contains="distribution",
+              fields = list(pl_data = function(x)
+                if(!missing(x) && !is.null(x)) {
+                  internal[["cum_slx"]] <<-
+                    rev(cumsum(log(rev(x$values))*rev(x$freq)))
+                  internal[["cum_n"]] <<- rev(cumsum(rev(x$freq)))
+                  internal[["pl_data"]] <<- x
+                  
+                  xmin <<- internal[["xmin"]]
+                  pars <<- internal[["pars"]]
+                } else internal[["pl_data"]],
+                            xmin = function(x) {
+                              if(!missing(x) && !is.null(x)) {
+                                internal[["xmin"]] <<- x
+                                selection = min(which(pl_data$values >= x))
+                                .self$slx = internal[["cum_slx"]][selection]
+                                .self$n = internal[["cum_n"]][selection]                                
+                              } else  internal[["xmin"]]
+                            }, pars = function(x) {
+                              if (!missing(x) && !is.null(x)) {
+                                internal[["pars"]] <<- x
+                              } else internal[["pars"]]
+                            }
+              )
+  )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

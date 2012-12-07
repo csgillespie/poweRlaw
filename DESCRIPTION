@@ -37,3 +37,4 @@ Collate:
     'plot-methods.R'
     'points-methods.R'
     'poweRlaw-package.R'
+    'plcon.R'
