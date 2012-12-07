@@ -52,43 +52,53 @@ ppldis = function(q, xmin, alpha, lower.tail=TRUE) {
 
 
 my_ppldis_cumsum = function(xmin, alpha, incr) {
-  xmin = floor(xmin)
-  constant = zeta(alpha)
-  if(xmin > 1) 
-    constant = constant - sum((1:(xmin-1))^(-alpha))
-  upper = 0
-  xstart = xmin; xend = xmin + incr
-  cdf = function()  {
-    cdf = 1-(constant - cumsum((xstart:xend)^(-alpha)))/constant+ upper
-    upper <<- cdf[length(cdf)-1]
-    xstart <<- xend; xend <<- xend + 2*incr
-    return(cdf)
-  }
-  get_xstart = function() xstart
-  get_xend = function() xend
-  list(cdf = cdf, get_xstart=get_xstart, get_xend=get_xend)
+    xmin = floor(xmin)
+    alpha = alpha
+    constant = zeta(alpha)
+    if(xmin > 1) 
+        constant = constant - sum((1:(xmin-1))^(-alpha))
+    upper = 0
+    xstart = xmin; xend = xmin + incr
+    cdf = function()  {
+        cdf = 1-(constant - cumsum((xstart:xend)^(-alpha)))/constant+ upper
+        upper <<- cdf[length(cdf)-1]
+        xstart <<- xend; xend <<- xend + 2*incr
+        return(cdf)
+    }
+    get_xstart = function() xstart
+    get_xend = function() xend
+    get_alpha = function() alpha
+    get_xmin = function() xmin
+    list(cdf = cdf, get_xstart=get_xstart, get_xend=get_xend, 
+         get_alpha= get_alpha, get_xmin=get_xmin)
 }
 
 
 rng = function(u, pp) {
-  if(!length(u))
-    return(NULL)
-  else {
-    xstart = pp$get_xstart(); xend = pp$get_xend()
-    cdf = pp$cdf()
-    rngs = colSums(sapply(u, ">", cdf)) + xstart
-    rngs[rngs == (xend+1)] = rng(u[rngs==(xend+1)], pp)
-  }
-  return(rngs)
+    xend = pp$get_xend()
+    if(!length(u))
+        return(NULL)
+    else if(xend > 150000) {
+        xmin = pp$get_xmin(); alpha = pp$get_alpha()
+        
+        rngs = xmin*(1-u)^(-1/(alpha-1))
+    
+    } else {
+        xstart = pp$get_xstart(); xend = pp$get_xend()
+        cdf = pp$cdf()
+        rngs = colSums(sapply(u, ">", cdf)) + xstart
+        rngs[rngs == (xend+1)] = rng(u[rngs==(xend+1)], pp)
+    }
+    return(rngs)
 }
 
 #' @param n number of observations.
 #' @rdname dpldis
 #' @export
 rpldis = function(n, xmin, alpha) {
-  u = runif(n)
-  pp = my_ppldis_cumsum(xmin, alpha, 10000)
-  rng(u, pp)
+    u = runif(n)
+    pp = my_ppldis_cumsum(xmin, alpha, 10000)
+    rng(u, pp)
 }
 
 
