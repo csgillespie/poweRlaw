@@ -4,7 +4,8 @@
 \alias{get_KS_statistic}
 \title{Estimates the lower bound (xmin)}
 \usage{
-  bootstrap_xmin(m, no_of_sims = 100, threads = 1)
+  bootstrap_xmin(m, xmins = NULL, pars = NULL,
+    no_of_sims = 100, threads = 1)
 
   get_KS_statistic(m)
 
@@ -37,8 +38,8 @@
 \description{
   \code{bootstrap_xmin} estimates unncertainity in the xmin
   and parameter values using bootstraping. This function
-  runs in parallel, with the number of threads used
-  specficied by the \code{threads} argument.
+  runs in parallel with the number of threads specficied by
+  the \code{threads} argument.
 
   \code{get_KS_statistic} calculates the Kolmogorov-Smirnov
   or KS statistic. This is the maximum distance between the

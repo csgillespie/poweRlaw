@@ -3,12 +3,15 @@ lseq = function(from, to, length.out) {
   ceiling(exp(seq(log(from), log(to), length.out=length.out)))    
 }
 
-get_data_cdf = function(x, lower.tail=TRUE){ 
-  occur = as.vector(table(x))
+get_data_cdf = function(x, lower.tail=TRUE, pad=FALSE){ 
+  if(pad)
+    occur = tabulate(x)
+  else
+    occur = as.vector(table(x))
   occur = occur/sum(occur)
   p = occur/sum(occur)
   if(lower.tail)
-      cumsum(p)
+    cumsum(p)
   else
     rev(cumsum(rev(p)))
 }

@@ -23,7 +23,7 @@ lines(m, col=3)
 estimate_xmin(m)
 
 ##This can take a while
-bs = bootstrap_xmin(m, pars=seq(1.5, 3.5, 0.01),no_of_sims=1000, threads=6)
+bs = bootstrap_xmin(m, no_of_sims=1000, threads=2)
 
 ##Plot uncertainity in xmin and alpha
 hist(bs$bootstraps[,2], breaks="fd")

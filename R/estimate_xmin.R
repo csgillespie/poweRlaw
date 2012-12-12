@@ -8,8 +8,8 @@
 get_KS_statistic = function(m) {
   x_values = m$pl_data$x
   x_values = x_values[x_values >= m$xmin]
-  data_cdf = get_data_cdf(x_values)
-  fit_cdf = dist_cdf(m, m$pl_data$values)
+  data_cdf = get_data_cdf(x_values, pad=TRUE)[m$xmin:max(x_values)]
+  fit_cdf = dist_cdf(m, cumulative=TRUE)
   
   gof = max(abs(data_cdf - fit_cdf))
   return(gof)
