@@ -23,8 +23,8 @@
 
   \item{pars}{default NULL. A vector of parameters used to
   optimise over. Otherwise, for each value of xmin, the mle
-  will be used, i.e. \code{m$mle}. For small samples, the
-  mle may be biased.}
+  will be used, i.e. \code{estimate_pars(m)}. For small
+  samples, the mle may be biased.}
 
   \item{xmins}{default NULL. A vector of possible values of
   xmin to explore. The default, \code{xmins=NULL}, results

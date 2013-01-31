@@ -47,17 +47,19 @@ m = displ$new(pl_d)
 ```
 We can estimate the lower cut-off `xmin` via:
 ```r
-estimate_xmin(m)
+(xmin = estimate_xmin(m))
 ```
 This function returns the Kolomogorov-statistics, xmin value and the alpha
 scaling parameter. Alternatively, we can set the xmin parameter to a specific
 value
 ```r
-m$setXmin(7)
+m$setXmin(xmin[2])
+m$getXmin()
 ```
 and then estimate the scaling parameter using the `mle` method:
 ```r
-m$mle()
+pars = estimate_pars(m)
+m$setPars(pars)
 m$getPars()
 ```
 We can get a handle on the uncertainty when estimating `xmin` using 
@@ -79,7 +81,7 @@ Once a distribution object has been created, standard plotting functions
 can be applied to it:
 ```r
 m$setXmin(7)
-m$mle()
+m$setPars(1.95)
 ##Plot the data, remove point before the threshold
 plot(m)
 ##Add in the fitted distribution

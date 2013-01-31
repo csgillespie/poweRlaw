@@ -23,7 +23,7 @@ get_KS_statistic = function(m) {
 #' Clauset, Shalizi, Newman (2009)
 #' @param m A reference class object that contains the data.
 #' @param pars default NULL. A vector of parameters used to optimise over. 
-#' Otherwise, for each value of xmin, the mle will be used, i.e. \code{m$mle}.
+#' Otherwise, for each value of xmin, the mle will be used, i.e. \code{estimate_pars(m)}.
 #' For small samples, the mle may be biased. 
 #' @param xmins default NULL. A vector of possible values of xmin to explore. 
 #' The default, \code{xmins=NULL}, results in exploring all possible xmin values.

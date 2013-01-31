@@ -1,3 +1,7 @@
+Version 0.13
+------------
+ * Created the estimate_pars method - an mle estimate of the parameters.
+
 Version 0.12
 ------------
  * Fixed bug when calculating the KS statistics
