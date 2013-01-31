@@ -21,6 +21,7 @@ data(moby_sample)
 pl_d = pl_data$new(moby_sample)
 m = displ$new(pl_d)
 estimate_xmin(m)
+m$setXmin(7)
 estimate_pars(m)
 }
 
