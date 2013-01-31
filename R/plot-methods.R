@@ -56,7 +56,8 @@ setMethod("plot",
 #' @exportMethod plot
 setMethod("plot",
           signature = signature(x="distribution"),
-          definition = function(x, plot=TRUE, length.out=1000, data=TRUE,...) {
+          definition = function(x, plot=TRUE, 
+                                length.out=1000, data=TRUE,...) {
               x_values = x$pl_data$x
             if(data) {
               

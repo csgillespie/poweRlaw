@@ -1,9 +1,10 @@
+require(poweRlaw)
 ##Load in the full Moby dick data set
 data(moby)
 
 ##Create a data object and plot
 pl_d = pl_data$new(moby)
-plot(pl_d)
+plot(pl_d, plot=FALSE)
 
 ##Create a distribution object
 m = displ$new(pl_d)

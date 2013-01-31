@@ -28,13 +28,15 @@ data(moby_sample)
 ```
 The `moby_sample` data set is described in its associated help file - `?moby_sample`. This dataset contains a subset of the word frequency from the novel Moby Dick. The entire data set can be loaded using `data(moby)`.
 
-We then create a `pl_data` object. This is a reference object that contains the data set.
+We then create a `pl_data` object. This is an R reference object that contains the data set.
 ```r
 pl_d = pl_data$new(moby_sample)
 ```
 which can be plotted using the plot function:
 ```r
 plot(pl_d)
+#Alternatively, we can extract the data
+plot(pl_d, plot=FALSE)
 ```
 
 ### Estimating parameters of the discrete powerlaw
@@ -45,20 +47,28 @@ we use the `displ` method:
 ```r
 m = displ$new(pl_d)
 ```
-We can estimate the lower cut-off `xmin` via:
+Initially, the parameters of the `displ` object are `NULL`:
+```r
+m$getXmin()
+m$getPars()
+```
+To estimate the lower cut-off `xmin`, we use 
 ```r
 (xmin = estimate_xmin(m))
 ```
-This function returns the Kolomogorov-statistics, xmin value and the alpha
-scaling parameter. Alternatively, we can set the xmin parameter to a specific
+This function returns the Kolomogorov-statistic, xmin value and the alpha
+scaling parameter. We can then set the `xmin` value in `m`:
 value
 ```r
 m$setXmin(xmin[2])
 m$getXmin()
 ```
-and then estimate the scaling parameter using the `mle` method:
+Next we estimate the scaling parameter using the `mle` method:
 ```r
 pars = estimate_pars(m)
+```
+and set the parameters in the `m` object:
+```r
 m$setPars(pars)
 m$getPars()
 ```
