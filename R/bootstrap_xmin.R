@@ -42,7 +42,7 @@ bootstrap_xmin = function (m, xmins=NULL, pars=NULL, no_of_sims=100, threads=1) 
                   bootstrap_helper,  m_cpy, N, y, xmins, pars)
   stopCluster(cl)
   
-  list(p=sum(nof >= gof_v["KS"])/length(nof), 
+  list(p=sum(nof[1,] >= gof_v["KS"])/no_of_sims, 
        gof = gof_v["KS"], 
        bootstraps = as.data.frame(t(nof)))
 }

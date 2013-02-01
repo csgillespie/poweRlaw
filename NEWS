@@ -1,3 +1,7 @@
+Version 0.14.1
+--------------
+ *  Bug fix when calculating the bootstrapping p-value
+
 Version 0.14
 ------------
  * Added explict garbage collection call to the bootstrap routine to avoid memory issues.
