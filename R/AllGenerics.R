@@ -36,7 +36,7 @@ setGeneric("points")
 #' dist_cdf(m, 10:15)
 #' dist_cdf(m) #at a the data values
 setGeneric("dist_cdf", 
-           function(m, q=NULL, lower.tail=FALSE) standardGeneric("dist_cdf"))
+           function(m, q=NULL, lower.tail=FALSE, ...) standardGeneric("dist_cdf"))
 
 #' PDF for the distribution objects.
 #'

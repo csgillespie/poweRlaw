@@ -26,14 +26,10 @@ m = displ$new(pl_data)
 m$setXmin(7)
 m$setPars(5)
 dist_ll(m) #-16945
-m$mle() #1.952
+estimate_pars(m) #1.952
+m$setPars(estimate_pars(m))
 plot(pl_data)
 plot(m)
 lines(m)
-
-data(blackouts)
-m = displ$new(pl_data)
-m$setXmin(230)
-m$mle()
 }
 
