@@ -1,4 +1,5 @@
 bootstrap_helper = function (i, m, N, y, xmins, pars) {
+  gc()
   ##Make thread safe
   m_tmp = m$copy()
   ny = length(y);  nz = N - ny; pz = nz/N
@@ -9,7 +10,7 @@ bootstrap_helper = function (i, m, N, y, xmins, pars) {
   q = c(q1, q2)
   m_tmp$pl_data = pl_data$new(q)
   estimate_xmin(m_tmp, xmins=xmins, pars=pars)
-  gc()
+  
 }
 
 #' @description \code{bootstrap_xmin} estimates unncertainity in the xmin and
