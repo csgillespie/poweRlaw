@@ -1,4 +1,4 @@
-Version 0.14.2
+Version 0.14.2 
 --------------
  *  Plots, lines and points functions now return the data using
     invisible
