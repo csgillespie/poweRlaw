@@ -41,13 +41,11 @@ get_data_cdf = function(x, lower.tail=TRUE, pad=FALSE){
 #' @exportMethod plot
 setMethod("plot",
           signature=signature(x="pl_data"),
-          definition=function(x, plot=TRUE, ...) {
+          definition=function(x, ...) {
             y = get_data_cdf(x$x, FALSE)
             x = as.numeric(names(table(x$x)))
-            if(plot)
-              plot(x, y, log="xy", ...)
-            else
-              data.frame(x, y)
+            plot(x, y, log="xy", ...)
+            invisible(data.frame(x, y))
           }
 )
 
@@ -56,7 +54,7 @@ setMethod("plot",
 #' @exportMethod plot
 setMethod("plot",
           signature = signature(x="distribution"),
-          definition = function(x, plot=TRUE, 
+          definition = function(x, 
                                 length.out=1000, data=TRUE,...) {
               x_values = x$pl_data$x
             if(data) {
@@ -69,9 +67,7 @@ setMethod("plot",
               y = dist_cdf(m, x_axs, FALSE)
             }
             
-            if(plot)
-              plot(x_axs, y, log="xy", ...)
-            else
-              data.frame(x=x_axs, y=y)
+            plot(x_axs, y, log="xy", ...)
+            invisible(data.frame(x=x_axs, y=y))
           }
 )

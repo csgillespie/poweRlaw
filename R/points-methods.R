@@ -7,6 +7,7 @@ setMethod("points",
             x_axs = lseq(x$xmin, max(x_values), length.out)
             y = dist_cdf(m, x_axs, FALSE)
             points(x_axs, y, ...)
+            invisible(data.frame(x=x_axs, y))
           }
 )
 
