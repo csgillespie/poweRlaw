@@ -23,9 +23,21 @@ setMethod("dist_cdf",
 
 setMethod("dist_cdf",
           signature = signature(m="conpl"),
-          definition = function(m, q=NULL, lower.tail=TRUE) {
-            if(is.null(q)) q = m$pl_data$x
-            pplcon(q[q >= m$xmin], m$xmin, m$pars, lower.tail)
+          definition = function(m, 
+                                q=NULL, 
+                                lower.tail=TRUE,
+                                cumulative=FALSE) {
+            if(cumulative) {
+              xmin = m$xmin
+              alpha = m$pars
+              xmax = max(m$pl_data$x)
+              1 - (xmin:xmax/xmin)^(-alpha + 1)
+            } else if(is.null(q)) {
+              q = m$pl_data$x
+              pplcon(q[q >= m$xmin], m$xmin, m$pars, lower.tail)
+            } else {
+              pplcon(q[q >= m$xmin], m$xmin, m$pars, lower.tail)
+            }
           }
 )
 

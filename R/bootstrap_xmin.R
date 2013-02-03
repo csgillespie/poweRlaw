@@ -25,7 +25,7 @@ bootstrap_helper = function (i, m, N, y, xmins, pars) {
 #' @export
 bootstrap_xmin = function (m, xmins=NULL, pars=NULL, no_of_sims=100, threads=1) {
   m_cpy = m$copy()
-  gof_v = estimate_xmin(m_cpy)
+  gof_v = estimate_xmin(m_cpy, xmins=xmins, pars=pars)
   m_cpy$xmin = gof_v["xmin"]
   m_cpy$pars = gof_v["pars"]
   
