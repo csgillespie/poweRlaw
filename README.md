@@ -35,8 +35,9 @@ pl_d = pl_data$new(moby_sample)
 which can be plotted using the plot function:
 ```r
 plot(pl_d)
-#Alternatively, we can extract the data
-plot(pl_d, plot=FALSE)
+#Alternatively, all plot & line methods return the data silently, so
+d = plot(pl_d)
+head(d)
 ```
 
 ### Estimating parameters of the discrete powerlaw
@@ -77,12 +78,29 @@ bootstrapping:
 ```r
 #This function runs in parallel.
 #Set the number threads to the number of CPU cores
-bs = bootstrap_xmin(m, no_of_sims=100, threads=1)
+#This can take a while
+bs = bootstrap_xmin(m, no_of_sims=1000, threads=1)
+```
+Example results are included in this package:
+```r
+##Moby_bootstrap relates to the entire moby data set
+##See ?bootstrap_moby
+data(bootstrap_moby)
+bs = bootstrap_moby
 ```
 We can plot the range of plausible `xmin` and `alpha` values using:
 ```r
 hist(bs$bootstraps[,2])
 hist(bs$bootstraps[,3])
+```
+The values in the first row of table 6.1 in Clauset et al, can be obtained via:
+```r
+##p-value
+bs[[1]]
+##sd of xmin. In the paper, it's 2
+sd(bs[[3]][,2])
+##sd of alpha. In the paper, it's 0.02
+sd(bs[[3]][,3])
 ```
 
 ### Plotting distribution objects
@@ -96,6 +114,11 @@ m$setPars(1.95)
 plot(m)
 ##Add in the fitted distribution
 lines(m, col=2)
+```
+The data used in the plots can be extracted by assignment:
+```r
+d = plot(m)
+pl = lines(m, col=2)
 ```
 
 

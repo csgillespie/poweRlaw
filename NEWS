@@ -1,3 +1,14 @@
+Version 0.14.2 
+--------------
+ *  Plots, lines and points functions now return the data using
+    invisible
+ * Moved to parSapplyLB
+ * Added a bootstrap_moby data set.
+
+Version 0.14.1
+--------------
+ *  Bug fix when calculating the bootstrapping p-value
+
 Version 0.14
 ------------
  * Added explict garbage collection call to the bootstrap routine to avoid memory issues.
