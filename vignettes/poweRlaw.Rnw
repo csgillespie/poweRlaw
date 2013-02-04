@@ -1,0 +1,90 @@
+\documentclass[a4paper]{article}
+\usepackage{url}
+\title{poweRlaw - a package for fitting heavy tail distributions}
+\author{Colin Gillespie}
+%\VignetteIndexEntry{smfsb}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+
+\section{Overview}
+
+The \verb$poweRlaw$ provides code to fit discrete and continuous power-laws. The fitting procedure follows the method detailed in Clauset \textit{et al.}, 2009\cite{clauset2009}.
+
+\section{Installation}
+
+The package can be installed from CRAN using the standard command:
+<<eval=False>>=
+install.packages("smfsb")
+@
+from any machine with an internet connection.
+
+The package is being maintained on github. To install the developmental version, 
+<<eval=False>>=
+## install.packages("devtools")
+library(devtools)
+install_github('poweRlaw', 'csgillespie')
+@
+If use Windows, you need to install the \texttt{Rtools} package first.
+
+Once installed, the package can be loaded ready for use with
+<<>>=
+library(poweRlaw)
+@
+
+
+\section{Accessing documentation}
+
+I have tried to ensure that the package and all associated functions and datasets are properly documented with runnable examples. So,
+<<eval=False>>=
+help(package="poweRlaw")
+@
+will give a brief overview of the package and a complete list of all functions. The list of vignettes associated with the package can be obtained with
+<<eval=False>>=
+vignette(package="poweRlaw")
+@
+At the time of writing, \emph{this} vignette is the only one available, and can be accessed from the R command line with
+<<eval=False>>=
+vignette("poweRlaw", package="poweRlaw")
+@
+Help on functions can be obtained using the usual R mechanisms. For example, help on the function \verb$rpldis$ can be obtained with
+<<term=False>>=
+?rpldis
+@
+and the associated example can be run with
+<<eval=False>>=
+example(rpldis)
+@
+A list of demos associated with the package can be obtained with
+<<eval=False>>=
+demo(package="poweRlaw")
+@
+A list of data sets associated with the package can be obtained with
+<<eval=False>>=
+data(package="poweRlaw")
+@
+For example, the moby dick data set can be load using 
+<<>>=
+data(moby)
+@
+After running this command, the vector \verb$moby$ will be accessible, and can be examined by typing
+<<term=False>>=
+moby
+@
+at the R command prompt.
+
+
+
+\section{References}
+
+\bibliographystyle{plain}
+\bibliography{poweRlaw}
+
+% 
+% \begin{description}
+% \item Clauset, A., Shalizi, C. R., & Newman, M. E. (2009). \emph{Power-law distributions in empirical data}. SIAM review, \textbf{51}(4), 661-703.
+% \end{description}
+
+\end{document}
+
+% eof
