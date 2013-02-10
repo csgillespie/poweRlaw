@@ -21,11 +21,10 @@ displ$methods(
         internal[["cum_slx"]] <<-
           rev(cumsum(log(rev(pl_data$values))*rev(pl_data$freq)))
         internal[["cum_n"]] <<- rev(cumsum(rev(pl_data$freq)))
-        
-        pl_data <<- pl_data
+        internal[["pl_data"]] <<- pl_data
+        xmin <<- min(pl_data$values)
       }
     }
-    
   )
 )
 # 
