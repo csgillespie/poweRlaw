@@ -26,9 +26,10 @@ lines(m, col=3)
 estimate_xmin(m)
 
 ##This can take a while
-bs = bootstrap_xmin(m, no_of_sims=10, threads=4)
+system.time(bs <- bootstrap_xmin(m, no_of_sims=1000, threads=4))
 
 
 ##Plot uncertainity in xmin and alpha
 hist(bs$bootstraps[,2], breaks="fd")
 hist(bs$bootstraps[,3], breaks="fd")
+apply(bs[[3]], 2, sd)

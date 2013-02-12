@@ -6,17 +6,18 @@ setMethod("dist_cdf",
                                 q=NULL, 
                                 lower.tail=TRUE,
                                 cumulative=FALSE) {
-            if(cumulative) {
-              xmin = m$xmin
-              alpha = m$pars
-              xmax = max(m$pl_data$x)
-              cumsum((((xmin:xmax)^-alpha))/(m$constant - sum((1:(xmin-1))^-alpha)))
-            } else if(is.null(q)) {
-              q = m$pl_data$x
-              ppldis(q[q >= m$xmin], m$xmin, m$pars, lower.tail)
-            } else {
-              ppldis(q[q >= m$xmin], m$xmin, m$pars, lower.tail)
-            } 
+              inter = m$internal
+              if(cumulative) {
+                  xmin = m$xmin
+                  alpha = m$pars
+                  xmax = max(m$pl_data$x)
+                  cumsum((((xmin:xmax)^-alpha))/(inter[["constant"]] - sum((1:(xmin-1))^-alpha)))
+              } else if(is.null(q)) {
+                  q = m$pl_data$x
+                  ppldis(q[q >= m$xmin], m$xmin, m$pars, lower.tail)
+              } else {
+                  ppldis(q[q >= m$xmin], m$xmin, m$pars, lower.tail)
+              } 
           }
           
 )

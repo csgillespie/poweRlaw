@@ -1,18 +1,17 @@
 Package: poweRlaw
 Type: Package
 Title: Fitting power laws to discrete and continuous data
-Version: 0.14.1
-Date: 2012-11-29
+Version: 0.14.4
+Date: 2013-02-12
 Author: Colin Gillespie
 Maintainer: Colin Gillespie <colin.gillespie@newcastle.ac.uk>
 Description: This package implements both the discrete (and in the near
     future continuous) maximum likelihood estimators for fitting the
     power-law distribution to data. Additionally, a goodness-of-fit based
     approach is used to estimate the lower cut-off for the scaling region.
-    The code developed in this package has
-    been heavily influnenced from the python and R code found at:
-    http://tuvalu.santafe.edu/~aaronc/powerlaws/ . In particular, the R code of
-    Laurent Dubroca.
+    The code developed in this package has been heavily influnenced from the python 
+    and R code found at: http://tuvalu.santafe.edu/~aaronc/powerlaws/ . 
+    In particular, the R code of Laurent Dubroca.
 URL: https://github.com/csgillespie/poweRlaw
 Depends:
     stats
@@ -30,6 +29,7 @@ Collate:
     'dist_ll-methods.R'
     'dist_pdf-methods.R'
     'dist_rand-methods.R'
+    'estimates_pars.R'
     'estimate_xmin.R'
     'initialize-methods.R'
     'lines-methods.R'
@@ -38,5 +38,8 @@ Collate:
     'plot-methods.R'
     'points-methods.R'
     'poweRlaw-package.R'
+<<<<<<< HEAD
     'plcon.R'
     'estimates_pars.R'
+=======
+>>>>>>> master

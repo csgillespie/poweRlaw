@@ -8,7 +8,7 @@
 
   ppldis(q, xmin, alpha, lower.tail = TRUE)
 
-  rpldis(n, xmin, alpha)
+  rpldis(n, xmin, alpha, discrete_max = 50000)
 }
 \arguments{
   \item{x,q}{vector of quantiles. The discrete power-law
@@ -28,6 +28,9 @@
   x]}.}
 
   \item{n}{number of observations.}
+
+  \item{discrete_max}{The value when we switch from the
+  discrete random numbers to a CTN approximation}
 }
 \value{
   dpldis returns the denisty, ppldis returns the
@@ -37,6 +40,25 @@
   Density, distribution function and random number
   generation for the discrete power law distribution with
   parameters xmin and alpha.
+}
+\details{
+  The Clausett, 2009 paper provides an algorithm for
+  generating discrete random numbers. However, if this
+  algorithm is implemented in R, it gives terrible
+  performance. This is because the algorithm involves
+  "growing vectors". Another problem is when alpha is close
+  to 1, this can result in very large random number being
+  generated (which means we need to calculate the discrete
+  CDF).
+
+  The algorithm provided in this package generates true
+  discrete random numbers up to 50000, then switches to
+  using the continuous CDF. This switching point can
+  altered by changing the \code{discrete_max} argument.
+
+  In order to get a efficient power-law discrete random
+  number generator, the algorithm needs to be implemented
+  in C.
 }
 \note{
   The naming of these functions mirrors standard R

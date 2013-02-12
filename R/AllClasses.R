@@ -67,6 +67,7 @@ displ =
                   xmin <<- internal[["xmin"]]
                   pars <<- internal[["pars"]]
                 } else internal[["pl_data"]],
+<<<<<<< HEAD
                             xmin = function(x) {
                               if(!missing(x) && !is.null(x)) {
                                 internal[["xmin"]] <<- x
@@ -81,6 +82,22 @@ displ =
                                 .self$constant = zeta(x)
                               } else internal[["pars"]]
                             }
+=======
+                xmin = function(x) {
+                  if(!missing(x) && !is.null(x)) {
+                    internal[["xmin"]] <<- x
+                    internal[["v"]] <<- 1:(x-1)
+                    selection = min(which(pl_data$values >= x))
+                    internal[["slx"]] <<- internal[["cum_slx"]][selection]
+                    internal[["n"]] <<- internal[["cum_n"]][selection]    
+                  } else  internal[["xmin"]]
+                }, pars = function(x) {
+                  if (!missing(x) && !is.null(x)) {
+                    internal[["pars"]] <<- x
+                    internal[["constant"]] <<- zeta(x)
+                  } else internal[["pars"]]
+                }
+>>>>>>> master
               ))
 
 

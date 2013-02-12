@@ -66,8 +66,8 @@ setMethod("plot",
               x_axs = lseq(x$xmin, max(x_values), length.out)
               y = dist_cdf(m, x_axs, FALSE)
             }
-            
-            plot(x_axs, y, log="xy", ...)
-            invisible(data.frame(x=x_axs, y=y))
+            x = x_axs
+            plot(x, y, log="xy", ...)
+            invisible(data.frame(x=x, y=y))
           }
 )

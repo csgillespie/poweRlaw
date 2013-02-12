@@ -11,7 +11,8 @@ Installation
 Currently, this package can only be installed from github and requires R >=2-15.0. The easiest way to install from github is to use the devtools package:
 ```r
 ## install.packages("devtools")
-library(devtools); install_github('poweRlaw', 'csgillespie')
+library(devtools)
+install_github('poweRlaw', 'csgillespie')
 ```
 
 Note Windows users have to first install [Rtools](http://cran.rstudio.com/bin/windows/Rtools/).
@@ -48,7 +49,7 @@ we use the `displ` method:
 ```r
 m = displ$new(pl_d)
 ```
-Initially, the parameters of the `displ` object are `NULL`:
+Initially, `xmin` is set to the minimum value of `x` and the scaling parameter `alpha` is set to `NULL`:
 ```r
 m$getXmin()
 m$getPars()

@@ -14,5 +14,5 @@
 #' m$setXmin(7)
 #' estimate_pars(m)
 estimate_pars = function (m) {
-  m$mle(set=FALSE)
+    m$mle(set=FALSE)
 }
