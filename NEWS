@@ -1,6 +1,8 @@
 Version 0.14.4
 --------------
   * No visible changes - preparing for future R versions.
+  * Added discrete_xmax parameter to the discrete random number generater. This parameter controls where we change from using  
+    a (true) discrete random number generator to a CTN approximation.
 
 
 Version 0.14.3
