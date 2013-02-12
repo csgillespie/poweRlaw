@@ -3,6 +3,6 @@
 setMethod("dist_rand",
           signature = signature(m="displ"),
           definition = function(m, n="numeric") {
-            rpldis(n, m$xmin, m$pars)
+              rpldis(n, m$xmin, m$pars)
           }
 )

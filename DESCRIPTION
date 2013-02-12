@@ -1,7 +1,7 @@
 Package: poweRlaw
 Type: Package
 Title: Fitting power laws to discrete and continuous data
-Version: 0.14.3
+Version: 0.14.4
 Date: 2013-02-10
 Author: Colin Gillespie
 Maintainer: Colin Gillespie <colin.gillespie@newcastle.ac.uk>
@@ -30,6 +30,7 @@ Collate:
     'dist_ll-methods.R'
     'dist_pdf-methods.R'
     'dist_rand-methods.R'
+    'estimates_pars.R'
     'estimate_xmin.R'
     'initialize-methods.R'
     'lines-methods.R'
@@ -38,4 +39,3 @@ Collate:
     'plot-methods.R'
     'points-methods.R'
     'poweRlaw-package.R'
-    'estimates_pars.R'

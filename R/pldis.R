@@ -34,6 +34,16 @@ dpldis = function(x, xmin, alpha, log=FALSE) {
 
 #'@rdname dpldis
 #'@export
+#'@details The Clausett, 2009 paper provides an algorithm for generating discrete random numbers. However, if this
+#'algorithm is implemented in R, it gives terrible performance. This is because the algorithm involves "growing vectors". 
+#'Another problem is when alpha is close to 1, this can result in very large random number being generated (which means we need 
+#'to calculate the discrete CDF). 
+#'
+#'The algorithm provided in this package generates true discrete random numbers up to 50000, then switches to using the
+#'continuous CDF. 
+#'
+#'In order to get a efficient power-law discrete random number generator, the algorithm needs to be implemented in 
+#'C.
 #'@examples
 #' plot(x, ppldis(x, xmin, alpha), type="l", main="Distribution function")
 #' rpldis(x, xmin, alpha)
@@ -78,11 +88,9 @@ rng = function(u, pp) {
     xend = pp$get_xend()
     if(!length(u))
         return(NULL)
-    else if(xend > 150000) {
+    else if(xend > 50000) {
         xmin = pp$get_xmin(); alpha = pp$get_alpha()
-        
-        rngs = xmin*(1-u)^(-1/(alpha-1))
-    
+        rngs = floor(xmin*(1-u)^(-1/(alpha-1)))
     } else {
         xstart = pp$get_xstart(); xend = pp$get_xend()
         cdf = pp$cdf()
@@ -102,23 +110,3 @@ rpldis = function(n, xmin, alpha) {
 }
 
 
-
-# 
-# 
-# ppldis_cumsum = function(xmax, xmin, alpha) {
-#     xmin = floor(xmin)
-#     constant = zeta(alpha)
-#     if(xmin > 1) 
-#         constant = constant - sum((1:(xmin-1))^(-alpha))
-#     1-(constant - cumsum((xmin:xmax)^(-alpha)))/constant
-# }
-# 
-# rpldis = function(n, xmin, alpha, xmax=20000) {
-#     u = runif(n)
-#     pp = ppldis_cumsum(xmax, xmin, alpha)
-#     colSums(sapply(u, ">", pp)) + xmin
-# }
-# 
-# 
-# 
-# 

@@ -26,7 +26,7 @@ lines(m, col=3)
 estimate_xmin(m)
 
 ##This can take a while
-bs = bootstrap_xmin(m, no_of_sims=10, threads=4)
+bs = bootstrap_xmin(m, no_of_sims=100, threads=4)
 
 
 ##Plot uncertainity in xmin and alpha
