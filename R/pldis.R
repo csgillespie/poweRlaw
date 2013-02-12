@@ -40,7 +40,7 @@ dpldis = function(x, xmin, alpha, log=FALSE) {
 #'to calculate the discrete CDF). 
 #'
 #'The algorithm provided in this package generates true discrete random numbers up to 50000, then switches to using the
-#'continuous CDF. 
+#'continuous CDF. This switching point can altered by changing the \code{discrete_max} argument.
 #'
 #'In order to get a efficient power-law discrete random number generator, the algorithm needs to be implemented in 
 #'C.
@@ -61,7 +61,7 @@ ppldis = function(q, xmin, alpha, lower.tail=TRUE) {
 }
 
 
-my_ppldis_cumsum = function(xmin, alpha, incr) {
+internal_ppldis_cumsum = function(xmin, alpha, incr, discrete) {
     xmin = floor(xmin)
     alpha = alpha
     constant = zeta(alpha)
@@ -84,29 +84,30 @@ my_ppldis_cumsum = function(xmin, alpha, incr) {
 }
 
 
-rng = function(u, pp) {
+rng = function(u, pp, discrete_max) {
     xend = pp$get_xend()
     if(!length(u))
         return(NULL)
-    else if(xend > 50000) {
+    else if(xend > discrete_max) {
         xmin = pp$get_xmin(); alpha = pp$get_alpha()
         rngs = floor(xmin*(1-u)^(-1/(alpha-1)))
     } else {
         xstart = pp$get_xstart(); xend = pp$get_xend()
         cdf = pp$cdf()
         rngs = colSums(sapply(u, ">", cdf)) + xstart
-        rngs[rngs == (xend+1)] = rng(u[rngs==(xend+1)], pp)
+        rngs[rngs == (xend+1)] = rng(u[rngs==(xend+1)], pp, discrete_max)
     }
     return(rngs)
 }
 
 #' @param n number of observations.
+#' @param discrete_max The value when we switch from the discrete random numbers to a CTN approximation
 #' @rdname dpldis
 #' @export
-rpldis = function(n, xmin, alpha) {
+rpldis = function(n, xmin, alpha, discrete_max=50000) {
     u = runif(n)
-    pp = my_ppldis_cumsum(xmin, alpha, 10000)
-    rng(u, pp)
+    pp = internal_ppldis_cumsum(xmin, alpha, 10000)
+    rng(u, pp, discrete_max)
 }
 
 
