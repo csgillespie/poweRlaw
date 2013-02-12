@@ -7,9 +7,9 @@
 #' @exportClass pl_data
 #' @export pl_data
 pl_data = setRefClass("pl_data", 
-                      fields = list(x="numeric", 
-                                    values="numeric", 
-                                    freq="numeric"))
+  fields = list(x="numeric", 
+    values="numeric", 
+    freq="numeric"))
 
 
 
@@ -22,12 +22,12 @@ pl_data = setRefClass("pl_data",
 #' @exportClass distribution
 #' @export distribution
 distribution = setRefClass("distribution", 
-                           fields=list(
-                             datatype="character", 
-                             pl_data = "ANY", 
-                             internal = "list", 
-                             xmin = "ANY", 
-                             pars="ANY"))
+  fields=list(
+    datatype="character", 
+    pl_data = "ANY", 
+    internal = "list", 
+    xmin = "ANY", 
+    pars="ANY"))
 distribution$accessors(c("xmin", "pars", "pl_data"))
 
 #' Maximum likelihood estimation of the discrete power law distribution.
@@ -67,22 +67,6 @@ displ =
                   xmin <<- internal[["xmin"]]
                   pars <<- internal[["pars"]]
                 } else internal[["pl_data"]],
-<<<<<<< HEAD
-                            xmin = function(x) {
-                              if(!missing(x) && !is.null(x)) {
-                                internal[["xmin"]] <<- x
-                                .self$v = 1:(x-1)
-                                selection = min(which(pl_data$values >= x))
-                                .self$slx = internal[["cum_slx"]][selection]
-                                .self$n = internal[["cum_n"]][selection]    
-                              } else  internal[["xmin"]]
-                            }, pars = function(x) {
-                              if (!missing(x) && !is.null(x)) {
-                                internal[["pars"]] <<- x
-                                .self$constant = zeta(x)
-                              } else internal[["pars"]]
-                            }
-=======
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
                     internal[["xmin"]] <<- x
@@ -97,8 +81,7 @@ displ =
                     internal[["constant"]] <<- zeta(x)
                   } else internal[["pars"]]
                 }
->>>>>>> master
-              ))
+                ))
 
 
 #' @exportClass conpl
@@ -113,23 +96,24 @@ conpl =
                   internal[["cum_n"]] <<- rev(cumsum(rev(x$freq)))
                   internal[["pl_data"]] <<- x
                   
+                  ##Note sure if these two lines are needed?
                   xmin <<- internal[["xmin"]]
                   pars <<- internal[["pars"]]
                 } else internal[["pl_data"]],
-                            xmin = function(x) {
-                              if(!missing(x) && !is.null(x)) {
-                                internal[["xmin"]] <<- x
-                                selection = min(which(pl_data$values >= x))
-                                .self$slx = internal[["cum_slx"]][selection]
-                                .self$n = internal[["cum_n"]][selection]                                
-                              } else  internal[["xmin"]]
-                            }, pars = function(x) {
-                              if (!missing(x) && !is.null(x)) {
-                                internal[["pars"]] <<- x
-                              } else internal[["pars"]]
-                            }
+                xmin = function(x) {
+                  if(!missing(x) && !is.null(x)) {
+                    internal[["xmin"]] <<- x
+                    selection = min(which(pl_data$values >= x))
+                    internal[["slx"]] <<- internal[["cum_slx"]][selection]
+                    internal[["n"]] <<- internal[["cum_n"]][selection]                                
+                  } else  internal[["xmin"]]
+                }, pars = function(x) {
+                  if (!missing(x) && !is.null(x)) {
+                    internal[["pars"]] <<- x
+                  } else internal[["pars"]]
+                }
+                )
               )
-  )
 
 
 

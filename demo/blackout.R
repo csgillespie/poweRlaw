@@ -1,6 +1,6 @@
-library(roxygen2)
+#library(roxygen2)
 #roxygenise("../poweRlaw/")
-
+require(poweRlaw)
 ##Load in the full Moby dick data set
 data(blackouts)
 
@@ -20,9 +20,11 @@ lines(m, col=2)
 
 ##Now calculate the mle estimate and add to the plot
 estimate_pars(m)
-xmins =seq(1000, 1000000, 50000)
+xmins =seq(100000, 1000000, 100000)
+
+
 estimate_xmin(m, xmins)
-system.time(bootstrap_xmin(m, xmins=xmins, no_of_sims=1))
+bootstrap_xmin(m, xmins=xmins, no_of_sims=1)
 
 lines(m, col=3)
 

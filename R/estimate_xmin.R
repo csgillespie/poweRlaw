@@ -52,7 +52,7 @@ estimate_xmin = function (m, xmins = NULL, pars=NULL) {
   dat = matrix(0, nrow=length(xmins), ncol=2)
   
   #ll = pldis_ll$new(x)
-  xm = 271
+  xm = 1
   for(xm in 1:length(xmins)){
     m_cpy$xmin = xmins[xm]
     if(is.null(pars)) m_cpy$mle()

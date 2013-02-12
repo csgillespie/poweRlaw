@@ -13,6 +13,8 @@ displ$methods(
 ##CTN Power-law
 conpl$methods(
   mle = function(set = TRUE) {
+    n = internal[["n"]]
+    slx = internal[["slx"]]
     mle = 1 + n*(slx-log(xmin)*n)^(-1)
     if(set)
       pars <<- mle

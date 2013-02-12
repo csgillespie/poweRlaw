@@ -17,16 +17,13 @@ setMethod("dist_ll",
               ll
           }
 )
-<<<<<<< HEAD
- 
 
 setMethod("dist_ll",
-          signature = signature(m="conpl"),
-          definition = function(m) {
-            m$n*log(m$pars-1) - m$n*log(m$xmin) - m$pars *(m$slx-log(m$xmin))
-            
-          }
+  signature = signature(m="conpl"),
+  definition = function(m) {
+    n = m$internal[["n"]]
+    slx = m$internal[["slx"]]
+    n*log(m$pars-1) - n*log(m$xmin) - m$pars *(slx-log(m$xmin))
+  }
 )
 
-=======
->>>>>>> master
