@@ -20,8 +20,7 @@ lines(m, col=2)
 
 ##Now calculate the mle estimate and add to the plot
 estimate_pars(m)
-xmins =seq(100000, 1000000, 100000)
-
+xmins =seq(200000, 300000, 10000)
 
 estimate_xmin(m, xmins)
 bootstrap_xmin(m, xmins=xmins, no_of_sims=1)

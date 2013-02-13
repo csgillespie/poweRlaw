@@ -5,9 +5,12 @@ bootstrap_helper = function (i, m, N, y, xmins, pars) {
   ny = length(y);  nz = N - ny; pz = nz/N
   
   n1 = sum(runif(N) > pz)
-  q1 = y[sample(N-nz, n1, replace=TRUE)]
-  q2 = dist_rand(m_tmp, N-n1)
-  q = c(q1, q2)
+  q = dist_rand(m_tmp, N-n1)
+  if(m$datatype == "discrete")
+    q = c(y[sample(N-nz, n1, replace=TRUE)], q)
+  else 
+    q = c(runif(n1, 0, N-nz), q)
+  
   m_tmp$pl_data = pl_data$new(q)
   estimate_xmin(m_tmp, xmins=xmins, pars=pars)
   
