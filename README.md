@@ -1,7 +1,7 @@
 The poweRlaw package
 ====================
 
-This package implements both the discrete (and in the near future continuous) maximum likelihood estimators for fitting the power-law distribution to data. Additionally, a goodness-of-fit based approach is used to estimate the lower cut-off for the scaling region. 
+This package implements both the discrete and continuous maximum likelihood estimators for fitting the power-law distribution to data. Additionally, a goodness-of-fit based approach is used to estimate the lower cut-off for the scaling region. 
 
 The code developed in this package has been heavily influenced from the python and R code found at: http://tuvalu.santafe.edu/~aaronc/powerlaws/ . In particular, the R code of Laurent Dubroca.
 
@@ -10,17 +10,15 @@ Installation
 
 Currently, this package can only be installed from github and requires R >=2-15.0. The easiest way to install from github is to use the devtools package:
 ```r
-## install.packages("devtools")
+install.packages("devtools")
 library(devtools)
 install_github('poweRlaw', 'csgillespie')
 ```
 
 Note Windows users have to first install [Rtools](http://cran.rstudio.com/bin/windows/Rtools/).
 
-Example workflow
+The pl_data object 
 ----------------
-
-### The pl_data object 
 
 First we load the package and an example data set:
 ```r
@@ -41,11 +39,15 @@ d = plot(pl_d)
 head(d)
 ```
 
-### Estimating parameters of the discrete powerlaw
+The distribution object
+------------------------
 
-Currently the only distribution available is the discrete power-law 
-distribution (more will be added soon). To create a discrete power-law object, 
-we use the `displ` method:
+There are currently two distributions available in this package; the discrete and continuous power-law. To fit and manipulate **discrete** power-laws, we use the `displ` object. To fit and manipulate **continuous** power-laws, we use `conpl` objects. Regardless of the distribution type, the interface to plotting and fitting is identical. See `demo(moby)` and `demo(blackout)` for further examples.
+
+
+#### Example: discrete power-law
+
+To create a discrete power-law object, we use the `displ` method:
 ```r
 m = displ$new(pl_d)
 ```
@@ -104,7 +106,7 @@ sd(bs[[3]][,2])
 sd(bs[[3]][,3])
 ```
 
-### Plotting distribution objects
+#### Plotting distribution objects
 
 Once a distribution object has been created, standard plotting functions
 can be applied to it:
