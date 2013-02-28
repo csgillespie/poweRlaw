@@ -1,7 +1,7 @@
 Package: poweRlaw
 Type: Package
 Title: Fitting power laws to discrete and continuous data
-Version: 0.15.1
+Version: 0.15.2
 Date: 2013-02-14
 Author: Colin Gillespie
 Maintainer: Colin Gillespie <colin.gillespie@newcastle.ac.uk>
