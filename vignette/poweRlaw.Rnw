@@ -305,9 +305,23 @@ All distribution objects have a number of methods available. A list of methods i
   \caption{A list of functions for \texttt{distribution} functions. These objects do not change the object states. However, they may not be thread safe. }\label{T2}
 \end{table}
 
+\section{Approximations}
+
+When fitting discrete power-laws two approximations are implemented. 
+
+First, during the bootstrap procedure, generate random numbers. However, when $\alpha$ is close to 1, this can result in very large values. Hence, random numbers over $10^5$ are generated from the continuous power-law.
+
+The second approximation occurs when comparing the data cdf and distribution cdf for discrete power-laws. Again, when $\alpha$ is close 1, data sets with extreme points can be routinely generated. Hence, when comparing distribution, we compare at values $1, 2, 3, \ldots, 10^5$. For value above $10^5$, we generate a sequence from $10^5$ to the largest data point.
+
+
+
 <<echo=FALSE, results='hide', message=FALSE>>=
 source("plfit.R")
 @
+
+
+
+
 
 \section{Comparison with the \texttt{plfit} script}
 
@@ -336,7 +350,7 @@ estimate_xmin(m, pars=seq(1.5, 2.5, 0.01))
 
 \subsection{The continuous case}
 
-The \texttt{plfit} script also fits continuous power-laws. Again the results are comparable. First we generate one thousand random numbers from the continuous power-law with parameters $\alpha = 2.5$ amd $\xmin = 10$
+The \texttt{plfit} script also fits continuous power-laws. Again the results are comparable. First we generate one thousand random numbers from the continuous power-law with parameters $\alpha = 2.5$ and $\xmin = 10.0$
 <<>>=
 r = rplcon(1000, 10, 2.5)
 @
