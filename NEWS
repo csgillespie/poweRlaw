@@ -1,11 +1,10 @@
 Version 0.15.2
 --------------
- * Generating discrete random numbers took up too much memory. 
-   Reduced the threshold for switching to the CTN PL distribution.
+  * Bug fix. Off by 1 error due to floating point comparsion.
 
 Version 0.15.1
 --------------
- * Bug fix in the lines and points function
+ * issue 3: Bug fix in the lines and points function
 
 
 Version 0.15.0
