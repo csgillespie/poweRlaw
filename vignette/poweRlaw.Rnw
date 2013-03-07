@@ -45,6 +45,10 @@ knit_hooks$set(
     crop=hook_pdfcrop)
 #1,7, 12,18
 knit_theme$set(knit_theme$get()[7])
+
+setnicepar = function(...)  par(mar=c(3,3,2,1), 
+                  mgp=c(2,0.4,0), tck=-.01,
+                  cex.axis=0.9, las=1, ...)
 @
 
 <<echo=FALSE>>=
@@ -217,12 +221,12 @@ bs = bootstrap_xmin(m, no_of_sims=1000, threads=1)
 @
 \begin{marginfigure}
 \centering
-\includegraphics[width=\textwidth]{graphics/figure3-crop}
+\includegraphics[width=\textwidth]{graphics/figure2-crop}
 \caption{Results of the bootstrap}
 \end{marginfigure}
 \begin{marginfigure}
 \centering
-\includegraphics[width=\textwidth]{graphics/figure4-crop}
+\includegraphics[width=\textwidth]{graphics/figure3-crop}
 \end{marginfigure}
 \noindent The object returned from the bootstrap procedure contains three elements
 \begin{itemize}
@@ -243,23 +247,23 @@ plot(bs$bootstraps[,2], bs$bootstraps[,3])
 
 
 <<echo=FALSE>>=
-pdf("graphics/figure3.pdf", width=4, height=6)
+pdf("graphics/figure2.pdf", width=4, height=6)
 setnicepar(mfrow=c(2, 1))
 hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 400), 
      xlim=c(0, 35), main=NULL)
 hist(bs$bootstraps[,3], xlab=expression(alpha), 
      ylim=c(0, 400), xlim=c(1.8, 2.1), main=NULL)
 sink=dev.off()
-system("pdfcrop graphics/figure3.pdf")
+system("pdfcrop graphics/figure2.pdf")
 
-pdf("graphics/figure4.pdf", width=4, height=4)
+pdf("graphics/figure3.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
 plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3], 
      xlab="xmin", ylab=expression(alpha), 
      xlim=c(0, 35), ylim=c(1.8, 2.1), cex=0.35)
 grid()
 sink = dev.off()
-system("pdfcrop graphics/figure4.pdf")
+system("pdfcrop graphics/figure3.pdf")
 @
 
 
