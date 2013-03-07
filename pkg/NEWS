@@ -1,10 +1,19 @@
+Version 0.16.0
+--------------
+ * Added dist_data_cdf_function
+ * Can plot the all data and add distribution lines starting at xmin
+ * Added vignette
+ * Improved documentation
+ * Deprecated pl_data data class
+ 
 Version 0.15.2
 --------------
-  * Bug fix. Off by 1 error due to floating point comparsion.
+ * Generating discrete random numbers took up too much memory. 
+   Reduced the threshold for switching to the CTN PL distribution.
 
 Version 0.15.1
 --------------
- * issue 3: Bug fix in the lines and points function
+ * Bug fix in the lines and points function
 
 
 Version 0.15.0
@@ -15,7 +24,7 @@ Version 0.15.0
 Version 0.14.4
 --------------
   * No visible changes - preparing for future R versions.
-  * Added discrete_xmax parameter to the discrete random number generater. This parameter controls where we change from using  
+  * Added discrete_xmax parameter to the discrete random number generator. This parameter controls where we change from using  
     a (true) discrete random number generator to a CTN approximation.
 
 
@@ -36,7 +45,7 @@ Version 0.14.1
 
 Version 0.14
 ------------
- * Added explict garbage collection call to the bootstrap routine to avoid memory issues.
+ * Added explicit garbage collection call to the bootstrap routine to avoid memory issues.
 
 
 Version 0.13
