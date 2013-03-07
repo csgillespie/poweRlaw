@@ -3,7 +3,7 @@
 setMethod("points",
           signature = signature(x="distribution"),
           definition = function(x, length.out=1000, ...) {
-            x_values = x$pl_data$x
+            x_values = x$dat
             x_axs = lseq(x$xmin, max(x_values), length.out)
             y = dist_cdf(x, x_axs, FALSE)
             points(x_axs, y, ...)

@@ -5,11 +5,12 @@
 \title{Estimates the lower bound (xmin)}
 \usage{
   bootstrap_xmin(m, xmins = NULL, pars = NULL,
-    no_of_sims = 100, threads = 1)
+    no_of_sims = 100, threads = 1, data_max = 1e+06)
 
   get_KS_statistic(m)
 
-  estimate_xmin(m, xmins = NULL, pars = NULL)
+  estimate_xmin(m, xmins = NULL, pars = NULL,
+    data_max = 1e+05)
 }
 \arguments{
   \item{threads}{number of concurrent threads used during
@@ -29,6 +30,10 @@
   \item{xmins}{default NULL. A vector of possible values of
   xmin to explore. The default, \code{xmins=NULL}, results
   in exploring all possible xmin values.}
+
+  \item{data_max}{default 1e5. When estimating xmin for
+  discrete distributions, a the search space when comparing
+  the data_cdf and distribution_cdf runs from 1:data_max}
 }
 \value{
   \code{estimate_xmin} returns a vector containing the
@@ -58,12 +63,11 @@
 }
 \examples{
 data(moby_sample)
-pl_d = pl_data$new(moby_sample)
-m = displ$new(pl_d)
+m = displ$new(moby_sample)
 estimate_xmin(m)
-estimate_xmin(m, xmins=c(10, 11, 12))
+estimate_xmin(m, xmins=10:12)
 ############################
 ##Bootstrap examples
-bootstrap_xmin(m, no_of_sims=2, threads=1)
+bootstrap_xmin(m, no_of_sims=3, threads=1)
 }
 

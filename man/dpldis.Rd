@@ -8,7 +8,7 @@
 
   ppldis(q, xmin, alpha, lower.tail = TRUE)
 
-  rpldis(n, xmin, alpha, discrete_max = 50000)
+  rpldis(n, xmin, alpha, discrete_max = 1e+05)
 }
 \arguments{
   \item{x,q}{vector of quantiles. The discrete power-law
@@ -52,9 +52,9 @@
   CDF).
 
   The algorithm provided in this package generates true
-  discrete random numbers up to 50000, then switches to
-  using the continuous CDF. This switching point can
-  altered by changing the \code{discrete_max} argument.
+  discrete random numbers up to 1e5 then switches to using
+  the continuous CDF. This switching point can altered by
+  changing the \code{discrete_max} argument.
 
   In order to get a efficient power-law discrete random
   number generator, the algorithm needs to be implemented

@@ -1,5 +1,7 @@
 \docType{class}
 \name{displ}
+\alias{conpl}
+\alias{conpl-class}
 \alias{displ}
 \alias{displ-class}
 \title{Maximum likelihood estimation of the discrete power law distribution.}
@@ -21,15 +23,5 @@
 }
 \examples{
 data(moby)
-pl_data = pl_data$new(moby)
-m = displ$new(pl_data)
-m$setXmin(7)
-m$setPars(5)
-dist_ll(m) #-16945
-estimate_pars(m) #1.952
-m$setPars(estimate_pars(m))
-plot(pl_data)
-plot(m)
-lines(m)
 }
 

@@ -1,15 +1,15 @@
 #' The pl class
 #' 
-#' A data class
+#' A data class. 
 #' @name pl_data-class
 #' @aliases pl_data
 #' @docType class
 #' @exportClass pl_data
 #' @export pl_data
 pl_data = setRefClass("pl_data", 
-  fields = list(x="numeric", 
-    values="numeric", 
-    freq="numeric"))
+                      fields = list(x="numeric", 
+                                    values="numeric", 
+                                    freq="numeric"))
 
 
 
@@ -22,13 +22,15 @@ pl_data = setRefClass("pl_data",
 #' @exportClass distribution
 #' @export distribution
 distribution = setRefClass("distribution", 
-  fields=list(
-    datatype="character", 
-    pl_data = "ANY", 
-    internal = "list", 
-    xmin = "ANY", 
-    pars="ANY"))
-distribution$accessors(c("xmin", "pars", "pl_data"))
+                           fields=list(
+                             datatype="character", 
+                             internal = "list", 
+                             dat = "ANY",
+                             xmin = "ANY", 
+                             pars="ANY"), 
+                           
+)
+distribution$accessors(c("xmin", "pars", "dat"))
 
 #' Maximum likelihood estimation of the discrete power law distribution.
 #' 
@@ -39,81 +41,92 @@ distribution$accessors(c("xmin", "pars", "pl_data"))
 #' @param alpha The scaling parameter: alpha > 1
 #' @aliases displ-class
 #' @docType class
+#' @aliases conpl
 #' @importFrom VGAM zeta
 #' @exportClass displ 
 #' @export displ
 #' @examples
 #' data(moby)
-#' pl_data = pl_data$new(moby)
-#' m = displ$new(pl_data)
-#' m$setXmin(7)
-#' m$setPars(5)
-#' dist_ll(m) #-16945
-#' estimate_pars(m) #1.952
-#' m$setPars(estimate_pars(m))
-#' plot(pl_data)
-#' plot(m)
-#' lines(m)
 displ = 
   setRefClass("displ", 
               contains="distribution",
-              fields = list(pl_data = function(x)
-                if(!missing(x) && !is.null(x)) {
-                  internal[["cum_slx"]] <<-
-                    rev(cumsum(log(rev(x$values))*rev(x$freq)))
-                  internal[["cum_n"]] <<- rev(cumsum(rev(x$freq)))
-                  internal[["pl_data"]] <<- x
-                  
-                  xmin <<- internal[["xmin"]]
-                  pars <<- internal[["pars"]]
-                } else internal[["pl_data"]],
+              fields = list(
+                dat = function(x)
+                  if(!missing(x) && !is.null(x)) {
+                    freq = internal[["freq"]]
+                    values = internal[["values"]]
+                    
+                    internal[["cum_slx"]] <<-
+                      rev(cumsum(log(rev(values))*rev(freq)))
+                    internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
+                    internal[["dat"]] <<- x
+                    #                     
+                    xmin <<- internal[["xmin"]]
+                    pars <<- internal[["pars"]]
+                  } else internal[["dat"]],
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
+                    if(class(x) == "ks_est") {
+                      pars <<- x$pars
+                      x = x$xmin
+                    }
                     internal[["xmin"]] <<- x
                     internal[["v"]] <<- 1:(x-1)
-                    selection = min(which(pl_data$values >= x))
+                    
+                    ##Copying the data results in floating point
+                    ##Comparsion errors - need to add 
+                    ##Machine precision :(
+                    selection = min(which(
+                      internal[["values"]] >= x))
                     internal[["slx"]] <<- internal[["cum_slx"]][selection]
                     internal[["n"]] <<- internal[["cum_n"]][selection]    
                   } else  internal[["xmin"]]
-                }, pars = function(x) {
+                }, 
+                pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
                     internal[["pars"]] <<- x
                     internal[["constant"]] <<- zeta(x)
                   } else internal[["pars"]]
                 }
-                ))
+              ))
 
-
+#' @rdname displ
+#' @aliases conpl-class
 #' @exportClass conpl
 #' @export conpl
 conpl = 
   setRefClass("conpl", 
               contains="distribution",
-              fields = list(pl_data = function(x)
+              fields = list(dat = function(x)
                 if(!missing(x) && !is.null(x)) {
                   internal[["cum_slx"]] <<-
                     rev(cumsum(log(rev(x$values))*rev(x$freq)))
                   internal[["cum_n"]] <<- rev(cumsum(rev(x$freq)))
-                  internal[["pl_data"]] <<- x
+                  internal[["dat"]] <<- x
                   
                   ##Note sure if these two lines are needed?
                   xmin <<- internal[["xmin"]]
                   pars <<- internal[["pars"]]
-                } else internal[["pl_data"]],
-                xmin = function(x) {
-                  if(!missing(x) && !is.null(x)) {
-                    internal[["xmin"]] <<- x
-                    selection = min(which(pl_data$values >= x))
-                    internal[["slx"]] <<- internal[["cum_slx"]][selection]
-                    internal[["n"]] <<- internal[["cum_n"]][selection]                                
-                  } else  internal[["xmin"]]
-                }, pars = function(x) {
-                  if (!missing(x) && !is.null(x)) {
-                    internal[["pars"]] <<- x
-                  } else internal[["pars"]]
+                } else internal[["dat"]],
+                  xmin = function(x) {
+                   if(!missing(x) && !is.null(x)) {
+                     if(class(x) == "ks_est") {
+                       pars <<- x$pars
+                       x = x$xmin
+                     }
+                     internal[["xmin"]] <<- x
+                     selection = min(which(internal[["dat"]] >= (x- .Machine$double.eps ^ 0.5)))
+                     internal[["slx"]] <<- internal[["cum_slx"]][selection]
+                     internal[["n"]] <<- internal[["cum_n"]][selection]                                
+                     } else  internal[["xmin"]]
+                   }, 
+                  pars = function(x) {
+                    if (!missing(x) && !is.null(x)) {
+                      internal[["pars"]] <<- x
+                    } else internal[["pars"]]
                 }
-                )
-              )
+          )
+  )
 
 
 

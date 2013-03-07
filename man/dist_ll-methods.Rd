@@ -1,6 +1,7 @@
 \docType{methods}
 \name{dist_ll}
 \alias{dist_ll}
+\alias{dist_ll,conpl-method}
 \alias{dist_ll,displ-method}
 \title{log-likelihood for the distribution objects.}
 \arguments{
@@ -20,8 +21,7 @@
 }
 \examples{
 data(moby_sample)
-pl_d = pl_data$new(moby_sample)
-m = displ$new(pl_d)
+m = displ$new(moby_sample)
 m$setXmin(7);m$setPars(2)
 dist_ll(m)
 }

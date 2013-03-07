@@ -1,7 +1,11 @@
 \docType{methods}
 \name{dist_cdf}
 \alias{dist_cdf}
+\alias{dist_cdf,conpl-method}
 \alias{dist_cdf,displ-method}
+\alias{dist_data_cdf}
+\alias{dist_data_cdf,conpl-method}
+\alias{dist_data_cdf,displ-method}
 \title{The cumulative distribution function}
 \arguments{
   \item{m}{a reference class distribution object. This
@@ -29,8 +33,7 @@
 }
 \examples{
 data(moby_sample)
-pl_d = pl_data$new(moby_sample)
-m = displ$new(pl_d)
+m = displ$new(moby_sample)
 m$setXmin(7);m$setPars(2)
 #CDF at a particular value
 dist_cdf(m, 10:15)

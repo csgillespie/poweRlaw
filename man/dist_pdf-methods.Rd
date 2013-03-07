@@ -24,8 +24,7 @@
 }
 \examples{
 data(moby_sample)
-pl_d = pl_data$new(moby_sample)
-m = displ$new(pl_d)
+m = displ$new(moby_sample)
 m$setXmin(7);m$setPars(2)
 dist_pdf(m)
 }

@@ -2,9 +2,12 @@
 #' @exportMethod lines
 setGeneric("lines")
 
-
 #' @exportMethod points
 setGeneric("points")
+
+
+
+
 
 #' The cumulative distribution function
 #'
@@ -29,8 +32,7 @@ setGeneric("points")
 #' @export
 #' @examples
 #' data(moby_sample)
-#' pl_d = pl_data$new(moby_sample)
-#' m = displ$new(pl_d)
+#' m = displ$new(moby_sample)
 #' m$setXmin(7);m$setPars(2)
 #' #CDF at a particular value
 #' dist_cdf(m, 10:15)
@@ -58,8 +60,7 @@ setGeneric("dist_cdf",
 #' @rdname dist_pdf-methods
 #' @examples
 #' data(moby_sample)
-#' pl_d = pl_data$new(moby_sample)
-#' m = displ$new(pl_d)
+#' m = displ$new(moby_sample)
 #' m$setXmin(7);m$setPars(2)
 #' dist_pdf(m)
 setGeneric("dist_pdf", function(m, q=NULL) standardGeneric("dist_pdf"))
@@ -83,8 +84,7 @@ setGeneric("dist_pdf", function(m, q=NULL) standardGeneric("dist_pdf"))
 #' @rdname dist_ll-methods
 #' @examples
 #' data(moby_sample)
-#' pl_d = pl_data$new(moby_sample)
-#' m = displ$new(pl_d)
+#' m = displ$new(moby_sample)
 #' m$setXmin(7);m$setPars(2)
 #' dist_ll(m)
 setGeneric("dist_ll", function(m) standardGeneric("dist_ll"))
@@ -110,10 +110,10 @@ setGeneric("dist_ll", function(m) standardGeneric("dist_ll"))
 #' @rdname dist_rand-methods
 #' @examples
 #' data(moby_sample)
-#' pl_d = pl_data$new(moby_sample)
-#' m = displ$new(pl_d)
+#' m = displ$new(moby_sample)
 #' m$setXmin(7);m$setPars(2)
 #' dist_rand(m, 5)
 setGeneric("dist_rand", function(m, n) standardGeneric("dist_rand"))
 
-
+#' @export 
+setGeneric("dist_data_cdf", function(m, lower.tail=TRUE, cumulative=FALSE) standardGeneric("dist_data_cdf"))

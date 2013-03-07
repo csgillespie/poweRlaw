@@ -3,6 +3,8 @@
 #' Density and distribution function of the continuous power-law distribution, with
 #' parameters xmin and alpha.
 #' @inheritParams ppldis
+#' @param x,q vector of quantiles. The discrete 
+#' power-law distribution is defined for x > xmin
 #' @return dplcon gives the denisty and pplcon gives the distribution function.
 #' @export
 #' @examples
@@ -10,11 +12,12 @@
 #' x = seq(xmin, 10, length.out=1000)
 #' plot(x, dplcon(x, xmin, alpha), type="l")
 dplcon = function(x, xmin, alpha, log=FALSE) {
-    x = x[x>=xmin]
-    if(log)
-        log(alpha-1) - log(xmin) - alpha*(log(x/xmin))
-    else
-        (alpha-1)/xmin * (x/xmin)^(-alpha)
+  tol = 1e-10
+  x = x[(x+tol) >= xmin]
+  if(log)
+    log(alpha-1) - log(xmin) - alpha*(log(x/xmin))
+  else
+    (alpha-1)/xmin * (x/xmin)^(-alpha)
 }
 
 
@@ -23,13 +26,13 @@ dplcon = function(x, xmin, alpha, log=FALSE) {
 #'@examples
 #' plot(x, pplcon(x, xmin, alpha), type="l", main="Distribution function")
 pplcon = function(q, xmin, alpha, lower.tail=TRUE) {
-    #x = x[x>=xmin]
+  tol = 1e-10
+  q = q[(q+tol) >= xmin]
   cdf = 1 - (q/xmin)^(-alpha + 1)
   if(lower.tail)
     cdf
   else
-    1 - (cdf - dplcon(q, xmin, alpha)) 
-    
+    1 - cdf#(cdf - dplcon(q, xmin, alpha)) 
 }
 
 
@@ -44,16 +47,8 @@ pplcon = function(q, xmin, alpha, lower.tail=TRUE) {
 #' #Zipfs plot
 #' plot(con_rns, rev(cumsum(p)), log="xy", type="l")
 rplcon = function(n, xmin, alpha) {
-    xmin*(1-runif(n))^(-1/(alpha-1))
+  xmin*(1-runif(n))^(-1/(alpha-1))
 }
-
-
-
-
-
-
-
-
 
 
 

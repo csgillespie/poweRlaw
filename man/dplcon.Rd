@@ -14,6 +14,9 @@ parameters xmin and alpha.}
   rplcon(n, xmin, alpha)
 }
 \arguments{
+  \item{x,q}{vector of quantiles. The discrete power-law
+  distribution is defined for x > xmin}
+
   \item{xmin}{The lower bound of the power-law
   distribution. For the continuous power-law, xmin >= 0 for
   the discrete distribution, xmin >0}

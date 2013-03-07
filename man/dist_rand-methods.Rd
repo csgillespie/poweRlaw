@@ -1,6 +1,7 @@
 \docType{methods}
 \name{dist_rand}
 \alias{dist_rand}
+\alias{dist_rand,conpl-method}
 \alias{dist_rand,displ-method}
 \title{Random number generation for the distribution objects}
 \arguments{
@@ -24,8 +25,7 @@
 }
 \examples{
 data(moby_sample)
-pl_d = pl_data$new(moby_sample)
-m = displ$new(pl_d)
+m = displ$new(moby_sample)
 m$setXmin(7);m$setPars(2)
 dist_rand(m, 5)
 }

@@ -21,7 +21,7 @@
 #' x = xmin:100
 #' plot(x, dpldis(x, xmin, alpha), type="l")
 dpldis = function(x, xmin, alpha, log=FALSE) {
-    x = x[x>=xmin]
+    x = x[round(x) >= round(xmin)]
     xmin = floor(xmin)
     constant = zeta(alpha)
     if(xmin > 1) constant = constant - sum((1:(xmin-1))^(-alpha))
@@ -39,7 +39,7 @@ dpldis = function(x, xmin, alpha, log=FALSE) {
 #'Another problem is when alpha is close to 1, this can result in very large random number being generated (which means we need 
 #'to calculate the discrete CDF). 
 #'
-#'The algorithm provided in this package generates true discrete random numbers up to 1000, then switches to using the
+#'The algorithm provided in this package generates true discrete random numbers up to 1e5 then switches to using the
 #'continuous CDF. This switching point can altered by changing the \code{discrete_max} argument.
 #'
 #'In order to get a efficient power-law discrete random number generator, the algorithm needs to be implemented in 
@@ -48,7 +48,7 @@ dpldis = function(x, xmin, alpha, log=FALSE) {
 #' plot(x, ppldis(x, xmin, alpha), type="l", main="Distribution function")
 #' rpldis(x, xmin, alpha)
 ppldis = function(q, xmin, alpha, lower.tail=TRUE) {
-    #x = x[x>=xmin]
+    q = q[round(q) >= round(xmin)]
     xmin = floor(xmin)
     constant = zeta(alpha)
     if(xmin > 1) 
@@ -104,10 +104,8 @@ rng = function(u, pp, discrete_max) {
 #' @param discrete_max The value when we switch from the discrete random numbers to a CTN approximation
 #' @rdname dpldis
 #' @export
-rpldis = function(n, xmin, alpha, discrete_max=1000) {
+rpldis = function(n, xmin, alpha, discrete_max=1e5) {
     u = runif(n)
-    pp = internal_ppldis_cumsum(xmin, alpha, 1000)
+    pp = internal_ppldis_cumsum(xmin, alpha, discrete_max)
     rng(u, pp, discrete_max)
 }
-
-

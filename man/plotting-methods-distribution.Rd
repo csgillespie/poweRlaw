@@ -4,7 +4,6 @@
 \alias{lines,distribution-method}
 \alias{plot}
 \alias{plot,distribution,ANY-method}
-\alias{plot,pl_data,ANY-method}
 \alias{points}
 \alias{points,distribution-method}
 \title{Plotting functions}
@@ -23,15 +22,11 @@
   distribution be plotted.}
 }
 \description{
-  These are generic functions for distribution and pl_data
-  reference objects. Standard plotting functions, i.e.
-  plot, points, and lines work with distribution and
-  pl_data objects.
+  These are generic functions for distribution reference
+  objects. Standard plotting functions, i.e. plot, points,
+  and lines work with distribution and pl_data objects.
 }
 \note{
-  These methods do *not* alter the internal state of the
-  distribubtion objects.
-
   This method does *not* alter the internal state of the
   distribubtion objects.
 }
