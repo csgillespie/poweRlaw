@@ -29,29 +29,11 @@
 
 <<echo=FALSE>>=
 opts_chunk$set(prompt = FALSE,fig.path='graphics/', fig.align='center',fig.lp="")
-#knit_hooks$set()
 options(width=75)
-knit_hooks$set(
-    par.nice = function(before, options, envir) {
-        if (before && !is.null(options$par.mfrow)){
-            par(mar=c(3,3,2,1),  mgp=c(2,0.4,0), tck=-.01,
-                cex.lab=.95,cex.axis=0.9, las=1, mfrow=options$par.mfrow)
-            
-        } else if (before) {
-            par(mar=c(3,3,2,1),  mgp=c(2,0.4,0), tck=-.01,
-                cex.lab=.95,cex.axis=0.9, las=1)
-        }
-    }, 
-    crop=hook_pdfcrop)
-#1,7, 12,18
 knit_theme$set(knit_theme$get()[7])
-
 setnicepar = function(...)  par(mar=c(3,3,2,1), 
                   mgp=c(2,0.4,0), tck=-.01,
                   cex.axis=0.9, las=1, ...)
-@
-
-<<echo=FALSE>>=
 set.seed(1)
 @
 
@@ -222,11 +204,12 @@ bs = bootstrap_xmin(m, no_of_sims=1000, threads=1)
 \begin{marginfigure}
 \centering
 \includegraphics[width=\textwidth]{graphics/figure2-crop}
-\caption{Results of the bootstrap}
+\caption{Histograms of the bootstrap results.}\label{F2}
 \end{marginfigure}
 \begin{marginfigure}
 \centering
 \includegraphics[width=\textwidth]{graphics/figure3-crop}
+\caption{Bivariate scatter plot of the bootstrap results. The values of $\xmin$ and $\alpha$ are obviously strongly correlated.}\label{F3}
 \end{marginfigure}
 \noindent The object returned from the bootstrap procedure contains three elements
 \begin{itemize}
@@ -326,7 +309,9 @@ All distribution objects have a number of methods available. A list of methods i
 source("plfit.R")
 @
 
-\section{Comparison with other R scripts}
+\section{Comparison with the \texttt{plfit} script}
+
+\subsection{The discrete case}
 
 Other implementations of estimating the lower bound can be found at
 \begin{center}
@@ -349,6 +334,43 @@ plfit(moby)
 estimate_xmin(m, pars=seq(1.5, 2.5, 0.01))
 @
 
+\subsection{The continuous case}
+
+The \texttt{plfit} script also fits continuous power-laws. Again the results are comparable. First we generate one thousand random numbers from the continuous power-law with parameters $\alpha = 2.5$ amd $\xmin = 10$
+<<>>=
+r = rplcon(1000, 10, 2.5)
+@
+\noindent The \texttt{plfit} automatically detects if the data is continuous
+<<>>=
+plfit(r)
+@
+\noindent Fitting with the \texttt{poweRlaw} package gives the same values
+<<>>=
+m_r = conpl$new(r)
+(est = estimate_xmin(m_r))
+@
+\noindent Of course, using the \texttt{poweRlaw} package, we can easily plot the data
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{graphics/figure4-crop}
+\caption{CDF plot of one thousand random numbers generated from a power-law with parameters $\alpha=2.5$ and $\xmin = 10$. The line of best fit is also shown.}\label{F4}
+\end{marginfigure}
+<<fig.keep='none'>>=
+m_r$setXmin(est)
+plot(m_r)
+lines(m_r, col=2)
+@
+\noindent to get figure \ref{F4}.
+
+<<echo=FALSE>>=
+pdf("graphics/figure4.pdf", width=4, height=4)
+setnicepar(mfrow=c(1,1))
+plot(m_r)
+lines(m_r, col=2)
+grid()
+sink = dev.off()
+system("pdfcrop graphics/figure4.pdf")
+@
 
 
 
@@ -384,5 +406,29 @@ version
 
 
 \end{document}
+
+<<echo=FALSE>>=
+setwd("graphics")
+system("convert figure1-crop.pdf figure1.png")
+system("convert figure2-crop.pdf figure2.png")
+system("convert figure3-crop.pdf figure3.png")
+setwd("../")
+@
+
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+
 
 % eof
