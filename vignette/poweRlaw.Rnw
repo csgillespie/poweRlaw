@@ -1,0 +1,384 @@
+\documentclass[a4paper,justified,openany]{tufte-handout}
+\setcounter{secnumdepth}{2}
+
+\usepackage{microtype}
+% -------------------------------------------------------------------------------
+
+%\usepackage{cite} % Make references as [1-4], not [1,2,3,4]
+\usepackage{url}  % Formatting web addresses  
+%\usepackage[utf8]{inputenc} %unicode support
+%\usepackage{epsfig}
+\usepackage{color,hyperref,comment, booktabs}
+\urlstyle{rm}
+\usepackage{algorithmic, algorithm}
+\newcommand{\cc}{\texttt}
+\newcommand{\xmin}{x_{\min}}
+
+\newcommand{\note}[1]{{\color{red}#1}}
+
+\usepackage{etoolbox}
+\makeatletter
+\preto{\@verbatim}{\topsep=-20pt \partopsep=0pt }
+\makeatother
+
+\date{Last updated: \today}  % if the \date{} command is left out, the current date will be used
+
+\title{The poweRlaw package}
+\author[Colin S. Gillespie]{Colin S. Gillespie}
+\date{Last updated: \today}
+
+<<echo=FALSE>>=
+opts_chunk$set(prompt = FALSE,fig.path='graphics/', fig.align='center',fig.lp="")
+#knit_hooks$set()
+options(width=75)
+knit_hooks$set(
+    par.nice = function(before, options, envir) {
+        if (before && !is.null(options$par.mfrow)){
+            par(mar=c(3,3,2,1),  mgp=c(2,0.4,0), tck=-.01,
+                cex.lab=.95,cex.axis=0.9, las=1, mfrow=options$par.mfrow)
+            
+        } else if (before) {
+            par(mar=c(3,3,2,1),  mgp=c(2,0.4,0), tck=-.01,
+                cex.lab=.95,cex.axis=0.9, las=1)
+        }
+    }, 
+    crop=hook_pdfcrop)
+#1,7, 12,18
+knit_theme$set(knit_theme$get()[7])
+@
+
+<<echo=FALSE>>=
+set.seed(1)
+@
+
+\begin{document}
+\maketitle
+ \begin{abstract}
+The \verb$poweRlaw$ package provides code to fit discrete and continuous power-laws. The fitting procedure follows the method detailed in Clauset \textit{et al.}\cite{clauset2009}. By minimising the Kolmogorov-Smirnoff statistic, the lower-bound cut-off is estimated. 
+
+Future versions of this package will allow other heavy tailed distributions to be fitted.
+\end{abstract}
+
+\section{Installation}
+
+The package can be installed from CRAN using the standard command:
+<<eval=FALSE>>=
+install.packages("poweRlaw")
+@
+\noindent from any machine with an internet connection. The package is being maintained on github. The developmental version can be installed using the \cc{devtools} package:\sidenote{If use Windows, you need to install the \texttt{Rtools} package first.}
+<<eval=FALSE>>=
+install.packages("devtools")
+library(devtools)
+install_github("poweRlaw", "csgillespie")
+@
+\noindent Once installed, the package can be loaded ready for use with standard \cc{library} command
+<<>>=
+library(poweRlaw)
+@
+
+
+\section{Accessing documentation}
+
+I have tried to ensure that the package and all associated functions and datasets are properly documented with runnable examples. The command
+<<results='hide'>>=
+help(package="poweRlaw")
+@
+\noindent will give a brief overview of the package and a complete list of all functions. The list of vignettes associated with the package can be obtained with
+<<results='hide'>>=
+vignette(package="poweRlaw")
+@
+\noindent At the time of writing, \emph{this} vignette is the only one available, and can be accessed from the R command line with
+<<eval=FALSE>>=
+vignette("poweRlaw", package="poweRlaw")
+@
+\noindent Help on functions can be obtained using the usual R mechanisms. For example, help on the function \verb$rpldis$ can be obtained with
+<<eval=FALSE>>=
+?rpldis
+@
+\noindent and the associated example can be run with
+<<results='hide',fig.keep='none'>>=
+example(rpldis)
+@
+\noindent A list of demos and data sets associated with the package can be obtained with
+<<eval=FALSE>>=
+demo(package="poweRlaw")
+data(package="poweRlaw")
+@
+\noindent For example, the Moby dick data set can be load using\marginnote{The package also contains the data set \texttt{moby\_sample}. This data set is 2000 randomly sampled values from the larger \cc{moby} data set.}
+<<>>=
+data(moby)
+@
+\noindent After running this command, the vector \verb$moby$ will be accessible, and can be examined by typing
+<<results='hide'>>=
+moby
+@
+\noindent at the R command prompt.
+
+
+\section{Example: Word frequency in Moby Dick}
+
+This example investigates the frequency of occurrence of unique words in the novel Moby Dick by Herman Melville\cite{clauset2009,newman2005}. The data can be downloaded from
+\begin{center}
+\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm}
+\end{center}
+\noindent or loaded directly
+<<>>=
+data(moby)
+@
+
+\subsection{Fitting a discrete power-law}
+
+To fit a discrete power-law, we create a discrete power-law object, \texttt{displ}
+<<>>=
+m = displ$new(moby)
+@
+\noindent Initially the lower cut-off, $\xmin$ is set to the smallest $x$ value and the scaling parameter, \texttt{alpha}, is set to \texttt{NULL}
+<<tidy=FALSE>>=
+m$getXmin()
+m$getPars()
+@
+\noindent The distribution object also has standard setters
+<<>>=
+m$setXmin(5)
+m$setPars(2)
+@
+\noindent For a given $\xmin$ value, we can estimate the corresponding $\alpha$ value using its maximum likelihood estimator (mle)\marginnote{Instead of using the mle, we could instead do a parameter scan:\\ \texttt{\mbox{estimate\_pars(m, pars=seq(2, 3, 0.1))}}}
+<<>>=
+estimate_pars(m)
+@
+\noindent To estimate the lower bound, we minimise the distance between the data and the fitted model CDF, that is
+\[
+D(x) = \max_{x \ge \xmin} \vert S(x) - P(x) \vert
+\]
+\noindent where $S(x)$ is the data CDF and $P(x)$ is the theoretical CDF. The value $D(x)$ is known as the Kolmogorov-Smirnov statistic. Our estimate of $\xmin$ is then the value of $x$ that minimises $D(x)$:
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{graphics/figure1-crop}
+\caption{Plot of the data CDF for the Moby Dick data set. This corresponds to figure 6.1(a) in Clausett, 2009. Plot of data CDF with line of best fit.}
+\end{marginfigure}
+<<>>=
+(est = estimate_xmin(m))
+@
+\noindent We can then set parameters of power-law distribution to the "optimal" values
+<<>>=
+m$setXmin(est)
+@
+\noindent All distribution objects  have generic plot methods:\sidenote{Generic \texttt{lines} and \texttt{points} functions are also available.}
+<<fig.keep='none'>>=
+##Plot the data (from xmin)
+plot(m)
+##Add in the fitted distribution
+lines(m, col=2)
+@
+\noindent When calling the \texttt{plot} and \texttt{lines} function, the data plotted is actually invisibly returned, i.e.
+<<fig.keep='none'>>=
+dd = plot(m)
+head(dd, 3)
+@
+
+
+
+<<echo=FALSE>>=
+pdf("graphics/figure1.pdf", width=5, height=5)
+setnicepar()
+plot(m, xlab="x", ylab="CDF")
+grid()
+lines(m, col=2)
+sink=dev.off()
+system("pdfcrop graphics/figure1.pdf")
+data(bootstrap_moby)
+bs = bootstrap_moby
+@
+
+\subsection{Quantifying $\xmin$ uncertainty}
+
+Clausett, \textit{el al}, 2009 recommend a bootstrap procedure to estimate the uncertainty in $\xmin$. Essentially, an estimate of parameter uncertainty is obtained by generating multiple data sets (with parameters $\xmin$ and $\alpha$) and then "re-inferring" the model parameters. The algorithm is detailed in Algorithm 1.
+\begin{table}[t]
+\centering
+  \begin{tabular}{@{}ll@{}}
+    \hline
+    \multicolumn{2}{l}{\textbf{Algorithm 1:} Estimating the uncertainty in \texttt{xmin}}\\
+    \hline
+    {\small 1:} & Calculate point estimates $\xmin$ and scaling parameter $\alpha$. \\
+    {\small 2:} & Set $n_1$ equal to the number of values below \texttt{xmin}. \\
+    {\small 3:} & Set $n_2 = n - n_1$.\\
+    {\small 4:} & \texttt{for} \texttt{i} in \texttt{1:B}:\\
+    {\small 5:} & $\quad$ Simulate $n_1$ values from $U(1, \xmin)$ and $n_2$ values from a discrete \\
+    & $\quad$ power-law (with parameter $\alpha$).\\
+    {\small 6:} & $\quad$ Estimate $\xmin$ and $\alpha$ using the Kolmogorov-Smirnoff statistic.\\
+    {\small 7:} & \textbf{end for} \\
+    \hline
+  \end{tabular}
+\end{table}  
+For large data sets, this algorithm can be time consuming to run. However, steps 4 -- 7 can be run in parallel. To estimate the uncertainty with the \cc{moby} data set, we use
+<<eval=FALSE>>=
+##This takes a while
+bs = bootstrap_xmin(m, no_of_sims=1000, threads=1)
+@
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{graphics/figure3-crop}
+\caption{Results of the bootstrap}
+\end{marginfigure}
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{graphics/figure4-crop}
+\end{marginfigure}
+\noindent The object returned from the bootstrap procedure contains three elements
+\begin{itemize}
+\item A $p$-value .. \verb|bs$p|
+\item The original goodness of fit statistic  - \verb|bs$gof|
+\item The result of the bootstrap procedure - a data frame with three columns.
+\item The average time (in seconds) for a single bootstrap realisation.
+\end{itemize}
+\noindent The results of the bootstrap are best investigated with histograms
+<<fig.keep='none'>>=
+hist(bs$bootstraps[,2])
+hist(bs$bootstraps[,3])
+@
+\noindent and a bivariate scatter plot
+<<fig.keep='none'>>=
+plot(bs$bootstraps[,2], bs$bootstraps[,3])
+@
+
+
+<<echo=FALSE>>=
+pdf("graphics/figure3.pdf", width=4, height=6)
+setnicepar(mfrow=c(2, 1))
+hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 400), 
+     xlim=c(0, 35), main=NULL)
+hist(bs$bootstraps[,3], xlab=expression(alpha), 
+     ylim=c(0, 400), xlim=c(1.8, 2.1), main=NULL)
+sink=dev.off()
+system("pdfcrop graphics/figure3.pdf")
+
+pdf("graphics/figure4.pdf", width=4, height=4)
+setnicepar(mfrow=c(1,1))
+plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3], 
+     xlab="xmin", ylab=expression(alpha), 
+     xlim=c(0, 35), ylim=c(1.8, 2.1), cex=0.35)
+grid()
+sink = dev.off()
+system("pdfcrop graphics/figure4.pdf")
+@
+
+
+
+\section{Distribution objects}
+
+During the Moby Dick example, we created a \texttt{displ} object
+<<>>=
+m = displ$new(moby)
+@
+\noindent The object \cc{m} has class \cc{displ} and inherits the general \texttt{distribution} class. A list of available distributions is given in table \ref{T1}. 
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{} llll @{}}
+  \toprule
+  Distribution & Object name & \# Parameters \\
+  \midrule
+  Discrete Power-law & \texttt{displ} & 1 \\
+  CTN Power-law & \texttt{conpl} & 1 \\
+  \bottomrule
+  \end{tabular}
+  \caption{Available distributions in the power-law package. These objects are all reference classes.}\label{T1}
+\end{table}
+
+\noindent All distribution objects list in table \ref{T1} are reference classes.\marginnote{See \texttt{\mbox{?setRefClass}} for further details on references classes.} The key point, is that unlike S4 classes, reference classes have a mutable set. Each distribution object has four fields:
+\begin{itemize}
+\item \texttt{datatype}: This will be set to \textit{discrete} or \textit{continuous}.
+\item \texttt{dat}: a copy of the data.
+\item \texttt{xmin}: the lower cut-off $\xmin$.
+\item \texttt{pars}: a vector of parameter values.
+\item \texttt{internal}: a list of values use in different numerical procedures. This will differ between distribution objects.
+\end{itemize}
+By using the mutable state, we have  efficient caching of data structures that can be reused. For example, the mle of discrete power-laws uses the statistic:
+\[
+\sum_{i=\xmin}^n \log(x_i)
+\]
+This value is calculated once for all values of $\xmin$, then iterated over when estimating $\xmin$. 
+
+All distribution objects have a number of methods available. A list of methods is given in table \ref{T2}. See the associated help files for further details.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{} lp{7.5cm} @{}}
+    \toprule
+    Method Name & Description \\
+    \midrule
+    \texttt{dist\_cdf} & Cumulative density function\\
+    \texttt{dist\_pdf} & Probability density function\\
+    \texttt{dist\_rand}& Random numbers generator\\
+    \texttt{dist\_data\_cdf} & Data CDF \\
+    \texttt{dist\_ll} & Log-likelihood\\
+    \texttt{estimate\_xmin} & Estimate the cut-off point and parameter value\\
+    \texttt{estimate\_pars} & Estimate of the parameters (conditional on the current $\xmin$ value)\\
+    \texttt{bootstrap\_xmin} & Bootstrap procedure\\
+    \bottomrule
+  \end{tabular}
+  \caption{A list of functions for \texttt{distribution} functions. These objects do not change the object states. However, they may not be thread safe. }\label{T2}
+\end{table}
+
+<<echo=FALSE, results='hide', message=FALSE>>=
+source("plfit.R")
+@
+
+\section{Comparison with other R scripts}
+
+Other implementations of estimating the lower bound can be found at
+\begin{center}
+\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/}
+\end{center}
+In particular, the script for estimating $\xmin$ can be loaded using
+<<eval=FALSE>>=
+source("http://tuvalu.santafe.edu/~aaronc/powerlaws/plpva.r")
+@
+\noindent The results are directly comparable to the poweRlaw package. For example, if we look consider the Moby Dick data set again:
+<<>>=
+plfit(moby)
+@
+\noindent Notice that the results are slightly different. This is because the \cc{plfit} by default does a parameter scan over the range
+\[
+1.50, 1.51, 1.52, \ldots, 2.49, 2.50
+\]
+\noindent To exactly replicate the results, we could use
+<<results='hide', eval=FALSE>>=
+estimate_xmin(m, pars=seq(1.5, 2.5, 0.01))
+@
+
+
+
+
+\clearpage
+
+
+\bibliography{poweRlaw}
+\bibliographystyle{plainnat}
+
+
+\clearpage
+
+\section*{Package and R version}
+
+\begin{table}
+\centering
+\begin{tabular}{@{} llll @{}}
+\toprule
+Package & Version\\
+\midrule
+parallel & \Sexpr{packageDescription("parallel")$Version}\\
+poweRlaw & \Sexpr{packageDescription("poweRlaw")$Version}\\
+VGAM & \Sexpr{packageDescription("VGAM")$Version}\\
+\bottomrule
+\end{tabular}
+\caption{A list of packages and versions used.}\label{A1}
+\end{table}
+
+<<>>=
+version
+@
+
+
+
+\end{document}
+
+% eof
