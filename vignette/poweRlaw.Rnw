@@ -40,24 +40,27 @@ set.seed(1)
 \begin{document}
 \maketitle
  \begin{abstract}
-The \verb$poweRlaw$ package provides code to fit discrete and continuous power-laws. The fitting procedure follows the method detailed in Clauset \textit{et al.}\cite{clauset2009}. By minimising the Kolmogorov-Smirnoff statistic, the lower-bound cut-off is estimated. 
+The \verb$poweRlaw$ package provides code to fit discrete and continuous power-law distributions. 
+The fitting procedure follows the method detailed in Clauset \textit{et al.}\cite{clauset2009}. The scaling coefficient, $\alpha$, is obtained by maximising the likelihood. The cut-off value, $\xmin$, is estimated by minimising the Kolmogorov-Smirnoff statistic.
 
 Future versions of this package will allow other heavy tailed distributions to be fitted.
 \end{abstract}
 
 \section{Installation}
 
-The package can be installed from CRAN using the standard command:
-<<eval=FALSE>>=
-install.packages("poweRlaw")
-@
-\noindent from any machine with an internet connection. The package is being maintained on github. The developmental version can be installed using the \cc{devtools} package:\sidenote{If use Windows, you need to install the \texttt{Rtools} package first.}
+% The package can be installed from CRAN using the standard command:
+% <<eval=FALSE>>=
+% install.packages("poweRlaw")
+% @
+% \noindent from any machine with an internet connection. 
+
+The package is hosted on github.\sidenote{The intention is eventually host this package on CRAN.} The package can be installed using the \cc{devtools} package:\sidenote{If use Windows, you need to install the \texttt{Rtools} package first.}
 <<eval=FALSE>>=
 install.packages("devtools")
 library(devtools)
-install_github("poweRlaw", "csgillespie")
+install_github("poweRlaw", "csgillespie", subdir="pkg")
 @
-\noindent Once installed, the package can be loaded ready for use with standard \cc{library} command
+\noindent Once installed, the package can be loaded ready for use with the standard \cc{library} command
 <<>>=
 library(poweRlaw)
 @
@@ -178,25 +181,38 @@ bs = bootstrap_moby
 
 \subsection{Quantifying $\xmin$ uncertainty}
 
-Clausett, \textit{el al}, 2009 recommend a bootstrap procedure to estimate the uncertainty in $\xmin$. Essentially, an estimate of parameter uncertainty is obtained by generating multiple data sets (with parameters $\xmin$ and $\alpha$) and then "re-inferring" the model parameters. The algorithm is detailed in Algorithm 1.
+Clausett, \textit{el al}, 2009 recommend a bootstrap procedure to estimate the uncertainty in $\xmin$. Essentially, an estimate of parameter uncertainty is obtained by generating multiple data sets (with parameters $\xmin$ and $\alpha$) and then "re-inferring" the model parameters. The algorithm is detailed in Algorithm 1.\sidenote{Algorithm 1 can easily be extended for other distributions.}
 \begin{table}[t]
 \centering
   \begin{tabular}{@{}ll@{}}
     \hline
     \multicolumn{2}{l}{\textbf{Algorithm 1:} Estimating the uncertainty in \texttt{xmin}}\\
     \hline
-    {\small 1:} & Calculate point estimates $\xmin$ and scaling parameter $\alpha$. \\
+    {\small 1:} & Calculate point estimates $\xmin$ and the scaling parameter $\alpha$. \\
     {\small 2:} & Set $n_1$ equal to the number of values below \texttt{xmin}. \\
     {\small 3:} & Set $n_2 = n - n_1$.\\
-    {\small 4:} & \texttt{for} \texttt{i} in \texttt{1:B}:\\
-    {\small 5:} & $\quad$ Simulate $n_1$ values from $U(1, \xmin)$ and $n_2$ values from a discrete \\
+    {\small 4:} & \textbf{for} \texttt{i} in \texttt{1:B}:\\
+    {\small 5:} & $\quad$ Simulate $n_1$ values from a discrete uniform distribution: $U(1, \xmin)$ and $n_2$ values from a discrete \\
     & $\quad$ power-law (with parameter $\alpha$).\\
     {\small 6:} & $\quad$ Estimate $\xmin$ and $\alpha$ using the Kolmogorov-Smirnoff statistic.\\
     {\small 7:} & \textbf{end for} \\
     \hline
   \end{tabular}
 \end{table}  
-For large data sets, this algorithm can be time consuming to run. However, steps 4 -- 7 can be run in parallel. To estimate the uncertainty with the \cc{moby} data set, we use
+
+When $\alpha$ is close to one, this algorithm can be particularly time consuming to run, for two reasons:
+\begin{enumerate}
+\item When generating random numbers from the discrete power-law distribution, extreme values are highly possible, i.e. values greater than $10^8$. Hence, when generating the random numbers, all numbers larger than $10^5$ are generated using a continuous approximation.
+\item To calculate the Komologorov-Smirnov statistic, we need explore the state space. It is computationally infeasible to explore the entire state space when $\max(x) >> 10^5$. So to this algorithm feasible, we explore two state space. The first, 
+\[
+\xmin, \xmin+1, \xmin+2, \ldots, 10^5
+\]
+and combine it with an additional $10^5$ values from
+\[
+10^5, \ldots, \max(x)
+\]
+\end{enumerate}
+The bootstrapping procedure, steps 4 -- 7, can be run in parallel. To estimate the uncertainty with the \cc{moby} data set, we use
 <<eval=FALSE>>=
 ##This takes a while
 bs = bootstrap_xmin(m, no_of_sims=1000, threads=1)
@@ -305,18 +321,12 @@ All distribution objects have a number of methods available. A list of methods i
   \caption{A list of functions for \texttt{distribution} functions. These objects do not change the object states. However, they may not be thread safe. }\label{T2}
 \end{table}
 
-\section{Approximations}
-
-When fitting discrete power-laws two approximations are implemented. 
-
-First, during the bootstrap procedure, generate random numbers. However, when $\alpha$ is close to 1, this can result in very large values. Hence, random numbers over $10^5$ are generated from the continuous power-law.
-
-The second approximation occurs when comparing the data cdf and distribution cdf for discrete power-laws. Again, when $\alpha$ is close 1, data sets with extreme points can be routinely generated. Hence, when comparing distribution, we compare at values $1, 2, 3, \ldots, 10^5$. For value above $10^5$, we generate a sequence from $10^5$ to the largest data point.
 
 
-
-<<echo=FALSE, results='hide', message=FALSE>>=
-source("plfit.R")
+<<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
+tc = try(source("plfit.R"))
+if(class(tc) == "try-error")
+  source("http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r")
 @
 
 
@@ -333,7 +343,7 @@ Other implementations of estimating the lower bound can be found at
 \end{center}
 In particular, the script for estimating $\xmin$ can be loaded using
 <<eval=FALSE>>=
-source("http://tuvalu.santafe.edu/~aaronc/powerlaws/plpva.r")
+source("http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r")
 @
 \noindent The results are directly comparable to the poweRlaw package. For example, if we look consider the Moby Dick data set again:
 <<>>=
