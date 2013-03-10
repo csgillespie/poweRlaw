@@ -81,7 +81,7 @@ vignette(package="poweRlaw")
 vignette("poweRlaw", package="poweRlaw")
 @
 \noindent Help on functions can be obtained using the usual R mechanisms. For example, help on the function \verb$rpldis$ can be obtained with
-<<eval=FALSE>>=
+<<message=FALSE,results='hide', tidy=FALSE>>=
 ?rpldis
 @
 \noindent and the associated example can be run with
@@ -222,11 +222,6 @@ bs = bootstrap_xmin(m, no_of_sims=1000, threads=1)
 \includegraphics[width=\textwidth]{graphics/figure2-crop}
 \caption{Histograms of the bootstrap results.}\label{F2}
 \end{marginfigure}
-\begin{marginfigure}
-\centering
-\includegraphics[width=\textwidth]{graphics/figure3-crop}
-\caption{Bivariate scatter plot of the bootstrap results. The values of $\xmin$ and $\alpha$ are obviously strongly correlated.}\label{F3}
-\end{marginfigure}
 \noindent The object returned from the bootstrap procedure contains three elements
 \begin{itemize}
 \item A $p$-value .. \verb|bs$p|
@@ -243,6 +238,11 @@ hist(bs$bootstraps[,3])
 <<fig.keep='none'>>=
 plot(bs$bootstraps[,2], bs$bootstraps[,3])
 @
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{graphics/figure3-crop}
+\caption{Bivariate scatter plot of the bootstrap results. The values of $\xmin$ and $\alpha$ are obviously strongly correlated.}\label{F3}
+\end{marginfigure}
 
 
 <<echo=FALSE>>=
@@ -321,6 +321,42 @@ All distribution objects have a number of methods available. A list of methods i
   \caption{A list of functions for \texttt{distribution} functions. These objects do not change the object states. However, they may not be thread safe. }\label{T2}
 \end{table}
 
+<<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
+blackouts = try(read.table("blackouts.txt"))
+if(class(blackouts) == "try-error")
+  blackouts = read.txt("http://goo.gl/BsqnP")
+@
+
+\newpage
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{graphics/figure4-crop}
+\caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more it efficient.}\label{F4}
+\end{marginfigure}
+
+\section{Loading data}
+
+Typically, data is stored in a csv or text file. To use this data, we load it in the usual way\sidenote{The blackouts data set can be obtained from Clauset's website: \url{http://goo.gl/BsqnP} . }
+<<eval=FALSE>>=
+blackouts = read.table("blackouts.txt")
+@
+\noindent Distribution objects take vectors as inputs, so
+<<>>=
+m_bl = conpl$new(blackouts$V1)
+@
+
+<<echo=FALSE>>=
+est = estimate_xmin(m_bl)
+m_bl$setXmin(est)
+pdf("graphics/figure4.pdf", width=4, height=4)
+setnicepar(mfrow=c(1,1))
+plot(m_bl)
+lines(m_bl, col=2)
+grid()
+sink = dev.off()
+system("pdfcrop graphics/figure4.pdf")
+@
+
 
 
 <<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
@@ -376,24 +412,24 @@ m_r = conpl$new(r)
 \noindent Of course, using the \texttt{poweRlaw} package, we can easily plot the data
 \begin{marginfigure}
 \centering
-\includegraphics[width=\textwidth]{graphics/figure4-crop}
-\caption{CDF plot of one thousand random numbers generated from a power-law with parameters $\alpha=2.5$ and $\xmin = 10$. The line of best fit is also shown.}\label{F4}
+\includegraphics[width=\textwidth]{graphics/figure5-crop}
+\caption{CDF plot of one thousand random numbers generated from a power-law with parameters $\alpha=2.5$ and $\xmin = 10$. The line of best fit is also shown.}\label{F5}
 \end{marginfigure}
 <<fig.keep='none'>>=
 m_r$setXmin(est)
 plot(m_r)
 lines(m_r, col=2)
 @
-\noindent to get figure \ref{F4}.
+\noindent to get figure \ref{F5}.
 
 <<echo=FALSE>>=
-pdf("graphics/figure4.pdf", width=4, height=4)
+pdf("graphics/figure5.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
 plot(m_r)
 lines(m_r, col=2)
 grid()
 sink = dev.off()
-system("pdfcrop graphics/figure4.pdf")
+system("pdfcrop graphics/figure5.pdf")
 @
 
 
@@ -431,11 +467,13 @@ version
 
 \end{document}
 
-<<echo=FALSE>>=
+<<echo=FALSE, eval=FALSE>>=
 setwd("graphics")
 system("convert figure1-crop.pdf figure1.png")
 system("convert figure2-crop.pdf figure2.png")
 system("convert figure3-crop.pdf figure3.png")
+system("convert figure4-crop.pdf figure4.png")
+system("convert figure5-crop.pdf figure5.png")
 setwd("../")
 @
 
