@@ -3,9 +3,11 @@
 pl_data$methods( 
   list(
     initialize = function(x = numeric()) {
-      message("This class is depreciated. You can now created 
+      message("This class is depreciated. You should now create
               distribution objects directly: displ$new(x) where
-              x is a vector of numbers.")
+              x is a vector of numbers.\n
+              See vignette('poweRlaw')")
+      stop()
     }
   )
 )

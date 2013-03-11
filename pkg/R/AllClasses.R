@@ -1,6 +1,6 @@
 #' The pl class
 #' 
-#' A data class. 
+#' This class is depreciated. Do not use
 #' @name pl_data-class
 #' @aliases pl_data
 #' @docType class
@@ -15,7 +15,8 @@ pl_data = setRefClass("pl_data",
 
 #' The distribution class
 #' 
-#' Distributions use this class for plotting
+#' This is the base class for other distributions. There should be
+#' no need to create a \code{distribution} object. 
 #' @name distribution
 #' @aliases distribution-class
 #' @docType class
@@ -32,13 +33,19 @@ distribution = setRefClass("distribution",
 )
 distribution$accessors(c("xmin", "pars", "dat"))
 
-#' Maximum likelihood estimation of the discrete power law distribution.
+#' Discrete and continuous power-law objects
 #' 
-#' @return the mle estimate of the parameter alpha (for fixed xmin).
-#' @param x data vector
-#' @param xmin Lower bound of the power-law distribution. For the continuous 
-#' power-law, xmin >= 0 for the discrete distribution, xmin >0
-#' @param alpha The scaling parameter: alpha > 1
+#' The reference objects \code{displ} and \code{conpl} are used 
+#' for parameter inference for discrete and continuous power-laws.
+#' Each class also inherits the \code{distribution} class. These
+#' are the main classes of the poweRlaw package. 
+#'
+#' @return a reference object
+#' @param x the data vector
+#' @param xmin lower bound of the power-law distribution. 
+#' For the continuous  power-law, xmin >= 0 for the discrete 
+#' distributions, xmin >0
+#' @param pars the scaling parameter: alpha > 1
 #' @aliases displ-class
 #' @docType class
 #' @aliases conpl

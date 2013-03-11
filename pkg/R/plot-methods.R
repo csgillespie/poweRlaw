@@ -11,16 +11,17 @@ lseq = function(from, to, length.out) {
 #'
 #' These are generic functions for distribution  reference 
 #' objects. Standard plotting functions, i.e. plot, points, and lines work 
-#' with distribution and pl_data objects.
+#' with all distribution objects.
 #' 
-#' @param plot logical (default TRUE). Should the plot function plot or 
+#' @param plot logical (default \code{TRUE}). Should the plot function plot or 
 #' return the data (in a data frame object).
 #' @param length.out numeric, default 1000. How many points should the 
 #' distribution be evaulated at. This argument is only
 #' for plotting distribution objects
-#' @param data logical (default TRUE) - for distribution objects only. 
-#' When plotting, should the data (truncated at xmin) be plotted, or should the 
-#' theoretical distribution be plotted.
+#' @param cut logical (default \code{FALSE}) - 
+#' Where should the plot begin. If \code{cut=FALSE}, then the 
+#' plot will start at the minimum data value. Otherwise, the plot
+#' will start from \code{xmin}
 #' @docType methods
 #' @note This method does *not* alter the internal state of
 #' the distribubtion objects.

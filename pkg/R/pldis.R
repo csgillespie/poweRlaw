@@ -1,6 +1,7 @@
-#' The discrete powerlaw distribution. 
+#' Discrete powerlaw distribution. 
 #' 
-#' Density, distribution function and random number generation for the discrete power law distribution with parameters xmin and alpha.
+#' Density, distribution function and random number generation 
+#' for the discrete power law distribution with parameters xmin and alpha.
 #' @param x,q vector of quantiles. The discrete 
 #' power-law distribution is defined for x > xmin
 #' @param xmin The lower bound of the power-law distribution. 
@@ -34,16 +35,17 @@ dpldis = function(x, xmin, alpha, log=FALSE) {
 
 #'@rdname dpldis
 #'@export
-#'@details The Clausett, 2009 paper provides an algorithm for generating discrete random numbers. However, if this
+#'@details The Clausett, 2009 paper provides an algorithm for generating discrete random numbers. However, if this
 #'algorithm is implemented in R, it gives terrible performance. This is because the algorithm involves "growing vectors". 
 #'Another problem is when alpha is close to 1, this can result in very large random number being generated (which means we need 
 #'to calculate the discrete CDF). 
 #'
-#'The algorithm provided in this package generates true discrete random numbers up to 1e5 then switches to using the
-#'continuous CDF. This switching point can altered by changing the \code{discrete_max} argument.
+#'The algorithm provided in this package generates true 
+#'discrete random numbers up to 1e5 then switches to
+#'using continuous random numbers. This switching point can altered by 
+#'changing the \code{discrete_max} argument.
 #'
-#'In order to get a efficient power-law discrete random number generator, the algorithm needs to be implemented in 
-#'C.
+#'In order to get a efficient power-law discrete random number generator, the algorithm needs to be implemented in C.
 #'@examples
 #' plot(x, ppldis(x, xmin, alpha), type="l", main="Distribution function")
 #' rpldis(x, xmin, alpha)

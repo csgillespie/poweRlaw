@@ -13,15 +13,19 @@ bootstrap_helper = function (i, m, N, y, xmins, pars, data_max) {
   estimate_xmin(m_cpy, xmins=xmins, pars=pars)
 }
 
-#' @description \code{bootstrap_xmin} estimates unncertainity in the xmin and
-#' parameter values using bootstraping. This function runs in parallel with the
+#' @description \code{bootstrap_xmin} estimates the unncertainity 
+#' in the xmin and parameter values using bootstraping. 
+#' This function runs in parallel with the
 #' number of threads specficied by the \code{threads} argument. 
 #' @importFrom parallel makeCluster parSapply 
 #' @importFrom parallel clusterExport stopCluster
 #' @rdname estimate_xmin
-#' @param threads number of concurrent threads used during the bootstrap
+#' @param threads number of concurrent threads used during the bootstrap.
 #' @param no_of_sims number of bootstrap simulations. This can 
-#' take a while to run
+#' take a while to run.
+#' @return Returns a list containing the results of the bootstrap 
+#' procedure. The list gives, amongst other things, an estimate of
+#' how long a single bootstrap takes.
 #' @export
 bootstrap_xmin = function (m, xmins=NULL, pars=NULL, 
                            no_of_sims=100, threads=1, 

@@ -4,6 +4,7 @@
 \alias{distribution-class}
 \title{The distribution class}
 \description{
-  Distributions use this class for plotting
+  This is the base class for other distributions. There
+  should be no need to create a \code{distribution} object.
 }
 

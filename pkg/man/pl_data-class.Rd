@@ -4,6 +4,6 @@
 \alias{pl_data-class}
 \title{The pl class}
 \description{
-  A data class.
+  This class is depreciated. Do not use
 }
 

@@ -2,7 +2,7 @@
 \alias{dpldis}
 \alias{ppldis}
 \alias{rpldis}
-\title{The discrete powerlaw distribution.}
+\title{Discrete powerlaw distribution.}
 \usage{
   dpldis(x, xmin, alpha, log = FALSE)
 
@@ -43,7 +43,7 @@
 }
 \details{
   The Clausett, 2009 paper provides an algorithm for
-  generating discrete random numbers. However, if this
+  generating discrete random numbers. However, if this
   algorithm is implemented in R, it gives terrible
   performance. This is because the algorithm involves
   "growing vectors". Another problem is when alpha is close
@@ -53,8 +53,8 @@
 
   The algorithm provided in this package generates true
   discrete random numbers up to 1e5 then switches to using
-  the continuous CDF. This switching point can altered by
-  changing the \code{discrete_max} argument.
+  continuous random numbers. This switching point can
+  altered by changing the \code{discrete_max} argument.
 
   In order to get a efficient power-law discrete random
   number generator, the algorithm needs to be implemented

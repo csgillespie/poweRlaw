@@ -12,18 +12,15 @@ setGeneric("points")
 #' The cumulative distribution function
 #'
 #' This is generic function for distribution reference objects.
-#' This function calculates the probability density for the current 
-#' parameters and xmin value.
+#' This function calculates the cumulative probability density 
+#' for the current parameters and xmin value.
 #' 
-#' @param m a reference class distribution object. 
-#' This object should contains data
-#' @param a q a vector values where the function will be evaluated. 
-#' If \code{q} is \code{NULL} (default), then the data value will be used.
+#' @param m a reference class distribution object.
+#' @param q a vector values where the function will be evaluated. 
+#' If \code{q} is \code{NULL} (default), then the data values will be used.
 #' @param lower.tail logical; 
 #' if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, 
 #' otherwise, \eqn{P[X > x]}.
-#' @note These methods do *not* alter the internal state of
-#' the distribubtion objects.
 #' @docType methods
 #' @exportMethod dist_cdf
 #' @note This method does *not* alter the internal state of
@@ -36,14 +33,14 @@ setGeneric("points")
 #' m$setXmin(7);m$setPars(2)
 #' #CDF at a particular value
 #' dist_cdf(m, 10:15)
-#' dist_cdf(m) #at a the data values
+#' dist_cdf(m) #at the data values
 setGeneric("dist_cdf", 
            function(m, q=NULL, lower.tail=FALSE, ...) standardGeneric("dist_cdf"))
 
-#' PDF for the distribution objects.
+#' The probability density function
 #'
 #' This is generic function for distribution reference objects.
-#' This function calculates the probability density for the current 
+#' This function calculates the probability density functionfor the current 
 #' parameters and xmin value.
 #'
 #' @param m The distribution reference object.
@@ -66,7 +63,7 @@ setGeneric("dist_cdf",
 setGeneric("dist_pdf", function(m, q=NULL) standardGeneric("dist_pdf"))
 
 
-#' log-likelihood for the distribution objects.
+#' The log-likelihood function
 #'
 #' This is generic function for distribution reference objects.
 #' This function calculates the log-likelihood for the current 
@@ -91,7 +88,8 @@ setGeneric("dist_ll", function(m) standardGeneric("dist_ll"))
 
 #' Random number generation for the distribution objects
 #'
-#' This is generic function for generating random numbers from the underlying 
+#' This is generic function for generating random numbers 
+#' from the underlying 
 #' distribution of the distribution reference objects.
 #' This function generates \code{n} random numbers using the parameters 
 #' and xmin values found in the associated reference object.

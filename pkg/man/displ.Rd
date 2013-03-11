@@ -4,22 +4,25 @@
 \alias{conpl-class}
 \alias{displ}
 \alias{displ-class}
-\title{Maximum likelihood estimation of the discrete power law distribution.}
+\title{Discrete and continuous power-law objects}
 \arguments{
-  \item{x}{data vector}
+  \item{x}{the data vector}
 
-  \item{xmin}{Lower bound of the power-law distribution.
+  \item{xmin}{lower bound of the power-law distribution.
   For the continuous power-law, xmin >= 0 for the discrete
-  distribution, xmin >0}
+  distributions, xmin >0}
 
-  \item{alpha}{The scaling parameter: alpha > 1}
+  \item{pars}{the scaling parameter: alpha > 1}
 }
 \value{
-  the mle estimate of the parameter alpha (for fixed xmin).
+  a reference object
 }
 \description{
-  Maximum likelihood estimation of the discrete power law
-  distribution.
+  The reference objects \code{displ} and \code{conpl} are
+  used for parameter inference for discrete and continuous
+  power-laws. Each class also inherits the
+  \code{distribution} class. These are the main classes of
+  the poweRlaw package.
 }
 \examples{
 data(moby)

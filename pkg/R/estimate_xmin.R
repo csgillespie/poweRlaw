@@ -1,4 +1,3 @@
-#' @description \code{get_KS_statistic} calculates the Kolmogorov-Smirnov or 
 #' KS statistic. 
 #' This is the maximum distance between the data CDF and fitted model CDF.
 #' This corresponds to expression (3.9) in the Newman, et al, 2009 paper. 
@@ -33,14 +32,17 @@ get_KS_statistic = function(m) {
 #' @param xmins default NULL. A vector of possible values of xmin to explore. 
 #' The default, \code{xmins=NULL}, results in exploring all possible xmin values.
 #' @param data_max default 1e5. When estimating xmin for discrete distributions, a the search space when comparing the data_cdf and distribution_cdf runs from 1:data_max
-#' @return \code{estimate_xmin} returns a vector containing the optimial 
+#' @return \code{estimate_xmin} returns a vector containing the optimal 
 #' parameter value, xmin and the associated KS statistic.
 #' @note Adapted from Laurent Dubroca's code found at
 #' http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r
 #' @export
 #' @examples
+#' #Load the data set
 #' data(moby_sample)
+#' #Create a discrete power-law object
 #' m = displ$new(moby_sample)
+#' #Estimate xmin and pars
 #' estimate_xmin(m)
 #' estimate_xmin(m, xmins=10:12)
 #' ############################

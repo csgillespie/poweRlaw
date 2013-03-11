@@ -2,7 +2,7 @@
 \name{dist_pdf}
 \alias{dist_pdf}
 \alias{dist_pdf,displ-method}
-\title{PDF for the distribution objects.}
+\title{The probability density function}
 \arguments{
   \item{m}{The distribution reference object.}
 
@@ -16,7 +16,7 @@
 \description{
   This is generic function for distribution reference
   objects. This function calculates the probability density
-  for the current parameters and xmin value.
+  functionfor the current parameters and xmin value.
 }
 \note{
   This method does *not* alter the internal state of the

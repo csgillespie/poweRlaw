@@ -3,7 +3,7 @@
 \alias{dist_ll}
 \alias{dist_ll,conpl-method}
 \alias{dist_ll,displ-method}
-\title{log-likelihood for the distribution objects.}
+\title{The log-likelihood function}
 \arguments{
   \item{m}{The distribution reference object.}
 }

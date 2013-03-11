@@ -2,7 +2,10 @@
 \alias{bootstrap_xmin}
 \alias{estimate_xmin}
 \alias{get_KS_statistic}
-\title{Estimates the lower bound (xmin)}
+\title{KS statistic.
+This is the maximum distance between the data CDF and fitted model CDF.
+This corresponds to expression (3.9) in the Newman, et al, 2009 paper.
+The Kolmogorov-Smirnov statistic is used when estimating the cut-off, xmin.}
 \usage{
   bootstrap_xmin(m, xmins = NULL, pars = NULL,
     no_of_sims = 100, threads = 1, data_max = 1e+06)
@@ -14,10 +17,10 @@
 }
 \arguments{
   \item{threads}{number of concurrent threads used during
-  the bootstrap}
+  the bootstrap.}
 
   \item{no_of_sims}{number of bootstrap simulations. This
-  can take a while to run}
+  can take a while to run.}
 
   \item{m}{A reference class object that contains the
   data.}
@@ -36,18 +39,21 @@
   the data_cdf and distribution_cdf runs from 1:data_max}
 }
 \value{
+  Returns a list containing the results of the bootstrap
+  procedure. The list gives, amongst other things, an
+  estimate of how long a single bootstrap takes.
+
   \code{estimate_xmin} returns a vector containing the
-  optimial parameter value, xmin and the associated KS
+  optimal parameter value, xmin and the associated KS
   statistic.
 }
 \description{
-  \code{bootstrap_xmin} estimates unncertainity in the xmin
-  and parameter values using bootstraping. This function
-  runs in parallel with the number of threads specficied by
-  the \code{threads} argument.
+  \code{bootstrap_xmin} estimates the unncertainity in the
+  xmin and parameter values using bootstraping. This
+  function runs in parallel with the number of threads
+  specficied by the \code{threads} argument.
 
-  \code{get_KS_statistic} calculates the Kolmogorov-Smirnov
-  or KS statistic. This is the maximum distance between the
+  KS statistic. This is the maximum distance between the
   data CDF and fitted model CDF. This corresponds to
   expression (3.9) in the Newman, et al, 2009 paper. The
   Kolmogorov-Smirnov statistic is used when estimating the
@@ -62,8 +68,11 @@
   http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r
 }
 \examples{
+#Load the data set
 data(moby_sample)
+#Create a discrete power-law object
 m = displ$new(moby_sample)
+#Estimate xmin and pars
 estimate_xmin(m)
 estimate_xmin(m, xmins=10:12)
 ############################
