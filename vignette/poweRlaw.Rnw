@@ -119,21 +119,21 @@ data(moby)
 
 To fit a discrete power-law, we create a discrete power-law object, \texttt{displ}
 <<>>=
-m = displ$new(moby)
+m_m = displ$new(moby)
 @
 \noindent Initially the lower cut-off, $\xmin$ is set to the smallest $x$ value and the scaling parameter, \texttt{alpha}, is set to \texttt{NULL}
 <<tidy=FALSE>>=
-m$getXmin()
-m$getPars()
+m_m$getXmin()
+m_m$getPars()
 @
 \noindent The distribution object also has standard setters
 <<>>=
-m$setXmin(5)
-m$setPars(2)
+m_m$setXmin(5)
+m_m$setPars(2)
 @
-\noindent For a given $\xmin$ value, we can estimate the corresponding $\alpha$ value using its maximum likelihood estimator (mle)\marginnote{Instead of using the mle, we could instead do a parameter scan:\\ \texttt{\mbox{estimate\_pars(m, pars=seq(2, 3, 0.1))}}}
+\noindent For a given $\xmin$ value, we can estimate the corresponding $\alpha$ value using its maximum likelihood estimator (mle)\marginnote{Instead of using the mle, we could instead do a parameter scan:\\ \texttt{\mbox{estimate\_pars(m\_m, pars=seq(2, 3, 0.1))}}}
 <<>>=
-estimate_pars(m)
+estimate_pars(m_m)
 @
 \noindent To estimate the lower bound, we minimise the distance between the data and the fitted model CDF, that is
 \[
@@ -146,33 +146,33 @@ D(x) = \max_{x \ge \xmin} \vert S(x) - P(x) \vert
 \caption{Plot of the data CDF for the Moby Dick data set. This corresponds to figure 6.1(a) in Clausett, 2009. Plot of data CDF with line of best fit.}
 \end{marginfigure}
 <<>>=
-(est = estimate_xmin(m))
+(est = estimate_xmin(m_m))
 @
 \noindent We can then set parameters of power-law distribution to the "optimal" values
 <<>>=
-m$setXmin(est)
+m_m$setXmin(est)
 @
 \noindent All distribution objects  have generic plot methods:\sidenote{Generic \texttt{lines} and \texttt{points} functions are also available.}
 <<fig.keep='none'>>=
 ##Plot the data (from xmin)
-plot(m)
+plot(m_m)
 ##Add in the fitted distribution
-lines(m, col=2)
+lines(m_m, col=2)
 @
 \noindent When calling the \texttt{plot} and \texttt{lines} function, the data plotted is actually invisibly returned, i.e.
 <<fig.keep='none'>>=
-dd = plot(m)
+dd = plot(m_m)
 head(dd, 3)
 @
 
 
 
 <<echo=FALSE>>=
-pdf("graphics/figure1.pdf", width=5, height=5)
+pdf("graphics/figure1.pdf", width=4, height=4)
 setnicepar()
-plot(m, xlab="x", ylab="CDF")
+plot(m_m, xlab="x", ylab="CDF")
 grid()
-lines(m, col=2)
+lines(m_m, col=2)
 sink=dev.off()
 system("pdfcrop graphics/figure1.pdf")
 data(bootstrap_moby)
@@ -215,7 +215,7 @@ and combine it with an additional $10^5$ values from
 The bootstrapping procedure, steps 4 -- 7, can be run in parallel. To estimate the uncertainty with the \cc{moby} data set, we use
 <<eval=FALSE>>=
 ##This takes a while
-bs = bootstrap_xmin(m, no_of_sims=1000, threads=1)
+bs = bootstrap_xmin(m_m, no_of_sims=1000, threads=1)
 @
 \begin{marginfigure}
 \centering
@@ -271,7 +271,7 @@ system("pdfcrop graphics/figure3.pdf")
 
 During the Moby Dick example, we created a \texttt{displ} object
 <<>>=
-m = displ$new(moby)
+m_m = displ$new(moby)
 @
 \noindent The object \cc{m} has class \cc{displ} and inherits the general \texttt{distribution} class. A list of available distributions is given in table \ref{T1}. 
 \begin{table}[h]
@@ -286,6 +286,9 @@ m = displ$new(moby)
   \end{tabular}
   \caption{Available distributions in the power-law package. These objects are all reference classes.}\label{T1}
 \end{table}
+<<echo=FALSE>>=
+m_m$setXmin(est)
+@
 
 \noindent All distribution objects list in table \ref{T1} are reference classes.\marginnote{See \texttt{\mbox{?setRefClass}} for further details on references classes.} The key point, is that unlike S4 classes, reference classes have a mutable set. Each distribution object has four fields:
 \begin{itemize}
@@ -391,7 +394,7 @@ plfit(moby)
 \]
 \noindent To exactly replicate the results, we could use
 <<results='hide', eval=FALSE>>=
-estimate_xmin(m, pars=seq(1.5, 2.5, 0.01))
+estimate_xmin(m_m, pars=seq(1.5, 2.5, 0.01))
 @
 
 \subsection{The continuous case}
@@ -467,14 +470,32 @@ version
 
 \end{document}
 
-<<echo=FALSE, eval=FALSE>>=
-setwd("graphics")
-system("convert figure1-crop.pdf figure1.png")
-system("convert figure2-crop.pdf figure2.png")
-system("convert figure3-crop.pdf figure3.png")
-system("convert figure4-crop.pdf figure4.png")
-system("convert figure5-crop.pdf figure5.png")
-setwd("../")
+<<echo=FALSE, eval=TRUE>>=
+##Used to generate the figures for github
+setwd("../graphics/")
+ppi = 300
+png("figure1.png", width=6*ppi, height=4*ppi, res=ppi)
+setnicepar(mfrow=c(1, 2))
+plot(m_m, xlab="x", ylab="CDF")
+lines(m_m, col=2, lty=2)
+grid()
+plot(m_bl, xlab="x", ylab="CDF")
+lines(m_bl, col=2, lty=2)
+grid()
+sink = dev.off()
+
+png("figure2.png", width=6*ppi, height=4*ppi, res=ppi)
+setnicepar(mfrow=c(1,2))
+hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 400), 
+     xlim=c(0, 35), main=NULL)
+grid()
+hist(bs$bootstraps[,3], xlab=expression(alpha), 
+     ylim=c(0, 400), xlim=c(1.8, 2.1), main=NULL)
+grid()
+sink=dev.off()
+
+
+setwd("../vignettes/")
 @
 
        
