@@ -17,8 +17,16 @@ install_github("poweRlaw", "csgillespie", subdir="pkg")
 
 Note Windows users have to first install [Rtools](http://cran.rstudio.com/bin/windows/Rtools/).
 
+Getting Started
+---------------
+
+To get started, load the package and go the vignette.
+```r
+library(poweRlaw)
+vignette("poweRlaw")
+```
 
 
-![Cumulative CDF of the Moby Dick and blackout data setes with line of best fit.](https://raw.github.com/csgillespie/poweRlaw/dev//graphics/figure1.png)
 
-![Uncertainity in parameter estimates for the Moby Dick data set.](https://raw.github.com/csgillespie/poweRlaw/dev/graphics/figure2.png)
+![Cumulative CDF of the Moby Dick and blackout data sets with line of best fit.](https://raw.github.com/csgillespie/poweRlaw/dev/graphics/figure1.png)
+

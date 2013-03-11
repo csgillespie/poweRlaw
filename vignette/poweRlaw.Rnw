@@ -472,9 +472,9 @@ version
 
 <<echo=FALSE, eval=TRUE>>=
 ##Used to generate the figures for github
-setwd("../graphics/")
-ppi = 300
-png("figure1.png", width=6*ppi, height=4*ppi, res=ppi)
+#setwd("../graphics/")
+ppi = 50
+png("../graphics/figure1.png", width=6*ppi, height=4*ppi, res=ppi)
 setnicepar(mfrow=c(1, 2))
 plot(m_m, xlab="x", ylab="CDF")
 lines(m_m, col=2, lty=2)
@@ -484,7 +484,7 @@ lines(m_bl, col=2, lty=2)
 grid()
 sink = dev.off()
 
-png("figure2.png", width=6*ppi, height=4*ppi, res=ppi)
+png("../graphics/figure2.png", width=6*ppi, height=4*ppi, res=ppi)
 setnicepar(mfrow=c(1,2))
 hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 400), 
      xlim=c(0, 35), main=NULL)
