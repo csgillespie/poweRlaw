@@ -3,6 +3,8 @@ Type: Package
 Title: Fitting power laws to discrete and continuous data
 Version: 0.16.0
 Date: 2013-03-07
+Authors@R: person("Gillespie", "Colin",
+    email="colin.gillespie@newcastle.ac.uk",role = c("aut", "cre"))
 Author: Colin Gillespie
 Maintainer: Colin Gillespie <colin.gillespie@newcastle.ac.uk>
 Description: This package implements both the discrete and continuous maximum
@@ -13,8 +15,10 @@ Description: This package implements both the discrete and continuous maximum
     http://tuvalu.santafe.edu/~aaronc/powerlaws/ . In particular, the R code of
     Laurent Dubroca.
 URL: https://github.com/csgillespie/poweRlaw
+BugReports: https://github.com/csgillespie/poweRlaw/issues
 Depends:
-    stats
+    stats,
+    R (>= 2.14.1)
 Imports:
     VGAM,
     parallel,
