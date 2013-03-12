@@ -10,7 +10,7 @@ bootstrap_helper = function (i, m, N, y, xmins, pars, data_max) {
     q = c(runif(n1, 0, N-nz), q)
   
   m_cpy = m$getRefClass()$new(q)
-  estimate_xmin(m_cpy, xmins=xmins, pars=pars)
+  unlist(estimate_xmin(m_cpy, xmins=xmins, pars=pars))
 }
 
 #' @description \code{bootstrap_xmin} estimates the unncertainity 
@@ -48,7 +48,7 @@ bootstrap_xmin = function (m, xmins=NULL, pars=NULL,
                  N, y, xmins, pars, data_max)
   stopCluster(cl)
   end_time = Sys.time()
-  total_time = (end_time - start_time)
+  total_time = difftime(end_time, start_time, units="secs")
   l = list(p=sum(nof[1,] >= gof_v[["KS"]])/no_of_sims, 
        gof = gof_v[["KS"]], 
        bootstraps = as.data.frame(t(nof)), 
