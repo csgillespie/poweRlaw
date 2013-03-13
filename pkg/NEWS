@@ -1,7 +1,7 @@
 Version 0.16.0
 --------------
  * Added dist_data_cdf_function
- * Can plot the all data and add distribution lines starting at xmin
+ * Can now plot the entire data line and add distribution lines starting at xmin
  * Added vignette
  * Improved documentation
  * Deprecated pl_data data class
