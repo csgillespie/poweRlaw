@@ -108,7 +108,7 @@ moby
 
 This example investigates the frequency of occurrence of unique words in the novel Moby Dick by Herman Melville\cite{clauset2009,newman2005}. The data can be downloaded from
 \begin{center}
-\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm}
+\url{http://tuvalu.santafe.edu/~aaronc/power laws/data.htm}
 \end{center}
 \noindent or loaded directly
 <<>>=
@@ -215,8 +215,10 @@ and combine it with an additional $10^5$ values from
 The bootstrapping procedure, steps 4 -- 7, can be run in parallel. To estimate the uncertainty with the \cc{moby} data set, we use
 <<eval=FALSE>>=
 ##This takes a while
+##This use the mle t
 bs = bootstrap_xmin(m_m, no_of_sims=1000, threads=1)
 @
+\noindent Alternative
 \begin{marginfigure}
 \centering
 \includegraphics[width=\textwidth]{graphics/figure2-crop}
@@ -248,10 +250,10 @@ plot(bs$bootstraps[,2], bs$bootstraps[,3])
 <<echo=FALSE>>=
 pdf("graphics/figure2.pdf", width=4, height=6)
 setnicepar(mfrow=c(2, 1))
-hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 400), 
-     xlim=c(0, 35), main=NULL)
+hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 1600), 
+     xlim=c(0, 45), main=NULL, breaks="fd")
 hist(bs$bootstraps[,3], xlab=expression(alpha), 
-     ylim=c(0, 400), xlim=c(1.8, 2.1), main=NULL)
+     ylim=c(0, 400), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
 sink=dev.off()
 system("pdfcrop graphics/figure2.pdf")
 
@@ -259,7 +261,7 @@ pdf("graphics/figure3.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
 plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3], 
      xlab="xmin", ylab=expression(alpha), 
-     xlim=c(0, 35), ylim=c(1.8, 2.1), cex=0.35)
+     xlim=c(0, 45), ylim=c(1.8, 2.05), cex=0.35)
 grid()
 sink = dev.off()
 system("pdfcrop graphics/figure3.pdf")
@@ -290,7 +292,7 @@ m_m = displ$new(moby)
 m_m$setXmin(est)
 @
 
-\noindent All distribution objects list in table \ref{T1} are reference classes.\marginnote{See \texttt{\mbox{?setRefClass}} for further details on references classes.} The key point, is that unlike S4 classes, reference classes have a mutable set. Each distribution object has four fields:
+\noindent All distribution objects list in table \ref{T1} are reference classes.\marginnote{See \texttt{\mbox{?setRefClass}} for further details on references classes.} The key point, is that unlike S4 classes, reference classes have a mutable state. Each distribution object has four fields:
 \begin{itemize}
 \item \texttt{datatype}: This will be set to \textit{discrete} or \textit{continuous}.
 \item \texttt{dat}: a copy of the data.
@@ -325,17 +327,13 @@ All distribution objects have a number of methods available. A list of methods i
 \end{table}
 
 <<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
-blackouts = try(read.table("blackouts.txt"))
-if(class(blackouts) == "try-error")
-  blackouts = read.txt("http://goo.gl/BsqnP")
+if(!file.exists("blackouts.txt"))
+  download.file("http://goo.gl/BsqnP", destfile="blackouts.txt")
+blackouts = read.table("blackouts.txt")
 @
 
 \newpage
-\begin{marginfigure}
-\centering
-\includegraphics[width=\textwidth]{graphics/figure4-crop}
-\caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more it efficient.}\label{F4}
-\end{marginfigure}
+
 
 \section{Loading data}
 
@@ -347,7 +345,11 @@ blackouts = read.table("blackouts.txt")
 <<>>=
 m_bl = conpl$new(blackouts$V1)
 @
-
+\begin{marginfigure}[5\baselineskip]
+\centering
+\includegraphics[width=\textwidth]{graphics/figure4-crop}
+\caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more it efficient.}\label{F4}
+\end{marginfigure}
 <<echo=FALSE>>=
 est = estimate_xmin(m_bl)
 m_bl$setXmin(est)
@@ -363,9 +365,14 @@ system("pdfcrop graphics/figure4.pdf")
 
 
 <<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
-tc = try(source("plfit.R"))
-if(class(tc) == "try-error")
-  source("http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r")
+if(!file.exists("plfit.R"))
+  download.file("http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r", destfile="plfit.R")
+source("plfit.R")
+
+
+if(!file.exists("plpva.r"))
+  download.file("http://tuvalu.santafe.edu/~aaronc/powerlaws/plpva.r", destfile="plpva.r")
+source("plpva.r")
 @
 
 
@@ -396,6 +403,7 @@ plfit(moby)
 <<results='hide', eval=FALSE>>=
 estimate_xmin(m_m, pars=seq(1.5, 2.5, 0.01))
 @
+
 
 \subsection{The continuous case}
 
