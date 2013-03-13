@@ -20,12 +20,15 @@ Note Windows users have to first install [Rtools](http://cran.rstudio.com/bin/wi
 Getting Started
 ---------------
 
-To get started, load the package and go the vignette.
+To get started, load the package
 ```r
 library(poweRlaw)
+```
+then work the vignette examples
+```r
 vignette("poweRlaw")
 ```
-
+The plots below, show the line of best fit to the Moby Dick and blackout data sets (from Clauset et al, 2009.)
 
 
 ![Cumulative CDF of the Moby Dick and blackout data sets with line of best fit.](https://raw.github.com/csgillespie/poweRlaw/dev/graphics/figure1.png)
