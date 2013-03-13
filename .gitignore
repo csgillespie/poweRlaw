@@ -8,3 +8,5 @@ README.html
 *.Rcheck
 .Rbuildignore
 poweRlaw_0.*
+blackouts.txt
+plpva.r
