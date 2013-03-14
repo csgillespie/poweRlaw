@@ -24,12 +24,12 @@ To get started, load the package
 ```r
 library(poweRlaw)
 ```
-then work the vignette examples
+then work the through [vignette](https://github.com/csgillespie/poweRlaw/blob/master/pkg/inst/doc/poweRlaw.pdf?raw=true) examples
 ```r
 vignette("poweRlaw")
 ```
 The plots below, show the line of best fit to the Moby Dick and blackout data sets (from Clauset et al, 2009.)
 
 
-![Cumulative CDF of the Moby Dick and blackout data sets with line of best fit.](https://raw.github.com/csgillespie/poweRlaw/dev/graphics/figure1.png)
+![Cumulative CDF of the Moby Dick and blackout data sets with line of best fit.](https://raw.github.com/csgillespie/poweRlaw/master/graphics/figure1.png)
 
