@@ -35,7 +35,7 @@ dpldis = function(x, xmin, alpha, log=FALSE) {
 
 #'@rdname dpldis
 #'@export
-#'@details The Clausett, 2009 paper provides an algorithm for generating discrete random numbers. However, if this
+#'@details The Clausett, 2009 paper provides an algorithm for generating discrete random numbers. However, if this
 #'algorithm is implemented in R, it gives terrible performance. This is because the algorithm involves "growing vectors". 
 #'Another problem is when alpha is close to 1, this can result in very large random number being generated (which means we need 
 #'to calculate the discrete CDF). 
