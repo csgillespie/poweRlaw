@@ -177,16 +177,75 @@ sink=dev.off()
 system("pdfcrop graphics/figure1.pdf")
 data(bootstrap_moby)
 bs = bootstrap_moby
+data(bootstrap_p_moby)
+bs_p = bootstrap_p_moby
 @
 
-\subsection{Quantifying $\xmin$ uncertainty}
 
-Clausett, \textit{el al}, 2009 recommend a bootstrap procedure to estimate the uncertainty in $\xmin$. Essentially, an estimate of parameter uncertainty is obtained by generating multiple data sets (with parameters $\xmin$ and $\alpha$) and then "re-inferring" the model parameters. The algorithm is detailed in Algorithm 1.\sidenote{Algorithm 1 can easily be extended for other distributions.}
+
+\subsection{Uncertainty in $\xmin$}
+
+Clausett, \textit{el al}, 2009 recommend a bootstrap procedure to get a handle on parameter uncertainty. Essentially, we sample with replacement from the data set and then re-infer the parameters.
 \begin{table}[t]
 \centering
   \begin{tabular}{@{}ll@{}}
     \hline
-    \multicolumn{2}{l}{\textbf{Algorithm 1:} Estimating the uncertainty in \texttt{xmin}}\\
+    \multicolumn{2}{l}{\textbf{Algorithm 1:} Uncertainty in $\xmin$}\\
+    \hline
+    {\small 1:} & Set $N$ equal to the number of values in the original data set \\
+    {\small 2:} & \textbf{for} \texttt{i} in \texttt{1:B}:\\
+    {\small 3:} & $\quad$ Sample $N$ values from the original data set \\
+    {\small 4:} & $\quad$ Estimate $\xmin$ and $\alpha$ using the Kolmogorov-Smirnoff statistic.\\
+    {\small 5:} & \textbf{end for} \\
+    \hline
+  \end{tabular}
+\end{table}  
+
+To run the bootstrapping procedure, we use the \texttt{bootstrap} function
+<<eval=FALSE>>=
+bs = bootstrap(m_m, no_of_sims=1000, threads=1)
+@
+\noindent this function runs in parallel, with the number of threads used determined by the \texttt{threads} argument. To detect the number of cores on your machine, you can run:
+<<>>=
+parallel::detectCores()
+@
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{graphics/figure2-crop}
+\caption{Characterising uncertainty in parameter values. (a) $\xmin$ uncertainty (standard deviation 2) (b) $\alpha$ uncertainty (std dev. 0.03)}\label{F2}
+\end{marginfigure}
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{graphics/figure3-crop}
+\caption{Characterising uncertainty in parameter values. Bivariate scatter plot of $\xmin$ and $\alpha$.}\label{F3}
+\end{marginfigure}
+\noindent The object return by \texttt{bootstrap}  is list, with three elements: 
+\begin{itemize}
+\item The original Kolmogorov-Smirnov statistic
+\item The results of the bootstrapping procedure
+\item The average time (in seconds) for a single bootstrap
+\end{itemize}
+\noindent The results of the bootstrap are best investigated with histograms
+<<fig.keep='none'>>=
+hist(bs$bootstraps[,2])
+hist(bs$bootstraps[,3])
+@
+\noindent and a bivariate scatter plot
+<<fig.keep='none'>>=
+plot(bs$bootstraps[,2], bs$bootstraps[,3])
+@
+\noindent This gives figures \ref{F2} and \ref{F3}.
+
+\clearpage
+
+\subsection{Do we have a power-law?}
+
+Clausett, \textit{el al}, 2009 recommend a bootstrap procedure to determine whether the underlying distribution is a power-law the uncertainty. Essentially, we perform a hypothesis test by generating multiple data sets (with parameters $\xmin$ and $\alpha$) and then "re-inferring" the model parameters. The algorithm is detailed in Algorithm 2.\sidenote{Algorithm 2 can easily be extended for other distributions.}
+\begin{table}[t]
+\centering
+  \begin{tabular}{@{}ll@{}}
+    \hline
+    \multicolumn{2}{l}{\textbf{Algorithm 2:} Do we have a power-law?}\\
     \hline
     {\small 1:} & Calculate point estimates $\xmin$ and the scaling parameter $\alpha$. \\
     {\small 2:} & Set $n_1$ equal to the number of values below \texttt{xmin}. \\
@@ -199,11 +258,16 @@ Clausett, \textit{el al}, 2009 recommend a bootstrap procedure to estimate the u
     \hline
   \end{tabular}
 \end{table}  
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{graphics/figure4-crop}
+\caption{Histograms of the bootstrap results.}\label{F4}
+\end{marginfigure}
 
 When $\alpha$ is close to one, this algorithm can be particularly time consuming to run, for two reasons:
 \begin{enumerate}
 \item When generating random numbers from the discrete power-law distribution, extreme values are highly possible, i.e. values greater than $10^8$. Hence, when generating the random numbers, all numbers larger than $10^5$ are generated using a continuous approximation.
-\item To calculate the Komologorov-Smirnov statistic, we need explore the state space. It is computationally infeasible to explore the entire state space when $\max(x) >> 10^5$. So to this algorithm feasible, we explore two state space. The first, 
+\item To calculate the Kolmogorov-Smirnov statistic, we need explore the state space. It is computationally infeasible to explore the entire state space when $\max(x) >> 10^5$. So to this algorithm feasible, we explore two state space. The first, 
 \[
 \xmin, \xmin+1, \xmin+2, \ldots, 10^5
 \]
@@ -212,39 +276,29 @@ and combine it with an additional $10^5$ values from
 10^5, \ldots, \max(x)
 \]
 \end{enumerate}
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{graphics/figure5-crop}
+\caption{Bivariate scatter plot of the bootstrap results. The values of $\xmin$ and $\alpha$ are obviously strongly correlated.}\label{F5}
+\end{marginfigure}
 The bootstrapping procedure, steps 4 -- 7, can be run in parallel. To estimate the uncertainty with the \cc{moby} data set, we use
 <<eval=FALSE>>=
 ##This takes a while
-##This use the mle t
-bs = bootstrap_xmin(m_m, no_of_sims=1000, threads=1)
+##This use the mle to estimate the parameters
+bs_p = bootstrap_p(m_m, no_of_sims=1000, threads=1)
 @
-\noindent Alternative
-\begin{marginfigure}
-\centering
-\includegraphics[width=\textwidth]{graphics/figure2-crop}
-\caption{Histograms of the bootstrap results.}\label{F2}
-\end{marginfigure}
-\noindent The object returned from the bootstrap procedure contains three elements
+\noindent The object returned from the bootstrap procedure contains four elements
 \begin{itemize}
 \item A $p$-value .. \verb|bs$p|
 \item The original goodness of fit statistic  - \verb|bs$gof|
 \item The result of the bootstrap procedure - a data frame with three columns.
 \item The average time (in seconds) for a single bootstrap realisation.
 \end{itemize}
-\noindent The results of the bootstrap are best investigated with histograms
-<<fig.keep='none'>>=
-hist(bs$bootstraps[,2])
-hist(bs$bootstraps[,3])
-@
-\noindent and a bivariate scatter plot
-<<fig.keep='none'>>=
-plot(bs$bootstraps[,2], bs$bootstraps[,3])
-@
-\begin{marginfigure}
-\centering
-\includegraphics[width=\textwidth]{graphics/figure3-crop}
-\caption{Bivariate scatter plot of the bootstrap results. The values of $\xmin$ and $\alpha$ are obviously strongly correlated.}\label{F3}
-\end{marginfigure}
+The results of this procedure are shown in figures \ref{F4} and \ref{F5.}
+
+
+
+
 
 
 <<echo=FALSE>>=
@@ -265,6 +319,28 @@ plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3],
 grid()
 sink = dev.off()
 system("pdfcrop graphics/figure3.pdf")
+@
+
+
+
+<<echo=FALSE>>=
+pdf("graphics/figure4.pdf", width=4, height=6)
+setnicepar(mfrow=c(2, 1))
+hist(bs_p$bootstraps[,2], xlab="xmin", ylim=c(0, 1600), 
+     xlim=c(0, 45), main=NULL, breaks="fd")
+hist(bs_p$bootstraps[,3], xlab=expression(alpha), 
+     ylim=c(0, 400), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
+sink=dev.off()
+system("pdfcrop graphics/figure4.pdf")
+
+pdf("graphics/figure5.pdf", width=4, height=4)
+setnicepar(mfrow=c(1,1))
+plot(jitter(bs_p$bootstraps[,2], factor=1.2), bs_p$bootstraps[,3], 
+     xlab="xmin", ylab=expression(alpha), 
+     xlim=c(0, 45), ylim=c(1.8, 2.05), cex=0.35)
+grid()
+sink = dev.off()
+system("pdfcrop graphics/figure5.pdf")
 @
 
 
@@ -313,14 +389,15 @@ All distribution objects have a number of methods available. A list of methods i
     \toprule
     Method Name & Description \\
     \midrule
-    \texttt{dist\_cdf} & Cumulative density function\\
-    \texttt{dist\_pdf} & Probability density function\\
-    \texttt{dist\_rand}& Random numbers generator\\
+    \texttt{dist\_cdf} & Cumulative density/mass function (CDF)\\
+    \texttt{dist\_pdf} & Probability density/mass function (pdf)\\
+    \texttt{dist\_rand}& Random number generator\\
     \texttt{dist\_data\_cdf} & Data CDF \\
     \texttt{dist\_ll} & Log-likelihood\\
     \texttt{estimate\_xmin} & Estimate the cut-off point and parameter value\\
     \texttt{estimate\_pars} & Estimate of the parameters (conditional on the current $\xmin$ value)\\
-    \texttt{bootstrap\_xmin} & Bootstrap procedure\\
+    \texttt{bootstrap} & Bootstrap procedure\\
+    \texttt{bootstrap\_p} & Bootstrap procedure to test whether we have a power-law\\
     \bottomrule
   \end{tabular}
   \caption{A list of functions for \texttt{distribution} functions. These objects do not change the object states. However, they may not be thread safe. }\label{T2}
@@ -347,19 +424,19 @@ m_bl = conpl$new(blackouts$V1)
 @
 \begin{marginfigure}[5\baselineskip]
 \centering
-\includegraphics[width=\textwidth]{graphics/figure4-crop}
-\caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more it efficient.}\label{F4}
+\includegraphics[width=\textwidth]{graphics/figure6-crop}
+\caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more it efficient.}\label{F6}
 \end{marginfigure}
 <<echo=FALSE>>=
 est = estimate_xmin(m_bl)
 m_bl$setXmin(est)
-pdf("graphics/figure4.pdf", width=4, height=4)
+pdf("graphics/figure6.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
 plot(m_bl)
 lines(m_bl, col=2)
 grid()
 sink = dev.off()
-system("pdfcrop graphics/figure4.pdf")
+system("pdfcrop graphics/figure6.pdf")
 @
 
 
@@ -423,24 +500,24 @@ m_r = conpl$new(r)
 \noindent Of course, using the \texttt{poweRlaw} package, we can easily plot the data
 \begin{marginfigure}
 \centering
-\includegraphics[width=\textwidth]{graphics/figure5-crop}
-\caption{CDF plot of one thousand random numbers generated from a power-law with parameters $\alpha=2.5$ and $\xmin = 10$. The line of best fit is also shown.}\label{F5}
+\includegraphics[width=\textwidth]{graphics/figure7-crop}
+\caption{CDF plot of one thousand random numbers generated from a power-law with parameters $\alpha=2.5$ and $\xmin = 10$. The line of best fit is also shown.}\label{F7}
 \end{marginfigure}
 <<fig.keep='none'>>=
 m_r$setXmin(est)
 plot(m_r)
 lines(m_r, col=2)
 @
-\noindent to get figure \ref{F5}.
+\noindent to get figure \ref{F7}.
 
 <<echo=FALSE>>=
-pdf("graphics/figure5.pdf", width=4, height=4)
+pdf("graphics/figure7.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
 plot(m_r)
 lines(m_r, col=2)
 grid()
 sink = dev.off()
-system("pdfcrop graphics/figure5.pdf")
+system("pdfcrop graphics/figure7.pdf")
 @
 
 
@@ -494,15 +571,16 @@ sink = dev.off()
 
 png("../graphics/figure2.png", width=6*ppi, height=4*ppi, res=ppi)
 setnicepar(mfrow=c(1,2))
-hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 400), 
-     xlim=c(0, 35), main=NULL)
+hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 2000), 
+     xlim=c(0, 30), main=NULL, breaks="fd")
 grid()
 hist(bs$bootstraps[,3], xlab=expression(alpha), 
-     ylim=c(0, 400), xlim=c(1.8, 2.1), main=NULL)
+     ylim=c(0, 500), xlim=c(1.8, 2.1), main=NULL, 
+     breaks="fd")
 grid()
 sink=dev.off()
 
-
+mypalette
 setwd("../vignettes/")
 @
 
