@@ -1,10 +1,10 @@
 Package: poweRlaw
 Type: Package
 Title: Fitting power laws to discrete and continuous data
-Version: 0.16.0
-Date: 2013-03-07
+Version: 0.16.1
+Date: 2013-03-23
 Authors@R: person("Gillespie", "Colin",
-    email="colin.gillespie@newcastle.ac.uk", 
+    email="colin.gillespie@newcastle.ac.uk",
     role = c("aut", "cre"))
 Author: Colin Gillespie
 Maintainer: Colin Gillespie <colin.gillespie@newcastle.ac.uk>
@@ -28,7 +28,6 @@ License: GPL-3
 Collate:
     'AllClasses.R'
     'AllGenerics.R'
-    'bootstrap_xmin.R'
     'data-help-files.R'
     'dist_cdf-methods.R'
     'dist_data_cdf-methods.R'
@@ -45,3 +44,5 @@ Collate:
     'plot-methods.R'
     'points-methods.R'
     'poweRlaw-package.R'
+    'bootstrap_p.R'
+    'bootstrap.R'

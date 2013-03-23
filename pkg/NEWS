@@ -1,3 +1,9 @@
+Version 0.16.1
+--------------
+
+ * bootstrap_xmin now implements the procedure described in Clauset
+ * bootstrap_p estimates the p-value
+
 Version 0.16.0
 --------------
  * Added dist_data_cdf_function
