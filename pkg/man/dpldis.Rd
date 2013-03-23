@@ -43,7 +43,7 @@
 }
 \details{
   The Clausett, 2009 paper provides an algorithm for
-  generating discrete random numbers. However, if this
+  generating discrete random numbers. However, if this
   algorithm is implemented in R, it gives terrible
   performance. This is because the algorithm involves
   "growing vectors". Another problem is when alpha is close
