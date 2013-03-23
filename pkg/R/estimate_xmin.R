@@ -47,7 +47,8 @@ get_KS_statistic = function(m) {
 #' estimate_xmin(m, xmins=10:12)
 #' ############################
 #' ##Bootstrap examples
-#' bootstrap_xmin(m, no_of_sims=3, threads=1)
+#' bootstrap(m, no_of_sims=1, threads=1)
+#' bootstrap_p(m, no_of_sims=1, threads=1)
 estimate_xmin = function (m, 
                           xmins = NULL, 
                           pars=NULL,

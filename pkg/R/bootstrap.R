@@ -5,7 +5,7 @@ bootstrap_helper = function (i, m, xmins, pars) {
   unlist(estimate_xmin(m_cpy, xmins=xmins, pars=pars))
 }
 
-#' @description \code{bootstrap_xmin} estimates the unncertainity 
+#' @description \code{bootstrap} estimates the unncertainity 
 #' in the xmin and parameter values using bootstraping. 
 #' This function runs in parallel with the
 #' number of threads specficied by the \code{threads} argument. 
@@ -23,7 +23,7 @@ bootstrap_helper = function (i, m, xmins, pars) {
 #' procedure. The list gives, amongst other things, an estimate of
 #' how long a single bootstrap takes.
 #' @export
-bootstrap_xmin = function (m, xmins=NULL, pars=NULL, 
+bootstrap = function (m, xmins=NULL, pars=NULL, 
                         no_of_sims=100, threads=1) {
   m_cpy = m$copy()
   gof_v = estimate_xmin(m_cpy, xmins=xmins, pars=pars)
