@@ -1,4 +1,5 @@
 \name{bootstrap_xmin}
+\alias{bootstrap_p}
 \alias{bootstrap_xmin}
 \alias{estimate_xmin}
 \alias{get_KS_statistic}
@@ -8,12 +9,15 @@ This corresponds to expression (3.9) in the Newman, et al, 2009 paper.
 The Kolmogorov-Smirnov statistic is used when estimating the cut-off, xmin.}
 \usage{
   bootstrap_xmin(m, xmins = NULL, pars = NULL,
-    no_of_sims = 100, threads = 1, data_max = 1e+06)
+    no_of_sims = 100, threads = 1)
 
   get_KS_statistic(m)
 
   estimate_xmin(m, xmins = NULL, pars = NULL,
     data_max = 1e+05)
+
+  bootstrap_p(m, xmins = NULL, pars = NULL,
+    no_of_sims = 100, threads = 1, data_max = 1e+06)
 }
 \arguments{
   \item{threads}{number of concurrent threads used during
@@ -52,6 +56,9 @@ The Kolmogorov-Smirnov statistic is used when estimating the cut-off, xmin.}
   xmin and parameter values using bootstraping. This
   function runs in parallel with the number of threads
   specficied by the \code{threads} argument.
+
+  \code{bootstrap_p} estimates the unncertainity in the
+  xmin and parameter values using bootstraping.
 
   KS statistic. This is the maximum distance between the
   data CDF and fitted model CDF. This corresponds to

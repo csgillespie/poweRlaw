@@ -24,6 +24,11 @@ lines(m, col=2)
 m$setXmin(est)
 lines(m, col=4)
 
+##Uncertainity in xmin
+bs = bootstrap(m, no_of_sims=100)
+
+
+
 ##This can take a while
 bs1 = bootstrap_xmin(m, no_of_sims=5000, threads=4, pars = seq(1.6, 2.5, 0.01))
 bs2 = bootstrap_xmin(m, no_of_sims=5000, threads=4)

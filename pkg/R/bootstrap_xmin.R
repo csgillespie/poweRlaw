@@ -1,15 +1,7 @@
-bootstrap_helper = function (i, m, N, y, xmins, pars, data_max) {
-  ny = length(y);  nz = N - ny; pz = nz/N
-  n1 = sum(runif(N) > pz)
-  q = dist_rand(m, N-n1)
+bootstrap_helper = function (i, m, xmins, pars) {
+  x = sample(m$dat, length(m$dat), replace=TRUE)
   
-  q = q[q < data_max]
-  if(m$datatype == "discrete")
-    q = c(y[sample(N-nz, n1, replace=TRUE)], q)
-  else 
-    q = c(runif(n1, 0, N-nz), q)
-  
-  m_cpy = m$getRefClass()$new(q)
+  m_cpy = m$getRefClass()$new(x)
   unlist(estimate_xmin(m_cpy, xmins=xmins, pars=pars))
 }
 
@@ -17,6 +9,10 @@ bootstrap_helper = function (i, m, N, y, xmins, pars, data_max) {
 #' in the xmin and parameter values using bootstraping. 
 #' This function runs in parallel with the
 #' number of threads specficied by the \code{threads} argument. 
+#' 
+#' \code{bootstrap_p} estimates the unncertainity 
+#' in the xmin and parameter values using bootstraping. 
+
 #' @importFrom parallel makeCluster parSapply 
 #' @importFrom parallel clusterExport stopCluster
 #' @rdname estimate_xmin
@@ -28,29 +24,26 @@ bootstrap_helper = function (i, m, N, y, xmins, pars, data_max) {
 #' how long a single bootstrap takes.
 #' @export
 bootstrap_xmin = function (m, xmins=NULL, pars=NULL, 
-                           no_of_sims=100, threads=1, 
-                           data_max=1e6) {
+                        no_of_sims=100, threads=1) {
   m_cpy = m$copy()
   gof_v = estimate_xmin(m_cpy, xmins=xmins, pars=pars)
   m_cpy$setXmin(gof_v)
-  
   x = m_cpy$dat
   N = length(x)
-  z = x[x >= m_cpy$xmin]
-  y = x[x < m_cpy$xmin]
   
   start_time = Sys.time()
   ##Parallel bootstrap
   cl = makeCluster(threads)
-  clusterExport(cl, c("dist_rand", "estimate_xmin"))
+  clusterExport(cl, c("estimate_xmin"))
   nof = parSapply(cl, 1:no_of_sims,
-                 bootstrap_helper,  m_cpy, 
-                 N, y, xmins, pars, data_max)
+                  bootstrap_helper,  m_cpy, 
+                  xmins, pars)
   stopCluster(cl)
   end_time = Sys.time()
+  
+  
   total_time = difftime(end_time, start_time, units="secs")
-  l = list(p=sum(nof[1,] >= gof_v[["KS"]])/no_of_sims, 
-       gof = gof_v[["KS"]], 
+  l = list(gof = gof_v[["KS"]], 
        bootstraps = as.data.frame(t(nof)), 
        sim_time = total_time[[1]]/no_of_sims)
   class(l) = "bs_xmin"
