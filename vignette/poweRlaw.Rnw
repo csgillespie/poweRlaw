@@ -219,7 +219,7 @@ parallel::detectCores()
 \includegraphics[width=\textwidth]{graphics/figure3-crop}
 \caption{Characterising uncertainty in parameter values. Bivariate scatter plot of $\xmin$ and $\alpha$.}\label{F3}
 \end{marginfigure}
-\noindent The object return by \texttt{bootstrap}  is list, with three elements: 
+\noindent The object return by \texttt{bootstrap}  is a list with three elements: 
 \begin{itemize}
 \item The original Kolmogorov-Smirnov statistic
 \item The results of the bootstrapping procedure
@@ -227,14 +227,14 @@ parallel::detectCores()
 \end{itemize}
 \noindent The results of the bootstrap are best investigated with histograms
 <<fig.keep='none'>>=
-hist(bs$bootstraps[,2])
-hist(bs$bootstraps[,3])
+hist(bs$bootstraps[,2], breaks="fd")
+hist(bs$bootstraps[,3], breaks="fd")
 @
 \noindent and a bivariate scatter plot
 <<fig.keep='none'>>=
 plot(bs$bootstraps[,2], bs$bootstraps[,3])
 @
-\noindent This gives figures \ref{F2} and \ref{F3}.
+\noindent These commands produce figures \ref{F2} and \ref{F3}.
 
 \clearpage
 
@@ -276,25 +276,25 @@ and combine it with an additional $10^5$ values from
 10^5, \ldots, \max(x)
 \]
 \end{enumerate}
+The bootstrapping procedure, steps 4 -- 7, can be run in parallel. To estimate the uncertainty with the \cc{moby} data set, we use
+<<eval=FALSE, tidy=FALSE>>=
+##This may take a while
+##Use the mle to estimate the parameters
+bs_p = bootstrap_p(m_m, no_of_sims=1000, threads=1)
+@
+\noindent The object returned from the bootstrap procedure contains four elements
 \begin{marginfigure}
 \centering
 \includegraphics[width=\textwidth]{graphics/figure5-crop}
 \caption{Bivariate scatter plot of the bootstrap results. The values of $\xmin$ and $\alpha$ are obviously strongly correlated.}\label{F5}
 \end{marginfigure}
-The bootstrapping procedure, steps 4 -- 7, can be run in parallel. To estimate the uncertainty with the \cc{moby} data set, we use
-<<eval=FALSE>>=
-##This takes a while
-##This use the mle to estimate the parameters
-bs_p = bootstrap_p(m_m, no_of_sims=1000, threads=1)
-@
-\noindent The object returned from the bootstrap procedure contains four elements
 \begin{itemize}
-\item A $p$-value .. \verb|bs$p|
-\item The original goodness of fit statistic  - \verb|bs$gof|
+\item A $p$-value - \verb|bs$p|. See section 4.2 of the Clauset paper.
+\item The original goodness of fit statistic  - \verb|bs$gof|.
 \item The result of the bootstrap procedure - a data frame with three columns.
 \item The average time (in seconds) for a single bootstrap realisation.
 \end{itemize}
-The results of this procedure are shown in figures \ref{F4} and \ref{F5.}
+The results of this procedure are shown in figures \ref{F4} and \ref{F5}.
 
 
 
@@ -394,9 +394,9 @@ All distribution objects have a number of methods available. A list of methods i
     \texttt{dist\_rand}& Random number generator\\
     \texttt{dist\_data\_cdf} & Data CDF \\
     \texttt{dist\_ll} & Log-likelihood\\
-    \texttt{estimate\_xmin} & Estimate the cut-off point and parameter value\\
-    \texttt{estimate\_pars} & Estimate of the parameters (conditional on the current $\xmin$ value)\\
-    \texttt{bootstrap} & Bootstrap procedure\\
+    \texttt{estimate\_xmin} & Point estimates of the cut-off point and parameter values\\
+    \texttt{estimate\_pars} & Point estimates of the parameters (conditional on the current $\xmin$ value)\\
+    \texttt{bootstrap} & Bootstrap procedure (uncertainty in $\xmin$)\\
     \texttt{bootstrap\_p} & Bootstrap procedure to test whether we have a power-law\\
     \bottomrule
   \end{tabular}
@@ -484,7 +484,9 @@ estimate_xmin(m_m, pars=seq(1.5, 2.5, 0.01))
 
 \subsection{The continuous case}
 
-The \texttt{plfit} script also fits continuous power-laws. Again the results are comparable. First we generate one thousand random numbers from the continuous power-law with parameters $\alpha = 2.5$ and $\xmin = 10.0$
+The \texttt{plfit} script also fits continuous power-laws. Again the results are comparable. 
+
+For example, suppose we have one thousand random numbers from a continuous power-law distributinos with parameters $\alpha = 2.5$ and $\xmin = 10.0$
 <<>>=
 r = rplcon(1000, 10, 2.5)
 @
@@ -497,7 +499,7 @@ plfit(r)
 m_r = conpl$new(r)
 (est = estimate_xmin(m_r))
 @
-\noindent Of course, using the \texttt{poweRlaw} package, we can easily plot the data
+\noindent Of course, using the \texttt{poweRlaw} package we can easily plot the data
 \begin{marginfigure}
 \centering
 \includegraphics[width=\textwidth]{graphics/figure7-crop}
