@@ -30,8 +30,6 @@ displ$methods(
         freq = as.vector(tab)
         internal[["freq"]] <<- freq
         internal[["values"]] <<- values
-        
-        
         internal[["cum_slx"]] <<-
           rev(cumsum(log(rev(values))*rev(freq)))
         internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
