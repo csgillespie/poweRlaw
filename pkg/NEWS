@@ -1,3 +1,8 @@
+Version 0.16.2
+--------------
+ * Bug fix in CTN ll fixed.
+ * Bug fix in on reinitialisation
+
 Version 0.16.1
 --------------
 
