@@ -106,14 +106,12 @@ conpl =
               contains="distribution",
               fields = list(dat = function(x)
                 if(!missing(x) && !is.null(x)) {
+                  d = sort(x)
                   internal[["cum_slx"]] <<-
-                    rev(cumsum(log(rev(x$values))*rev(x$freq)))
-                  internal[["cum_n"]] <<- rev(cumsum(rev(x$freq)))
-                  internal[["dat"]] <<- x
-                  
-                  ##Note sure if these two lines are needed?
-                  xmin <<- internal[["xmin"]]
-                  pars <<- internal[["pars"]]
+                    rev(cumsum(log(rev(d))))
+                  internal[["cum_n"]] <<- length(d):1
+                  internal[["dat"]] <<- sort(d)
+                  xmin <<- d[1]
                 } else internal[["dat"]],
                   xmin = function(x) {
                    if(!missing(x) && !is.null(x)) {
