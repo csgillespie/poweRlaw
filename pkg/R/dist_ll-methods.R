@@ -26,7 +26,7 @@ setMethod("dist_ll",
           definition = function(m) {
             n = m$internal[["n"]]
             slx = m$internal[["slx"]]
-            n*log(m$pars-1) - n*log(m$xmin) - m$pars *(slx-log(m$xmin))
+            n*log(m$pars-1) - n*log(m$xmin) - m$pars *(slx-n*log(m$xmin))
           }
 )
 
