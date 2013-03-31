@@ -16,4 +16,3 @@ test_that("Test discrete data fitting", {
   expect_equal(est$xmin, 2)
   
 })
-          
