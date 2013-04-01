@@ -60,16 +60,18 @@ displ =
               fields = list(
                 dat = function(x)
                   if(!missing(x) && !is.null(x)) {
-                    freq = internal[["freq"]]
-                    values = internal[["values"]]
-                    
+                    x = sort(x)
+                    #x= round(sort(x))
+                    tab = table(x)
+                    values = as.numeric(names(tab))
+                    freq = as.vector(tab)
+                    internal[["freq"]] <<- freq
+                    internal[["values"]] <<- values
                     internal[["cum_slx"]] <<-
                       rev(cumsum(log(rev(values))*rev(freq)))
                     internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
                     internal[["dat"]] <<- x
-                    #                     
-                    xmin <<- internal[["xmin"]]
-                    pars <<- internal[["pars"]]
+                    xmin <<- min(values)
                   } else internal[["dat"]],
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
