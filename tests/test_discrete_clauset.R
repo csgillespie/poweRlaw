@@ -1,4 +1,4 @@
-test_that("Test discrete data fitting", {
+test_that("Discrete Clauset test", {
   load("discrete_data.RData")
   m = displ$new(discrete_data)
   

@@ -1,4 +1,4 @@
-test_that("Test CTN data fitting", {
+test_that("CTN Clauset test", {
   load("ctn_data.RData")
   m = conpl$new(ctn_data)
   m$setPars(2.53282)
