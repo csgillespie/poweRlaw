@@ -1,5 +1,5 @@
 ##TODO: Change discrete and CTN signatures
-#' @rdname dist_cdf-methods
+#' @rdname dist_data_cdf-methods
 #' @aliases dist_data_cdf,displ-method
 setMethod("dist_data_cdf",
           signature = signature(m="displ"),
@@ -23,7 +23,7 @@ setMethod("dist_data_cdf",
           }
 )
 
-#' @rdname dist_cdf-methods
+#' @rdname dist_data_cdf-methods
 #' @aliases dist_data_cdf,conpl-method
 setMethod("dist_data_cdf",
           signature = signature(m="conpl"),
