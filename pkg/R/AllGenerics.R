@@ -17,7 +17,9 @@ setGeneric("points")
 #' 
 #' @param m a reference class distribution object.
 #' @param q a vector values where the function will be evaluated. 
-#' If \code{q} is \code{NULL} (default), then the data values will be used.
+#' If \code{q} is \code{NULL} (default), then the data values 
+#' will be used (used in dist_cdf only)
+#' @param cumulative logical
 #' @param lower.tail logical; 
 #' if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, 
 #' otherwise, \eqn{P[X > x]}.
@@ -36,6 +38,43 @@ setGeneric("points")
 #' dist_cdf(m) #at the data values
 setGeneric("dist_cdf", 
            function(m, q=NULL, lower.tail=FALSE, ...) standardGeneric("dist_cdf"))
+
+
+#' The data cumulative distribution function
+#'
+#' This is generic function for distribution reference objects.
+#' This function calculates the cumulative probability density 
+#' for the current parameters and xmin value.
+#' 
+#' @param m a reference class distribution object.
+#' @param q a vector values where the function will be evaluated. 
+#' If \code{q} is \code{NULL} (default), then the data values 
+#' will be used (used in dist_cdf only)
+#' @param cumulative logical
+#' @param lower.tail logical; 
+#' if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, 
+#' otherwise, \eqn{P[X > x]}.
+#' @docType methods
+#' @exportMethod dist_data_cdf
+#' @note This method does *not* alter the internal state of
+#' the distribubtion objects.
+#' @rdname dist_data_cdf-methods
+#' @export
+#' @examples
+#' data(moby_sample)
+#' m = displ$new(moby_sample)
+#' m$setXmin(7);m$setPars(2)
+#' #CDF at a particular value
+#' dist_data_cdf(m)
+setGeneric("dist_data_cdf", function(m, lower.tail=TRUE, cumulative=FALSE) standardGeneric("dist_data_cdf"))
+
+
+
+
+
+
+
+
 
 #' The probability density function
 #'
@@ -113,5 +152,3 @@ setGeneric("dist_ll", function(m) standardGeneric("dist_ll"))
 #' dist_rand(m, 5)
 setGeneric("dist_rand", function(m, n) standardGeneric("dist_rand"))
 
-#' @export 
-setGeneric("dist_data_cdf", function(m, lower.tail=TRUE, cumulative=FALSE) standardGeneric("dist_data_cdf"))
