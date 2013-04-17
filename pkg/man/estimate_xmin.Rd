@@ -1,4 +1,4 @@
-\name{get_KS_statistic}
+\name{bootstrap_p}
 \alias{bootstrap}
 \alias{bootstrap_p}
 \alias{estimate_xmin}
@@ -8,18 +8,24 @@ This is the maximum distance between the data CDF and fitted model CDF.
 This corresponds to expression (3.9) in the Newman, et al, 2009 paper.
 The Kolmogorov-Smirnov statistic is used when estimating the cut-off, xmin.}
 \usage{
-  get_KS_statistic(m)
-
-  estimate_xmin(m, xmins = NULL, pars = NULL,
-    data_max = 1e+05)
-
   bootstrap_p(m, xmins = NULL, pars = NULL,
     no_of_sims = 100, threads = 1, data_max = 1e+06)
 
   bootstrap(m, xmins = NULL, pars = NULL, no_of_sims = 100,
     threads = 1)
+
+  get_KS_statistic(m)
+
+  estimate_xmin(m, xmins = NULL, pars = NULL,
+    data_max = 1e+05)
 }
 \arguments{
+  \item{threads}{number of concurrent threads used during
+  the bootstrap.}
+
+  \item{no_of_sims}{number of bootstrap simulations. This
+  can take a while to run.}
+
   \item{m}{A reference class object that contains the
   data.}
 
@@ -35,23 +41,25 @@ The Kolmogorov-Smirnov statistic is used when estimating the cut-off, xmin.}
   \item{data_max}{default 1e5. When estimating xmin for
   discrete distributions, a the search space when comparing
   the data_cdf and distribution_cdf runs from 1:data_max}
-
-  \item{threads}{number of concurrent threads used during
-  the bootstrap.}
-
-  \item{no_of_sims}{number of bootstrap simulations. This
-  can take a while to run.}
 }
 \value{
-  \code{estimate_xmin} returns a vector containing the
-  optimal parameter value, xmin and the associated KS
-  statistic.
-
   Returns a list containing the results of the bootstrap
   procedure. The list gives, amongst other things, an
   estimate of how long a single bootstrap takes.
+
+  \code{estimate_xmin} returns a vector containing the
+  optimal parameter value, xmin and the associated KS
+  statistic.
 }
 \description{
+  \code{bootstrap} estimates the unncertainity in the xmin
+  and parameter values using bootstraping. This function
+  runs in parallel with the number of threads specficied by
+  the \code{threads} argument.
+
+  \code{bootstrap_p} estimates the unncertainity in the
+  xmin and parameter values using bootstraping.
+
   KS statistic. This is the maximum distance between the
   data CDF and fitted model CDF. This corresponds to
   expression (3.9) in the Newman, et al, 2009 paper. The
@@ -61,14 +69,6 @@ The Kolmogorov-Smirnov statistic is used when estimating the cut-off, xmin.}
   \code{estimate_xmin} estimates the lower cutoff using a
   goodness-of-fit based approach. This method is described
   in Clauset, Shalizi, Newman (2009)
-
-  \code{bootstrap} estimates the unncertainity in the xmin
-  and parameter values using bootstraping. This function
-  runs in parallel with the number of threads specficied by
-  the \code{threads} argument.
-
-  \code{bootstrap_p} estimates the unncertainity in the
-  xmin and parameter values using bootstraping.
 }
 \note{
   Adapted from Laurent Dubroca's code found at

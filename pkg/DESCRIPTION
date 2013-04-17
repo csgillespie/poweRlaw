@@ -26,8 +26,12 @@ Imports:
     methods
 License: GPL-3
 Collate:
-    'AllClasses.R'
+    'aaa_all_classes.R'
+    'all_classes_ctn.R'
+    'all_classes_discrete.R'
     'AllGenerics.R'
+    'bootstrap_p.R'
+    'bootstrap.R'
     'data-help-files.R'
     'dist_cdf-methods.R'
     'dist_data_cdf-methods.R'
@@ -44,5 +48,3 @@ Collate:
     'plot-methods.R'
     'points-methods.R'
     'poweRlaw-package.R'
-    'bootstrap_p.R'
-    'bootstrap.R'

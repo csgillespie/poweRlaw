@@ -1,5 +1,5 @@
 \docType{class}
-\name{displ}
+\name{conpl}
 \alias{conpl}
 \alias{conpl-class}
 \alias{displ}

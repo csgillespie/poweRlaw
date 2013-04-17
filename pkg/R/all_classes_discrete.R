@@ -1,37 +1,3 @@
-#' The pl class
-#' 
-#' This class is depreciated. Do not use
-#' @name pl_data-class
-#' @aliases pl_data
-#' @docType class
-#' @exportClass pl_data
-#' @export pl_data
-pl_data = setRefClass("pl_data", 
-                      fields = list(x="numeric", 
-                                    values="numeric", 
-                                    freq="numeric"))
-
-
-
-#' The distribution class
-#' 
-#' This is the base class for other distributions. There should be
-#' no need to create a \code{distribution} object. 
-#' @name distribution
-#' @aliases distribution-class
-#' @docType class
-#' @exportClass distribution
-#' @export distribution
-distribution = setRefClass("distribution", 
-                           fields=list(
-                             datatype="character", 
-                             internal = "list", 
-                             dat = "ANY",
-                             xmin = "ANY", 
-                             pars="ANY"), 
-                           
-)
-distribution$accessors(c("xmin", "pars", "dat"))
 
 #' Discrete and continuous power-law objects
 #' 
@@ -98,61 +64,6 @@ displ =
                   } else internal[["pars"]]
                 }
               ))
-
-#' @rdname displ
-#' @aliases conpl-class
-#' @exportClass conpl
-#' @export conpl
-conpl = 
-  setRefClass("conpl", 
-              contains="distribution",
-              fields = list(dat = function(x)
-                if(!missing(x) && !is.null(x)) {
-                  d = sort(x)
-                  internal[["cum_slx"]] <<-
-                    rev(cumsum(log(rev(d))))
-                  internal[["cum_n"]] <<- length(d):1
-                  internal[["dat"]] <<- sort(d)
-                  xmin <<- d[1]
-                } else internal[["dat"]],
-                  xmin = function(x) {
-                   if(!missing(x) && !is.null(x)) {
-                     if(class(x) == "ks_est") {
-                       pars <<- x$pars
-                       x = x$xmin
-                     }
-                     internal[["xmin"]] <<- x
-                     selection = min(which(internal[["dat"]] >= (x- .Machine$double.eps ^ 0.5)))
-                     internal[["slx"]] <<- internal[["cum_slx"]][selection]
-                     internal[["n"]] <<- internal[["cum_n"]][selection]                                
-                     } else  internal[["xmin"]]
-                   }, 
-                  pars = function(x) {
-                    if (!missing(x) && !is.null(x)) {
-                      internal[["pars"]] <<- x
-                    } else internal[["pars"]]
-                }
-          )
-  )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
