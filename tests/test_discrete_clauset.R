@@ -11,7 +11,6 @@ test_that("Discrete Clauset test", {
   ##Log-likelihood test
   m$setPars(2.58); m$setXmin(2)
   expect_equal(dist_ll(m), -9155.62809)
-
     
   ## Estimate xmin test
   est = estimate_xmin(m, pars=seq(2, 3, 0.01))
