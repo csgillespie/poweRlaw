@@ -4,10 +4,10 @@ setMethod("dist_cdf",
           signature = signature(m="displ"),
           definition = function(m, 
                                 q=NULL, 
-                                lower.tail=TRUE,
-                                cumulative=FALSE) {
+                                lower_tail=TRUE,
+                                all_values=FALSE) {
               inter = m$internal
-              if(cumulative) {
+              if(all_values) {
                 xmin = m$xmin
                 xmax = max(m$dat)
                   alpha = m$pars
@@ -15,12 +15,11 @@ setMethod("dist_cdf",
                   cumsum((((xmin:xmax)^-alpha))/(inter[["constant"]] - v))                
               } else if(is.null(q)) {
                   q = m$dat
-                  ppldis(q, m$xmin, m$pars, lower.tail)
+                  ppldis(q, m$xmin, m$pars, lower_tail)
               } else {
-                  ppldis(q, m$xmin, m$pars, lower.tail)
+                  ppldis(q, m$xmin, m$pars, lower_tail)
               } 
           }
-          
 )
 
 #' @rdname dist_cdf-methods
@@ -29,18 +28,18 @@ setMethod("dist_cdf",
           signature = signature(m="conpl"),
           definition = function(m, 
                                 q=NULL, 
-                                lower.tail=TRUE,
-                                cumulative=FALSE) {
-            if(cumulative) {
+                                lower_tail=TRUE,
+                                all_values=FALSE) {
+            if(all_values) {
               xmin = m$xmin
               alpha = m$pars
               xmax = max(m$dat)
               1 - (xmin:xmax/xmin)^(-alpha + 1)
             } else if(is.null(q)) {
               q = m$dat
-              pplcon(q[q >= m$xmin], m$xmin, m$pars, lower.tail)
+              pplcon(q[q >= m$xmin], m$xmin, m$pars, lower_tail)
             } else {
-              pplcon(q[q >= m$xmin], m$xmin, m$pars, lower.tail)
+              pplcon(q[q >= m$xmin], m$xmin, m$pars, lower_tail)
             }
           }
 )

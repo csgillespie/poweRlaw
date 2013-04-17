@@ -3,8 +3,8 @@
 #' @aliases dist_data_cdf,displ-method
 setMethod("dist_data_cdf",
           signature = signature(m="displ"),
-          definition = function(m, lower.tail=TRUE, cumulative=FALSE) {
-            if(cumulative) {
+          definition = function(m, lower_tail=TRUE, all_values=FALSE) {
+            if(all_values) {
               occur = tabulate(m$dat)
               if(m$xmin > 1)
                 occur = occur[-(1:(m$xmin-1))]
@@ -16,7 +16,7 @@ setMethod("dist_data_cdf",
             occur = occur/sum(occur)
             p = occur/sum(occur)
             
-            if(lower.tail)
+            if(lower_tail)
               cumsum(p)
             else
               rev(cumsum(rev(p)))
@@ -27,10 +27,10 @@ setMethod("dist_data_cdf",
 #' @aliases dist_data_cdf,conpl-method
 setMethod("dist_data_cdf",
           signature = signature(m="conpl"),
-          definition = function(m, lower.tail=TRUE) {
+          definition = function(m, lower_tail=TRUE) {
             n = m$internal[["n"]]
             cdf = (0:(n-1))/n
-            if(lower.tail)
+            if(lower_tail)
               cdf
             else
               1 - cdf

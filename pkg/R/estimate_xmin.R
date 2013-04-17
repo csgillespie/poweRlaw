@@ -6,8 +6,8 @@
 #' @export
 get_KS_statistic = function(m) {
   if(m$datatype=="discrete") {
-    data_cdf = dist_data_cdf(m, cumulative=TRUE)
-    fit_cdf = dist_cdf(m, cumulative=TRUE)
+    data_cdf = dist_data_cdf(m, all_values=TRUE)
+    fit_cdf = dist_cdf(m, all_values=TRUE)
   } else {
     data_cdf = dist_data_cdf(m)
     fit_cdf = dist_cdf(m)

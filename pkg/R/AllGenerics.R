@@ -6,21 +6,20 @@ setGeneric("lines")
 setGeneric("points")
 
 
-
-
-
 #' The cumulative distribution function
 #'
-#' This is generic function for distribution reference objects.
-#' This function calculates the cumulative probability density 
-#' for the current parameters and xmin value.
+#' This is generic function for cumulative distribution function of 
+#' reference objects. This is similar to base R's \code{pnorm} for the 
+#' normal distribution. This function calculates the cumulative
+#' probability density for the current parameters and xmin value.
 #' 
 #' @param m a reference class distribution object.
 #' @param q a vector values where the function will be evaluated. 
 #' If \code{q} is \code{NULL} (default), then the data values 
 #' will be used (used in dist_cdf only)
-#' @param cumulative logical
-#' @param lower.tail logical; 
+#' @param all_values logical; if \code{FALSE} (default), calculated
+#' at observed data values
+#' @param lower_tail logical; 
 #' if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, 
 #' otherwise, \eqn{P[X > x]}.
 #' @docType methods
@@ -32,12 +31,12 @@ setGeneric("points")
 #' @examples
 #' data(moby_sample)
 #' m = displ$new(moby_sample)
-#' m$setXmin(7);m$setPars(2)
+#' m$setXmin(7); m$setPars(2)
 #' #CDF at a particular value
 #' dist_cdf(m, 10:15)
 #' dist_cdf(m) #at the data values
 setGeneric("dist_cdf", 
-           function(m, q=NULL, lower.tail=FALSE, ...) standardGeneric("dist_cdf"))
+           function(m, q=NULL, lower_tail=FALSE, ...) standardGeneric("dist_cdf"))
 
 
 #' The data cumulative distribution function
@@ -47,13 +46,12 @@ setGeneric("dist_cdf",
 #' for the current parameters and xmin value.
 #' 
 #' @param m a reference class distribution object.
-#' @param q a vector values where the function will be evaluated. 
-#' If \code{q} is \code{NULL} (default), then the data values 
-#' will be used (used in dist_cdf only)
-#' @param cumulative logical
-#' @param lower.tail logical; 
+
+#' @param lower_tail logical; 
 #' if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, 
 #' otherwise, \eqn{P[X > x]}.
+#' @param all_values logical; if \code{FALSE} (default), calculated
+#' at observed data values
 #' @docType methods
 #' @exportMethod dist_data_cdf
 #' @note This method does *not* alter the internal state of
@@ -66,7 +64,7 @@ setGeneric("dist_cdf",
 #' m$setXmin(7);m$setPars(2)
 #' #CDF at a particular value
 #' dist_data_cdf(m)
-setGeneric("dist_data_cdf", function(m, lower.tail=TRUE, cumulative=FALSE) standardGeneric("dist_data_cdf"))
+setGeneric("dist_data_cdf", function(m, lower_tail=TRUE, all_values=FALSE) standardGeneric("dist_data_cdf"))
 
 
 

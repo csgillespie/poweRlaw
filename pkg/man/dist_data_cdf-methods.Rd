@@ -7,15 +7,12 @@
 \arguments{
   \item{m}{a reference class distribution object.}
 
-  \item{q}{a vector values where the function will be
-  evaluated. If \code{q} is \code{NULL} (default), then the
-  data values will be used (used in dist_cdf only)}
-
-  \item{cumulative}{logical}
-
-  \item{lower.tail}{logical; if \code{TRUE} (default),
+  \item{lower_tail}{logical; if \code{TRUE} (default),
   probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X >
   x]}.}
+
+  \item{all_values}{logical; if \code{FALSE} (default),
+  calculated at observed data values}
 }
 \description{
   This is generic function for distribution reference
