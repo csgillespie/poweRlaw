@@ -30,3 +30,20 @@ setMethod("dist_ll",
           }
 )
 
+#' @rdname dist_ll-methods
+#' @aliases dist_ll,dislnorm-method
+setMethod("dist_ll",
+  signature = signature(m="dislnorm"),
+  definition = function(m) {
+    #threshold = 0
+    n = m$internal[["n"]]
+    xmin = m$getXmin()
+    pars = m$getPars()
+    meanlog = pars[1]; sdlog = pars[2] 
+    JointProb = sum(dlnorm.disc(m$getDat(), meanlog, sdlog, log=TRUE))
+    ProbOverThreshold = plnorm(xmin-0.5, 
+                               meanlog, sdlog, 
+                               lower.tail=FALSE, log.p=TRUE)
+    return(JointProb - n*ProbOverThreshold)
+  }
+)

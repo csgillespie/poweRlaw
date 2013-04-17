@@ -2,6 +2,7 @@
 \name{dist_ll}
 \alias{dist_ll}
 \alias{dist_ll,conpl-method}
+\alias{dist_ll,dislnorm-method}
 \alias{dist_ll,displ-method}
 \title{The log-likelihood function}
 \arguments{

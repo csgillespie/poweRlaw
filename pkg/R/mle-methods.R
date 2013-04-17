@@ -10,6 +10,27 @@ displ$methods(
     }
 )
 
+dislnorm$methods(
+  mle = function(set = TRUE) {
+    n = internal[["n"]]
+    x.log = log(dat)
+    theta_0 = c(mean(x.log), sd(x.log))
+    # Chop off values below 
+    ##SLOW MUST cache
+    x = rep(internal[["values"]], internal[["freq"]])
+    negloglike = function(theta) {-lnorm.tail.disc.loglike(x,theta[1],theta[2],xmin)}
+    mle = nlm(f=negloglike, p=theta_0)
+    if(set)
+      pars <<- mle$estimate
+    mle$estimate
+  
+  }
+)
+
+
+
+
+
 ##CTN Power-law
 conpl$methods(
   mle = function(set = TRUE) {

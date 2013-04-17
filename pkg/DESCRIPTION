@@ -48,3 +48,4 @@ Collate:
     'plot-methods.R'
     'points-methods.R'
     'poweRlaw-package.R'
+    'dislnorm.R'

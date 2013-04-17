@@ -40,6 +40,32 @@ displ$methods(
   )
 )
 
+dislnorm$methods( 
+  list(
+    initialize = function(dat) {
+      datatype <<- "discrete"
+      ##Use the internal attribute for copying
+      if(!missing(dat)) {
+        x = sort(dat)
+        #x= round(sort(x))
+        tab = table(x)
+        values = as.numeric(names(tab))
+        freq = as.vector(tab)
+        internal[["freq"]] <<- freq
+        internal[["values"]] <<- values
+        internal[["cum_slx"]] <<-
+          rev(cumsum(log(rev(values))*rev(freq)))
+        internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
+        internal[["dat"]] <<- x
+        xmin <<- min(values)
+      }
+    }
+  )
+)
+
+
+
+
 conpl$methods( 
   list(
     initialize = function(dat) {

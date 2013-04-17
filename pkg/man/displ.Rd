@@ -2,6 +2,8 @@
 \name{conpl}
 \alias{conpl}
 \alias{conpl-class}
+\alias{dislnorm}
+\alias{dislnorm-class}
 \alias{displ}
 \alias{displ-class}
 \title{Discrete and continuous power-law objects}
