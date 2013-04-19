@@ -7,17 +7,17 @@ setMethod("lines",
             xmin = x$getXmin()
             x_values = x$dat
             x_axs = lseq(x$xmin, max(x_values), length.out) 
-            if(x$datatype == "discrete") 
+            if(is(x,"discrete_distribution"))
               x_axs = unique(round(x_axs))
             
             y = dist_cdf(x, x_axs, FALSE)
             if(!cut) {
               x$setXmin(1)
-              d_cdf = dist_data_cdf(x, lower.tail=FALSE)
+              d_cdf = dist_data_cdf(x, lower_tail=FALSE)
               ##If CTN, then in theory we can't have
               ##equal data points. But in practice...
               ##Take the min
-              if(x$datatype == "discrete") 
+              if(is(x,"discrete_distribution")) 
                 scale = d_cdf[unique(x$internal[["dat"]])==xmin]
               else
                 scale = max(d_cdf[x$internal[["dat"]]==xmin])

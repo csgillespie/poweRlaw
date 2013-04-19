@@ -22,7 +22,7 @@
 #' data(moby)
 displ = 
   setRefClass("displ", 
-              contains="distribution",
+              contains="discrete_distribution",
               fields = list(
                 dat = function(x)
                   if(!missing(x) && !is.null(x)) {
@@ -70,7 +70,7 @@ displ =
 #' @export dislnorm
 dislnorm = 
   setRefClass("dislnorm", 
-              contains="distribution",
+              contains="discrete_distribution",
               fields = list(
                 dat = function(x)
                   if(!missing(x) && !is.null(x)) {

@@ -5,7 +5,7 @@
 #' @export conpl
 conpl = 
   setRefClass("conpl", 
-              contains="distribution",
+              contains="ctn_distribution",
               fields = list(dat = function(x)
                 if(!missing(x) && !is.null(x)) {
                   d = sort(x)

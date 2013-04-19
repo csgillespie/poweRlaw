@@ -5,7 +5,7 @@
 #' @rdname estimate_xmin
 #' @export
 get_KS_statistic = function(m) {
-  if(m$datatype=="discrete") {
+  if(is(m, "discrete_distribution")) {
     data_cdf = dist_data_cdf(m, all_values=TRUE)
     fit_cdf = dist_cdf(m, all_values=TRUE)
   } else {
@@ -59,17 +59,21 @@ estimate_xmin = function (m,
     xmins = unique(m$dat)
     xmins = xmins[-length(xmins)]
   }
-  dat = matrix(0, nrow=length(xmins), ncol=2)
+  
+  dat = matrix(0, nrow=length(xmins), ncol=(1 + m$no_pars))
   
   xm = 1
-  for(xm in 1:length(xmins)){
+  for(xm in 1:(length(xmins)-1)){
     m_cpy$xmin = xmins[xm]
     if(is.null(pars)) m_cpy$mle()
     else m_cpy$pars = pars
     
-    L = dist_ll(m_cpy)
-    I = which.max(L)
-    m_cpy$pars = m_cpy$pars[I]
+    ##Doesn't work for lognormal - need par matrix    
+    if(!is.null(pars)) {
+      L = dist_ll(m_cpy)
+      I = which.max(L)
+      m_cpy$pars = m_cpy$pars[I]
+    }
     gof = get_KS_statistic(m_cpy)
     
     dat[xm,] = c(gof, m_cpy$pars)

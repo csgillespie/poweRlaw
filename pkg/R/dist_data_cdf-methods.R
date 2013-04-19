@@ -2,7 +2,7 @@
 #' @rdname dist_data_cdf-methods
 #' @aliases dist_data_cdf,displ-method
 setMethod("dist_data_cdf",
-          signature = signature(m="displ"),
+          signature = signature(m="discrete_distribution"),
           definition = function(m, lower_tail=TRUE, all_values=FALSE) {
             if(all_values) {
               occur = tabulate(m$dat)
@@ -26,7 +26,7 @@ setMethod("dist_data_cdf",
 #' @rdname dist_data_cdf-methods
 #' @aliases dist_data_cdf,conpl-method
 setMethod("dist_data_cdf",
-          signature = signature(m="conpl"),
+          signature = signature(m="ctn_distribution"),
           definition = function(m, lower_tail=TRUE) {
             n = m$internal[["n"]]
             cdf = (0:(n-1))/n

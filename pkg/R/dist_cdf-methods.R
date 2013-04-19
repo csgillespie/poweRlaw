@@ -22,6 +22,41 @@ setMethod("dist_cdf",
           }
 )
 
+setMethod("dist_cdf",
+          signature = signature(m="dislnorm"),
+          definition = function(m, 
+                                q=NULL, 
+                                lower_tail=TRUE,
+                                all_values=FALSE) {
+            pars = m$pars
+            xmin = m$xmin
+            C = plnorm(xmin-0.5, pars[1], pars[2], lower.tail=lower_tail) 
+            
+            if(all_values) {
+              xmin = m$xmin; xmax = max(m$dat)
+              q = xmin:xmax
+            } else if(is.null(q)) {
+              q = m$dat
+            } 
+            #q = xmin:30
+            p = plnorm(q-0.5, pars[1], pars[2], lower.tail=lower_tail) 
+            if(lower_tail)
+              p/(1-C)
+            else
+              p/C
+          }
+)
+
+
+
+
+
+
+
+
+
+
+
 #' @rdname dist_cdf-methods
 #' @aliases dist_cdf,conpl-method
 setMethod("dist_cdf",

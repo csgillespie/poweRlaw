@@ -24,11 +24,22 @@ pl_data = setRefClass("pl_data",
 #' @export distribution
 distribution = setRefClass("distribution", 
                            fields=list(
-                             datatype="character", 
                              internal = "list", 
                              dat = "ANY",
                              xmin = "ANY", 
-                             pars="ANY"), 
+                             pars="ANY",
+                             no_pars="numeric"), 
                            
 )
-distribution$accessors(c("xmin", "pars", "dat"))
+distribution$accessors(c("xmin", "pars", "dat", "no_pars"))
+
+
+discrete_distribution = setRefClass("discrete_distribution", 
+                                    contains="distribution")
+ctn_distribution = setRefClass("ctn_distribution", 
+                               contains="distribution")
+
+
+
+
+

@@ -20,7 +20,8 @@ pl_data$methods(
 displ$methods( 
   list(
     initialize = function(dat) {
-      datatype <<- "discrete"
+      #datatype <<- "discrete"
+      no_pars <<- 1
       ##Use the internal attribute for copying
       if(!missing(dat)) {
         x = sort(dat)
@@ -43,7 +44,8 @@ displ$methods(
 dislnorm$methods( 
   list(
     initialize = function(dat) {
-      datatype <<- "discrete"
+      #datatype <<- "discrete"
+      no_pars <<- 2
       ##Use the internal attribute for copying
       if(!missing(dat)) {
         x = sort(dat)
@@ -69,7 +71,7 @@ dislnorm$methods(
 conpl$methods( 
   list(
     initialize = function(dat) {
-      datatype <<- "continuous"
+      no_pars <<- 1
       ##Use the internal attribute for copying
       if(!missing(dat)) {
         d = sort(dat)
