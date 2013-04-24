@@ -60,12 +60,16 @@ estimate_xmin = function (m,
     xmins = xmins[-length(xmins)]
   }
   
-  dat = matrix(0, nrow=length(xmins), ncol=(1 + m$no_pars))
+  nr = (length(xmins)-m_cpy$no_pars-1)
+  dat = matrix(0, nrow=nr, ncol=(1 + m$no_pars))
   
   xm = 1
-  for(xm in 1:(length(xmins)-1)){
+  ##Initialise
+  est = estimate_pars(m_cpy)
+  m_cpy$pars = pars
+  for(xm in 1:nr){
     m_cpy$xmin = xmins[xm]
-    if(is.null(pars)) m_cpy$mle()
+    if(is.null(pars)) m_cpy$mle(initialise=est)
     else m_cpy$pars = pars
     
     ##Doesn't work for lognormal - need par matrix    
@@ -75,16 +79,15 @@ estimate_xmin = function (m,
       m_cpy$pars = m_cpy$pars[I]
     }
     gof = get_KS_statistic(m_cpy)
-    
     dat[xm,] = c(gof, m_cpy$pars)
   }
   
   I = which.min(dat[,1])
   xmin = xmins[I]
   n = sum(m_cpy$dat >= xmin)
-  alpha = dat[I,2]
+  pars = dat[I,2:ncol(dat)]
   
-  l = list(KS=dat[I,1], xmin=xmin, pars=alpha)
+  l = list(KS=dat[I,1], xmin=xmin, pars=pars)
   class(l) = "ks_est"
   return(l)
 }

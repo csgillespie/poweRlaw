@@ -1,7 +1,5 @@
 ##Tests for discrete power-laws
 ##Small data, but specifically chosen data sets
-
-
 test_that("Test discrete power-law", {
   x = c(1, 1, 2, 4, 5, 5)
   m = displ$new(x)

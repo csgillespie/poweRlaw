@@ -1,5 +1,5 @@
 test_that("Test CTN data fitting", {
-  x = c(1, 1, 2, 2, 3)
+  x = c(1, 1, 2, 2, 3, 4, 4)
   m = conpl$new(x)
   ##Set xmin = 1
   ##Check mle estimate
@@ -21,7 +21,4 @@ test_that("Test CTN data fitting", {
   expect_equal(m$getPars(), 3)
   expect_equal(estimate_pars(m_new), estimate_pars(m))
   expect_equal(estimate_xmin(m_new), estimate_xmin(m))
-  
-  
-  
 })

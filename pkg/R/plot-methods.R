@@ -40,7 +40,7 @@ setMethod("plot",
             
             cut_off_seq = (x_values >= cut_off)
             x_axs = x_values[cut_off_seq]
-            if(x$datatype == "discrete") 
+            if(is(x, "discrete_distribution")) 
               x_axs = unique(x_axs)
             x$setXmin(xmin)
             
