@@ -6,6 +6,8 @@
 \alias{dislnorm-class}
 \alias{displ}
 \alias{displ-class}
+\alias{dispois}
+\alias{dispois-class}
 \title{Discrete and continuous power-law objects}
 \arguments{
   \item{x}{the data vector}

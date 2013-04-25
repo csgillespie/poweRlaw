@@ -10,7 +10,6 @@ displ$methods(
     }
 )
 
-##Need a try catch
 
 dislnorm$methods(
   mle = function(set = TRUE, initialise=NULL) {
@@ -25,8 +24,8 @@ dislnorm$methods(
     # Chop off values below 
     negloglike = function(par) {
       if(any(par <= 0)) r = .Machine$double.xmax
-      else
-        r = -lnorm.tail.disc.loglike(x, par[1], par[2],xmin)
+      else r = -lnorm.tail.disc.loglike(x, par[1], par[2], xmin)
+      
       if(!is.finite(r)) r = .Machine$double.xmax
       r
     }
@@ -39,8 +38,29 @@ dislnorm$methods(
   }
 )
 
-
-
+dispois$methods(
+  mle = function(set = TRUE, initialise=NULL) {
+    x = dat
+    x = x[x > (xmin-1)]
+    if(is.null(initialise))
+      theta_0 = mean(x)
+    else 
+      theta_0 = initialise
+    # Chop off values below 
+    negloglike = function(par) {
+      if(par <= 0) r = .Machine$double.xmax
+      else r = -pois.tail.loglike(x, par, xmin)
+      
+      if(!is.finite(r)) r = .Machine$double.xmax
+      r
+    }
+    mle = optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=0)
+    if(set)
+      pars <<- mle$par
+    mle$par
+    
+  }
+)
 
 
 ##CTN Power-law

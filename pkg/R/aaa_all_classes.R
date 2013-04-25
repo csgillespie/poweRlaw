@@ -24,8 +24,8 @@ pl_data = setRefClass("pl_data",
 #' @export distribution
 distribution = setRefClass("distribution", 
                            fields=list(
-                             internal = "list", 
                              dat = "ANY",
+                             internal = "list", 
                              xmin = "ANY", 
                              pars="ANY",
                              no_pars="numeric"), 

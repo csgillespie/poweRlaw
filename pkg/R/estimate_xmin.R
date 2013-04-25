@@ -55,10 +55,7 @@ estimate_xmin = function (m,
                           data_max = 1e5) {
   ##Make thread safe
   m_cpy = m$getRefClass()$new(m$dat)
-  if(is.null(xmins)) {
-    xmins = unique(m$dat)
-    xmins = xmins[-length(xmins)]
-  }
+  if(is.null(xmins)) xmins = unique(m$dat)
   
   nr = (length(xmins)-m_cpy$no_pars-1)
   dat = matrix(0, nrow=nr, ncol=(1 + m$no_pars))

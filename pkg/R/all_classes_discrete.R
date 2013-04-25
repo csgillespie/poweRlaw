@@ -109,4 +109,47 @@ dislnorm =
               ))
 
 
+#' @rdname displ
+#' @aliases dispois-class
+#' @exportClass dispois
+#' @export dispois
+dispois = 
+  setRefClass("dispois", 
+              contains="discrete_distribution",
+              fields = list(
+                dat = function(x)
+                  if(!missing(x) && !is.null(x)) {
+                    x = sort(x)
+                    #x= round(sort(x))
+                    tab = table(x)
+                    values = as.numeric(names(tab))
+                    freq = as.vector(tab)
+                    internal[["freq"]] <<- freq
+                    internal[["values"]] <<- values
+                    internal[["cum_slx"]] <<-
+                      rev(cumsum(log(rev(values))*rev(freq)))
+                    
+                    internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
+                    xmin <<- min(values)
+                    internal[["dat"]] <<- x
+                  } else internal[["dat"]],
+                xmin = function(x) {
+                  if(!missing(x) && !is.null(x)) {
+                    if(class(x) == "ks_est") {
+                      pars <<- x$pars
+                      x = x$xmin
+                    }
+                    selection = min(which(
+                      internal[["values"]] >= x))
+                    internal[["slx"]] <<- internal[["cum_slx"]][selection]
+                    internal[["n"]] <<- internal[["cum_n"]][selection]            
+                    internal[["xmin"]] <<- x
+                  } else  internal[["xmin"]]
+                }, 
+                pars = function(x) {
+                  if (!missing(x) && !is.null(x)) {
+                    internal[["pars"]] <<- x            
+                  } else internal[["pars"]]
+                }
+              ))
 
