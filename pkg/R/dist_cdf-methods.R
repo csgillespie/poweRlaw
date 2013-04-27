@@ -28,9 +28,8 @@ setMethod("dist_cdf",
                                 q=NULL, 
                                 lower_tail=TRUE,
                                 all_values=FALSE) {
-            pars = m$pars
-            xmin = m$xmin
-            C = plnorm(xmin-0.5, pars[1], pars[2], lower.tail=lower_tail) 
+            pars = m$pars; xmin = m$xmin
+            
             if(all_values) {
               xmin = m$xmin; xmax = max(m$dat)
               q = xmin:xmax
@@ -38,10 +37,13 @@ setMethod("dist_cdf",
               q = m$dat
             } 
             p = plnorm(q-0.5, pars[1], pars[2], lower.tail=lower_tail) 
-            if(lower_tail)
-              p/(1-C)
-            else
+            if(lower_tail) {
+              C = plnorm(xmin-0.5, pars[1], pars[2], lower.tail=FALSE) 
+              (p/C-1/C+1)
+            } else {
+              C = 1-plnorm(xmin-0.5, pars[1], pars[2]) 
               p/C
+          }
           }
 )
 
@@ -51,9 +53,7 @@ setMethod("dist_cdf",
                                 q=NULL, 
                                 lower_tail=TRUE,
                                 all_values=FALSE) {
-            pars = m$pars
-            xmin = m$xmin
-            C = ppois(xmin, pars, lower.tail=lower_tail) 
+            pars = m$pars;  xmin = m$xmin
             if(all_values) {
               xmin = m$xmin; xmax = max(m$dat)
               q = xmin:xmax
@@ -61,10 +61,13 @@ setMethod("dist_cdf",
               q = m$dat
             } 
             p = ppois(q, pars, lower.tail=lower_tail) 
-            if(lower_tail)
-              p/(1-C)
-            else
+            if(lower_tail){
+              C = ppois(xmin-1, pars, lower.tail=FALSE) 
+              (p/C-1/C+1)
+            } else {
+              C = 1-ppois(xmin, pars)
               p/C
+            }
           }
 )
 
