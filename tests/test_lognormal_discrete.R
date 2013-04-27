@@ -21,8 +21,8 @@ test_that("Testing discrete log-normal", {
   m = dislnorm$new(x)
   est = estimate_xmin(m)
   m$setXmin(est)
-  expect_equal(m$getXmin(), 5)
-  expect_equal(m$getPars(), c(2.3779,0.6482), tol=1e-5)
+  expect_equal(m$getXmin(), 4)
+  expect_equal(m$getPars(), c(2.1977, 0.7586), tol=1e-4)
   
   ##Check updating data set
   y = c(2, 4, 5, 5)
