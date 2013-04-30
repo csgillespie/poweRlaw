@@ -4,7 +4,7 @@
 #' parameters using their maximum likelihood estimator. This estimate
 #' is conditional on the current xmin value.
 #' @inheritParams estimate_xmin
-#' @return returns a vector of the mles.
+#' @return returns list.
 #' @export
 #' @examples
 #' data(moby_sample)
@@ -15,7 +15,8 @@
 estimate_pars = function(m, pars=NULL) {
   p = m$getPars()
   if(is.null(pars)) {
-    return(m$mle(set=FALSE))
+    var = m$mle(set=FALSE)
+    return(var)
   } else {
     m$pars = pars
     L = dist_ll(m)

@@ -14,7 +14,7 @@
   samples, the mle may be biased.}
 }
 \value{
-  returns a vector of the mles.
+  returns list.
 }
 \description{
   \code{estimate_pars} estimates the distribution's

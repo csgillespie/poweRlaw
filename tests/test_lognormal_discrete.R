@@ -1,12 +1,11 @@
-##Tests for discrete power-laws
-##Small data, but specifically chosen data sets
 test_that("Testing discrete log-normal", {
   x = c(1, 1, 2, 4, 5, 5)
   m = dislnorm$new(x)
   expect_equal(m$getXmin(), 1)
   mle = estimate_pars(m)
-  
-  expect_equal(mle, c(0.8386, 0.7521), tol=1e-4)
+  m$setPars(mle)
+
+  expect_equal(m$getPars(), c(0.8386, 0.7521), tol=1e-4)
   
   ##Check Setting pars
   m$setPars(c(1, 1))
@@ -27,7 +26,7 @@ test_that("Testing discrete log-normal", {
   ##Check updating data set
   y = c(2, 4, 5, 5)
   m$setDat(y); xmin = 2
-  m$getXmin()
+  
   
   ##Check setting xmin  and data_cdf
   ##Set xmin to place where there are no data points

@@ -41,7 +41,7 @@ displ =
                   } else internal[["dat"]],
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
-                    if(class(x) == "ks_est") {
+                    if(class(x) == "estimate_xmin") {
                       pars <<- x$pars
                       x = x$xmin
                     }
@@ -59,6 +59,7 @@ displ =
                 }, 
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
+                    if(class(x) == "estimate_pars") x = x$pars            
                     internal[["pars"]] <<- x
                     internal[["constant"]] <<- zeta(x)
                   } else internal[["pars"]]
@@ -90,7 +91,7 @@ dislnorm =
                   } else internal[["dat"]],
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
-                    if(class(x) == "ks_est") {
+                    if(class(x) == "estimate_xmin") {
                       pars <<- x$pars
                       x = x$xmin
                     }
@@ -103,6 +104,7 @@ dislnorm =
                 }, 
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
+                    if(class(x) == "estimate_pars") x = x$pars            
                     internal[["pars"]] <<- x            
                   } else internal[["pars"]]
                 }
@@ -135,7 +137,7 @@ dispois =
                   } else internal[["dat"]],
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
-                    if(class(x) == "ks_est") {
+                    if(class(x) == "estimate_xmin") {
                       pars <<- x$pars
                       x = x$xmin
                     }
@@ -148,6 +150,7 @@ dispois =
                 }, 
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
+                    if(class(x) == "estimate_pars") x = x$pars            
                     internal[["pars"]] <<- x            
                   } else internal[["pars"]]
                 }

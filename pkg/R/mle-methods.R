@@ -6,6 +6,8 @@ displ$methods(
         mle = 1 + n*sum(slx - log(xmin-1/2)*n)^(-1)
         if(set)
             pars <<- mle
+        mle = list(pars=mle)
+        class(mle) = "estimate_pars"
         mle
     }
 )
@@ -33,7 +35,9 @@ dislnorm$methods(
     mle = optim(par=theta_0, fn=negloglike)
     if(set)
       pars <<- mle$par
-    mle$par
+    class(mle) = "estimate_pars"
+    names(mle)[1] = "pars"
+    mle
   
   }
 )
@@ -57,8 +61,10 @@ dispois$methods(
     mle = optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=0)
     if(set)
       pars <<- mle$par
-    mle$par
-    
+    class(mle) = "estimate_pars"
+    names(mle)[1] = "pars"
+    mle
+
   }
 )
 
@@ -71,6 +77,8 @@ conpl$methods(
     mle = 1 + n*(slx-log(xmin)*n)^(-1)
     if(set)
       pars <<- mle
+    mle = list(pars=mle)
+    class(mle) = "estimate_pars"
     mle
   }
 )

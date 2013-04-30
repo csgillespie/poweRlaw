@@ -62,7 +62,7 @@ estimate_xmin = function (m,
   
   xm = 1
   ##Initialise
-  est = estimate_pars(m_cpy)
+  est = estimate_pars(m_cpy)$pars
   m_cpy$pars = pars
   for(xm in 1:nr){
     m_cpy$xmin = xmins[xm]
@@ -85,7 +85,7 @@ estimate_xmin = function (m,
   pars = dat[I,2:ncol(dat)]
   
   l = list(KS=dat[I,1], xmin=xmin, pars=pars)
-  class(l) = "ks_est"
+  class(l) = "estimate_xmin"
   return(l)
 }
 

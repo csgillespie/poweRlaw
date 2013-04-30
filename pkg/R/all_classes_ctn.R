@@ -17,7 +17,7 @@ conpl =
                 } else internal[["dat"]],
                   xmin = function(x) {
                    if(!missing(x) && !is.null(x)) {
-                     if(class(x) == "ks_est") {
+                     if(class(x) == "estimate_xmin") {
                        pars <<- x$pars
                        x = x$xmin
                      }
@@ -29,6 +29,7 @@ conpl =
                    }, 
                   pars = function(x) {
                     if (!missing(x) && !is.null(x)) {
+                      if(class(x) == "estimate_pars") x = x$pars
                       internal[["pars"]] <<- x
                     } else internal[["pars"]]
                 }

@@ -5,10 +5,9 @@ test_that("Test CTN data fitting", {
   ##Check mle estimate
   xmin = 1
   mle = estimate_pars(m)
+  m$setPars(mle)
   exact = 1 + length(x)*(sum(log(x/xmin))^(-1))
-  expect_equal(mle, exact)
-  m$setXmin(xmin)
-  expect_equal(mle, exact)
+  expect_equal(m$getPars(), exact)
   
 
   ##Check Copying
