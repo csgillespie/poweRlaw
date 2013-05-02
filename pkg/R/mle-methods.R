@@ -25,7 +25,7 @@ dislnorm$methods(
       theta_0 = initialise
     # Chop off values below 
     negloglike = function(par) {
-      if(any(par <= 0)) r = .Machine$double.xmax
+      if(par[2] <= 0) r = .Machine$double.xmax
       else r = -lnorm.tail.disc.loglike(x, par[1], par[2], xmin)
       
       if(!is.finite(r)) r = .Machine$double.xmax
@@ -82,3 +82,41 @@ conpl$methods(
     mle
   }
 )
+
+lnorm$methods(
+  mle = function(set = TRUE, initialise=NULL) {
+    x = dat
+    x = x[x > xmin]
+    if(is.null(initialise))
+      theta_0 = c(mean(log(x)), sd(log(x)))
+    else 
+      theta_0 = initialise
+    # Chop off values below 
+    negloglike = function(par) {
+      if(par[2] <= 0) r = .Machine$double.xmax
+      else r = -lnorm.loglike.tail(x, par[1], par[2], xmin)
+      
+      if(!is.finite(r)) r = .Machine$double.xmax
+      r
+    }
+    mle = optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=-Inf)
+    if(set)
+      pars <<- mle$par
+    class(mle) = "estimate_pars"
+    names(mle)[1] = "pars"
+    mle
+    
+  }
+)
+
+
+
+
+
+
+
+
+
+
+
+

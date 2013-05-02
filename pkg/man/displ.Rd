@@ -8,6 +8,8 @@
 \alias{displ-class}
 \alias{dispois}
 \alias{dispois-class}
+\alias{lnorm}
+\alias{lnorm-class}
 \title{Discrete and continuous power-law objects}
 \arguments{
   \item{x}{the data vector}

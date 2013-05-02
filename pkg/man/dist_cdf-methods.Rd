@@ -3,6 +3,7 @@
 \alias{dist_cdf}
 \alias{dist_cdf,conpl-method}
 \alias{dist_cdf,displ-method}
+\alias{dist_cdf,lnorm-method}
 \title{The cumulative distribution function}
 \arguments{
   \item{m}{a reference class distribution object.}
