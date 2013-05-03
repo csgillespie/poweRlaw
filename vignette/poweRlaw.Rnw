@@ -359,7 +359,11 @@ m_m = displ$new(moby)
   Distribution & Object name & \# Parameters \\
   \midrule
   Discrete Power-law & \texttt{displ} & 1 \\
+  Discrete Log-normal & \texttt{dislnorm} & 2 \\
+  Poisson & \texttt{dispois} & 1 \\
+  \\
   CTN Power-law & \texttt{conpl} & 1 \\
+  CTN Log-normal & \texttt{lnorm} & 2 \\
   \bottomrule
   \end{tabular}
   \caption{Available distributions in the power-law package. These objects are all reference classes.}\label{T1}
