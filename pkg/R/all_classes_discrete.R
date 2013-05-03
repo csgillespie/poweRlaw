@@ -118,7 +118,7 @@ dispois =
               fields = list(
                 dat = function(x)
                   if(!missing(x) && !is.null(x)) {
-                    x = sort(dat)
+                    x = sort(x)
                     tab = table(x)
                     values = as.numeric(names(tab))
                     freq = as.vector(tab)
