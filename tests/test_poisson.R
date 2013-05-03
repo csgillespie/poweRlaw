@@ -8,7 +8,7 @@ test_that("Testing discrete poisson", {
   
   ##Check updating data set
   x = 1000:1004
-  m$setDat(x);
+  m$setDat(x)
   expect_equal(m$getDat(), x)
   
   ##Check Setting pars

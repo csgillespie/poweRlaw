@@ -26,7 +26,7 @@ test_that("Testing discrete log-normal", {
   ##Check updating data set
   y = c(2, 4, 5, 5)
   m$setDat(y); xmin = 2
-  
+  expect_equal(m$getDat(), y)
   
   ##Check setting xmin  and data_cdf
   ##Set xmin to place where there are no data points

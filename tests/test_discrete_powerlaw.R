@@ -17,6 +17,7 @@ test_that("Test discrete power-law", {
   ##Check updating data set
   y = c(2, 4, 5, 5)
   m$setDat(y); xmin = 2
+  expect_equal(m$getDat(), y)
   mle = estimate_pars(m)
   m$setPars(mle)
   exact = 1 + length(y)*(sum(log(y/(xmin-1/2)))^(-1))
