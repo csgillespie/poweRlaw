@@ -9,7 +9,12 @@ test_that("Test CTN data fitting", {
   exact = 1 + length(x)*(sum(log(x/xmin))^(-1))
   expect_equal(m$getPars(), exact)
   
-
+  ##Check setting data
+  y = 10:12
+  m$setDat(y)
+  expect_equal(m$getDat(), y)
+  
+  
   ##Check Copying
   ##Testing the mle should also test for the internal
   ##Structure
