@@ -37,11 +37,11 @@ conpl =
 
 
 #' @rdname displ
-#' @aliases lnorm-class
-#' @exportClass lnorm
-#' @export lnorm
-lnorm = 
-  setRefClass("lnorm", 
+#' @aliases conlnorm-class
+#' @exportClass conlnorm
+#' @export conlnorm
+conlnorm = 
+  setRefClass("conlnorm", 
               contains="ctn_distribution",
               fields = list(dat = function(x)
                 if(!missing(x) && !is.null(x)) {

@@ -1,5 +1,7 @@
 \docType{class}
 \name{conpl}
+\alias{conlnorm}
+\alias{conlnorm-class}
 \alias{conpl}
 \alias{conpl-class}
 \alias{dislnorm}
@@ -8,8 +10,6 @@
 \alias{displ-class}
 \alias{dispois}
 \alias{dispois-class}
-\alias{lnorm}
-\alias{lnorm-class}
 \title{Discrete and continuous power-law objects}
 \arguments{
   \item{x}{the data vector}

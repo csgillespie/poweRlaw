@@ -101,7 +101,7 @@ conpl$methods(
   )
 )
 
-lnorm$methods( 
+conlnorm$methods( 
   list(
     initialize = function(dat) {
       no_pars <<- 2

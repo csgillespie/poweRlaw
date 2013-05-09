@@ -1,5 +1,3 @@
-
-
 lnorm.tail.disc.loglike = function(x, meanlog, sdlog, xmin) {
   n = length(x)
   p = plnorm(x-0.5,meanlog,sdlog,lower.tail=FALSE) - 

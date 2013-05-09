@@ -19,16 +19,6 @@ setMethod("dist_ll",
           }
 )
 
-#' @rdname dist_ll-methods
-#' @aliases dist_ll,conpl-method
-setMethod("dist_ll",
-          signature = signature(m="conpl"),
-          definition = function(m) {
-            n = m$internal[["n"]]
-            slx = m$internal[["slx"]]
-            n*log(m$pars-1) - n*log(m$xmin) - m$pars *(slx-n*log(m$xmin))
-          }
-)
 
 #' @rdname dist_ll-methods
 #' @aliases dist_ll,dislnorm-method
@@ -48,4 +38,33 @@ setMethod("dist_ll",
             pois.tail.loglike(m$dat, m$getPars(), m$getXmin())
           }
 )
+
+
+####
+####CTN Distributions
+####
+
+#' @rdname dist_ll-methods
+#' @aliases dist_ll,conpl-method
+setMethod("dist_ll",
+          signature = signature(m="conpl"),
+          definition = function(m) {
+            n = m$internal[["n"]]
+            slx = m$internal[["slx"]]
+            n*log(m$pars-1) - n*log(m$xmin) - m$pars *(slx-n*log(m$xmin))
+          }
+)
+
+#' @rdname dist_ll-methods
+#' @aliases dist_ll,conlnorm-method
+setMethod("dist_ll",
+          signature = signature(m="conlnorm"),
+          definition = function(m) {
+            lnorm_ll(m$dat, m$getPars(), m$getXmin())
+          }
+)
+
+
+
+
 

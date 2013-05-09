@@ -83,7 +83,7 @@ conpl$methods(
   }
 )
 
-lnorm$methods(
+conlnorm$methods(
   mle = function(set = TRUE, initialise=NULL) {
     x = dat
     x = x[x > xmin]

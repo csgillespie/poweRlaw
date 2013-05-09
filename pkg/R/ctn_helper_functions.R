@@ -1,10 +1,17 @@
-lnorm.loglike.tail = function(x, mlog, sdlog, xmin) {
+lnorm_ll = function(x, pars, xmin) {
+  m_log = pars[1]; sd_log = pars[2]
   n = length(x)
-  ll = sum(dlnorm(x, mlog, sdlog, log=TRUE))
-  ThresholdProb = plnorm(xmin, mlog, sdlog, log.p=TRUE, lower.tail=FALSE)
-  L = ll - n*ThresholdProb
+  ll = sum(dlnorm(x, m_log, sd_log, log=TRUE))
+  threshold_prob = plnorm(xmin, 
+                          m_log, sd_log, 
+                          log.p=TRUE, lower.tail=FALSE)
+  L = ll - n*threshold_prob
   return(L)
 }
+
+
+
+
 # 
 # x = rlnorm(100)
 # lnorm.loglike.tail(x,0, 1, 0)
