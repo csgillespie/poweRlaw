@@ -21,6 +21,8 @@ estimate_pars = function(m, pars=NULL) {
     m$pars = pars
     L = dist_ll(m)
     I = which.max(L)
-    return(pars[I])
+    l = list(pars=pars[I], ll = L[I])
+    class(l) = "estimate_pars"
+    return(l)
   }
 }

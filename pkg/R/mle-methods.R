@@ -12,7 +12,6 @@ displ$methods(
     }
 )
 
-
 dislnorm$methods(
   mle = function(set = TRUE, initialise=NULL) {
     n = internal[["n"]]
