@@ -25,8 +25,9 @@ setMethod("dist_ll",
 setMethod("dist_ll",
   signature = signature(m="dislnorm"),
   definition = function(m) {
-    pars = m$getPars()
-    lnorm.tail.disc.loglike(m$dat, pars[1], pars[2], m$getXmin())
+    xmin = m$getXmin()
+    d = m$getDat()
+    disc_lnorm_tail_ll(d[d >= xmin], m$getPars(), xmin)
   }
 )
 
@@ -35,7 +36,9 @@ setMethod("dist_ll",
 setMethod("dist_ll",
           signature = signature(m="dispois"),
           definition = function(m) {
-            pois.tail.loglike(m$dat, m$getPars(), m$getXmin())
+            xmin = m$getXmin()
+            d = m$getDat()
+            pois_tail_ll(d[d >= xmin], m$getPars(), xmin)
           }
 )
 
@@ -60,7 +63,9 @@ setMethod("dist_ll",
 setMethod("dist_ll",
           signature = signature(m="conlnorm"),
           definition = function(m) {
-            lnorm_ll(m$dat, m$getPars(), m$getXmin())
+            xmin = m$getXmin()
+            d = m$getDat()
+            conlnorm_tail_ll(d[d >= xmin], m$getPars(), xmin)
           }
 )
 

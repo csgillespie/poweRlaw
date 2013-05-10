@@ -15,20 +15,21 @@ test_that("Testing log-likelihood function", {
   ll1 = 2*log(l)
   expect_equal(dist_ll(m), ll1)
   
-  x = c(1, 1, 3)
-  ll2 = (plnorm(3.5, 1, 1)-plnorm(2.5, 1, 1))/(1 - plnorm(0.5, 1, 1))
-  ll = ll1 + log(ll2)
-  m$setDat(x)
+  x = c(1, 1, 3,4)
+  m$setDat(x);  m$setXmin(2)
+  ll3 = (plnorm(3.5, 1, 1)-plnorm(2.5, 1, 1))/(1 - plnorm(1.5, 1, 1))
+  ll4 = (plnorm(4.5, 1, 1)-plnorm(3.5, 1, 1))/(1 - plnorm(1.5, 1, 1))
+  ll = log(ll3) + log(ll4)
   expect_equal(dist_ll(m), ll)
   
   ##Discrete Poisson
-  x = c(1, 1, 3)
+  x = c(1, 1, 3, 4)
   m = dispois$new(x); m$setPars(2)
-  ll = log(prod(dpois(x, 2)/(1-sum(dpois(0, 2)))))
+  ll = log(prod(dpois(x, 2)/(1-sum(dpois(0:1, 2)))))
   expect_equal(dist_ll(m), ll)
   
-  m$setXmin(3)
-  ll = log(prod(dpois(x, 2)/(1-sum(dpois(0:2, 2)))))
+  m$setXmin(2)
+  ll = log(prod(dpois(3:4, 2)/(1-sum(dpois(0:2, 2)))))
   expect_equal(dist_ll(m), ll)
   
   #######################################
@@ -47,13 +48,13 @@ test_that("Testing log-likelihood function", {
   ll1 = sum(log(dlnorm(x, 1, 1)/(1 - plnorm(1, 1, 1))))
   expect_equal(dist_ll(m), ll1)
 
-  x = c(1, 1, 3)
+  x = c(1, 1, 3, 4)
   m$setDat(x)
-  ll2 = log(dlnorm(3, 1, 1)/(1 - plnorm(1, 1, 1)))
+  ll2 = sum(log(dlnorm(3:4, 1, 1)/(1 - plnorm(1, 1, 1))))
   expect_equal(dist_ll(m), ll1+ll2)
   
-  m$setDat(3); m$setXmin(3)
-  ll3 = log(dlnorm(3, 1, 1)/(1 - plnorm(3, 1, 1)))
+  m$setXmin(2)
+  ll3 = sum(log(dlnorm(3:4, 1, 1)/(1 - plnorm(2, 1, 1))))
   expect_equal(dist_ll(m), ll3)
   
 }

@@ -4,6 +4,7 @@ library(testthat)
 test_file("tests/test_dist_ll.R")
 test_file("tests/test_dist_cdf.R")
 test_file("tests/test_dist_data_cdf.R")
+test_file("tests/test_estimate_pars.R")
 
 
 

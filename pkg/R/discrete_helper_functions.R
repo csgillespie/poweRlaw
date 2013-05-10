@@ -1,22 +1,25 @@
-lnorm.tail.disc.loglike = function(x, meanlog, sdlog, xmin) {
+disc_lnorm_tail_ll = function(x, pars, xmin) {
+  if(is.vector(pars)) pars = t(as.matrix(pars))
   n = length(x)
-  p = plnorm(x-0.5,meanlog,sdlog,lower.tail=FALSE) - 
-    plnorm(x+0.5,meanlog,sdlog,lower.tail=FALSE)
-  joint_prob = sum(log(p))
+  p = function(par){
+    m_log = par[1]; sd_log = par[2]
+    plnorm(x-0.5, m_log, sd_log, lower.tail=FALSE) - 
+      plnorm(x+0.5, m_log, sd_log, lower.tail=FALSE)
+  }
   
-  ProbOverThreshold = plnorm(xmin-0.5,meanlog, sdlog, lower.tail=FALSE,
-                              log.p=TRUE)
-  return(joint_prob - n*ProbOverThreshold)
+  
+  joint_prob = colSums(log(apply(pars, 1, p)))
+  prob_over = apply(pars, 1, function(i) 
+    plnorm(xmin-0.5, i[1], i[2], 
+           lower.tail=FALSE, log.p=TRUE))
+  
+  return(joint_prob - n*prob_over)
 }
-
-pois.tail.loglike = function(x, rate, xmin) {
+  
+pois_tail_ll = function(x, rate, xmin) {
   n = length(x)
-  JointProb = sum(dpois(x, rate,log=TRUE))
-  ProbOverThreshold = ppois(xmin-1, rate, lower.tail=FALSE, log.p=TRUE)
-  return(JointProb - n*ProbOverThreshold)
+  joint_prob = colSums(sapply(rate, function(i) dpois(x, i, log=TRUE)))
+  prob_over = sapply(rate, function(i) ppois(xmin, i, 
+                                 lower.tail=FALSE, log.p=TRUE))
+  return(joint_prob - n*prob_over)
 }
-
-
-
-
-

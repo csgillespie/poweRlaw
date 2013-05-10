@@ -8,6 +8,29 @@ test_that("Testing estimate_pars function", {
   expect_equal(est$pars, 2.58, tol=1e-1)
   est = estimate_pars(mt)
   expect_equal(est$pars, 2.437, tol=1e-1)
+
+  ##Discrete Poisson
+  x = 1:3
+  mt = dispois$new(x)
+  mt$setXmin(0)
+  est = estimate_pars(mt)
+  expect_equal(est$pars, 2)
+  est = estimate_pars(mt, pars=seq(1.5, 2.5, 0.01))
+  expect_equal(est$pars, 2)
+  
+  ##Discrete Log normal
+  set.seed(1)
+  x = rlnorm(1000,1, 1)
+  mt = dislnorm$new(x)
+  mt$setXmin(0)
+  est = estimate_pars(mt)
+  expect_equal(est$pars, c(1, 1), tol=1e-2)
+  m_pars = expand.grid(seq(0.5, 1.5, 0.05), seq(0.5, 1.5, 0.05))
+  est = estimate_pars(mt, m_pars)
+  expect_equal(est$pars, c(1, 1))
+  
+  
+  
   
   ##CTN Power-law
   load("ctn_data.RData")
@@ -15,19 +38,24 @@ test_that("Testing estimate_pars function", {
   mt$setXmin(1.43628)
   
   est = estimate_pars(mt)
-  expect_equal(est$pars, 2.514, tol=1e-3)
+  expect_equal(est$pars, 2.532, tol=1e-3)
   
-  est = estimate_pars(mt, pars=seq(2.4, 2.6, 0.0001))
-  expect_equal(est$pars, 2.514, tol=1e-3)
+  est = estimate_pars(mt, pars=seq(2.3, 2.7, 0.0001))
+  expect_equal(est$pars, 2.53282, tol=1e-3)
   
-  est$pars
+  ##Log normal
+  set.seed(1)
+  x = rlnorm(1000, 1, 1)
+  mt = conlnorm$new(x)
+  mt$setXmin(0)
+  est = estimate_pars(mt)
+  expect_equal(est$pars, c(0.988, 1.034), tol=1e-2)
+  m_pars = expand.grid(seq(0.85, 1.25, 0.01), seq(0.85, 1.25, 0.01))
+  est = estimate_pars(mt, m_pars)
+  expect_equal(est$pars, c(0.99, 1.03))
   
-  est$pars
   
   
-  expect_equal(est$pars, 2.53282, tol=1e-4)
-  expect_equal(est$xmin, 1.43628, tol=1e-4)
-
 
 }
 )

@@ -25,7 +25,7 @@ dislnorm$methods(
     # Chop off values below 
     negloglike = function(par) {
       if(par[2] <= 0) r = .Machine$double.xmax
-      else r = -lnorm.tail.disc.loglike(x, par[1], par[2], xmin)
+      else r = -disc_lnorm_tail_ll(x, par, xmin)
       
       if(!is.finite(r)) r = .Machine$double.xmax
       r
@@ -52,7 +52,7 @@ dispois$methods(
     # Chop off values below 
     negloglike = function(par) {
       if(par <= 0) r = .Machine$double.xmax
-      else r = -pois.tail.loglike(x, par, xmin)
+      else r = -pois_tail_ll(x, par, xmin)
       
       if(!is.finite(r)) r = .Machine$double.xmax
       r
@@ -93,7 +93,7 @@ conlnorm$methods(
     # Chop off values below 
     negloglike = function(par) {
       if(par[2] <= 0) r = .Machine$double.xmax
-      else r = -lnorm.loglike.tail(x, par[1], par[2], xmin)
+      else r = -conlnorm_tail_ll(x, par, xmin)
       
       if(!is.finite(r)) r = .Machine$double.xmax
       r
