@@ -30,7 +30,9 @@ lseq = function(from, to, length.out) {
 #' @exportMethod plot
 setMethod("plot",
           signature = signature(x="distribution"),
-          definition = function(x, cut=FALSE, ...) {
+          definition = function(x, 
+                                cut=FALSE,
+                                draw=TRUE, ...) {
             xmin = x$getXmin()
             cut_off = cut*xmin
             x_values = x$dat
@@ -45,7 +47,7 @@ setMethod("plot",
             x$setXmin(xmin)
             
             x = x_axs
-            plot(x, y, log="xy", ...)
+            if(draw) plot(x, y, log="xy", ...)
             invisible(data.frame(x=x, y=y))
           }
 )
