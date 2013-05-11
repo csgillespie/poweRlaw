@@ -51,3 +51,71 @@ setMethod("plot",
             invisible(data.frame(x=x, y=y))
           }
 )
+
+######################################
+######################################
+######################################
+
+
+
+get_cum_summary = function(x) {
+  m = cumsum(x)/1:length(x)
+  x2 = cumsum(x^2)/1:length(x)
+  v = x2 - m^2
+  sqrt(tail(v))
+  std_err = qt(0.975, 1:length(x))*sqrt(v)/sqrt(1:length(x))
+  dd = data.frame(m = m, std_err = std_err)
+  dd$x = 1:nrow(dd)
+  return(dd)
+}
+
+
+#' @export
+plot.bs_xmin = function(x, ...){
+  no_plots = ncol(x$bootstraps)-1
+  par(mfrow=c(1, no_plots), 
+      mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01,
+      cex.axis=0.9, las=1)
+  cols = c(rgb(170,93,152, maxColorValue=255),
+           rgb(103,143,57, maxColorValue=255))
+  
+  l = list()
+  for(i in 1:no_plots){
+    d = x$bootstraps[,i+1]
+    l[[i]] = get_cum_summary(d)
+  }
+  names(l) = c("xmin", paste0("Parameter", 1:(no_plots-1)))
+  
+  ##Xmin
+  upp_y = ceiling(max(l[[1]]$m + l[[1]]$std_err))
+  low_y = floor(min(l[[1]]$m - l[[1]]$std_err))
+  plot(l[[1]]$m, type="l", ylim=c(low_y, upp_y), 
+       ylab="xmin", xlab="Iteration", 
+       panel.first=grid(), col=cols[1])
+  
+  lines(l[[1]]$m + l[[1]]$std_err, col=cols[2], lty=2)
+  lines(l[[1]]$m - l[[1]]$std_err, col=cols[2], lty=2)
+  
+  for(i in 2:length(l)) {
+    
+    upp_y = max(l[[i]]$m + l[[i]]$std_err)
+    low_y = min(l[[i]]$m - l[[i]]$std_err)
+    plot(l[[i]]$m, type="l", ylim=c(low_y, upp_y), 
+         ylab=paste("Par", i),
+         xlab="Iteration",
+         panel.first=grid(), col=cols[1])
+    
+    lines(l[[i]]$m + l[[i]]$std_err, col=cols[2])
+    lines(l[[i]]$m - l[[i]]$std_err, col=cols[2])
+  }
+  invisible(l)
+  
+}
+
+
+
+
+
+
+
+
