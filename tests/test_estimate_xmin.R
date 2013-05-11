@@ -1,5 +1,4 @@
 test_that("Testing estimate_xmin function", {
- 
   
   ##Discrete Power-law
   load("discrete_data.RData")
@@ -27,7 +26,7 @@ test_that("Testing estimate_xmin function", {
   
   mt = dislnorm$new(x)
   est = estimate_xmin(mt)
-  expect_equal(est$pars, c(2.981, 1.012), tol=1e-4)
+  expect_equal(est$pars, c(2.981, 1.012), tol=1e-3)
   expect_equal(est$xmin, 10)
   
   

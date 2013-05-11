@@ -24,20 +24,20 @@ dislnorm$methods(
       theta_0 = initialise
     # Chop off values below 
     negloglike = function(par) {
-      if(par[2] <= 0) r = .Machine$double.xmax
-      else r = -disc_lnorm_tail_ll(x, par, xmin)
-      
-      if(!is.finite(r)) r = .Machine$double.xmax
+      r = -disc_lnorm_tail_ll(x, par, xmin)
+      if(!is.finite(r)) r = 1e12
       r
     }
-    #mle = nlm(f=negloglike, p=theta_0)
-    mle = optim(par=theta_0, fn=negloglike)
+    
+    mle = optim(par=theta_0, 
+                fn=negloglike, 
+                method="L-BFGS-B", 
+                lower=c(-Inf, .Machine$double.eps))
     if(set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
     names(mle)[1] = "pars"
     mle
-  
   }
 )
 
@@ -51,10 +51,8 @@ dispois$methods(
       theta_0 = initialise
     # Chop off values below 
     negloglike = function(par) {
-      if(par <= 0) r = .Machine$double.xmax
-      else r = -pois_tail_ll(x, par, xmin)
-      
-      if(!is.finite(r)) r = .Machine$double.xmax
+      r = -pois_tail_ll(x, par, xmin)
+      if(!is.finite(r)) r = 1e12
       r
     }
     mle = optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=0)
@@ -92,13 +90,14 @@ conlnorm$methods(
       theta_0 = initialise
     # Chop off values below 
     negloglike = function(par) {
-      if(par[2] <= 0) r = .Machine$double.xmax
-      else r = -conlnorm_tail_ll(x, par, xmin)
-      
-      if(!is.finite(r)) r = .Machine$double.xmax
+      r = -conlnorm_tail_ll(x, par, xmin)
+      if(!is.finite(r)) r = 1e12
       r
     }
-    mle = optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=-Inf)
+    mle = optim(par=theta_0, 
+                fn=negloglike, 
+                method="L-BFGS-B", 
+                lower=c(-Inf, .Machine$double.eps))
     if(set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
@@ -107,6 +106,7 @@ conlnorm$methods(
     
   }
 )
+
 
 
 

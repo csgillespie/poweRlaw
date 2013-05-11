@@ -4,7 +4,7 @@ bootstrap_p_helper = function (i, m, N, y, xmins, pars, data_max) {
   q = dist_rand(m, N-n1)
   
   q = q[q < data_max]
-  if(m$datatype == "discrete")
+  if(inherits(m, "discrete_distribution"))
     q = c(y[sample(N-nz, n1, replace=TRUE)], q)
   else 
     q = c(runif(n1, 0, N-nz), q)
@@ -41,7 +41,7 @@ bootstrap_p = function (m, xmins=NULL, pars=NULL,
        gof = gof_v[["KS"]], 
        bootstraps = as.data.frame(t(nof)), 
        sim_time = total_time[[1]]/no_of_sims)
-  class(l) = "bs_xmin"
+  class(l) = "bs_p_xmin"
   l
 }
 

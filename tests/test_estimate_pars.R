@@ -29,9 +29,6 @@ test_that("Testing estimate_pars function", {
   est = estimate_pars(mt, m_pars)
   expect_equal(est$pars, c(1, 1))
   
-  
-  
-  
   ##CTN Power-law
   load("ctn_data.RData")
   mt = conpl$new(ctn_data)
@@ -53,9 +50,5 @@ test_that("Testing estimate_pars function", {
   m_pars = expand.grid(seq(0.85, 1.25, 0.01), seq(0.85, 1.25, 0.01))
   est = estimate_pars(mt, m_pars)
   expect_equal(est$pars, c(0.99, 1.03))
-  
-  
-  
-
 }
 )

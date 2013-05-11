@@ -22,7 +22,8 @@ estimate_pars = function(m, pars=NULL) {
     L = dist_ll(m)
     I = which.max(L)
     
-    if(is.vector(pars)) par = pars[I]
+    if(is.vector(pars) && m$no_pars == 1L) par = pars[I]
+    else if(is.vector(pars)) par = pars 
     else par = unlist(pars[I,], use.names=FALSE)
     l = list(pars=par, ll = L[I])
     class(l) = "estimate_pars"
