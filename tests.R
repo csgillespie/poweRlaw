@@ -11,3 +11,5 @@ test_file("tests/test_estimate_xmin.R")
 test_file("tests/test_bootstrap.R")
 test_file("tests/test_bootstrap_p.R")
 
+test_file("tests/test_plot.R")
+
