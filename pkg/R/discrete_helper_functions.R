@@ -15,11 +15,13 @@ disc_lnorm_tail_ll = function(x, pars, xmin) {
   
   return(joint_prob - n*prob_over)
 }
-  
+
+
+
 pois_tail_ll = function(x, rate, xmin) {
   n = length(x)
   joint_prob = colSums(sapply(rate, function(i) dpois(x, i, log=TRUE)))
-  prob_over = sapply(rate, function(i) ppois(xmin, i, 
+  prob_over = sapply(rate, function(i) ppois(xmin-1, i, 
                                  lower.tail=FALSE, log.p=TRUE))
   return(joint_prob - n*prob_over)
 }

@@ -25,11 +25,11 @@ test_that("Testing log-likelihood function", {
   ##Discrete Poisson
   x = c(1, 1, 3, 4)
   m = dispois$new(x); m$setPars(2)
-  ll = log(prod(dpois(x, 2)/(1-sum(dpois(0:1, 2)))))
+  ll = log(prod(dpois(x, 2)/(1-sum(dpois(0, 2)))))
   expect_equal(dist_ll(m), ll)
   
   m$setXmin(2)
-  ll = log(prod(dpois(3:4, 2)/(1-sum(dpois(0:2, 2)))))
+  ll = log(prod(dpois(3:4, 2)/(1-sum(dpois(0:1, 2)))))
   expect_equal(dist_ll(m), ll)
   
   #######################################

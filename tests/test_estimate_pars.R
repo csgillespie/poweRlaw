@@ -10,7 +10,7 @@ test_that("Testing estimate_pars function", {
   expect_equal(est$pars, 2.437, tol=1e-1)
 
   ##Discrete Poisson
-  x = 1:3
+  x = rep(2, 10000)
   mt = dispois$new(x)
   mt$setXmin(0)
   est = estimate_pars(mt)
