@@ -1,6 +1,8 @@
 \documentclass[a4paper,justified,openany]{tufte-handout}
 \setcounter{secnumdepth}{2}
 
+
+
 \usepackage{microtype}
 % -------------------------------------------------------------------------------
 
@@ -28,18 +30,21 @@
 \date{Last updated: \today}
 
 <<echo=FALSE>>=
-opts_chunk$set(prompt = FALSE,fig.path='graphics/', fig.align='center',fig.lp="")
+library(poweRlaw)
+opts_chunk$set(prompt = FALSE,
+               fig.path='graphics/', 
+               fig.align='center',fig.lp="")
 options(width=75)
 knit_theme$set(knit_theme$get()[7])
-setnicepar = function(...)  par(mar=c(3,3,2,1), 
-                  mgp=c(2,0.4,0), tck=-.01,
-                  cex.axis=0.9, las=1, ...)
+
 set.seed(1)
+source("helper.R")
+mypalette(1)
 @
 
 \begin{document}
 \maketitle
- \begin{abstract}
+\begin{abstract}
 The \verb$poweRlaw$ package provides code to fit heavy tailed distributions, including discrete and continuous power-law distributions. 
 The fitting procedure follows the method detailed in Clauset \textit{et al.}\cite{clauset2009}. This vignette works through a number of examples.
 \end{abstract}
@@ -47,194 +52,208 @@ The fitting procedure follows the method detailed in Clauset \textit{et al.}\cit
 <<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
 if(!file.exists("blackouts.txt"))
   download.file("http://goo.gl/BsqnP", destfile="blackouts.txt")
-blackouts = read.table("blackouts.txt")
+
 @
 
+\section{Moby Dick}
 
-\section{The blackout data set}
-
-The blackouts data set can be obtained from Clauset's website: \url{http://goo.gl/BsqnP} . }
-<<eval=FALSE>>=
-blackouts = read.table("blackouts.txt")
-@
-\noindent Distribution objects take vectors as inputs, so
+This example investigates the frequency of occurrence of unique words in the novel Moby Dick by Herman Melville\cite{clauset2009,newman2005}. The data can be downloaded from
+\begin{center}
+\url{http://tuvalu.santafe.edu/~aaronc/power-laws/data.htm}
+\end{center}
+\noindent or loaded directly
 <<>>=
+data(moby)
+@
+\noindent To fit a discrete power-law, we create a discrete power-law object, \texttt{displ}
+<<cache=TRUE>>=
+m_pl = displ$new(moby)
+@
+\noindent and estimate $\xmin$
+<<cache=TRUE>>=
+est = estimate_xmin(m_pl)
+m_pl$setXmin(est)
+@
+
+
+<<>>=
+m_ln = dislnorm$new(moby)
+est = estimate_xmin(m_ln)
+m_ln$setXmin(est)
+
+@
+
+
+<<>>=
+pdf("graphics/v2_figure1a.pdf", width=4, height=4)
+setnicepar(mfrow=c(1,1))
+plot(m_pl, xlab="x", ylab="CDF", 
+     panel.first=grid(col="grey80"), 
+     pch=21, bg=1)
+
+lines(m_pl, col=2, lwd=2)
+lines(m_ln, col=3, lwd=2)
+lines(m_pois, col=4, lwd=2)
+
+sink = dev.off()
+system("pdfcrop graphics/v2_figure1.pdf")
+@
+\clearpage
+
+\section{Electrical blackouts}
+
+The numbers of customers affected in electrical blackouts in the United States between 1984 and 2002.\cite{newman2005} The data set can be downloaded from Clauset's website:\sidenote{\url{http://goo.gl/BsqnP}} 
+<<>>=
+blackouts = read.table("blackouts.txt")
+@
+\noindent Continuous power-law objects take vectors as inputs, so
+<<cache=TRUE>>=
 m_bl = conpl$new(blackouts$V1)
 @
+\noindent then we estimate the lower-bound via
+<<cache=TRUE>>=
+est = estimate_xmin(m_bl)
+@
+\noindent This gives a point estimate for $\xmin$ of \Sexpr{est$xmin}. We can then update distribution object:
+<<cache=TRUE>>=
+m_bl$setXmin(est)
+@
+\noindent We can use the generic plot method
+<<fig.keep='none', cache=TRUE>>=
+plot(m_bl)
+lines(m_bl, col=2, lwd=2)
+@
+\noindent to get figure \ref{F1}. To fit a discrete log-normal distribution we follow a similar procedure:
 \begin{marginfigure}[5\baselineskip]
 \centering
-\includegraphics[width=\textwidth]{graphics/figure6-crop}
-\caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more it efficient.}\label{F6}
+\includegraphics[width=\textwidth]{graphics/v2_figure1-crop}
+\caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more it efficient. The power-law fit is the green line, the discrete log-normal is the red line.}\label{F1}
 \end{marginfigure}
-<<echo=FALSE>>=
-est = estimate_xmin(m_bl)
-m_bl$setXmin(est)
-pdf("graphics/figure6.pdf", width=4, height=4)
-setnicepar(mfrow=c(1,1))
-plot(m_bl)
-lines(m_bl, col=2)
-grid()
-sink = dev.off()
-system("pdfcrop graphics/figure6.pdf")
+<<cache=TRUE>>=
+m_bl_ln = conlnorm$new(blackouts$V1)
+est = estimate_xmin(m_bl_ln)
+m_bl_ln$setXmin(est)
 @
-
-
-
-<<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
-if(!file.exists("plfit.R"))
-  download.file("http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r", destfile="plfit.R")
-source("plfit.R")
-
-
-if(!file.exists("plpva.r"))
-  download.file("http://tuvalu.santafe.edu/~aaronc/powerlaws/plpva.r", destfile="plpva.r")
-source("plpva.r")
-@
-
-\section{Comparison with the \texttt{plfit} script}
-
-\subsection{The discrete case}
-
-Other implementations of estimating the lower bound can be found at
-\begin{center}
-\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/}
-\end{center}
-In particular, the script for estimating $\xmin$ can be loaded using
+\noindent and add the line of best fit to the plot via
 <<eval=FALSE>>=
-source("http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r")
+lines(m_bl_ln, col=3, lwd=2)
 @
-\noindent The results are directly comparable to the poweRlaw package. For example, if we look consider the Moby Dick data set again:
-<<>>=
-plfit(moby)
-@
-\noindent Notice that the results are slightly different. This is because the \cc{plfit} by default does a parameter scan over the range
-\[
-1.50, 1.51, 1.52, \ldots, 2.49, 2.50
-\]
-\noindent To exactly replicate the results, we could use
-<<results='hide', eval=FALSE>>=
-estimate_xmin(m_m, pars=seq(1.5, 2.5, 0.01))
-@
+\noindent It is clear from figure \ref{F1} that the log-normal distribution provides a better fit to this data set.
 
 
-\subsection{The continuous case}
-
-The \texttt{plfit} script also fits continuous power-laws. Again the results are comparable. 
-
-For example, suppose we have one thousand random numbers from a continuous power-law distributinos with parameters $\alpha = 2.5$ and $\xmin = 10.0$
-<<>>=
-r = rplcon(1000, 10, 2.5)
-@
-\noindent The \texttt{plfit} automatically detects if the data is continuous
-<<>>=
-plfit(r)
-@
-\noindent Fitting with the \texttt{poweRlaw} package gives the same values
-<<>>=
-m_r = conpl$new(r)
-(est = estimate_xmin(m_r))
-@
-\noindent Of course, using the \texttt{poweRlaw} package we can easily plot the data
-\begin{marginfigure}
-\centering
-\includegraphics[width=\textwidth]{graphics/figure7-crop}
-\caption{CDF plot of one thousand random numbers generated from a power-law with parameters $\alpha=2.5$ and $\xmin = 10$. The line of best fit is also shown.}\label{F7}
-\end{marginfigure}
-<<fig.keep='none'>>=
-m_r$setXmin(est)
-plot(m_r)
-lines(m_r, col=2)
-@
-\noindent to get figure \ref{F7}.
-
-<<echo=FALSE>>=
-pdf("graphics/figure7.pdf", width=4, height=4)
+<<echo=FALSE, cache=TRUE>>=
+pdf("graphics/v2_figure1.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
-plot(m_r)
-lines(m_r, col=2)
-grid()
+plot(m_bl, pch=21, bg=1, 
+     panel.first=grid(col="grey80"), 
+     xlab="Blackouts", ylab="CDF")
+lines(m_bl, col=2, lwd=3)
+lines(m_bl_ln, col=3, lwd=3)
 sink = dev.off()
-system("pdfcrop graphics/figure7.pdf")
+system("pdfcrop graphics/v2_figure1.pdf")
 @
-
-
 
 \clearpage
+\section{The American-Indian War}
+
+In a recent paper, \citeauthor{Bohorquez2009} investigated insurgent attacks in Afghanistan, Iraq, Colombia, and Peru.\cite{Bohorquez2009} Each time, the data resembled power laws. \citeauthor{Friedman2013} used the power-law nature of casualities to infer under-reporting in the American-Indian War. Briefly, by fitting a power-law distribution to the observed process, the latent, unobserved casualities can be inferred.\cite{Friedman2013}  
+
+The number of casulaties observed in the American-Indian War can via
+<<>>=
+data(NativeAmerican)
+data(UsAmerican)
+@
+\noindent Each data frame, has two columns. The first column is number of casulaties recorded, the second the conflict date
+<<>>=
+head(NativeAmerican, 3)
+@
+\noindent The records span around one hundred years, 1776 -- 1890. The data is plotted in figure \ref{F2}. 
+\begin{figure}[b]
+\centering
+\includegraphics[width=0.9\textwidth]{graphics/v2_figure2-crop}
+\caption{Casuality record for the Indian-American war, 1776 -- 1890. Native Americans casualities (purple cirles) and US Americans casualities (green triangles). Data taken from \citeauthor{Friedman2013}.}\label{F2}
+\end{figure}
+
+It is straightforward to fit a discrete power-law to this data set. First, we create discrete power-law objects:
+<<cache=TRUE>>=
+m_na = displ$new(NativeAmerican$Cas)
+m_us = displ$new(UsAmerican$Cas)
+@
+\noindent then we estimate $\xmin$ for each data set:
+<<cache=TRUE>>=
+est_na = estimate_xmin(m_na, pars=seq(1.5, 2.5, 0.001))
+est_us = estimate_xmin(m_us, pars=seq(1.5, 2.5, 0.001))
+@
+\noindent then update the power-law objects
+<<cache=TRUE>>=
+m_na$setXmin(est_na)
+m_us$setXmin(est_us)
+@
+\noindent The resulting fit lines can be plotted on the same figure
+<<fig.keep='none', cache=TRUE>>=
+plot(m_na)
+lines(m_na)
+##Don't create a new plot
+##Just store the output
+d = plot(m_us, draw=FALSE)
+points(d$x, d$y, col=2)
+lines(m_us, col=2)
+@
+\begin{marginfigure}
+\includegraphics[width=\textwidth]{graphics/v2_figure3-crop}
+\caption{Plots of the CDFs for the Native American and US American casualities. The lines of best fit are also given.}\label{F3}
+\end{marginfigure}
+\noindent The result is given in figure \ref{F3}. The tails of the distributions seens to follow a power-law. This is consistent with the expectation that smaller-scale engagements are less likely to be recorded. However, for larger scale engagements, it is very likely that a record is made.
+
+
+
+
+
+<<echo=FALSE>>=
+pdf("graphics/v2_figure2.pdf", width=6, height=4)
+setnicepar()
+
+plot(NativeAmerican$Date, NativeAmerican$Cas, 
+     log="y", pch=21, bg=1, 
+     ylim=c(1, 2000), 
+     cex=0.5, panel.first=grid(col="grey70"), 
+     xlab="Date", ylab="#Casualties")
+
+points(UsAmerican$Date, UsAmerican$Cas, 
+       pch=24, bg=2, cex=0.5)
+sink = dev.off()
+system("pdfcrop graphics/v2_figure2.pdf")
+
+
+
+pdf("graphics/v2_figure3.pdf", width=4, height=4)
+setnicepar()
+plot(m_na, bg=1, pch=21, cex=0.5,  
+     panel.first=grid(col="grey70"), 
+     xlab="#Casualties", ylab="CDF")
+lines(m_na, lwd=2, col=1)
+
+d = plot(m_us, draw=FALSE)
+points(d$x, d$y, bg=2, pch=24, cex=0.5)
+lines(m_us, lwd=2, col=2)
+sink = dev.off()
+system("pdfcrop graphics/v2_figure3.pdf")
+
+@
 
 
 \bibliography{poweRlaw}
+%\bibliographystyle{agsm}
 \bibliographystyle{plainnat}
+%\bibliographystyle{te}
 
 
-\clearpage
 
-\section*{Package and R version}
 
-\begin{table}
-\centering
-\begin{tabular}{@{} llll @{}}
-\toprule
-Package & Version\\
-\midrule
-parallel & \Sexpr{packageDescription("parallel")$Version}\\
-poweRlaw & \Sexpr{packageDescription("poweRlaw")$Version}\\
-VGAM & \Sexpr{packageDescription("VGAM")$Version}\\
-\bottomrule
-\end{tabular}
-\caption{A list of packages and versions used.}\label{A1}
-\end{table}
 
-<<>>=
-version
-@
+
+
 
 
 
 \end{document}
-
-<<echo=FALSE, eval=TRUE>>=
-##Used to generate the figures for github
-#setwd("../graphics/")
-ppi = 50
-png("../graphics/figure1.png", width=6*ppi, height=4*ppi, res=ppi)
-setnicepar(mfrow=c(1, 2))
-plot(m_m, xlab="x", ylab="CDF")
-lines(m_m, col=2, lty=2)
-grid()
-plot(m_bl, xlab="x", ylab="CDF")
-lines(m_bl, col=2, lty=2)
-grid()
-sink = dev.off()
-
-png("../graphics/figure2.png", width=6*ppi, height=4*ppi, res=ppi)
-setnicepar(mfrow=c(1,2))
-hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 2000), 
-     xlim=c(0, 30), main=NULL, breaks="fd")
-grid()
-hist(bs$bootstraps[,3], xlab=expression(alpha), 
-     ylim=c(0, 500), xlim=c(1.8, 2.1), main=NULL, 
-     breaks="fd")
-grid()
-sink=dev.off()
-
-mypalette
-setwd("../vignettes/")
-@
-
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-
-
-% eof
