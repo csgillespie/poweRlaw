@@ -36,3 +36,6 @@ graphics/figure?.pdf
 *.vrb
 *.xdy
 *.tdo
+examples.tex
+examples.pdf
+cache
