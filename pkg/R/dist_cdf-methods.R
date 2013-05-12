@@ -24,6 +24,8 @@ setMethod("dist_cdf",
           }
 )
 
+#' @rdname dist_cdf-methods
+#' @aliases dist_cdf,dislnorm-method
 setMethod("dist_cdf",
           signature = signature(m="dislnorm"),
           definition = function(m, 
@@ -51,6 +53,8 @@ setMethod("dist_cdf",
           }
 )
 
+#' @rdname dist_cdf-methods
+#' @aliases dist_cdf,dispois-method
 setMethod("dist_cdf",
           signature = signature(m="dispois"),
           definition = function(m, 

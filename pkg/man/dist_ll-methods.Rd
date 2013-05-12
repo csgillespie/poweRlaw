@@ -5,6 +5,7 @@
 \alias{dist_ll,conpl-method}
 \alias{dist_ll,dislnorm-method}
 \alias{dist_ll,displ-method}
+\alias{dist_ll,dispois-method}
 \title{The log-likelihood function}
 \arguments{
   \item{m}{The distribution reference object.}

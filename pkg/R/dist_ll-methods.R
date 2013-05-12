@@ -32,7 +32,7 @@ setMethod("dist_ll",
 )
 
 #' @rdname dist_ll-methods
-#' @aliases dist_ll,dislnorm-method
+#' @aliases dist_ll,dispois-method
 setMethod("dist_ll",
           signature = signature(m="dispois"),
           definition = function(m) {

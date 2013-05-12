@@ -1,9 +1,10 @@
-
-#' Discrete and continuous power-law objects
+#' Distribution objects
 #' 
-#' The reference objects \code{displ} and \code{conpl} are used 
-#' for parameter inference for discrete and continuous power-laws.
-#' Each class also inherits the \code{distribution} class. These
+#' The reference objects \code{displ}, \code{dispois},
+#' \code{dislnorm}, \code{conpl} and \code{conlnorm} are used 
+#' for parameter inference.
+#' Each class also inherits the \code{discrete_distribution} or
+#' \code{ctn_distribution} class. These
 #' are the main classes of the poweRlaw package. 
 #'
 #' @return a reference object
@@ -11,7 +12,8 @@
 #' @param xmin lower bound of the power-law distribution. 
 #' For the continuous  power-law, xmin >= 0 for the discrete 
 #' distributions, xmin >0
-#' @param pars the scaling parameter: alpha > 1
+#' @param pars distribution parameters. For power-laws
+#' pars > 1. The lognormal distribution has two parameters.
 #' @aliases displ-class
 #' @docType class
 #' @aliases conpl

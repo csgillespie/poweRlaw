@@ -1,8 +1,8 @@
 \docType{methods}
 \name{dist_data_cdf}
 \alias{dist_data_cdf}
-\alias{dist_data_cdf,conpl-method}
-\alias{dist_data_cdf,displ-method}
+\alias{dist_data_cdf,ctn_distribution-method}
+\alias{dist_data_cdf,discrete_distribution-method}
 \title{The data cumulative distribution function}
 \arguments{
   \item{m}{a reference class distribution object.}

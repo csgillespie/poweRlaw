@@ -70,8 +70,13 @@ get_cum_summary = function(x) {
 }
 
 
-#' @export
+#' @method plot bs_xmin
+#' @S3method plot bs_xmin
 plot.bs_xmin = function(x, ...){
+  old_par = par(no.readonly = TRUE)
+  on.exit(par(old_par))
+  
+  
   no_plots = ncol(x$bootstraps)-1
   par(mfrow=c(1, no_plots), 
       mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01,
@@ -84,7 +89,6 @@ plot.bs_xmin = function(x, ...){
     d = x$bootstraps[,i+1]
     l[[i]] = get_cum_summary(d)
   }
-  names(l) = c("xmin", paste0("Parameter", 1:(no_plots-1)))
   
   ##Xmin
   upp_y = ceiling(max(l[[1]]$m + l[[1]]$std_err))
@@ -92,19 +96,16 @@ plot.bs_xmin = function(x, ...){
   plot(l[[1]]$m, type="l", ylim=c(low_y, upp_y), 
        ylab="xmin", xlab="Iteration", 
        panel.first=grid(), col=cols[1])
-  
   lines(l[[1]]$m + l[[1]]$std_err, col=cols[2], lty=2)
   lines(l[[1]]$m - l[[1]]$std_err, col=cols[2], lty=2)
   
   for(i in 2:length(l)) {
-    
     upp_y = max(l[[i]]$m + l[[i]]$std_err)
     low_y = min(l[[i]]$m - l[[i]]$std_err)
     plot(l[[i]]$m, type="l", ylim=c(low_y, upp_y), 
-         ylab=paste("Par", i),
+         ylab=paste("Par", (i-1)),
          xlab="Iteration",
          panel.first=grid(), col=cols[1])
-    
     lines(l[[i]]$m + l[[i]]$std_err, col=cols[2])
     lines(l[[i]]$m - l[[i]]$std_err, col=cols[2])
   }
@@ -113,7 +114,12 @@ plot.bs_xmin = function(x, ...){
 }
 
 
-
+#' @method plot bs_p_xmin
+#' @S3method plot bs_p_xmin
+plot.bs_p_xmin = function(x, ...){
+  d = plot.bs_xmin(x, ...)
+  invisible(d)
+}
 
 
 

@@ -1,6 +1,6 @@
 ##TODO: Change discrete and CTN signatures
 #' @rdname dist_data_cdf-methods
-#' @aliases dist_data_cdf,displ-method
+#' @aliases dist_data_cdf,discrete_distribution-method
 setMethod("dist_data_cdf",
           signature = signature(m="discrete_distribution"),
           definition = function(m, lower_tail=TRUE, all_values=FALSE) {
@@ -24,7 +24,7 @@ setMethod("dist_data_cdf",
 )
 
 #' @rdname dist_data_cdf-methods
-#' @aliases dist_data_cdf,conpl-method
+#' @aliases dist_data_cdf,ctn_distribution-method
 setMethod("dist_data_cdf",
           signature = signature(m="ctn_distribution"),
           definition = function(m, lower_tail=TRUE) {
