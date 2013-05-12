@@ -40,10 +40,8 @@ set.seed(1)
 \begin{document}
 \maketitle
  \begin{abstract}
-The \verb$poweRlaw$ package provides code to fit discrete and continuous power-law distributions. 
+The \verb$poweRlaw$ package provides code to fit heavy tailed distributions, including discrete and continuous power-law distributions. 
 The fitting procedure follows the method detailed in Clauset \textit{et al.}\cite{clauset2009}. The scaling coefficient, $\alpha$, is obtained by maximising the likelihood. The cut-off value, $\xmin$, is estimated by minimising the Kolmogorov-Smirnoff statistic.
-
-Future versions of this package will allow other heavy tailed distributions to be fitted.
 \end{abstract}
 
 \section{Installation}
@@ -93,7 +91,7 @@ example(rpldis)
 demo(package="poweRlaw")
 data(package="poweRlaw")
 @
-\noindent For example, the Moby dick data set can be load using\marginnote{The package also contains the data set \texttt{moby\_sample}. This data set is 2000 randomly sampled values from the larger \cc{moby} data set.}
+\noindent For example, the Moby dick data set can be load using\marginnote{The package also contains the data set \texttt{moby\_sample}. This data set is two thousand randomly sampled values from the larger \cc{moby} data set.}
 <<>>=
 data(moby)
 @
@@ -372,9 +370,8 @@ m_m = displ$new(moby)
 m_m$setXmin(est)
 @
 
-\noindent All distribution objects list in table \ref{T1} are reference classes.\marginnote{See \texttt{\mbox{?setRefClass}} for further details on references classes.} The key point, is that unlike S4 classes, reference classes have a mutable state. Each distribution object has four fields:
+\noindent All distribution objects list in table \ref{T1} are reference classes.\marginnote{See \texttt{\mbox{?setRefClass}} for further details on references classes.} The key point,is that unlike S4 classes, reference classes have a mutable state. Each distribution object has four fields:
 \begin{itemize}
-\item \texttt{datatype}: This will be set to \textit{discrete} or \textit{continuous}.
 \item \texttt{dat}: a copy of the data.
 \item \texttt{xmin}: the lower cut-off $\xmin$.
 \item \texttt{pars}: a vector of parameter values.
@@ -455,10 +452,6 @@ if(!file.exists("plpva.r"))
   download.file("http://tuvalu.santafe.edu/~aaronc/powerlaws/plpva.r", destfile="plpva.r")
 source("plpva.r")
 @
-
-
-
-
 
 \section{Comparison with the \texttt{plfit} script}
 
