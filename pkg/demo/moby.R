@@ -14,10 +14,10 @@ lines(m, col=2)
 
 ##Now calculate the mle estimate and add to the plot
 mle_pars = estimate_pars(m)
-estimate_pars(m, pars=seq(1.5, 3.5, 0.001))
-m$setPars(1.775)
+est = estimate_pars(m, pars=seq(1.5, 3.5, 0.001))
+m$setPars(est)
 
-lines(m, col=2)
+lines(m, col=3)
 
 ##Estimate xmin
 (est = estimate_xmin(m))
@@ -25,13 +25,17 @@ m$setXmin(est)
 lines(m, col=4)
 
 ##Uncertainity in xmin
-bs = bootstrap(m, no_of_sims=100)
+bs1 = bootstrap(m, no_of_sims=5000, threads=2)
+bs2 = bootstrap_p(m, no_of_sims=5000, threads=2)
 
+bootstrap_moby = bs1
+bootstrap_p_moby = bs2
+save(bootstrap_p_moby, file="pkg/data/bootstrap_p_moby.RData")
 
 
 ##This can take a while
-bs1 = bootstrap_xmin(m, no_of_sims=5000, threads=4, pars = seq(1.6, 2.5, 0.01))
-bs2 = bootstrap_xmin(m, no_of_sims=5000, threads=4)
+bs1 = bootstrap(m, no_of_sims=5000, threads=4, pars = seq(1.6, 2.5, 0.01))
+bs2 = bootstrap(m, no_of_sims=5000, threads=4)
 
 ##Plot uncertainity in xmin and alpha
 par(mfrow=c(1, 2))
@@ -42,5 +46,7 @@ hist(bs1$bootstraps[,3], breaks="fd")
 hist(bs2$bootstraps[,2], breaks="fd")
 hist(bs2$bootstraps[,3], breaks="fd")
 
-apply(bs1[[3]], 2, sd)
+apply(bs1[[2]], 2, sd)
 apply(bs2[[3]], 2, sd)
+
+bs2$p
