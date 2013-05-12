@@ -1,7 +1,9 @@
-Version 0.16.2
+Version 0.17.0
 --------------
- * Bug fix in CTN ll fixed.
- * Bug fix in on (re) initialisation of dat
+ * Added discrete lognormal, lognormal and poisson distributions
+ * Generic plot functions added for bootstrap output
+ * Test suite
+ * Bug fixes
 
 Version 0.16.1
 --------------
