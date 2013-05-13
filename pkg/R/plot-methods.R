@@ -55,30 +55,37 @@ setMethod("plot",
 ######################################
 ######################################
 ######################################
-
-
-
-get_cum_summary = function(x) {
-  m = cumsum(x)/1:length(x)
-  x2 = cumsum(x^2)/1:length(x)
-  v = x2 - m^2
-  sqrt(tail(v))
-  std_err = qt(0.975, 1:length(x))*sqrt(v)/sqrt(1:length(x))
-  dd = data.frame(m = m, std_err = std_err)
+get_cum_summary = function(x,trim=0.1) {
+  n = length(x)
+  m = cumsum(x)/1:n
+  x2 = cumsum(x^2)
+  v = (x2 - m^2*(1:n))/(1:n-1)
+  
+  dd = data.frame(m = m, v = v)
   dd$x = 1:nrow(dd)
+  
+  dd$m_up = m + qt(0.975, 1:length(x))*sqrt(v)/sqrt(1:n)
+  dd$m_low = m + qt(0.025, 1:length(x))*sqrt(v)/sqrt(1:n)
+  
+  ##XXX: Should be n not n-1
+  dd$v_low = (1:n-1)*v/qchisq(0.975, 1:n)
+  dd$v_up = (1:n-1)*v/qchisq(0.025, 1:n)
+  dd = dd[-1,]
+  dd = dd[floor(nrow(dd)*trim):nrow(dd), ]
+  
   return(dd)
 }
 
-
+#CI for s is sqrt((n-1)*s/chi(n-1))
+  
 #' @method plot bs_xmin
 #' @S3method plot bs_xmin
-plot.bs_xmin = function(x, ...){
+plot.bs_xmin = function(x, trim=0.1, ...){
   old_par = par(no.readonly = TRUE)
   on.exit(par(old_par))
   
-  
   no_plots = ncol(x$bootstraps)-1
-  par(mfrow=c(1, no_plots), 
+  par(mfrow=c(2, no_plots), 
       mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01,
       cex.axis=0.9, las=1)
   cols = c(rgb(170,93,152, maxColorValue=255),
@@ -87,30 +94,54 @@ plot.bs_xmin = function(x, ...){
   l = list()
   for(i in 1:no_plots){
     d = x$bootstraps[,i+1]
-    l[[i]] = get_cum_summary(d)
+    l[[i]] = get_cum_summary(d, trim)
   }
   
   ##Xmin
-  upp_y = ceiling(max(l[[1]]$m + l[[1]]$std_err))
-  low_y = floor(min(l[[1]]$m - l[[1]]$std_err))
-  plot(l[[1]]$m, type="l", ylim=c(low_y, upp_y), 
+  upp_y = ceiling(max(l[[1]]$m_up))
+  low_y = floor(min(l[[1]]$m_low))
+  plot(l[[1]]$x, l[[1]]$m, type="l", ylim=c(low_y, upp_y), 
        ylab="xmin", xlab="Iteration", 
-       panel.first=grid(), col=cols[1])
-  lines(l[[1]]$m + l[[1]]$std_err, col=cols[2], lty=2)
-  lines(l[[1]]$m - l[[1]]$std_err, col=cols[2], lty=2)
+       panel.first=grid(), col=cols[1],
+       main="Cumulative mean")
+  lines(l[[1]]$x, l[[1]]$m_up, col=cols[2], lty=2)
+  lines(l[[1]]$x, l[[1]]$m_low, col=cols[2], lty=2)
   
   for(i in 2:length(l)) {
-    upp_y = max(l[[i]]$m + l[[i]]$std_err)
-    low_y = min(l[[i]]$m - l[[i]]$std_err)
-    plot(l[[i]]$m, type="l", ylim=c(low_y, upp_y), 
+    upp_y = max(l[[i]]$m_up)
+    low_y = min(l[[i]]$m_low)
+    plot(l[[i]]$x, l[[i]]$m, type="l", ylim=c(low_y, upp_y), 
          ylab=paste("Par", (i-1)),
          xlab="Iteration",
-         panel.first=grid(), col=cols[1])
-    lines(l[[i]]$m + l[[i]]$std_err, col=cols[2])
-    lines(l[[i]]$m - l[[i]]$std_err, col=cols[2])
+         panel.first=grid(), col=cols[1], 
+         main="Cumulative mean")
+    lines(l[[i]]$x, l[[i]]$m_up, col=cols[2])
+    lines(l[[i]]$x, l[[i]]$m_low, col=cols[2])
+  }
+  
+  ##Xmin
+  upp_y = max(sqrt(l[[1]]$v_up))
+  low_y = min(sqrt(l[[1]]$v_low))
+  plot(l[[1]]$x, sqrt(l[[1]]$v), type="l", ylim=c(low_y, upp_y), 
+       ylab="xmin", xlab="Iteration", 
+       panel.first=grid(), col=cols[1], 
+       main="Cumulative std dev")
+  lines(l[[1]]$x, sqrt(l[[1]]$v_up), col=cols[2], lty=2)
+  lines(l[[1]]$x, sqrt(l[[1]]$v_low), col=cols[2], lty=2)
+
+  for(i in 2:length(l)) {
+    upp_y = max(sqrt(l[[i]]$v_up))
+    low_y = min(sqrt(l[[i]]$v_low))
+    plot(l[[i]]$x, sqrt(l[[i]]$v), 
+         type="l", ylim=c(low_y, upp_y), 
+         ylab=paste("Par", (i-1)),
+         xlab="Iteration",
+         panel.first=grid(), col=cols[1], 
+         main="Cumulative std dev")
+    lines(l[[i]]$x, sqrt(l[[i]]$v_up), col=cols[2])
+    lines(l[[i]]$x, sqrt(l[[i]]$v_low), col=cols[2])
   }
   invisible(l)
-  
 }
 
 
