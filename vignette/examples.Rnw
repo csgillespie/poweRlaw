@@ -1,11 +1,6 @@
 \documentclass[a4paper,justified,openany]{tufte-handout}
 \setcounter{secnumdepth}{2}
-
-
-
 \usepackage{microtype}
-% -------------------------------------------------------------------------------
-
 %\usepackage{cite} % Make references as [1-4], not [1,2,3,4]
 \usepackage{url}  % Formatting web addresses  
 %\usepackage[utf8]{inputenc} %unicode support
@@ -52,7 +47,6 @@ The fitting procedure follows the method detailed in Clauset \textit{et al.}\cit
 <<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
 if(!file.exists("blackouts.txt"))
   download.file("http://goo.gl/BsqnP", destfile="blackouts.txt")
-
 @
 
 \section{Moby Dick}
@@ -74,17 +68,33 @@ m_pl = displ$new(moby)
 est = estimate_xmin(m_pl)
 m_pl$setXmin(est)
 @
+\noindent This yields a threshold estimate of $\xmin=\Sexpr{est$xmin}$ and scaling parameter $\alpha=\Sexpr{est$pars}$, which matches results found in \citeauthor{clauset2009}.
 
+Alternatively, we could also fit a discrete log-normal distribution:
 
-<<>>=
+<<warning=FALSE, cache=TRUE>>=
 m_ln = dislnorm$new(moby)
 est = estimate_xmin(m_ln)
+@
+<<echo=FALSE, cache=TRUE>>=
+est_ln = est
+est_ln$pars = signif(est_ln$pars, 3)
 m_ln$setXmin(est)
-
+m_pois = dispois$new(moby)
+est = estimate_xmin(m_pois)
+m_pois$setXmin(est)
 @
 
+\noindent which yeilds a lower threshold of $\xmin=\Sexpr{est_ln$xmin}$ and parameters $(\Sexpr{est_ln$pars[1]},$ $\Sexpr{est_ln$pars[2]})$. A similar procedure is applied to fit the Poisson distribution; we create a distribution object using \cc{dispois}, then fit as before.
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{graphics/v2_figure1a-crop}
+\caption{Data CDF of the Moby Dick data set. The fitted power-law (green line), log-normal (red line) and poisson (blue) distributions are also given.}\label{F1}
+\end{marginfigure}
 
-<<>>=
+The data CDF and lines of best fit for all three distributions are given figure \ref{F1}. It clear that the Poisson distribution is not apprioate for this data set. However, the log-normal and power-law distribution both provide reasonable fits to the data.
+
+<<echo=FALSE, cache=TRUE>>=
 pdf("graphics/v2_figure1a.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
 plot(m_pl, xlab="x", ylab="CDF", 
@@ -96,8 +106,78 @@ lines(m_ln, col=3, lwd=2)
 lines(m_pois, col=4, lwd=2)
 
 sink = dev.off()
-system("pdfcrop graphics/v2_figure1.pdf")
+system("pdfcrop graphics/v2_figure1a.pdf")
 @
+
+<<echo=FALSE>>=
+data(bootstrap_moby)
+bs = bootstrap_moby
+@
+
+To get a handle on the uncertainity in the paramater estimates, we use a bootstrapping procedure, via the \texttt{bootstrap} function. This procedure can be applied to any distribution object. Furthermore, the bootstrap procedure can utilize multiple CPU cores to speed up inference. 
+<<eval=FALSE>>=
+bs = bootstrap(m_pl, no_of_sims=5000, threads=2)
+@
+\noindent The boostrap results can be explored in a variety way. First we can estimate the standard deviation of the parameter uncertainity, i.e.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{graphics/v2_figure1b-crop}
+\caption{Some plots}
+\end{figure}
+<<>>=
+sd(bs$bootstraps[,2])
+sd(bs$bootstraps[,3])
+@
+\noindent This can also be visualised using the inbuilt plot function:
+<<fig.keep='none'>>=
+plot(bs, trim=0.1)
+@
+\noindent to get figure \ref{F2}. This top row of graphics in figure \ref{F2} give a 95\% confidence interval for mean estimate of the parameters. The bottom row of graphics give a 95\% confidence for the standard deviation of the parameters. The parameter \texttt{trim} in the \texttt{plot} function controls the percentage of samples to display. When \texttt{trim=0.1}, we only display the final 90\% of data. 
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{graphics/v2_figure1c-crop}
+\caption{Some plots}\label{F3}
+\end{marginfigure}
+
+Alternatively, we can construct histograms to help understand the sampling distribution
+<<fig.keep='none'>>=
+hist(bs$bootstraps[,2])
+hist(bs$bootstraps[,3]) 
+@
+\noindent this gives figure \ref{F3}. 
+
+A similar bootstrap analysis can be obtained for the lognormal distribution
+<<eval=FALSE>>=
+bs1 = bootstrap(m_ln)
+@
+\noindent in this case we would obtain uncertainity estimates for both of the log-normal parameters.
+
+<<echo=FALSE>>=
+pdf("graphics/v2_figure1b.pdf", width=12, height=9)
+plot(bs)
+sink=dev.off()
+system("pdfcrop graphics/v2_figure1b.pdf")
+
+pdf("graphics/v2_figure1c.pdf", width=4, height=8)
+setnicepar(mfrow=c(2, 1))
+hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 1600), 
+     xlim=c(0, 45), main=NULL, breaks="fd")
+hist(bs$bootstraps[,3], xlab=expression(alpha), 
+     ylim=c(0, 400), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
+sink = dev.off()
+system("pdfcrop graphics/v2_figure1c.pdf")
+@
+
+<<echo=FALSE>>=
+data(bootstrap_p_moby)
+bs_p = bootstrap_p_moby
+y = bs_p
+class(y) = "bs_xmin"
+plot(y)
+@
+
+
 \clearpage
 
 \section{Electrical blackouts}

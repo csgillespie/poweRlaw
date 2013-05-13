@@ -10,7 +10,7 @@
 \alias{displ-class}
 \alias{dispois}
 \alias{dispois-class}
-\title{Discrete and continuous power-law objects}
+\title{Distribution objects}
 \arguments{
   \item{x}{the data vector}
 
@@ -18,17 +18,19 @@
   For the continuous power-law, xmin >= 0 for the discrete
   distributions, xmin >0}
 
-  \item{pars}{the scaling parameter: alpha > 1}
+  \item{pars}{distribution parameters. For power-laws pars
+  > 1. The lognormal distribution has two parameters.}
 }
 \value{
   a reference object
 }
 \description{
-  The reference objects \code{displ} and \code{conpl} are
-  used for parameter inference for discrete and continuous
-  power-laws. Each class also inherits the
-  \code{distribution} class. These are the main classes of
-  the poweRlaw package.
+  The reference objects \code{displ}, \code{dispois},
+  \code{dislnorm}, \code{conpl} and \code{conlnorm} are
+  used for parameter inference. Each class also inherits
+  the \code{discrete_distribution} or
+  \code{ctn_distribution} class. These are the main classes
+  of the poweRlaw package.
 }
 \examples{
 data(moby)
