@@ -76,42 +76,22 @@ get_cum_summary = function(x,trim=0.1) {
   return(dd)
 }
 
-#CI for s is sqrt((n-1)*s/chi(n-1))
-  
-#' @method plot bs_xmin
-#' @S3method plot bs_xmin
-plot.bs_xmin = function(x, trim=0.1, ...){
+create_plots = function(l, no_plots) {
   old_par = par(no.readonly = TRUE)
   on.exit(par(old_par))
   
-  no_plots = ncol(x$bootstraps)-1
+  
   par(mfrow=c(2, no_plots), 
       mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01,
       cex.axis=0.9, las=1)
   cols = c(rgb(170,93,152, maxColorValue=255),
            rgb(103,143,57, maxColorValue=255))
   
-  l = list()
-  for(i in 1:no_plots){
-    d = x$bootstraps[,i+1]
-    l[[i]] = get_cum_summary(d, trim)
-  }
-  
-  ##Xmin
-  upp_y = ceiling(max(l[[1]]$m_up))
-  low_y = floor(min(l[[1]]$m_low))
-  plot(l[[1]]$x, l[[1]]$m, type="l", ylim=c(low_y, upp_y), 
-       ylab="xmin", xlab="Iteration", 
-       panel.first=grid(), col=cols[1],
-       main="Cumulative mean")
-  lines(l[[1]]$x, l[[1]]$m_up, col=cols[2], lty=2)
-  lines(l[[1]]$x, l[[1]]$m_low, col=cols[2], lty=2)
-  
-  for(i in 2:length(l)) {
+  for(i in 1:length(l)) {
     upp_y = max(l[[i]]$m_up)
     low_y = min(l[[i]]$m_low)
     plot(l[[i]]$x, l[[i]]$m, type="l", ylim=c(low_y, upp_y), 
-         ylab=paste("Par", (i-1)),
+         ylab=names(l[i]),
          xlab="Iteration",
          panel.first=grid(), col=cols[1], 
          main="Cumulative mean")
@@ -119,40 +99,51 @@ plot.bs_xmin = function(x, trim=0.1, ...){
     lines(l[[i]]$x, l[[i]]$m_low, col=cols[2])
   }
   
-  ##Xmin
-  upp_y = max(sqrt(l[[1]]$v_up))
-  low_y = min(sqrt(l[[1]]$v_low))
-  plot(l[[1]]$x, sqrt(l[[1]]$v), type="l", ylim=c(low_y, upp_y), 
-       ylab="xmin", xlab="Iteration", 
-       panel.first=grid(), col=cols[1], 
-       main="Cumulative std dev")
-  lines(l[[1]]$x, sqrt(l[[1]]$v_up), col=cols[2], lty=2)
-  lines(l[[1]]$x, sqrt(l[[1]]$v_low), col=cols[2], lty=2)
-
-  for(i in 2:length(l)) {
+  ##Plot the std deviations
+  for(i in 1:length(l)) {
     upp_y = max(sqrt(l[[i]]$v_up))
     low_y = min(sqrt(l[[i]]$v_low))
-    plot(l[[i]]$x, sqrt(l[[i]]$v), 
-         type="l", ylim=c(low_y, upp_y), 
-         ylab=paste("Par", (i-1)),
-         xlab="Iteration",
-         panel.first=grid(), col=cols[1], 
-         main="Cumulative std dev")
-    lines(l[[i]]$x, sqrt(l[[i]]$v_up), col=cols[2])
-    lines(l[[i]]$x, sqrt(l[[i]]$v_low), col=cols[2])
+    if(names(l[i]) != "p-value") {
+      plot(l[[i]]$x, sqrt(l[[i]]$v), 
+           type="l", ylim=c(low_y, upp_y), 
+           ylab=names(l[i]),
+           xlab="Iteration",
+           panel.first=grid(), col=cols[1], 
+           main="Cumulative std dev")
+      lines(l[[i]]$x, sqrt(l[[i]]$v_up), col=cols[2])
+      lines(l[[i]]$x, sqrt(l[[i]]$v_low), col=cols[2])
+    }
   }
-  invisible(l)
+}
+#CI for s is sqrt((n-1)*s/chi(n-1))
+
+#' @method plot bs_xmin
+#' @S3method plot bs_xmin
+plot.bs_xmin = function(x, trim=0.1, ...){
+  no_plots = ncol(x$bootstraps) - 1
+  l = list()
+  for(i in 1:no_plots){
+    d = x$bootstraps[,i+1]
+    l[[i]] = get_cum_summary(d, trim)
+  }
+  names(l) = c("Xmin", paste("Par", 2:no_plots-1))
+  create_plots(l, no_plots)
 }
 
 
 #' @method plot bs_p_xmin
 #' @S3method plot bs_p_xmin
-plot.bs_p_xmin = function(x, ...){
-  d = plot.bs_xmin(x, ...)
-  invisible(d)
+plot.bs_p_xmin = function(x, trim=0.1, ...){
+  no_plots = ncol(x$bootstraps)
+  l = list()
+  for(i in 1:(no_plots-1)){
+    d = x$bootstraps[,i+1]
+    l[[i]] = get_cum_summary(d, trim)
+  }
+  l[[no_plots]] = get_cum_summary(x$gof < x$bootstraps$KS, trim)
+  
+  names(l) = c("Xmin", paste("Par", 2:(no_plots-1)-1), "p-value")
+  #no_plots = ncol(x$bootstraps) - 1
+  create_plots(l, no_plots)
+  
 }
-
-
-
-
-
