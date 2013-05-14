@@ -49,7 +49,7 @@ if(!file.exists("blackouts.txt"))
   download.file("http://goo.gl/BsqnP", destfile="blackouts.txt")
 @
 
-\section{Moby Dick}
+\section{Discrete data: Moby Dick}
 
 This example investigates the frequency of occurrence of unique words in the novel Moby Dick by Herman Melville\cite{clauset2009,newman2005}. The data can be downloaded from
 \begin{center}
@@ -205,7 +205,7 @@ system("pdfcrop graphics/v2_figure1d.pdf")
 @
 \clearpage
 
-\section{Electrical blackouts}
+\section{Continous data: electrical blackouts}
 
 The numbers of customers affected in electrical blackouts in the United States between 1984 and 2002.\cite{newman2005} The data set can be downloaded from Clauset's website:\sidenote{\url{http://goo.gl/BsqnP}} 
 <<>>=
@@ -259,7 +259,7 @@ system("pdfcrop graphics/v2_figure1.pdf")
 @
 
 \clearpage
-\section{The American-Indian War}
+\section{Multiple data sets: the American-Indian war}
 
 In a recent paper, \citeauthor{Bohorquez2009} investigated insurgent attacks in Afghanistan, Iraq, Colombia, and Peru.\cite{Bohorquez2009} Each time, the data resembled power laws. \citeauthor{Friedman2013} used the power-law nature of casualties to infer under-reporting in the American-Indian War. Briefly, by fitting a power-law distribution to the observed process, the latent, unobserved casualties can be inferred.\cite{Friedman2013}  
 
