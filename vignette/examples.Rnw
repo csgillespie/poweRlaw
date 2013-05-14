@@ -85,14 +85,14 @@ est = estimate_xmin(m_pois)
 m_pois$setXmin(est)
 @
 
-\noindent which yeilds a lower threshold of $\xmin=\Sexpr{est_ln$xmin}$ and parameters $(\Sexpr{est_ln$pars[1]},$ $\Sexpr{est_ln$pars[2]})$. A similar procedure is applied to fit the Poisson distribution; we create a distribution object using \cc{dispois}, then fit as before.
+\noindent which yields a lower threshold of $\xmin=\Sexpr{est_ln$xmin}$ and parameters $(\Sexpr{est_ln$pars[1]},$ $\Sexpr{est_ln$pars[2]})$. A similar procedure is applied to fit the Poisson distribution; we create a distribution object using \cc{dispois}, then fit as before.
 \begin{marginfigure}
 \centering
 \includegraphics[width=\textwidth]{graphics/v2_figure1a-crop}
 \caption{Data CDF of the Moby Dick data set. The fitted power-law (green line), log-normal (red line) and poisson (blue) distributions are also given.}\label{F1}
 \end{marginfigure}
 
-The data CDF and lines of best fit for all three distributions are given figure \ref{F1}. It clear that the Poisson distribution is not apprioate for this data set. However, the log-normal and power-law distribution both provide reasonable fits to the data.
+The data CDF and lines of best fit for all three distributions are given figure \ref{F1}. It clear that the Poisson distribution is not appropriate for this data set. However, the log-normal and power-law distribution both provide reasonable fits to the data.
 
 <<echo=FALSE, cache=TRUE>>=
 pdf("graphics/v2_figure1a.pdf", width=4, height=4)
@@ -114,11 +114,11 @@ data(bootstrap_moby)
 bs = bootstrap_moby
 @
 
-To get a handle on the uncertainity in the paramater estimates, we use a bootstrapping procedure, via the \texttt{bootstrap} function. This procedure can be applied to any distribution object. Furthermore, the bootstrap procedure can utilize multiple CPU cores to speed up inference. 
+To get a handle on the uncertainty in the parameter estimates, we use a bootstrapping procedure, via the \texttt{bootstrap} function. This procedure can be applied to any distribution object. Furthermore, the bootstrap procedure can utilize multiple CPU cores to speed up inference. 
 <<eval=FALSE>>=
 bs = bootstrap(m_pl, no_of_sims=5000, threads=2)
 @
-\noindent The boostrap results can be explored in a variety way. First we can estimate the standard deviation of the parameter uncertainity, i.e.
+\noindent The boostrap results can be explored in a variety way. First we can estimate the standard deviation of the parameter uncertainty, i.e.
 
 \begin{figure}[t]
 \centering
@@ -147,11 +147,11 @@ hist(bs$bootstraps[,3])
 @
 \noindent this gives figure \ref{F3}. 
 
-A similar bootstrap analysis can be obtained for the lognormal distribution
+A similar bootstrap analysis can be obtained for the log-normal distribution
 <<eval=FALSE>>=
 bs1 = bootstrap(m_ln)
 @
-\noindent in this case we would obtain uncertainity estimates for both of the log-normal parameters.
+\noindent in this case we would obtain uncertainty estimates for both of the log-normal parameters.
 
 <<echo=FALSE>>=
 pdf("graphics/v2_figure1b.pdf", width=12, height=9)
@@ -167,17 +167,42 @@ hist(bs$bootstraps[,3], xlab=expression(alpha),
      ylim=c(0, 400), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
 sink = dev.off()
 system("pdfcrop graphics/v2_figure1c.pdf")
-@
-
-<<echo=FALSE>>=
 data(bootstrap_p_moby)
 bs_p = bootstrap_p_moby
-y = bs_p
-class(y) = "bs_xmin"
-plot(y)
+@
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{graphics/v2_figure1d-crop}
+\caption{}\label{F4}
+\end{figure}
+
+Clasuett recommend that the power-law hypothesis should be explicitly tested. This test can be carried out with another bootstrap procedure. Using the \texttt{bootstrap\_p} function
+
+<<eval=FALSE>>=
+bs_p = bootstrap_p(m_pl)
 @
 
+\noindent we can estimate $p$. The point estimate of the $p$-value is one of the element of the \texttt{bs\_p} object, viz
+<<>>=
+bs_p$p
+@
+\noindent Alternatively, we can plot the results
 
+<<fig.keep='none', cache=TRUE>>=
+plot(bs_p)
+@
+
+\noindent to obtain figure \ref{F4}. The graph in the top right hand corner gives the cumulative estimate of the $p$-value; the final value of the purple line corresponds to \texttt{bs\_p\$p}. Also given are approximate 95\% confidence intervals. 
+
+
+<<echo=FALSE, cache=TRUE>>=
+
+pdf("graphics/v2_figure1d.pdf", width=12, height=9)
+setnicepar(mfrow=c(2, 1))
+plot(bs_p)
+sink = dev.off()
+system("pdfcrop graphics/v2_figure1d.pdf")
+@
 \clearpage
 
 \section{Electrical blackouts}
@@ -236,14 +261,14 @@ system("pdfcrop graphics/v2_figure1.pdf")
 \clearpage
 \section{The American-Indian War}
 
-In a recent paper, \citeauthor{Bohorquez2009} investigated insurgent attacks in Afghanistan, Iraq, Colombia, and Peru.\cite{Bohorquez2009} Each time, the data resembled power laws. \citeauthor{Friedman2013} used the power-law nature of casualities to infer under-reporting in the American-Indian War. Briefly, by fitting a power-law distribution to the observed process, the latent, unobserved casualities can be inferred.\cite{Friedman2013}  
+In a recent paper, \citeauthor{Bohorquez2009} investigated insurgent attacks in Afghanistan, Iraq, Colombia, and Peru.\cite{Bohorquez2009} Each time, the data resembled power laws. \citeauthor{Friedman2013} used the power-law nature of casualties to infer under-reporting in the American-Indian War. Briefly, by fitting a power-law distribution to the observed process, the latent, unobserved casualties can be inferred.\cite{Friedman2013}  
 
-The number of casulaties observed in the American-Indian War can via
+The number of casualties observed in the American-Indian War can via
 <<>>=
 data(NativeAmerican)
 data(UsAmerican)
 @
-\noindent Each data frame, has two columns. The first column is number of casulaties recorded, the second the conflict date
+\noindent Each data frame, has two columns. The first column is number of casualties recorded, the second the conflict date
 <<>>=
 head(NativeAmerican, 3)
 @
@@ -251,7 +276,7 @@ head(NativeAmerican, 3)
 \begin{figure}[b]
 \centering
 \includegraphics[width=0.9\textwidth]{graphics/v2_figure2-crop}
-\caption{Casuality record for the Indian-American war, 1776 -- 1890. Native Americans casualities (purple cirles) and US Americans casualities (green triangles). Data taken from \citeauthor{Friedman2013}.}\label{F2}
+\caption{Casualty record for the Indian-American war, 1776 -- 1890. Native Americans casualties (purple circles) and US Americans casualties (green triangles). Data taken from \citeauthor{Friedman2013}.}\label{F2}
 \end{figure}
 
 It is straightforward to fit a discrete power-law to this data set. First, we create discrete power-law objects:
@@ -281,9 +306,9 @@ lines(m_us, col=2)
 @
 \begin{marginfigure}
 \includegraphics[width=\textwidth]{graphics/v2_figure3-crop}
-\caption{Plots of the CDFs for the Native American and US American casualities. The lines of best fit are also given.}\label{F3}
+\caption{Plots of the CDFs for the Native American and US American casualties. The lines of best fit are also given.}\label{F3}
 \end{marginfigure}
-\noindent The result is given in figure \ref{F3}. The tails of the distributions seens to follow a power-law. This is consistent with the expectation that smaller-scale engagements are less likely to be recorded. However, for larger scale engagements, it is very likely that a record is made.
+\noindent The result is given in figure \ref{F3}. The tails of the distributions seems to follow a power-law. This is consistent with the expectation that smaller-scale engagements are less likely to be recorded. However, for larger scale engagements, it is very likely that a record is made.
 
 
 
