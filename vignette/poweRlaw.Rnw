@@ -23,7 +23,7 @@
 
 \date{Last updated: \today}  % if the \date{} command is left out, the current date will be used
 
-\title{The poweRlaw package}
+\title{The poweRlaw package: a general overview}
 \author[Colin S. Gillespie]{Colin S. Gillespie}
 \date{Last updated: \today}
 
@@ -40,8 +40,8 @@ set.seed(1)
 \begin{document}
 \maketitle
  \begin{abstract}
-The \verb$poweRlaw$ package provides code to fit heavy tailed distributions, including discrete and continuous power-law distributions. 
-The fitting procedure follows the method detailed in Clauset \textit{et al.}\cite{clauset2009}. The scaling coefficient, $\alpha$, is obtained by maximising the likelihood. The cut-off value, $\xmin$, is estimated by minimising the Kolmogorov-Smirnoff statistic.
+The \cc{poweRlaw} package provides code to fit heavy tailed distributions, including discrete and continuous power-law distributions. 
+The fitting procedure follows the method detailed in Clauset \textit{et al.}\cite{clauset2009}. The parameter values are obtained by maximising the likelihood. The cut-off value, $\xmin$, is estimated by minimising the Kolmogorov-Smirnoff statistic.
 \end{abstract}
 
 \section{Installation}
@@ -52,7 +52,7 @@ The fitting procedure follows the method detailed in Clauset \textit{et al.}\cit
 % @
 % \noindent from any machine with an internet connection. 
 
-The package is hosted on github.\sidenote{The intention is eventually host this package on CRAN.} The package can be installed using the \cc{devtools} package:\sidenote{If use Windows, you need to install the \texttt{Rtools} package first.}
+The package is hosted on github.\sidenote{The intention is to eventually host this package on CRAN.} The package can be installed using the \cc{devtools} package:\sidenote{If use Windows, you will need to install the \texttt{Rtools} package first.}
 <<eval=FALSE>>=
 install.packages("devtools")
 library(devtools)
@@ -63,10 +63,9 @@ install_github("poweRlaw", "csgillespie", subdir="pkg")
 library(poweRlaw)
 @
 
-
 \section{Accessing documentation}
 
-I have tried to ensure that the package and all associated functions and datasets are properly documented with runnable examples. The command
+Even function and dataset in the package is documented. The command
 <<results='hide'>>=
 help(package="poweRlaw")
 @
@@ -74,17 +73,18 @@ help(package="poweRlaw")
 <<results='hide'>>=
 vignette(package="poweRlaw")
 @
-\noindent At the time of writing, \emph{this} vignette is the only one available, and can be accessed from the R command line with
+\noindent Currently, there are two vignettes available. This vignette, which gives an overview of the functionality, and a worked examples vignette. This documents can be accessed via
 <<eval=FALSE>>=
 vignette("poweRlaw", package="poweRlaw")
+vignette("examples", package="poweRlaw")
 @
-\noindent Help on functions can be obtained using the usual R mechanisms. For example, help on the function \verb$rpldis$ can be obtained with
+\noindent Help on functions can be obtained using the usual R mechanisms. For example, help on the method \verb$displ$ can be obtained with
 <<message=FALSE,results='hide', tidy=FALSE>>=
-?rpldis
+?displ
 @
 \noindent and the associated example can be run with
 <<results='hide',fig.keep='none'>>=
-example(rpldis)
+example(displ)
 @
 \noindent A list of demos and data sets associated with the package can be obtained with
 <<eval=FALSE>>=
@@ -95,18 +95,24 @@ data(package="poweRlaw")
 <<>>=
 data(moby)
 @
-\noindent After running this command, the vector \verb$moby$ will be accessible, and can be examined by typing
+\noindent After running this command, the vector \cc{moby} will be accessible, and can be examined by typing
 <<results='hide'>>=
 moby
 @
 \noindent at the R command prompt.
+
+If you use this package, please cite it. The appropriate citation can be obtained via:
+<<results='hide'>>=
+citation("poweRlaw")
+@
+
 
 
 \section{Example: Word frequency in Moby Dick}
 
 This example investigates the frequency of occurrence of unique words in the novel Moby Dick by Herman Melville\cite{clauset2009,newman2005}. The data can be downloaded from
 \begin{center}
-\url{http://tuvalu.santafe.edu/~aaronc/power laws/data.htm}
+\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm}
 \end{center}
 \noindent or loaded directly
 <<>>=
@@ -115,16 +121,16 @@ data(moby)
 
 \subsection{Fitting a discrete power-law}
 
-To fit a discrete power-law, we create a discrete power-law object, \texttt{displ}
+To fit a discrete power-law,\sidenote{The examples vignette contains a more thorough analysis of this particular data set.} we create a discrete power-law object, \texttt{displ}\sidenote{\cc{displ}: discrete power-law.}
 <<>>=
 m_m = displ$new(moby)
 @
-\noindent Initially the lower cut-off, $\xmin$ is set to the smallest $x$ value and the scaling parameter, \texttt{alpha}, is set to \texttt{NULL}
+\noindent Initially the lower cut-off $\xmin$, is set to the smallest $x$ value and the scaling parameter, $\alpha$, is set to \texttt{NULL}
 <<tidy=FALSE>>=
 m_m$getXmin()
 m_m$getPars()
 @
-\noindent The distribution object also has standard setters
+\noindent This object also has standard setters
 <<>>=
 m_m$setXmin(5)
 m_m$setPars(2)
@@ -133,7 +139,7 @@ m_m$setPars(2)
 <<>>=
 estimate_pars(m_m)
 @
-\noindent To estimate the lower bound, we minimise the distance between the data and the fitted model CDF, that is
+\noindent To estimate the lower bound $\xmin$, we minimise the distance between the data and the fitted model CDF, that is
 \[
 D(x) = \max_{x \ge \xmin} \vert S(x) - P(x) \vert
 \]
@@ -141,12 +147,14 @@ D(x) = \max_{x \ge \xmin} \vert S(x) - P(x) \vert
 \begin{marginfigure}
 \centering
 \includegraphics[width=\textwidth]{graphics/figure1-crop}
-\caption{Plot of the data CDF for the Moby Dick data set. This corresponds to figure 6.1(a) in Clausett, 2009. Plot of data CDF with line of best fit.}
+\caption{Plot of the data CDF for the Moby Dick data set. This corresponds to figure 6.1(a) in Clauset, 2009. The line corresponds to a power-law distribution with parameters $\xmin=7$ and $\alpha=1.95$.}
 \end{marginfigure}
 <<>>=
 (est = estimate_xmin(m_m))
 @
-\noindent We can then set parameters of power-law distribution to the "optimal" values
+\noindent For the Moby-Dick data set, the minimum is achieved when $\xmin=7$ and $D(7) = \Sexpr{signif(est$KS, 3)}$.
+
+We can then set parameters of power-law distribution to the "optimal" values
 <<>>=
 m_m$setXmin(est)
 @
@@ -162,15 +170,17 @@ lines(m_m, col=2)
 dd = plot(m_m)
 head(dd, 3)
 @
-
+\noindent This makes it straight forward to create graphics using other R packages, such as \cc{ggplot2}.
 
 
 <<echo=FALSE>>=
+mypalette(1)
 pdf("graphics/figure1.pdf", width=4, height=4)
 setnicepar()
-plot(m_m, xlab="x", ylab="CDF")
-grid()
-lines(m_m, col=2)
+plot(m_m, xlab="x", ylab="CDF", 
+     pch=21, bg=1, cex=0.6, 
+     panel.first=grid())
+lines(m_m, col=2, lwd=2)
 sink=dev.off()
 system("pdfcrop graphics/figure1.pdf")
 data(bootstrap_moby)
@@ -183,17 +193,17 @@ bs_p = bootstrap_p_moby
 
 \subsection{Uncertainty in $\xmin$}
 
-Clausett, \textit{el al}, 2009 recommend a bootstrap procedure to get a handle on parameter uncertainty. Essentially, we sample with replacement from the data set and then re-infer the parameters.
+Clauset, \textit{el al}, 2009 recommend a bootstrap procedure to get a handle on parameter uncertainty. Essentially, we sample with replacement from the data set and then re-infer the parameters.
 \begin{table}[t]
 \centering
   \begin{tabular}{@{}ll@{}}
     \hline
-    \multicolumn{2}{l}{\textbf{Algorithm 1:} Uncertainty in $\xmin$}\\
+    \multicolumn{2}{@{} l}{\textbf{Algorithm 1:} Uncertainty in $\xmin$}\\
     \hline
     {\small 1:} & Set $N$ equal to the number of values in the original data set \\
     {\small 2:} & \textbf{for} \texttt{i} in \texttt{1:B}:\\
     {\small 3:} & $\quad$ Sample $N$ values from the original data set \\
-    {\small 4:} & $\quad$ Estimate $\xmin$ and $\alpha$ using the Kolmogorov-Smirnoff statistic.\\
+    {\small 4:} & $\quad$ Estimate $\xmin$ and $\alpha$ using the Kolmogorov-Smirnoff statistic\\
     {\small 5:} & \textbf{end for} \\
     \hline
   \end{tabular}
@@ -202,10 +212,6 @@ Clausett, \textit{el al}, 2009 recommend a bootstrap procedure to get a handle o
 To run the bootstrapping procedure, we use the \texttt{bootstrap} function
 <<eval=FALSE>>=
 bs = bootstrap(m_m, no_of_sims=1000, threads=1)
-@
-\noindent this function runs in parallel, with the number of threads used determined by the \texttt{threads} argument. To detect the number of cores on your machine, you can run:
-<<>>=
-parallel::detectCores()
 @
 \begin{marginfigure}
 \centering
@@ -217,13 +223,17 @@ parallel::detectCores()
 \includegraphics[width=\textwidth]{graphics/figure3-crop}
 \caption{Characterising uncertainty in parameter values. Bivariate scatter plot of $\xmin$ and $\alpha$.}\label{F3}
 \end{marginfigure}
-\noindent The object return by \texttt{bootstrap}  is a list with three elements: 
+\noindent this function runs in parallel, with the number of threads used determined by the \texttt{threads} argument. To detect the number of cores on your machine, you can run:
+<<>>=
+parallel::detectCores()
+@
+\noindent The object returned by \texttt{bootstrap} is a list with three elements: 
 \begin{itemize}
 \item The original Kolmogorov-Smirnov statistic
 \item The results of the bootstrapping procedure
 \item The average time (in seconds) for a single bootstrap
 \end{itemize}
-\noindent The results of the bootstrap are best investigated with histograms
+\noindent The results of the bootstrap can be investigated with histograms
 <<fig.keep='none'>>=
 hist(bs$bootstraps[,2], breaks="fd")
 hist(bs$bootstraps[,3], breaks="fd")
@@ -238,21 +248,24 @@ plot(bs$bootstraps[,2], bs$bootstraps[,3])
 
 \subsection{Do we have a power-law?}
 
-Clausett, \textit{el al}, 2009 recommend a bootstrap procedure to determine whether the underlying distribution is a power-law the uncertainty. Essentially, we perform a hypothesis test by generating multiple data sets (with parameters $\xmin$ and $\alpha$) and then "re-inferring" the model parameters. The algorithm is detailed in Algorithm 2.\sidenote{Algorithm 2 can easily be extended for other distributions.}
+Clauset, \textit{el al}, 2009 recommend a bootstrap procedure to determine whether the underlying distribution is a power-law the uncertainty. Essentially, we perform a hypothesis test by generating multiple data sets (with parameters $\xmin$ and $\alpha$) and then "re-inferring" the model parameters. The algorithm is detailed in Algorithm 2.\sidenote{Algorithm 2 can be easily extended for other distributions.}
 \begin{table}[t]
 \centering
   \begin{tabular}{@{}ll@{}}
     \hline
-    \multicolumn{2}{l}{\textbf{Algorithm 2:} Do we have a power-law?}\\
+    \multicolumn{2}{@{} l}{\textbf{Algorithm 2:} Do we have a power-law?}\\
     \hline
     {\small 1:} & Calculate point estimates $\xmin$ and the scaling parameter $\alpha$. \\
-    {\small 2:} & Set $n_1$ equal to the number of values below \texttt{xmin}. \\
-    {\small 3:} & Set $n_2 = n - n_1$.\\
-    {\small 4:} & \textbf{for} \texttt{i} in \texttt{1:B}:\\
-    {\small 5:} & $\quad$ Simulate $n_1$ values from a discrete uniform distribution: $U(1, \xmin)$ and $n_2$ values from a discrete \\
-    & $\quad$ power-law (with parameter $\alpha$).\\
-    {\small 6:} & $\quad$ Estimate $\xmin$ and $\alpha$ using the Kolmogorov-Smirnoff statistic.\\
-    {\small 7:} & \textbf{end for} \\
+    {\small 2:} & Calculate the data KS statistic, $KS_d$.\\
+    {\small 3:} & Set $n_1$ equal to the number of values below \texttt{xmin}. \\
+    {\small 4:} & Set $n_2 = n - n_1$ and P = 0.\\
+    {\small 5:} & \textbf{for} \texttt{i} in \texttt{1:B}:\\
+    {\small 6:} & $\quad$ Simulate $n_1$ values from a discrete uniform distribution: $U(1, \xmin)$ and \\
+    & $\quad$ $n_2$ values from a discrete power-law distribution (with parameter $\alpha$).\\
+    {\small 7:} & $\quad$ Calculate the associated KS statistic, $KS_{sim}$.\\
+{\small 8:} & $\quad$ If $KS_d > KS_{sim}$, then $P = P + 1$.\\
+    {\small 9:} & \textbf{end for} \\
+{\small 10:} & p = P/B\\
     \hline
   \end{tabular}
 \end{table}  
@@ -264,21 +277,21 @@ Clausett, \textit{el al}, 2009 recommend a bootstrap procedure to determine whet
 
 When $\alpha$ is close to one, this algorithm can be particularly time consuming to run, for two reasons:
 \begin{enumerate}
-\item When generating random numbers from the discrete power-law distribution, extreme values are highly possible, i.e. values greater than $10^8$. Hence, when generating the random numbers, all numbers larger than $10^5$ are generated using a continuous approximation.
-\item To calculate the Kolmogorov-Smirnov statistic, we need explore the state space. It is computationally infeasible to explore the entire state space when $\max(x) >> 10^5$. So to this algorithm feasible, we explore two state space. The first, 
+\item When generating random numbers from the discrete power-law distribution, large values are probable, i.e. values greater than $10^8$. To overcome this bottleneck, when generating the random numbers all numbers larger than $10^5$ are generated using a continuous approximation.
+\item To calculate the Kolmogorov-Smirnov statistic, we need explore the state space. It is computationally infeasible to explore the entire state space when $\max(x) >> 10^5$. So to make this algorithm computational feasible, we split the state space into two sections. The first section is all values from
 \[
 \xmin, \xmin+1, \xmin+2, \ldots, 10^5
 \]
-and combine it with an additional $10^5$ values from
+this set is combined with an additional $10^5$ values from
 \[
 10^5, \ldots, \max(x)
 \]
 \end{enumerate}
-The bootstrapping procedure, steps 4 -- 7, can be run in parallel. To estimate the uncertainty with the \cc{moby} data set, we use
+To estimate the uncertainty with the \cc{moby} data set, we use
 <<eval=FALSE, tidy=FALSE>>=
 ##This may take a while
 ##Use the mle to estimate the parameters
-bs_p = bootstrap_p(m_m, no_of_sims=1000, threads=1)
+bs_p = bootstrap_p(m_m, no_of_sims=1000, threads=2)
 @
 \noindent The object returned from the bootstrap procedure contains four elements
 \begin{marginfigure}
@@ -295,17 +308,15 @@ bs_p = bootstrap_p(m_m, no_of_sims=1000, threads=1)
 The results of this procedure are shown in figures \ref{F4} and \ref{F5}.
 
 
-
-
-
-
 <<echo=FALSE>>=
-pdf("graphics/figure2.pdf", width=4, height=6)
+pdf("graphics/figure2.pdf", width=4, height=7)
 setnicepar(mfrow=c(2, 1))
 hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 1600), 
      xlim=c(0, 45), main=NULL, breaks="fd")
+grid()
 hist(bs$bootstraps[,3], xlab=expression(alpha), 
      ylim=c(0, 400), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
+grid()
 sink=dev.off()
 system("pdfcrop graphics/figure2.pdf")
 
@@ -313,8 +324,8 @@ pdf("graphics/figure3.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
 plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3], 
      xlab="xmin", ylab=expression(alpha), 
-     xlim=c(0, 45), ylim=c(1.8, 2.05), cex=0.35)
-grid()
+     xlim=c(0, 25), ylim=c(1.85, 2.05), cex=0.35, 
+     pch=21, bg=1, panel.first=grid())
 sink = dev.off()
 system("pdfcrop graphics/figure3.pdf")
 @
@@ -322,12 +333,14 @@ system("pdfcrop graphics/figure3.pdf")
 
 
 <<echo=FALSE>>=
-pdf("graphics/figure4.pdf", width=4, height=6)
+pdf("graphics/figure4.pdf", width=4, height=7)
 setnicepar(mfrow=c(2, 1))
 hist(bs_p$bootstraps[,2], xlab="xmin", ylim=c(0, 1600), 
      xlim=c(0, 45), main=NULL, breaks="fd")
+grid()
 hist(bs_p$bootstraps[,3], xlab=expression(alpha), 
      ylim=c(0, 400), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
+grid()
 sink=dev.off()
 system("pdfcrop graphics/figure4.pdf")
 
@@ -335,8 +348,9 @@ pdf("graphics/figure5.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
 plot(jitter(bs_p$bootstraps[,2], factor=1.2), bs_p$bootstraps[,3], 
      xlab="xmin", ylab=expression(alpha), 
-     xlim=c(0, 45), ylim=c(1.8, 2.05), cex=0.35)
-grid()
+     xlim=c(0, 40), ylim=c(1.8, 2.05), cex=0.35, 
+     pch=21, bg=1,
+     panel.first= grid())
 sink = dev.off()
 system("pdfcrop graphics/figure5.pdf")
 @
@@ -345,14 +359,14 @@ system("pdfcrop graphics/figure5.pdf")
 
 \section{Distribution objects}
 
-During the Moby Dick example, we created a \texttt{displ} object
+For the Moby Dick example, we created a \texttt{displ} object
 <<>>=
 m_m = displ$new(moby)
 @
-\noindent The object \cc{m} has class \cc{displ} and inherits the general \texttt{distribution} class. A list of available distributions is given in table \ref{T1}. 
+\noindent The object \cc{m\_m} has class \cc{displ} and inherits the \texttt{discrete\_distribution} class. A list of available distributions is given in table \ref{T1}. 
 \begin{table}[h]
   \centering
-  \begin{tabular}{@{} llll @{}}
+  \begin{tabular}{@{} lll @{}}
   \toprule
   Distribution & Object name & \# Parameters \\
   \midrule
@@ -361,23 +375,23 @@ m_m = displ$new(moby)
   Poisson & \texttt{dispois} & 1 \\
   \\
   CTN Power-law & \texttt{conpl} & 1 \\
-  CTN Log-normal & \texttt{lnorm} & 2 \\
+  CTN Log-normal & \texttt{conlnorm} & 2 \\
   \bottomrule
   \end{tabular}
-  \caption{Available distributions in the power-law package. These objects are all reference classes.}\label{T1}
+  \caption{Available distributions in the \cc{poweRlaw} package. These objects are all reference classes.}\label{T1}
 \end{table}
 <<echo=FALSE>>=
 m_m$setXmin(est)
 @
 
-\noindent All distribution objects list in table \ref{T1} are reference classes.\marginnote{See \texttt{\mbox{?setRefClass}} for further details on references classes.} The key point,is that unlike S4 classes, reference classes have a mutable state. Each distribution object has four fields:
+\noindent All distribution objects listed in table \ref{T1} are reference classes.\marginnote{See \texttt{\mbox{?setRefClass}} for further details on references classes.} Each distribution object has four fields:
 \begin{itemize}
 \item \texttt{dat}: a copy of the data.
 \item \texttt{xmin}: the lower cut-off $\xmin$.
 \item \texttt{pars}: a vector of parameter values.
 \item \texttt{internal}: a list of values use in different numerical procedures. This will differ between distribution objects.
 \end{itemize}
-By using the mutable state, we have  efficient caching of data structures that can be reused. For example, the mle of discrete power-laws uses the statistic:
+By using the mutable states of reference objects, we are able to have efficient caching of data structures, that can be reused. For example, the mle of discrete power-laws uses the statistic:
 \[
 \sum_{i=\xmin}^n \log(x_i)
 \]
@@ -391,7 +405,7 @@ All distribution objects have a number of methods available. A list of methods i
     Method Name & Description \\
     \midrule
     \texttt{dist\_cdf} & Cumulative density/mass function (CDF)\\
-    \texttt{dist\_pdf} & Probability density/mass function (pdf)\\
+ %   \texttt{dist\_pdf} & Probability density/mass function (pdf)\\
     \texttt{dist\_rand}& Random number generator\\
     \texttt{dist\_data\_cdf} & Data CDF \\
     \texttt{dist\_ll} & Log-likelihood\\
@@ -512,20 +526,14 @@ lines(m_r, col=2)
 <<echo=FALSE>>=
 pdf("graphics/figure7.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
-plot(m_r)
-lines(m_r, col=2)
-grid()
+plot(m_r, ylab="CDF", 
+     pch=21, bg=1, cex=0.5, 
+     panel.first=grid(), xlim=c(10, 1000))
+lines(m_r, col=2, lwd=2)
 sink = dev.off()
 system("pdfcrop graphics/figure7.pdf")
 @
 
-
-
-\clearpage
-
-
-\bibliography{poweRlaw}
-\bibliographystyle{plainnat}
 
 
 \clearpage
@@ -546,9 +554,19 @@ VGAM & \Sexpr{packageDescription("VGAM")$Version}\\
 \caption{A list of packages and versions used.}\label{A1}
 \end{table}
 
+
 <<>>=
 version
 @
+
+
+\noindent This vignette was created using the excellent \cc{knitr} package\cite{Xie13}.
+
+\clearpage
+
+
+\bibliography{poweRlaw}
+\bibliographystyle{plainnat}
 
 
 

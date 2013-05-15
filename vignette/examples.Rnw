@@ -52,7 +52,7 @@ if(!file.exists("blackouts.txt"))
 
 The Moby Dick dataset contains the frequency of unique words in the the novel Moby Dick by Herman Melville. The data set can be downloaded from
 \begin{center}
-\url{http://tuvalu.santafe.edu/~aaronc/power-laws/data.htm}
+\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm}
 \end{center}
 \noindent or loaded directly
 <<>>=
@@ -133,11 +133,11 @@ bs = bootstrap(m_pl, no_of_sims=5000, threads=2)
 <<eval=FALSE>>=
 bootstrap(m_pl, xmins = seq(2, 20, 2))
 @
-\noindent will only test values of
+\noindent will only calculate the Kolmogorov-Smirnoff statistics at values of $\xmin$ equal to
 \[
-2, 4, 6, \ldots, 20
+2, 4, 6, \ldots, 20\;.
 \]
-\noindent when estimating $\xmin$. A similar argument exists for the parameters.\sidenote{For single parameter models, \cc{pars} should be a vector. For the log-normal distribution, \cc{pars} should be a matrix of values.}
+A similar argument exists for the parameters.\sidenote{For single parameter models, \cc{pars} should be a vector. For the log-normal distribution, \cc{pars} should be a matrix of values.}
 
 The \cc{bs} object contains three components:
 \begin{enumerate}
@@ -244,10 +244,10 @@ The estimate of the scaling parameter, $\alpha$, is typically highly correlated 
 <<>>=
 xmins = 1:1500
 @
-\begin{marginfigre}
+\begin{marginfigure}
 \centering
-\includegraphics[width=\textwidth]{graphics/figure1e-crop}
-\caption{Estimated parameter values conditional on the threshold, $\xmin$. The horizontal line corresponds to $\alpha=1.95$. }
+\includegraphics[width=\textwidth]{graphics/v2_figure1e-crop}
+\caption{Estimated parameter values conditional on the threshold, $\xmin$. The horizontal line corresponds to $\alpha=1.95$.}\label{F1e}
 \end{marginfigure}
 \noindent then a vector to store the results
 <<>>=
@@ -257,7 +257,8 @@ est_scan = 0*xmins
 <<cache=TRUE>>=
 for(i in seq_along(xmins)){
   m_pl$setXmin(xmins[i])
-  est_scan[i] = estimate_pars(m_pl, pars=seq(1.2, 2.8, 0.01))$pars
+  est = estimate_pars(m_pl, pars=seq(1.2, 2.8, 0.01))
+  est_scan[i] = est$pars
 }
 @
 \noindent The results are plotted figure \ref{F1e}. For this data set, as the lower threshold increases, so does the point estimate of $\alpha$.
@@ -383,7 +384,7 @@ lines(m_us, col=2)
 \end{marginfigure}
 \noindent The result is given in figure \ref{F3b}. The tails of the distributions seems to follow a power-law. This is consistent with the expectation that smaller-scale engagements are less likely to be recorded. However, for larger scale engagements, it is very likely that a record is made.
 
-
+}
 
 
 
