@@ -483,7 +483,7 @@ estimate_xmin(m_m, pars=seq(1.5, 2.5, 0.01))
 
 The \texttt{plfit} script also fits continuous power-laws. Again the results are comparable. 
 
-For example, suppose we have one thousand random numbers from a continuous power-law distributinos with parameters $\alpha = 2.5$ and $\xmin = 10.0$
+For example, suppose we have one thousand random numbers from a continuous power-law distributions with parameters $\alpha = 2.5$ and $\xmin = 10.0$
 <<>>=
 r = rplcon(1000, 10, 2.5)
 @
