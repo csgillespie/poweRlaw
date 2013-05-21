@@ -58,13 +58,15 @@ estimate_xmin = function (m,
   if(is.null(xmins)) xmins = unique(m$dat)
   
   nr = (length(xmins)-m_cpy$no_pars-1)
-  dat = matrix(0, nrow=nr, ncol=(1 + m$no_pars))
+  dat = matrix(0, nrow=nr, ncol=(1 + m_cpy$no_pars))
   
   xm = 1
   ##Initialise
   est = estimate_pars(m_cpy)$pars
   m_cpy$pars = pars
+  
   for(xm in 1:nr){
+   
     m_cpy$xmin = xmins[xm]
     if(is.null(pars)) m_cpy$mle(initialise=est)
     else m_cpy$pars = pars

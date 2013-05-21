@@ -12,8 +12,8 @@
 #' x = seq(xmin, 10, length.out=1000)
 #' plot(x, dplcon(x, xmin, alpha), type="l")
 dplcon = function(x, xmin, alpha, log=FALSE) {
-  tol = 1e-10
-  x = x[(x+tol) >= xmin]
+#   tol = 1e-10
+#   x = x[(x+tol) >= xmin]
   if(log)
     log(alpha-1) - log(xmin) - alpha*(log(x/xmin))
   else
@@ -26,8 +26,8 @@ dplcon = function(x, xmin, alpha, log=FALSE) {
 #'@examples
 #' plot(x, pplcon(x, xmin, alpha), type="l", main="Distribution function")
 pplcon = function(q, xmin, alpha, lower.tail=TRUE) {
-  tol = 1e-10
-  q = q[(q+tol) >= xmin]
+#   tol = 1e-10
+#   q = q[(q+tol) >= xmin]
   cdf = 1 - (q/xmin)^(-alpha + 1)
   if(lower.tail)
     cdf

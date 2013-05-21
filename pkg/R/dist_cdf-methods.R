@@ -103,7 +103,9 @@ setMethod("dist_cdf",
               1 - (xmin:xmax/xmin)^(-pars + 1)
             } else if(is.null(q)) {
               q = m$dat
-              pplcon(q[q >= xmin], xmin, pars, lower_tail)
+              n = m$internal[["n"]]; N = length(q)
+              q = q[(N-n+1):N]
+              pplcon(q, xmin, pars, lower_tail)
             } else {
               pplcon(q[q >= xmin], xmin, pars, lower_tail)
             }
@@ -125,7 +127,8 @@ setMethod("dist_cdf",
               q = xmin:xmax
             } else if(is.null(q)) {
               q = m$dat
-              q = q[q >= xmin]
+              n = m$internal[["n"]]; N = length(q)
+              q = q[(N-n+1):N]
             } 
             p = plnorm(q, pars[1], pars[2], lower.tail=lower_tail) 
             if(lower_tail) {
