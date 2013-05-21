@@ -94,13 +94,21 @@ m_pois$setXmin(est)
 
 \noindent which yields a lower threshold of $\xmin=\Sexpr{est_ln$xmin}$ and parameters $(\Sexpr{est_ln$pars[1]},$ $\Sexpr{est_ln$pars[2]})$. A similar procedure is applied to fit the Poisson distribution; we create a distribution object using \cc{dispois}, then fit as before.
 
+
+
+The data CDF and lines of best fit can be easily plotted:
+<<fig.keep='none', cache=TRUE>>=
+plot(m_pl)
+lines(m_pl, col=2)
+lines(m_ln, col=3)
+lines(m_pois, col=4)
+@
 \begin{marginfigure}
 \centering
 \includegraphics[width=\textwidth]{graphics/v2_figure1a-crop}
 \caption{Data CDF of the Moby Dick data set. The fitted power-law (green line), log-normal (red line) and poisson (blue) distributions are also given.}\label{F1a}
 \end{marginfigure}
-
-The data CDF and lines of best fit for all three distributions are given figure \ref{F1a}. It clear that the Poisson distribution is not appropriate for this data set. However, the log-normal and power-law distribution both provide reasonable fits to the data.
+\noindent to obtain figure \ref{F1a}. It clear that the Poisson distribution is not appropriate for this data set. However, the log-normal and power-law distribution both provide reasonable fits to the data.
 
 <<echo=FALSE, cache=TRUE>>=
 pdf("graphics/v2_figure1a.pdf", width=4, height=4)
@@ -340,7 +348,7 @@ In a recent paper, \citeauthor{Bohorquez2009} investigated insurgent attacks in 
 The number of casualties observed in the American-Indian War can via
 <<>>=
 data(NativeAmerican)
-data(UsAmerican)
+data(USAmerican)
 @
 \noindent Each data frame, has two columns. The first column is number of casualties recorded, the second the conflict date
 <<>>=
@@ -356,7 +364,7 @@ head(NativeAmerican, 3)
 It is straightforward to fit a discrete power-law to this data set. First, we create discrete power-law objects:
 <<cache=TRUE>>=
 m_na = displ$new(NativeAmerican$Cas)
-m_us = displ$new(UsAmerican$Cas)
+m_us = displ$new(USAmerican$Cas)
 @
 \noindent then we estimate $\xmin$ for each data set:
 <<cache=TRUE>>=
@@ -384,7 +392,7 @@ lines(m_us, col=2)
 \end{marginfigure}
 \noindent The result is given in figure \ref{F3b}. The tails of the distributions seems to follow a power-law. This is consistent with the expectation that smaller-scale engagements are less likely to be recorded. However, for larger scale engagements, it is very likely that a record is made.
 
-}
+
 
 
 
@@ -398,7 +406,7 @@ plot(NativeAmerican$Date, NativeAmerican$Cas,
      cex=0.5, panel.first=grid(col="grey70"), 
      xlab="Date", ylab="#Casualties")
 
-points(UsAmerican$Date, UsAmerican$Cas, 
+points(USAmerican$Date, USAmerican$Cas, 
        pch=24, bg=2, cex=0.5)
 sink = dev.off()
 system("pdfcrop graphics/v2_figure3a.pdf")
