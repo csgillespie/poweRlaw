@@ -40,7 +40,7 @@ mypalette(1)
 \begin{document}
 \maketitle
 \begin{abstract}
-The \verb$poweRlaw$ package provides an easy to use interface for fitting and visualising heavy tailed distributions, including power-laws. The fitting procedure follows the method detailed in Clauset \textit{et al.}\cite{clauset2009}. This vignette works gives examples of the fitting procedure.
+The \verb$poweRlaw$ package provides an easy to use interface for fitting and visualising heavy tailed distributions, including power-laws. The fitting procedure follows the method detailed in Clauset \textit{et al.}\cite{clauset2009}. This vignette gives examples of the fitting procedure.
 \end{abstract}
 
 <<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
@@ -77,7 +77,7 @@ estimate_xmin(m_pl, pars=seq(1.5, 2.5, 0.1))
 @
 \noindent The parameter scan method is more exact, but is slightly slower.
 
-To fit a discrete log-normal distribution, we follows a similar procedure, except we begin by creating a \cc{dislnorm}\sidenote{\cc{dislnorm}: discrete log-normal object}.
+To fit a discrete log-normal distribution, we follows a similar procedure, except we begin by creating a \cc{dislnorm}.\sidenote{\cc{dislnorm}: discrete log-normal object}
 
 <<warning=FALSE, cache=TRUE>>=
 m_ln = dislnorm$new(moby)
@@ -147,7 +147,7 @@ bootstrap(m_pl, xmins = seq(2, 20, 2))
 \]
 A similar argument exists for the parameters.\sidenote{For single parameter models, \cc{pars} should be a vector. For the log-normal distribution, \cc{pars} should be a matrix of values.}
 
-The \cc{bs} object contains three components:
+The bootstrap function, returns \cc{bs\_xmin} object that has three components:
 \begin{enumerate}
 \item The goodness of fit statistic obtained from the Kolmogorov-Smirnoff test. This value should correspond to the value obtained from the \mbox{\cc{estimate\_xmin}} function.
 \item A data frame containing the results for the bootstrap procedure. 
@@ -170,8 +170,8 @@ sd(bs$bootstraps[,3])
 <<fig.keep='none'>>=
 plot(bs, trim=0.1)
 @
-\noindent to obtain figure \ref{F1b}. This top row of graphics in figure \ref{F1b} give a 95\% confidence interval for mean estimate of the parameters. The bottom row of graphics give a 95\% confidence for the standard deviation of the parameters. The parameter \texttt{trim} in the \texttt{plot} function controls the percentage of samples displayed.\sidenote{When \cc{trim=0}, all iterations are displayed.} When \texttt{trim=0.1}, we only display the final 90\% of data. 
-\begin{marginfigure}
+\noindent to obtain figure \ref{F1b}. This top row of graphics in figure \ref{F1b} give a 95\% confidence interval for mean estimate of the parameters. The bottom row of graphics give a 95\% confidence for the standard deviation of the parameters. The parameter \texttt{trim} in the \texttt{plot} function controls the percentage of samples displayed.\sidenote[][-5\baselineskip]{When \cc{trim=0}, all iterations are displayed.} When \texttt{trim=0.1}, we only display the final 90\% of data. 
+\begin{marginfigure}[-5\baselineskip]
 \centering
 \includegraphics[width=\textwidth]{graphics/v2_figure1c-crop}
 \caption{Characterising uncertainty in parameter values. (a) $\xmin$ uncertainty (standard deviation 2) (b) $\alpha$ uncertainty (std dev. 0.03)}\label{F1c}
@@ -219,7 +219,7 @@ bs_p = bootstrap_p_moby
 
 Since it is possible to fit a power-law distribution to \textit{any} data set, it is appropriate to test whether it the observed data set actually follows a power-law. Clauset \textit{et al}, suggest that this hypothesis is tested using a goodness-of-fit test, via a bootstrapping procedure. This test generates a $p$-value that can be used to quantify the plausibility of the hypothesis. If the $p$-value is large, than any difference between the empirical data and the model can be explained with statistical fluctuations. If $p \simeq 0$, then the model does not provide a plausible fit to the data and another distribution may be more appropriate. In this scenario, 
 \begin{align*}
-&H_0: \mbox{data is generate from a power-law.}\\
+&H_0: \mbox{data is generated from a power-law distribution.}\\
 &H_1: \mbox{data is not generated from a power-law distribution.}
 \end{align*}
 \noindent To test these hypothesis, we use the \texttt{bootstrap\_p} function
@@ -248,7 +248,7 @@ system("pdfcrop graphics/v2_figure1d.pdf")
 
 \subsection{Investigating the effect in $\xmin$}
 
-The estimate of the scaling parameter, $\alpha$, is typically highly correlated with the threshold limit, $\xmin$. This relationship can be easily investigated with the \cc{poweRlaw} function. First, we create a vector of thresholds to scan
+The estimate of the scaling parameter, $\alpha$, is typically highly correlated with the threshold limit, $\xmin$. This relationship can be easily investigated with the \cc{poweRlaw} package. First, we create a vector of thresholds to scan
 <<>>=
 xmins = 1:1500
 @
@@ -289,11 +289,11 @@ system("pdfcrop graphics/v2_figure1e.pdf")
 
 \section{Continuous data: electrical blackouts}
 
-The numbers of customers affected in electrical blackouts in the United States between 1984 and 2002.\cite{newman2005} The data set can be downloaded from Clauset's website:\sidenote{\url{http://goo.gl/BsqnP}} 
+In this example, we will investigate the numbers of customers affected in electrical blackouts in the United States between 1984 and 2002.\cite{newman2005} The data set can be downloaded from Clauset's website:\sidenote{\url{http://goo.gl/BsqnP}} 
 <<>>=
 blackouts = read.table("blackouts.txt")
 @
-\noindent Although the \texttt{blackouts} data set is actually continuous, since the actual data values are large, it makes sense to treat the data as continuous. Continuous power-law objects take vectors as inputs, so
+\noindent Although the \texttt{blackouts} data set is discrete, since the values are large, it makes sense to treat the data as continuous. Continuous power-law objects take vectors as inputs, so
 <<cache=TRUE>>=
 m_bl = conpl$new(blackouts$V1)
 @
@@ -301,16 +301,16 @@ m_bl = conpl$new(blackouts$V1)
 <<cache=TRUE>>=
 est = estimate_xmin(m_bl)
 @
-\noindent This gives a point estimate for $\xmin$ of \Sexpr{est$xmin}. We can then update distribution object:
+\noindent This gives a point estimate of $\xmin=\Sexpr{est$xmin}$. We can then update distribution object:
 <<cache=TRUE>>=
 m_bl$setXmin(est)
 @
-\noindent We can use the generic plot method
+\noindent Using generic plot method
 <<fig.keep='none', cache=TRUE>>=
 plot(m_bl)
 lines(m_bl, col=2, lwd=2)
 @
-\noindent to get figure \ref{F2a}. To fit a discrete log-normal distribution we follow a similar procedure:
+\noindent we get figure \ref{F2a}. To fit a discrete log-normal distribution we follow a similar procedure:
 \begin{marginfigure}[5\baselineskip]
 \centering
 \includegraphics[width=\textwidth]{graphics/v2_figure2a-crop}
@@ -343,14 +343,14 @@ system("pdfcrop graphics/v2_figure2a.pdf")
 \clearpage
 \section{Multiple data sets: the American-Indian war}
 
-In a recent paper, \citeauthor{Bohorquez2009} investigated insurgent attacks in Afghanistan, Iraq, Colombia, and Peru.\cite{Bohorquez2009} Each time, the data resembled power laws. \citeauthor{Friedman2013} used the power-law nature of casualties to infer under-reporting in the American-Indian War. Briefly, by fitting a power-law distribution to the observed process, the latent, unobserved casualties can be inferred.\cite{Friedman2013}  
+In a recent paper, \citeauthor{Bohorquez2009} investigated insurgent attacks in Afghanistan, Iraq, Colombia, and Peru.\cite{Bohorquez2009} Each time, the data resembled power laws. \citeauthor{Friedman2013} used the power-law nature of casualties to infer under-reporting in the American-Indian war. Briefly, by fitting a power-law distribution to the observed process, the latent, unobserved casualties can be inferred.\cite{Friedman2013}  
 
-The number of casualties observed in the American-Indian War can via
+The number of casualties observed in the American-Indian War can be obtained via
 <<>>=
 data(NativeAmerican)
 data(USAmerican)
 @
-\noindent Each data frame, has two columns. The first column is number of casualties recorded, the second the conflict date
+\noindent Each data set is a data frame with two columns. The first column is number of casualties recorded, the second the conflict date
 <<>>=
 head(NativeAmerican, 3)
 @
@@ -371,12 +371,12 @@ m_us = displ$new(USAmerican$Cas)
 est_na = estimate_xmin(m_na, pars=seq(1.5, 2.5, 0.001))
 est_us = estimate_xmin(m_us, pars=seq(1.5, 2.5, 0.001))
 @
-\noindent then update the power-law objects
+\noindent and update the power-law objects
 <<cache=TRUE>>=
 m_na$setXmin(est_na)
 m_us$setXmin(est_us)
 @
-\noindent The resulting fit lines can be plotted on the same figure
+\noindent The resulting fitted distributions can be plotted on the same figure
 <<fig.keep='none', cache=TRUE>>=
 plot(m_na)
 lines(m_na)
@@ -390,7 +390,7 @@ lines(m_us, col=2)
 \includegraphics[width=\textwidth]{graphics/v2_figure3b-crop}
 \caption{Plots of the CDFs for the Native American and US American casualties. The lines of best fit are also given.}\label{F3b}
 \end{marginfigure}
-\noindent The result is given in figure \ref{F3b}. The tails of the distributions seems to follow a power-law. This is consistent with the expectation that smaller-scale engagements are less likely to be recorded. However, for larger scale engagements, it is very likely that a record is made.
+\noindent The result is given in figure \ref{F3b}. The tails of the distributions appear to follow a power-law. This is consistent with the expectation that smaller-scale engagements are less likely to be recorded. However, for larger scale engagements, it is very likely that a record is made.
 
 
 

@@ -52,7 +52,7 @@ The fitting procedure follows the method detailed in Clauset \textit{et al.}\cit
 % @
 % \noindent from any machine with an internet connection. 
 
-The package is hosted on github.\sidenote{The intention is to eventually host this package on CRAN.} The package can be installed using the \cc{devtools} package:\sidenote{If use Windows, you will need to install the \texttt{Rtools} package first.}
+The package is hosted on github and\sidenote{The intention is to eventually host this package on CRAN.}  can be installed using the \cc{devtools} package:\sidenote{If use Windows, you will need to install the \texttt{Rtools} package first.}
 <<eval=FALSE>>=
 install.packages("devtools")
 library(devtools)
@@ -65,7 +65,7 @@ library(poweRlaw)
 
 \section{Accessing documentation}
 
-Even function and dataset in the package is documented. The command
+Each function and dataset in the package is documented. The command
 <<results='hide'>>=
 help(package="poweRlaw")
 @
@@ -73,7 +73,7 @@ help(package="poweRlaw")
 <<results='hide'>>=
 vignette(package="poweRlaw")
 @
-\noindent Currently, there are two vignettes available. This vignette, which gives an overview of the functionality, and a worked examples vignette. This documents can be accessed via
+\noindent Currently, there are two vignettes available. This vignette, which gives an overview of the functionality, and a worked examples vignette. These documents can be accessed via the commands
 <<eval=FALSE>>=
 vignette("poweRlaw", package="poweRlaw")
 vignette("examples", package="poweRlaw")
@@ -110,7 +110,7 @@ citation("poweRlaw")
 
 \section{Example: Word frequency in Moby Dick}
 
-This example investigates the frequency of occurrence of unique words in the novel Moby Dick by Herman Melville\cite{clauset2009,newman2005}. The data can be downloaded from
+This example investigates the frequency of occurrence of unique words in the novel Moby Dick by Herman Melville.\cite{clauset2009,newman2005} The data can be downloaded from
 \begin{center}
 \url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm}
 \end{center}
@@ -121,7 +121,7 @@ data(moby)
 
 \subsection{Fitting a discrete power-law}
 
-To fit a discrete power-law,\sidenote{The examples vignette contains a more thorough analysis of this particular data set.} we create a discrete power-law object, \texttt{displ}\sidenote{\cc{displ}: discrete power-law.}
+To fit a discrete power-law,\sidenote{The examples vignette contains a more thorough analysis of this particular data set.} we create a discrete power-law object, using the \texttt{displ} method\sidenote{\cc{displ}: discrete power-law.}
 <<>>=
 m_m = displ$new(moby)
 @
@@ -135,7 +135,7 @@ m_m$getPars()
 m_m$setXmin(5)
 m_m$setPars(2)
 @
-\noindent For a given $\xmin$ value, we can estimate the corresponding $\alpha$ value using its maximum likelihood estimator (mle)\marginnote{Instead of using the mle, we could instead do a parameter scan:\\ \texttt{\mbox{estimate\_pars(m\_m, pars=seq(2, 3, 0.1))}}}
+\noindent For a given $\xmin$ value, we can estimate the corresponding $\alpha$ value using its maximum likelihood estimator (mle)\marginnote{Instead of using the mle, we could do a parameter scan:\\ \texttt{\mbox{estimate\_pars(m\_m, pars=seq(2, 3, 0.1))}}}
 <<>>=
 estimate_pars(m_m)
 @
@@ -147,14 +147,14 @@ D(x) = \max_{x \ge \xmin} \vert S(x) - P(x) \vert
 \begin{marginfigure}
 \centering
 \includegraphics[width=\textwidth]{graphics/figure1-crop}
-\caption{Plot of the data CDF for the Moby Dick data set. This corresponds to figure 6.1(a) in Clauset, 2009. The line corresponds to a power-law distribution with parameters $\xmin=7$ and $\alpha=1.95$.}
+\caption{Plot of the data CDF for the Moby Dick data set. This corresponds to figure 6.1(a) in Clauset, 2009. The line corresponds to a power-law distribution with parameters $\xmin=7$ and $\alpha=1.95$.}\label{F1}
 \end{marginfigure}
 <<>>=
 (est = estimate_xmin(m_m))
 @
 \noindent For the Moby-Dick data set, the minimum is achieved when $\xmin=7$ and $D(7) = \Sexpr{signif(est$KS, 3)}$.
 
-We can then set parameters of power-law distribution to the "optimal" values
+We can then set parameters of power-law distribution to these "optimal" values
 <<>>=
 m_m$setXmin(est)
 @
@@ -165,7 +165,7 @@ plot(m_m)
 ##Add in the fitted distribution
 lines(m_m, col=2)
 @
-\noindent When calling the \texttt{plot} and \texttt{lines} function, the data plotted is actually invisibly returned, i.e.
+\noindent which gives figure \ref{F1}. When calling the \texttt{plot} and \texttt{lines} function, the data plotted is actually invisibly returned, i.e.
 <<fig.keep='none'>>=
 dd = plot(m_m)
 head(dd, 3)
@@ -227,13 +227,13 @@ bs = bootstrap(m_m, no_of_sims=1000, threads=1)
 <<>>=
 parallel::detectCores()
 @
-\noindent The object returned by \texttt{bootstrap} is a list with three elements: 
+\noindent The object returned by \texttt{bootstrap} is a list with three elements.
 \begin{itemize}
-\item The original Kolmogorov-Smirnov statistic
-\item The results of the bootstrapping procedure
-\item The average time (in seconds) for a single bootstrap
+\item The original Kolmogorov-Smirnov statistic.
+\item The results of the bootstrapping procedure.
+\item The average time (in seconds) for a single bootstrap.
 \end{itemize}
-\noindent The results of the bootstrap can be investigated with histograms
+\noindent The results of the bootstrap procedure can be investigated with histograms
 <<fig.keep='none'>>=
 hist(bs$bootstraps[,2], breaks="fd")
 hist(bs$bootstraps[,3], breaks="fd")
@@ -242,13 +242,13 @@ hist(bs$bootstraps[,3], breaks="fd")
 <<fig.keep='none'>>=
 plot(bs$bootstraps[,2], bs$bootstraps[,3])
 @
-\noindent These commands produce figures \ref{F2} and \ref{F3}.
+\noindent These commands give figures \ref{F2} and \ref{F3}.
 
 \clearpage
 
 \subsection{Do we have a power-law?}
 
-Clauset, \textit{el al}, 2009 recommend a bootstrap procedure to determine whether the underlying distribution is a power-law the uncertainty. Essentially, we perform a hypothesis test by generating multiple data sets (with parameters $\xmin$ and $\alpha$) and then "re-inferring" the model parameters. The algorithm is detailed in Algorithm 2.\sidenote{Algorithm 2 can be easily extended for other distributions.}
+Since it is possible to fit a power-law distribution to \textit{any} data set, it is appropriate to test whether it the observed data set actually follows a power-law. Clauset \textit{et al}, suggest that this hypothesis is tested using a goodness-of-fit test, via a bootstrapping procedure. Essentially, we perform a hypothesis test by generating multiple data sets (with parameters $\xmin$ and $\alpha$) and then "re-inferring" the model parameters. The algorithm is detailed in Algorithm 2.\sidenote{Algorithm 2 can be easily extended for other distributions.}
 \begin{table}[t]
 \centering
   \begin{tabular}{@{}ll@{}}
@@ -256,9 +256,9 @@ Clauset, \textit{el al}, 2009 recommend a bootstrap procedure to determine wheth
     \multicolumn{2}{@{} l}{\textbf{Algorithm 2:} Do we have a power-law?}\\
     \hline
     {\small 1:} & Calculate point estimates $\xmin$ and the scaling parameter $\alpha$. \\
-    {\small 2:} & Calculate the data KS statistic, $KS_d$.\\
+    {\small 2:} & Calculate the data KS statistic, $KS_d$, for the original data set.\\
     {\small 3:} & Set $n_1$ equal to the number of values below \texttt{xmin}. \\
-    {\small 4:} & Set $n_2 = n - n_1$ and P = 0.\\
+    {\small 4:} & Set $n_2 = n - n_1$ and $P = 0$.\\
     {\small 5:} & \textbf{for} \texttt{i} in \texttt{1:B}:\\
     {\small 6:} & $\quad$ Simulate $n_1$ values from a discrete uniform distribution: $U(1, \xmin)$ and \\
     & $\quad$ $n_2$ values from a discrete power-law distribution (with parameter $\alpha$).\\
@@ -278,7 +278,7 @@ Clauset, \textit{el al}, 2009 recommend a bootstrap procedure to determine wheth
 When $\alpha$ is close to one, this algorithm can be particularly time consuming to run, for two reasons:
 \begin{enumerate}
 \item When generating random numbers from the discrete power-law distribution, large values are probable, i.e. values greater than $10^8$. To overcome this bottleneck, when generating the random numbers all numbers larger than $10^5$ are generated using a continuous approximation.
-\item To calculate the Kolmogorov-Smirnov statistic, we need explore the state space. It is computationally infeasible to explore the entire state space when $\max(x) >> 10^5$. So to make this algorithm computational feasible, we split the state space into two sections. The first section is all values from
+\item To calculate the Kolmogorov-Smirnov statistic, we need explore the state space. It is computationally infeasible to explore the entire state space when $\max(x) >> 10^5$. To make this algorithm computational feasible, we split the state space into two sections. The first section is all values from
 \[
 \xmin, \xmin+1, \xmin+2, \ldots, 10^5
 \]
@@ -287,7 +287,7 @@ this set is combined with an additional $10^5$ values from
 10^5, \ldots, \max(x)
 \]
 \end{enumerate}
-To estimate the uncertainty with the \cc{moby} data set, we use
+To determine whether the underlying distribution may be a power-law, we use the \cc{bootstrap\_p} function
 <<eval=FALSE, tidy=FALSE>>=
 ##This may take a while
 ##Use the mle to estimate the parameters
@@ -312,10 +312,10 @@ The results of this procedure are shown in figures \ref{F4} and \ref{F5}.
 pdf("graphics/figure2.pdf", width=4, height=7)
 setnicepar(mfrow=c(2, 1))
 hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 1600), 
-     xlim=c(0, 45), main=NULL, breaks="fd")
+     xlim=c(0, 25), main=NULL, breaks="fd")
 grid()
 hist(bs$bootstraps[,3], xlab=expression(alpha), 
-     ylim=c(0, 400), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
+     ylim=c(0, 400), xlim=c(1.85, 2.05), main=NULL, breaks="fd")
 grid()
 sink=dev.off()
 system("pdfcrop graphics/figure2.pdf")
@@ -363,7 +363,7 @@ For the Moby Dick example, we created a \texttt{displ} object
 <<>>=
 m_m = displ$new(moby)
 @
-\noindent The object \cc{m\_m} has class \cc{displ} and inherits the \texttt{discrete\_distribution} class. A list of available distributions is given in table \ref{T1}. 
+\noindent The object \cc{m\_m} has class \cc{displ} and inherits the \texttt{discrete\_distribution} class. A list of available distributions are given in table \ref{T1}. 
 \begin{table}[h]
   \centering
   \begin{tabular}{@{} lll @{}}
@@ -478,7 +478,7 @@ In particular, the script for estimating $\xmin$ can be loaded using
 <<eval=FALSE>>=
 source("http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r")
 @
-\noindent The results are directly comparable to the poweRlaw package. For example, if we look consider the Moby Dick data set again:
+\noindent The results are directly comparable to the \cc{poweRlaw} package. For example, consider the Moby Dick data set again, we have
 <<>>=
 plfit(moby)
 @
@@ -559,7 +559,7 @@ version
 @
 
 
-\noindent This vignette was created using the excellent \cc{knitr} package\cite{Xie13}.
+\noindent This vignette was created using the excellent \cc{knitr} package.\cite{Xie13}
 
 \clearpage
 
