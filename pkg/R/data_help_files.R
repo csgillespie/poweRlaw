@@ -31,3 +31,19 @@ NULL
 #' @source M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law." Contemporary Physics 46, 323 (2005). See http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm for further details.
 NULL
 
+
+          
+   
+
+#' @name NativeAmerican           
+#' @aliases NativeAmerican USAmerican
+#' @title Casualities in the American Indian Wars (1776 and 1890)
+#' @description These data files contain the observed casualties in the American Indian Wars. The data sets 
+#' \code{NativeAmerican} and \code{USAmerican} contain the casualties on the Native American and US American 
+#' sides respectivitely. Each data set is a data frame, with two columns: the number of casualities and the
+#' conflict date.
+#' 
+#' @docType data
+#' @format Data frame
+#' @source Friedman, Jeffrey A. "Using Power Laws to Estimate Conflict Size." (2013).
+NULL
