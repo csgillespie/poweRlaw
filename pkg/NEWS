@@ -1,8 +1,9 @@
 Version 0.17.0
 --------------
- * Added discrete lognormal, lognormal and poisson distributions
- * Generic plot functions added for bootstrap output
- * Test suite
+ * Added discrete lognormal, lognormal and poisson distributions.
+ * Generic plot functions added for bootstrap output.
+ * Test suite.
+ * New examples vignette.
  * Bug fixes
 
 Version 0.16.1
