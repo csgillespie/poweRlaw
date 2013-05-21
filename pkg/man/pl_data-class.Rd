@@ -6,6 +6,9 @@
 \usage{
   pl_data(...)
 }
+\arguments{
+  \item{...}{This class is depreciated.}
+}
 \description{
   This class is depreciated. Do not use
 }

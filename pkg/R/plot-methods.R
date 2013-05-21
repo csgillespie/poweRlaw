@@ -77,29 +77,32 @@ get_cum_summary = function(x,trim=0.1) {
 }
 
 create_plots = function(l, no_plots) {
+
+  
+  ##Set margins for optimal viewing
   old_par = par(no.readonly = TRUE)
   on.exit(par(old_par))
-  
   
   par(mfrow=c(2, no_plots), 
       mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01,
       cex.axis=0.9, las=1)
-  cols = c(rgb(170,93,152, maxColorValue=255),
-           rgb(103,143,57, maxColorValue=255))
   
+  
+  ##Plot the cumulative means
   for(i in 1:length(l)) {
     upp_y = max(l[[i]]$m_up)
     low_y = min(l[[i]]$m_low)
     plot(l[[i]]$x, l[[i]]$m, type="l", ylim=c(low_y, upp_y), 
          ylab=names(l[i]),
          xlab="Iteration",
-         panel.first=grid(), col=cols[1], 
+         panel.first=grid(), col=1, 
          main="Cumulative mean")
-    lines(l[[i]]$x, l[[i]]$m_up, col=cols[2])
-    lines(l[[i]]$x, l[[i]]$m_low, col=cols[2])
+    lines(l[[i]]$x, l[[i]]$m_up, col=2)
+    lines(l[[i]]$x, l[[i]]$m_low, col=2)
   }
   
   ##Plot the std deviations
+  ##Plotting the p-value std dev doesn't really make sense
   for(i in 1:length(l)) {
     upp_y = max(sqrt(l[[i]]$v_up))
     low_y = min(sqrt(l[[i]]$v_low))
@@ -108,10 +111,10 @@ create_plots = function(l, no_plots) {
            type="l", ylim=c(low_y, upp_y), 
            ylab=names(l[i]),
            xlab="Iteration",
-           panel.first=grid(), col=cols[1], 
+           panel.first=grid(), col=1, 
            main="Cumulative std dev")
-      lines(l[[i]]$x, sqrt(l[[i]]$v_up), col=cols[2])
-      lines(l[[i]]$x, sqrt(l[[i]]$v_low), col=cols[2])
+      lines(l[[i]]$x, sqrt(l[[i]]$v_up), col=2)
+      lines(l[[i]]$x, sqrt(l[[i]]$v_low), col=2)
     }
   }
 }
