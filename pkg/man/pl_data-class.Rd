@@ -3,6 +3,9 @@
 \alias{pl_data}
 \alias{pl_data-class}
 \title{The pl class}
+\usage{
+  pl_data(...)
+}
 \description{
   This class is depreciated. Do not use
 }

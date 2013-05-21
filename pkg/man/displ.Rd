@@ -11,6 +11,17 @@
 \alias{dispois}
 \alias{dispois-class}
 \title{Distribution objects}
+\usage{
+  conpl(...)
+
+  conlnorm(...)
+
+  displ(...)
+
+  dislnorm(...)
+
+  dispois(...)
+}
 \arguments{
   \item{x}{the data vector}
 
