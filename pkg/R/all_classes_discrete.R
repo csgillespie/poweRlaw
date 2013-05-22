@@ -37,6 +37,7 @@ displ =
               fields = list(
                 dat = function(x)
                   if(!missing(x) && !is.null(x)) {
+                    check_discrete_data(x)
                     x = sort(x)
                     #x= round(sort(x))
                     tab = table(x)
@@ -84,6 +85,7 @@ dislnorm =
               fields = list(
                 dat = function(x)
                   if(!missing(x) && !is.null(x)) {
+                    check_discrete_data(x)
                     x = sort(x)
                     tab = table(x)
                     values = as.numeric(names(tab))
@@ -127,6 +129,7 @@ dispois =
               fields = list(
                 dat = function(x)
                   if(!missing(x) && !is.null(x)) {
+                    check_discrete_data(x)
                     x = sort(x)
                     tab = table(x)
                     values = as.numeric(names(tab))
