@@ -1,6 +1,7 @@
 \docType{methods}
 \name{dist_cdf}
 \alias{dist_cdf}
+\alias{dist_cdf,conexp-method}
 \alias{dist_cdf,conlnorm-method}
 \alias{dist_cdf,conpl-method}
 \alias{dist_cdf,dislnorm-method}

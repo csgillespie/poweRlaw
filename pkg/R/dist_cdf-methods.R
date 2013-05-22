@@ -140,3 +140,34 @@ setMethod("dist_cdf",
             }
           }
 )
+
+
+#' @rdname dist_cdf-methods
+#' @aliases dist_cdf,conexp-method
+setMethod("dist_cdf",
+          signature = signature(m="conexp"),
+          definition = function(m, 
+                                q=NULL, 
+                                lower_tail=TRUE,
+                                all_values=FALSE) {
+            pars = m$pars; xmin = m$xmin
+            if(is.null(pars)) stop("Parameters not set")  
+            if(all_values) {
+              xmax = max(m$dat)
+              q = xmin:xmax
+            } else if(is.null(q)) {
+              q = m$dat
+              n = m$internal[["n"]]; N = length(q)
+              q = q[(N-n+1):N]
+            } 
+            p = pexp(q, pars, lower.tail=lower_tail) 
+            if(lower_tail) {
+              C = pexp(xmin, pars, lower.tail=FALSE) 
+              (p/C-1/C+1)
+            } else {
+              C = 1 - pexp(xmin, pars)
+              p/C
+            }
+          }
+)
+

@@ -51,5 +51,18 @@ test_that("Test plotting", {
   y = c(0.7500, 0.6408, 0.5298, 0.4226)
   expect_equal(d2$y, y, tol=1e-4)
   
+  
+  
+  ##Exponential
+  m = conexp$new(x); m$setPars(0.5); m$setXmin(2)
+  
+  d_exact = data.frame(x=1:4, y=4:1/4)
+  expect_equal(plot(m, draw=FALSE), d_exact)
+  d2 = lines(m, draw=FALSE, length.out=4)
+  expect_equal(d2$x, c(2.000, 2.520, 3.175, 4.000), tol=1e-4)
+  y = c(0.7500, 0.5783, 0.4168,0.2759)
+  expect_equal(d2$y, y, tol=1e-4)
+  
+  
 }
           )

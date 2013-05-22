@@ -63,13 +63,27 @@ setMethod("dist_ll",
 setMethod("dist_ll",
           signature = signature(m="conlnorm"),
           definition = function(m) {
-            xmin = m$getXmin()
-            d = m$getDat()
-            conlnorm_tail_ll(d[d >= xmin], m$getPars(), xmin)
+            q = m$dat
+            n = m$internal[["n"]]; N = length(q)
+            q = q[(N-n+1):N]
+            
+            conlnorm_tail_ll(q, m$getPars(), m$getXmin())
           }
 )
 
 
+
+#' @rdname dist_ll-methods
+#' @aliases dist_ll,conexp-method
+setMethod("dist_ll",
+          signature = signature(m="conexp"),
+          definition = function(m) {
+            q = m$dat
+            n = m$internal[["n"]]; N = length(q)
+            q = q[(N-n+1):N]
+            conexp_tail_ll(q, m$getPars(), m$getXmin())
+          }
+)
 
 
 

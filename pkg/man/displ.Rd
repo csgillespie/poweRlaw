@@ -1,5 +1,7 @@
 \docType{class}
 \name{conpl}
+\alias{conexp}
+\alias{conexp-class}
 \alias{conlnorm}
 \alias{conlnorm-class}
 \alias{conpl}
@@ -15,6 +17,8 @@
   conpl(...)
 
   conlnorm(...)
+
+  conexp(...)
 
   displ(...)
 

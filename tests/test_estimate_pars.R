@@ -20,14 +20,14 @@ test_that("Testing estimate_pars function", {
   
   ##Discrete Log normal
   set.seed(1)
-  x = rlnorm(1000,1, 1)
+  x = ceiling(rlnorm(1000,1, 1))
   mt = dislnorm$new(x)
   mt$setXmin(0)
   est = estimate_pars(mt)
-  expect_equal(est$pars, c(1, 1), tol=1e-2)
+  expect_equal(est$pars, c(1.2202, 0.8577), tol=1e-2)
   m_pars = expand.grid(seq(0.5, 1.5, 0.05), seq(0.5, 1.5, 0.05))
   est = estimate_pars(mt, m_pars)
-  expect_equal(est$pars, c(1, 1))
+  expect_equal(est$pars, c(1.20, 0.85))
   
   ##CTN Power-law
   load("ctn_data.RData")
@@ -50,5 +50,16 @@ test_that("Testing estimate_pars function", {
   m_pars = expand.grid(seq(0.85, 1.25, 0.01), seq(0.85, 1.25, 0.01))
   est = estimate_pars(mt, m_pars)
   expect_equal(est$pars, c(0.99, 1.03))
+  
+  ##Exponential
+  x = rep(2, 10000)
+  mt = conexp$new(x)
+  mt$setXmin(0)
+  est = estimate_pars(mt)
+  expect_equal(est$pars, 1/2, tol=1e-5)
+  est = estimate_pars(mt, pars=seq(0.1, 1, 0.01))
+  expect_equal(est$pars, 1/2)
+
+  
 }
 )

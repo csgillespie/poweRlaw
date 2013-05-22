@@ -45,5 +45,14 @@ test_that("Testing dist_data_cdf function", {
   expect_equal(dist_data_cdf(mt), 0:2/3)
   
   
+  ##CTN Exp
+  x = c(1, 1, 2, 4, 5)
+  mt = conexp$new(x)
+  expect_equal(dist_data_cdf(mt), 0:4/5)
+  mt$setXmin(2)
+  expect_equal(dist_data_cdf(mt), 0:2/3)
+  
+  
+  
 }
 )

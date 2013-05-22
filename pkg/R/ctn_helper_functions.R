@@ -11,3 +11,21 @@ conlnorm_tail_ll = function(x, pars, xmin) {
   
 }
 
+
+conexp_tail_ll = function(x, rate, xmin) {
+  n = length(x)
+  joint_prob = colSums(sapply(rate, function(i) dexp(x, i, log=TRUE)))
+  prob_over = sapply(rate, function(i) pexp(xmin, i, 
+                                             lower.tail=FALSE, log.p=TRUE))
+  return(joint_prob - n*prob_over)
+}
+
+
+
+# conlnorm_tail_ll(x, c(1,1), 1)
+# conexp_tail_ll(x, 1, 1)
+# 
+# pexp(1, 1, lower.tail=F, log.p=T)
+# log(1 - pexp(1, 1))
+# 
+# log(dexp(x, 1)/(1 - pexp(1, 1)))

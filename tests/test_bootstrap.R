@@ -30,5 +30,11 @@ test_that("Testing bootstrap function", {
   expect_equal(dim(bs$bootstraps), c(5, 4))
   expect_equal(names(bs), c("gof", "bootstraps", "sim_time"))
   
+  m = conexp$new(x)
+  bs = bootstrap(m, no_of_sims=5)
+  expect_is(bs, "bs_xmin")
+  expect_equal(dim(bs$bootstraps), c(5, 3))
+  expect_equal(names(bs), c("gof", "bootstraps", "sim_time"))  
+  
 }
 )

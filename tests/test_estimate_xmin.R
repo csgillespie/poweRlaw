@@ -47,6 +47,18 @@ test_that("Testing estimate_xmin function", {
   est = estimate_xmin(mt, xmins=1:50)
   expect_equal(est$pars, c(2.966, 1.022), tol=1e-4)
   expect_equal(est$xmin, 10)
+  
+  
+  ##Exponential
+  set.seed(1)
+  x = rexp(10000, 0.01)
+  x = x[x >= 10]
+  x = c(x, runif(10000-length(x), 0, 10))
+  
+  mt = conexp$new(x)
+  est = estimate_xmin(mt, xmins=1:50)
 
+  expect_equal(est$pars, 0.01003, tol=1e-3)
+  expect_equal(est$xmin, 4)
 }
 )

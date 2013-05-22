@@ -86,10 +86,27 @@ test_that("Testing dist_cdf function", {
   mt$setXmin(2)
   expect_equal(dist_cdf(mt), c(0, 0, cdf4))
 
-  
   mt$setXmin(4)
   expect_equal(dist_cdf(mt), 0)
   
+  
+  ##Exponential
+  x = c(2, 2, 4)
+  mt = conexp$new(x); 
+  mt$setXmin(1); mt$setPars(c(1))
+  cdf2 = (pexp(2, 1)-pexp(1, 1))/(1 - pexp(1, 1))
+  cdf3 = (pexp(3, 1)-pexp(1, 1))/(1 - pexp(1, 1))
+  cdf4 = (pexp(4, 1)-pexp(1, 1))/(1 - pexp(1, 1))
+  expect_equal(dist_cdf(mt), c(cdf2, cdf2, cdf4))
+  expect_equal(dist_cdf(mt, all_values=TRUE), c(0, cdf2, cdf3, cdf4))
+  expect_equal(dist_cdf(mt, q=c(2, 4)), c(cdf2, cdf4))
+  
+  cdf4 = (pexp(4, 1)-pexp(2, 1))/(1 - pexp(2, 1))
+  mt$setXmin(2)
+  expect_equal(dist_cdf(mt), c(0, 0, cdf4))
+  
+  mt$setXmin(4)
+  expect_equal(dist_cdf(mt), 0)
   
 }
 )

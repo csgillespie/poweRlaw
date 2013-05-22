@@ -65,7 +65,7 @@ dispois$methods(
   }
 )
 
-
+#########################################################################
 ##CTN Power-law
 conpl$methods(
   mle = function(set = TRUE, initialise=NULL) {
@@ -107,6 +107,29 @@ conlnorm$methods(
   }
 )
 
+conexp$methods(
+  mle = function(set = TRUE, initialise=NULL) {
+    x = dat
+    x = x[x > xmin]
+    if(is.null(initialise))
+      theta_0 = mean(x)
+    else 
+      theta_0 = initialise
+    # Chop off values below 
+    negloglike = function(par) {
+      r = -conexp_tail_ll(x, par, xmin)
+      if(!is.finite(r)) r = 1e12
+      r
+    }
+    mle = optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=0)
+    if(set)
+      pars <<- mle$par
+    class(mle) = "estimate_pars"
+    names(mle)[1] = "pars"
+    mle
+    
+  }
+)
 
 
 

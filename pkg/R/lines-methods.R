@@ -4,13 +4,13 @@ setMethod("lines",
           signature = signature(x="distribution"),
           definition = function(x, 
                                 cut=FALSE, 
-                                length.out=10, 
+                                length.out=100, 
                                 draw=TRUE,
                                 ...) {
             scale = 1
             xmin = x$getXmin()
             x_values = x$dat
-            x_axs = lseq(x$xmin, max(x_values), length.out) 
+            x_axs = lseq(xmin, max(x_values), length.out) 
             if(is(x,"discrete_distribution"))
               x_axs = unique(round(x_axs))
             
@@ -26,32 +26,39 @@ setMethod("lines",
               if(is(x,"discrete_distribution")) {
                 dif = x$internal[["values"]] - xmin
                 upper = which(dif > 0)[1]
-                lower = upper - 1
+                lower = max(upper - 1, 1)
                 x_dif = x$internal[["values"]][lower] - 
                   x$internal[["values"]][upper]
-                y_dif = ifelse(lower, d_cdf[lower], 0) - d_cdf[upper]
+                y_dif = d_cdf[lower] - d_cdf[upper]
                 
-                scale = ifelse(lower, d_cdf[lower], 0) + 
+                scale = d_cdf[lower] + 
                   y_dif*(xmin - x$internal[["values"]][lower])/x_dif
-                
-                
               } else {
                 dif = x$internal[["dat"]] - xmin
                 upper = which(dif > 0)[1]
-                lower = upper - 1
+                lower = max(upper - 1, 1)
                 x_dif = x$internal[["dat"]][lower] - x$internal[["dat"]][upper]
-                y_dif = ifelse(lower, d_cdf[lower], 0) - d_cdf[upper]
+                y_dif = d_cdf[lower] - d_cdf[upper]
                 
-                scale = ifelse(lower, d_cdf[lower], 0) + 
+                scale = d_cdf[lower] + 
                   y_dif*(xmin - x$internal[["dat"]][lower])/x_dif
+                
                 
               }
               
               x$setXmin(xmin)
             }
+            
+            if(is.nan(scale)) scale = 1
             y = y*scale
             if(draw)
               lines(x_axs, y, ...)
             invisible(data.frame(x=x_axs, y=y))
           }
 )
+
+
+
+
+
+

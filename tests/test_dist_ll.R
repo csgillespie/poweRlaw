@@ -57,5 +57,24 @@ test_that("Testing log-likelihood function", {
   ll3 = sum(log(dlnorm(3:4, 1, 1)/(1 - plnorm(2, 1, 1))))
   expect_equal(dist_ll(m), ll3)
   
+  
+  ##Exponential
+  x = c(1, 1)
+  m = conexp$new(x); m$setPars(1)
+  
+  ll1 = sum(log(dexp(x, 1)/(1 - pexp(1, 1))))
+  expect_equal(dist_ll(m), ll1)
+  
+  x = c(1, 1, 3, 4)
+  m$setDat(x)
+  ll2 = sum(log(dexp(3:4, 1)/(1 - pexp(1, 1))))
+  expect_equal(dist_ll(m), ll1+ll2)
+  
+  m$setXmin(2)
+  ll3 = sum(log(dexp(3:4, 1)/(1 - pexp(2,1))))
+  expect_equal(dist_ll(m), ll3)
+  
+  
+  
 }
 )
