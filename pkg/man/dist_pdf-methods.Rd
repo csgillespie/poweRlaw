@@ -1,7 +1,12 @@
 \docType{methods}
 \name{dist_pdf}
 \alias{dist_pdf}
+\alias{dist_pdf,conexp-method}
+\alias{dist_pdf,conlnorm-method}
+\alias{dist_pdf,conpl-method}
+\alias{dist_pdf,dislnorm-method}
 \alias{dist_pdf,displ-method}
+\alias{dist_pdf,dispois-method}
 \title{The probability density function}
 \arguments{
   \item{m}{The distribution reference object.}
