@@ -51,3 +51,4 @@ Collate:
     'points-methods.R'
     'poweRlaw-package.R'
     'checks.R'
+    'vuong.R'
