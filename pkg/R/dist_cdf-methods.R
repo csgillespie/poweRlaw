@@ -47,7 +47,7 @@ setMethod("dist_cdf",
               C = plnorm(xmin-0.5, pars[1], pars[2], lower.tail=FALSE) 
               (p/C-1/C+1)
             } else {
-              C = 1-plnorm(xmin-0.5, pars[1], pars[2]) 
+              C = 1-plnorm(xmin+0.5, pars[1], pars[2]) 
               p/C
             }
           }

@@ -16,10 +16,8 @@ setMethod("lines",
             
             y = dist_cdf(x, x_axs, FALSE)
             if(!cut) {
-              if(is(x,"discrete_distribution")) 
-                x$setXmin(1)
-              else 
-                x$setXmin(0)
+              if(is(x,"discrete_distribution")) x$setXmin(1)
+              else x$setXmin(0)
               d_cdf = dist_data_cdf(x, lower_tail=FALSE)
  
               ##Linear interprolate between cdf points
