@@ -3,9 +3,6 @@
 \alias{pl_data}
 \alias{pl_data-class}
 \title{The pl class}
-\usage{
-  pl_data(...)
-}
 \arguments{
   \item{...}{This class is depreciated.}
 }

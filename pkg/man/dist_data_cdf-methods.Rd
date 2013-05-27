@@ -11,8 +11,9 @@
   probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X >
   x]}.}
 
-  \item{all_values}{logical; if \code{FALSE} (default),
-  calculated at observed data values}
+  \item{all_values}{logical; if \code{FALSE} (default). If
+  \code{TRUE}, then the cdf is evaluated at points xmin,
+  xmin+1, ..., xmax.}
 }
 \description{
   This is generic function for distribution reference
@@ -28,7 +29,6 @@
 data(moby_sample)
 m = displ$new(moby_sample)
 m$setXmin(7);m$setPars(2)
-#CDF at a particular value
 dist_data_cdf(m)
 }
 

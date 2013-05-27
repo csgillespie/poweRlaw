@@ -9,25 +9,27 @@
 \alias{dist_cdf,dispois-method}
 \title{The cumulative distribution function}
 \arguments{
-  \item{m}{a reference class distribution object.}
+  \item{m}{a distribution object.}
+
+  \item{all_values}{logical; if \code{FALSE} (default). If
+  \code{TRUE}, then the cdf is evaluated at points xmin,
+  xmin+1, ..., xmax.}
 
   \item{q}{a vector values where the function will be
   evaluated. If \code{q} is \code{NULL} (default), then the
-  data values will be used (used in dist_cdf only)}
-
-  \item{all_values}{logical; if \code{FALSE} (default),
-  calculated at observed data values}
+  data values will be used.}
 
   \item{lower_tail}{logical; if \code{TRUE} (default),
   probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X >
   x]}.}
 }
 \description{
-  This is generic function for cumulative distribution
-  function of reference objects. This is similar to base
-  R's \code{pnorm} for the normal distribution. This
-  function calculates the cumulative probability density
-  for the current parameters and xmin value.
+  This is generic function for calculating the cumulative
+  distribution function (cdf) of reference objects. This is
+  similar to base R's \code{pnorm} for the normal
+  distribution. The \code{dist_cdf} function calculates the
+  cumulative probability distribution for the current
+  parameters and xmin value.
 }
 \note{
   This method does *not* alter the internal state of the

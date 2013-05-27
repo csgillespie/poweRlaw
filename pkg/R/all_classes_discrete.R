@@ -1,20 +1,22 @@
-#' Classes for distribution
+#' Heavy-tailed distributions
 #' 
-#' The reference class objects \code{displ}, \code{dispois},
-#' \code{dislnorm}, \code{conpl} and \code{conlnorm} are used 
-#' for parameter inference.
-#' 
-#' Each class also inherits the \code{discrete_distribution} or
+#' The poweRlaw package supports a number of distributions:
+#' \describe{
+#' \item{displ}{Discrete power-law}
+#' \item{dislnorm}{Discrete log-normal}
+#' \item{dispois}{Discrete Poisson}
+#' \item{conpl}{Continuous power-law}
+#' \item{conlnorm}{Continuous log-normal}
+#' \item{conexp}{Continuous exponential}}
+#' Each object inherits the \code{discrete_distribution} or
 #' \code{ctn_distribution} class. 
 #'
-#' @param ... The object is typically created by passing 
-#' data using the \code{dat} field. Each field has standard setters and getters.
-#' 
-#' @return a reference object
 #' @section Fields:
 #' 
-#' Each distribution object has four fields. However, the object is typically created by passing 
-#' data, using the \code{dat} field. Each field has standard setters and getters.
+#' Each distribution object has four fields. However, the object 
+#' is typically created by passing 
+#' data, using the \code{dat} field. Each field has standard 
+#' setters and getters.
 #' \describe{
 #' \item{dat}{The data set.}
 #' \item{xmin}{The lower threshold, xmin. Typically set after initialisation. 
@@ -23,6 +25,11 @@
 #' \item{pars}{A parameter vector. Typically set after initialisation. For power-laws
 #' pars > 1. The lognormal distribution has two parameters.}
 #' \item{internal}{A list. This list differs between objects and shouldn't be altered.}}
+#' @param ... The object is typically created by passing 
+#' data using the \code{dat} field. 
+#' Each field has standard setters and getters.
+#' 
+#' @return a reference object
 #' @aliases displ-class
 #' @docType class
 #' @aliases conpl
@@ -31,6 +38,16 @@
 #' @export displ
 #' @examples
 #' data(moby)
+#' m = displ$new(moby)
+#' m$getXmin()
+#' m$getPars()
+#' #Set Xmin and parameter
+#' m$setXmin(2)
+#' m$setPars(2)
+#' #Plot the data
+#' plot(m)
+#' #Add fitted distributions
+#' lines(m)
 displ = 
   setRefClass("displ", 
               contains="discrete_distribution",

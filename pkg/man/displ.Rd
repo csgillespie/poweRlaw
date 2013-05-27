@@ -12,20 +12,7 @@
 \alias{displ-class}
 \alias{dispois}
 \alias{dispois-class}
-\title{Classes for distribution}
-\usage{
-  conpl(...)
-
-  conlnorm(...)
-
-  conexp(...)
-
-  displ(...)
-
-  dislnorm(...)
-
-  dispois(...)
-}
+\title{Heavy-tailed distributions}
 \arguments{
   \item{...}{The object is typically created by passing
   data using the \code{dat} field. Each field has standard
@@ -35,13 +22,14 @@
   a reference object
 }
 \description{
-  The reference class objects \code{displ}, \code{dispois},
-  \code{dislnorm}, \code{conpl} and \code{conlnorm} are
-  used for parameter inference.
-}
-\details{
-  Each class also inherits the \code{discrete_distribution}
-  or \code{ctn_distribution} class.
+  The poweRlaw package supports a number of distributions:
+  \describe{ \item{displ}{Discrete power-law}
+  \item{dislnorm}{Discrete log-normal}
+  \item{dispois}{Discrete Poisson} \item{conpl}{Continuous
+  power-law} \item{conlnorm}{Continuous log-normal}
+  \item{conexp}{Continuous exponential}} Each object
+  inherits the \code{discrete_distribution} or
+  \code{ctn_distribution} class.
 }
 \section{Fields}{
   Each distribution object has four fields. However, the
@@ -59,5 +47,15 @@
 }
 \examples{
 data(moby)
+m = displ$new(moby)
+m$getXmin()
+m$getPars()
+#Set Xmin and parameter
+m$setXmin(2)
+m$setPars(2)
+#Plot the data
+plot(m)
+#Add fitted distributions
+lines(m)
 }
 

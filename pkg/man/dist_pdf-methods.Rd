@@ -21,7 +21,7 @@
 \description{
   This is generic function for distribution reference
   objects. This function calculates the probability density
-  functionfor the current parameters and xmin value.
+  function (pdf) for the current parameters and xmin value.
 }
 \note{
   This method does *not* alter the internal state of the

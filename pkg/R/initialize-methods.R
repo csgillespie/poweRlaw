@@ -15,8 +15,6 @@ pl_data$methods(
 #######################################################
 #Power-law distributions
 #######################################################
-#       if( all(x==floor(x)) && is.vector(x) ){ fdattype<-"integer" }
-#       if( all(x==floor(x)) && min(x) > 1000 && length(x) > 100 ){ fdattype <- "real" }
 displ$methods( 
   list(
     initialize = function(dat) {

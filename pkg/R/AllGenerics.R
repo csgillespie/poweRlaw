@@ -8,19 +8,21 @@ setGeneric("points")
 
 #' The cumulative distribution function
 #'
-#' This is generic function for cumulative distribution function of 
+#' This is generic function for calculating
+#' the cumulative distribution function (cdf) of 
 #' reference objects. This is similar to base R's \code{pnorm} for the 
-#' normal distribution. This function calculates the cumulative
-#' probability density for the current parameters and xmin value.
+#' normal distribution. The \code{dist_cdf} function calculates the 
+#' cumulative probability distribution for the 
+#' current parameters and xmin value.
 #' 
-#' @param m a reference class distribution object.
+#' @param m a distribution object.
+#' @param all_values logical; if \code{FALSE} (default). If \code{TRUE},
+#' then the cdf is evaluated at points xmin, xmin+1, ..., xmax.
 #' @param q a vector values where the function will be evaluated. 
 #' If \code{q} is \code{NULL} (default), then the data values 
-#' will be used (used in dist_cdf only)
-#' @param all_values logical; if \code{FALSE} (default), calculated
-#' at observed data values
-#' @param lower_tail logical; 
-#' if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, 
+#' will be used.
+#' @param lower_tail logical; if \code{TRUE} (default), 
+#' probabilities are \eqn{P[X \le x]}, 
 #' otherwise, \eqn{P[X > x]}.
 #' @docType methods
 #' @exportMethod dist_cdf
@@ -36,7 +38,8 @@ setGeneric("points")
 #' dist_cdf(m, 10:15)
 #' dist_cdf(m) #at the data values
 setGeneric("dist_cdf", 
-           function(m, q=NULL, lower_tail=FALSE, ...) standardGeneric("dist_cdf"))
+           function(m, q=NULL, lower_tail=FALSE, ...) 
+             standardGeneric("dist_cdf"))
 
 
 #' The data cumulative distribution function
@@ -46,12 +49,11 @@ setGeneric("dist_cdf",
 #' for the current parameters and xmin value.
 #' 
 #' @param m a reference class distribution object.
-
 #' @param lower_tail logical; 
 #' if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, 
 #' otherwise, \eqn{P[X > x]}.
-#' @param all_values logical; if \code{FALSE} (default), calculated
-#' at observed data values
+#' @param all_values logical; if \code{FALSE} (default). If \code{TRUE},
+#' then the cdf is evaluated at points xmin, xmin+1, ..., xmax.
 #' @docType methods
 #' @exportMethod dist_data_cdf
 #' @note This method does *not* alter the internal state of
@@ -62,12 +64,10 @@ setGeneric("dist_cdf",
 #' data(moby_sample)
 #' m = displ$new(moby_sample)
 #' m$setXmin(7);m$setPars(2)
-#' #CDF at a particular value
 #' dist_data_cdf(m)
-setGeneric("dist_data_cdf", function(m, lower_tail=TRUE, all_values=FALSE) standardGeneric("dist_data_cdf"))
-
-
-
+setGeneric("dist_data_cdf", 
+           function(m, lower_tail=TRUE, all_values=FALSE) 
+             standardGeneric("dist_data_cdf"))
 
 
 
@@ -77,8 +77,8 @@ setGeneric("dist_data_cdf", function(m, lower_tail=TRUE, all_values=FALSE) stand
 #' The probability density function
 #'
 #' This is generic function for distribution reference objects.
-#' This function calculates the probability density functionfor the current 
-#' parameters and xmin value.
+#' This function calculates the probability density function (pdf) 
+#' for the current parameters and xmin value.
 #'
 #' @param m The distribution reference object.
 #' @param q a vector values where the function will be evaluated. 
@@ -97,7 +97,9 @@ setGeneric("dist_data_cdf", function(m, lower_tail=TRUE, all_values=FALSE) stand
 #' m = displ$new(moby_sample)
 #' m$setXmin(7);m$setPars(2)
 #' dist_pdf(m)
-setGeneric("dist_pdf", function(m, q=NULL) standardGeneric("dist_pdf"))
+setGeneric("dist_pdf", 
+           function(m, q=NULL) 
+             standardGeneric("dist_pdf"))
 
 
 #' The log-likelihood function
@@ -121,7 +123,9 @@ setGeneric("dist_pdf", function(m, q=NULL) standardGeneric("dist_pdf"))
 #' m = displ$new(moby_sample)
 #' m$setXmin(7);m$setPars(2)
 #' dist_ll(m)
-setGeneric("dist_ll", function(m) standardGeneric("dist_ll"))
+setGeneric("dist_ll", 
+           function(m) 
+             standardGeneric("dist_ll"))
 
 #' Random number generation for the distribution objects
 #'
@@ -133,10 +137,9 @@ setGeneric("dist_ll", function(m) standardGeneric("dist_ll"))
 #'
 #' @param m a distribution reference object.
 #' @param n number of observations to be generated.
-#'
 #' @return n random numbers
 #' 
-#' @seealso \code{\link{dist_cdf}},  \code{\link{dist_pdf}} 
+#' @seealso \code{\link{dist_cdf}}, \code{\link{dist_pdf}} 
 #' and \code{\link{dist_ll}}
 #' @note This method does *not* alter the internal state of
 #' the distribubtion object.
@@ -148,5 +151,7 @@ setGeneric("dist_ll", function(m) standardGeneric("dist_ll"))
 #' m = displ$new(moby_sample)
 #' m$setXmin(7);m$setPars(2)
 #' dist_rand(m, 5)
-setGeneric("dist_rand", function(m, n) standardGeneric("dist_rand"))
+setGeneric("dist_rand", 
+           function(m, n) 
+             standardGeneric("dist_rand"))
 

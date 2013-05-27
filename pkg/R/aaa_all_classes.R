@@ -24,8 +24,10 @@ distribution = setRefClass("distribution",
 distribution$accessors(c("xmin", "pars", "dat", "no_pars"))
 
 
-discrete_distribution = setRefClass("discrete_distribution", contains="distribution")
-ctn_distribution = setRefClass("ctn_distribution", contains="distribution")
+discrete_distribution = setRefClass("discrete_distribution", 
+                                    contains="distribution")
+ctn_distribution = setRefClass("ctn_distribution", 
+                               contains="distribution")
 
 
 
