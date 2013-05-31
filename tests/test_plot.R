@@ -27,7 +27,7 @@ test_that("Test plotting", {
   d_exact = data.frame(x=1:4, y=4:1/4)
   expect_equal(plot(m, draw=FALSE), d_exact)
   d2 = lines(m, draw=FALSE)
-  y = c(0.5526, 0.4146, 0.3182)
+  y = c(0.75, 0.5628, 0.4318)
   expect_equal(d2$x, 2:4)
   expect_equal(d2$y, y, tol=1e-4)
   

@@ -40,7 +40,7 @@ test_that("Testing Vuong's", {
   m2$setXmin(xmin)
   m2$setPars(c(-9, 4))
   v = vuong(m1, m2)
-  expect_equal(v$total_ll_ratio, 2175, tol=1e0)
+  expect_equal(v$total_ll_ratio, -64.85, tol=1e-3)
   
 }
 )

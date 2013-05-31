@@ -18,8 +18,10 @@ setMethod("dist_pdf",
             xmin = m$getXmin(); pars = m$getPars()
             if(is.null(q)) q = m$dat
             q = q[q >= m$xmin]
-            dlnorm(q+0.5, pars[1], pars[2], log=TRUE) - 
+            log(plnorm(q-0.5, pars[1], pars[2], lower.tail=FALSE) -
+                  plnorm(q+0.5, pars[1], pars[2], lower.tail=FALSE)) - 
               plnorm(xmin-0.5, pars[1], pars[2], lower.tail=FALSE, log.p=TRUE)
+            
             
           }
 )
@@ -33,7 +35,8 @@ setMethod("dist_pdf",
             xmin = m$getXmin(); pars = m$getPars()
             if(is.null(q)) q = m$dat
             q = q[q >= m$xmin]
-            dpois(q, pars, log=TRUE) - ppois(xmin, pars, lower.tail=FALSE, log.p=TRUE)
+            dpois(q, pars, log=TRUE) - 
+              ppois(xmin, pars, lower.tail=FALSE, log.p=TRUE)
           }
 )
 
@@ -78,8 +81,8 @@ setMethod("dist_pdf",
             } else {
               q[q >= m$xmin]
             }
-            dlnorm(q, pars[1], pars[2], log=TRUE) - plnorm(xmin, pars[1], pars[2], 
-                                                         lower.tail=FALSE, log.p=TRUE)
+            dlnorm(q, pars[1], pars[2], log=TRUE) - 
+              plnorm(xmin, pars[1], pars[2], lower.tail=FALSE, log.p=TRUE)
             
           }
 )
@@ -100,6 +103,7 @@ setMethod("dist_pdf",
             } else {
               q[q >= m$xmin]
             }
-            dexp(q, pars, log=TRUE) - pexp(xmin, pars, lower.tail=FALSE, log.p=TRUE)
+            dexp(q, pars, log=TRUE) - 
+              pexp(xmin, pars, lower.tail=FALSE, log.p=TRUE)
           }
 )
