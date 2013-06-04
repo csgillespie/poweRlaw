@@ -13,6 +13,19 @@
 \alias{dispois}
 \alias{dispois-class}
 \title{Heavy-tailed distributions}
+\usage{
+  conpl(...)
+
+  conlnorm(...)
+
+  conexp(...)
+
+  displ(...)
+
+  dislnorm(...)
+
+  dispois(...)
+}
 \arguments{
   \item{...}{The object is typically created by passing
   data using the \code{dat} field. Each field has standard
