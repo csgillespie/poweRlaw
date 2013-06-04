@@ -4,6 +4,7 @@
 \alias{dist_ll,conexp-method}
 \alias{dist_ll,conlnorm-method}
 \alias{dist_ll,conpl-method}
+\alias{dist_ll,disexp-method}
 \alias{dist_ll,dislnorm-method}
 \alias{dist_ll,displ-method}
 \alias{dist_ll,dispois-method}

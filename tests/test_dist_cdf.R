@@ -54,6 +54,26 @@ test_that("Testing dist_cdf function", {
   cdf3 = sum(dpois(3, 1)/(1 - sum(dpois(0:2, 1))))
   expect_equal(dist_cdf(mt), cdf3)
   
+  ##Discrete Exp
+  x = c(1, 1, 3)
+  mt = disexp$new(x); mt$setPars(1)
+  cdf1 = (pexp(1.5, 1, 1)-pexp(0.5, 1, 1))/(1 - pexp(0.5, 1, 1))
+  cdf2 = (pexp(2.5, 1, 1)-pexp(0.5, 1, 1))/(1 - pexp(0.5, 1, 1))
+  cdf3 = (pexp(3.5, 1, 1)-pexp(0.5, 1, 1))/(1 - pexp(0.5, 1, 1))
+  expect_equal(dist_cdf(mt), c(cdf1, cdf1, cdf3))
+  expect_equal(dist_cdf(mt, all_values=TRUE), c(cdf1, cdf2, cdf3))
+  expect_equal(dist_cdf(mt, q=c(1, 3)), c(cdf1, cdf3))
+  
+  mt$setXmin(2)
+  cdf3 = (pexp(3.5, 1, 1)-pexp(1.5, 1, 1))/(1 - pexp(1.5, 1, 1))
+  expect_equal(dist_cdf(mt), cdf3)
+  
+  mt$setXmin(3)
+  cdf3 = cdf3 = (pexp(3.5, 1, 1)-pexp(2.5, 1, 1))/(1 - pexp(2.5, 1, 1))
+  expect_equal(dist_cdf(mt), cdf3)
+  
+  
+  
   ################################
   #CTN Distributions
   ################################

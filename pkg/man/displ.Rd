@@ -6,6 +6,8 @@
 \alias{conlnorm-class}
 \alias{conpl}
 \alias{conpl-class}
+\alias{disexp}
+\alias{disexp-class}
 \alias{dislnorm}
 \alias{dislnorm-class}
 \alias{displ}
@@ -25,6 +27,8 @@
   dislnorm(...)
 
   dispois(...)
+
+  disexp(...)
 }
 \arguments{
   \item{...}{The object is typically created by passing

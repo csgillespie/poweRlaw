@@ -13,5 +13,4 @@ test_file("tests/test_bootstrap_p.R")
 
 test_file("tests/test_plot.R")
 
-
 test_file("tests/test_compare_distributions.R")

@@ -83,6 +83,36 @@ setMethod("dist_cdf",
           }
 )
 
+#' @rdname dist_cdf-methods
+#' @aliases dist_cdf,disexp-method
+setMethod("dist_cdf",
+          signature = signature(m="disexp"),
+          definition = function(m, 
+                                q=NULL, 
+                                lower_tail=TRUE,
+                                all_values=FALSE) {
+            xmin = m$getXmin(); pars = m$getPars()
+            if(is.null(pars)) stop("Parameters not set")  
+            
+            if(all_values) {
+              xmax = max(m$dat)
+              q = xmin:xmax
+            } else if(is.null(q)) {
+              q = m$dat
+              q = q[q>=xmin]
+            } 
+            p = pexp(q + 0.5, pars, lower.tail=lower_tail) 
+            if(lower_tail) {
+              C = pexp(xmin-0.5, lower.tail=FALSE) 
+              (p/C-1/C+1)
+            } else {
+              C = 1-pexp(xmin+0.5, pars) 
+              p/C
+            }
+          }
+)
+
+
 ########################
 ##CTN distributions
 ########################

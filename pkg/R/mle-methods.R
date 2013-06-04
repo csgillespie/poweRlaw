@@ -16,7 +16,7 @@ dislnorm$methods(
   mle = function(set = TRUE, initialise=NULL) {
     n = internal[["n"]]
     x = dat
-    x = x[x > (xmin-1)]
+    x = x[x > (xmin-0.5)]
     x.log = log(x)
     if(is.null(initialise))
       theta_0 = c(mean(x.log), sd(x.log))
@@ -24,7 +24,7 @@ dislnorm$methods(
       theta_0 = initialise
     # Chop off values below 
     negloglike = function(par) {
-      r = -disc_lnorm_tail_ll(x, par, xmin)
+      r = -dis_lnorm_tail_ll(x, par, xmin)
       if(!is.finite(r)) r = 1e12
       r
     }
@@ -44,7 +44,7 @@ dislnorm$methods(
 dispois$methods(
   mle = function(set = TRUE, initialise=NULL) {
     x = dat
-    x = x[x > (xmin-1)]
+    x = x[x > (xmin-0.5)]
     if(is.null(initialise))
       theta_0 = mean(x)
     else 
@@ -62,6 +62,29 @@ dispois$methods(
     names(mle)[1] = "pars"
     mle
 
+  }
+)
+
+disexp$methods(
+  mle = function(set = TRUE, initialise=NULL) {
+    x = dat
+    x = x[x > (xmin-0.5)]
+    if(is.null(initialise))
+      theta_0 = mean(1/x)
+    else 
+      theta_0 = initialise
+    # Chop off values below 
+    negloglike = function(par) {
+      r = -dis_exp_tail_ll(x, par, xmin)
+      if(!is.finite(r)) r = 1e12
+      r
+    }
+    mle = optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=0)
+    if(set)
+      pars <<- mle$par
+    class(mle) = "estimate_pars"
+    names(mle)[1] = "pars"
+    mle
   }
 )
 

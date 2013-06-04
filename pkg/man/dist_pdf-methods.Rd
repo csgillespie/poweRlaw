@@ -4,6 +4,7 @@
 \alias{dist_pdf,conexp-method}
 \alias{dist_pdf,conlnorm-method}
 \alias{dist_pdf,conpl-method}
+\alias{dist_pdf,disexp-method}
 \alias{dist_pdf,dislnorm-method}
 \alias{dist_pdf,displ-method}
 \alias{dist_pdf,dispois-method}

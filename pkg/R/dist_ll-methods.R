@@ -27,7 +27,7 @@ setMethod("dist_ll",
   definition = function(m) {
     xmin = m$getXmin()
     d = m$getDat()
-    disc_lnorm_tail_ll(d[d >= xmin], m$getPars(), xmin)
+    dis_lnorm_tail_ll(d[d >= xmin], m$getPars(), xmin)
   }
 )
 
@@ -42,6 +42,16 @@ setMethod("dist_ll",
           }
 )
 
+#' @rdname dist_ll-methods
+#' @aliases dist_ll,disexp-method
+setMethod("dist_ll",
+          signature = signature(m="disexp"),
+          definition = function(m) {
+            xmin = m$getXmin()
+            d = m$getDat()
+            dis_exp_tail_ll(d[d >= xmin], m$getPars(), xmin)
+          }
+)
 
 ####
 ####CTN Distributions

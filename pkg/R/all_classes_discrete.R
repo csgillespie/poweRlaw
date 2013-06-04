@@ -179,3 +179,45 @@ dispois =
                 }
               ))
 
+#' @rdname displ
+#' @aliases disexp-class
+#' @exportClass disexp
+#' @export disexp
+disexp = 
+  setRefClass("disexp", 
+              contains="discrete_distribution",
+              fields = list(
+                dat = function(x)
+                  if(!missing(x) && !is.null(x)) {
+                    check_discrete_data(x)
+                    x = sort(x)
+                    tab = table(x)
+                    values = as.numeric(names(tab))
+                    freq = as.vector(tab)
+                    
+                    internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
+                    internal[["freq"]] <<- freq
+                    internal[["values"]] <<- values
+                    internal[["dat"]] <<- x
+                    xmin <<- min(values)
+                  } else internal[["dat"]],
+                xmin = function(x) {
+                  if(!missing(x) && !is.null(x)) {
+                    if(class(x) == "estimate_xmin") {
+                      pars <<- x$pars
+                      x = x$xmin
+                    }
+                    selection = min(which(
+                      internal[["values"]] >= x))
+                    internal[["n"]] <<- internal[["cum_n"]][selection]            
+                    internal[["xmin"]] <<- x
+                  } else  internal[["xmin"]]
+                }, 
+                pars = function(x) {
+                  if (!missing(x) && !is.null(x)) {
+                    if(class(x) == "estimate_pars") x = x$pars            
+                    internal[["pars"]] <<- x            
+                  } else internal[["pars"]]
+                }
+              ))
+

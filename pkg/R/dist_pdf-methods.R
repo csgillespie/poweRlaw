@@ -40,6 +40,20 @@ setMethod("dist_pdf",
           }
 )
 
+#' @rdname dist_pdf-methods
+#' @aliases dist_pdf,disexp-method
+setMethod("dist_pdf",
+          signature = signature(m="disexp"),
+          definition = function(m, q=NULL) {
+            xmin = m$getXmin(); pars = m$getPars()
+            if(is.null(q)) q = m$dat
+            q = q[q >= m$xmin]
+            log(pexp(q-0.5, pars, lower.tail=FALSE) -
+                  pexp(q+0.5, pars, lower.tail=FALSE)) - 
+              pexp(xmin-0.5, pars, lower.tail=FALSE, log.p=TRUE)
+            
+          }
+)
 
 
 

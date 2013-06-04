@@ -20,6 +20,7 @@ test_that("Testing dist_data_cdf function", {
   mt$setXmin(2)
   expect_equal(dist_data_cdf(mt), c(1/4, 1/2, 1))
   
+  
   ##I don't think this is correct
   ##But it's what clausett does
   ##Need to check

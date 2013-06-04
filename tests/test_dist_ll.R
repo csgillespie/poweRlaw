@@ -32,6 +32,21 @@ test_that("Testing log-likelihood function", {
   ll = log(prod(dpois(3:4, 2)/(1-sum(dpois(0:1, 2)))))
   expect_equal(dist_ll(m), ll)
   
+  ##Discrete Exponential
+  x = c(1, 1)
+  m = disexp$new(x)
+  m$setPars(1)
+  l = (pexp(1.5, 1, 1)-pexp(0.5, 1, 1))/(1 - pexp(0.5, 1, 1))
+  ll1 = 2*log(l)
+  expect_equal(dist_ll(m), ll1)
+  x = c(1, 1, 3,4)
+  m$setDat(x);  m$setXmin(2)
+  ll3 = (pexp(3.5, 1, 1)-pexp(2.5, 1, 1))/(1 - pexp(1.5, 1, 1))
+  ll4 = (pexp(4.5, 1, 1)-pexp(3.5, 1, 1))/(1 - pexp(1.5, 1, 1))
+  ll = log(ll3) + log(ll4)
+  expect_equal(dist_ll(m), ll)
+  
+  
   #######################################
   #######################################
   #######################################  

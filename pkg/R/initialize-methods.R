@@ -82,6 +82,28 @@ dispois$methods(
     }
   )
 )
+
+disexp$methods( 
+  list(
+    initialize = function(dat) {
+      no_pars <<- 1
+      ##Use the internal attribute for copying
+      if(!missing(dat)) {
+        check_discrete_data(dat)
+        x = sort(dat)
+        tab = table(x)
+        values = as.numeric(names(tab))
+        freq = as.vector(tab)
+        
+        internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
+        internal[["freq"]] <<- freq
+        internal[["values"]] <<- values
+        internal[["dat"]] <<- x
+        xmin <<- min(values)
+      }
+    }
+  )
+)
 ###############################################
 ###CTN Distributions
 ##############################################
