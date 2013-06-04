@@ -150,3 +150,19 @@ plot.bs_p_xmin = function(x, trim=0.1, ...){
   create_plots(l, no_plots)
   
 }
+
+
+#' @method plot compare_distributions
+#' @S3method plot compare_distributions
+plot.compare_distributions = function(x, ...) {
+
+  dd = x$ratio[!duplicated(x$ratio$x),]
+  defaults = list(xlab = "x", ylab = "Log-likelihood")
+  args = modifyList(defaults, list(x = dd$x, y=dd$ratio, ...))
+  do.call("plot", args)
+}
+
+
+
+
+

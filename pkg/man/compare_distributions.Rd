@@ -1,13 +1,13 @@
-\name{vuong}
-\alias{vuong}
+\name{compare_distributions}
+\alias{compare_distributions}
 \title{Vuong's test for non-nested models}
 \usage{
-  vuong(d1, d2)
+  compare_distributions(d1, d2)
 }
 \arguments{
-  \item{d1,}{distribution objects}
+  \item{d1}{distribution objects}
 
-  \item{d2,}{distribution objects}
+  \item{d2}{distribution objects}
 }
 \value{
   A list giving total, mean and standard deviation of the
@@ -59,10 +59,11 @@ est2 = estimate_pars(m2)
 m2$setPars(est2$pars)
 
 #Vuong's test
-vuong(m1, m2)
+compare_distributions(m1, m2)
 }
 \references{
   Vuong, Quang H. (1989): "Likelihood Ratio Tests for Model
-  Selection and
+  Selection and Non-Nested Hypotheses", Econometrica 57:
+  307--333.
 }
 

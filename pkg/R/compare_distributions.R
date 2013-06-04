@@ -18,14 +18,13 @@
 #' ratio which deviates that much from zero in _either_ direction, if the two
 #' distributions are actually equally good.  
 
-#' @param d1, distribution objects
-#' @param d2, distribution objects
+#' @param d1 distribution objects
+#' @param d2 distribution objects
 #' @return A list giving total, mean and standard deviation of the log likelihood ratio points.
 #' Also returned, is Vuong's test statistic (normalized pointwise log likelihood ratio), 
 #' one-sided and two-sided p-values (based on asymptotical standard Gaussian distribution)
 #' @note Code initially based on R code developed by Cosma Rohilla Shalizi (http://bactra.org/)
-#' @references Vuong, Quang H. (1989): "Likelihood Ratio Tests for Model Selection and
-#  Non-Nested Hypotheses", Econometrica 57: 307--333.
+#' @references Vuong, Quang H. (1989): "Likelihood Ratio Tests for Model Selection and Non-Nested Hypotheses", Econometrica 57: 307--333.
 #' @export
 #' @examples
 #' x = 3:10; xmin = 2
@@ -42,13 +41,14 @@
 #' m2$setPars(est2$pars)
 #' 
 #' #Vuong's test
-#' vuong(m1, m2)
+#' compare_distributions(m1, m2)
 #' @export
-vuong = function(d1, d2) {
+compare_distributions = function(d1, d2) {
   xmin1 = d1$getXmin(); xmin2 = d2$getXmin()
   if(xmin1 != xmin2)
     stop("Lower threshold, xmin, should be the same in both models")
-  ll_ratio_pts = dist_pdf(d1) - dist_pdf(d2)
+  q = d1$getDat(); q = q[q >= d1$getXmin()]
+  ll_ratio_pts = dist_pdf(d1, q) - dist_pdf(d2, q)
   
   m = mean(ll_ratio_pts); s = sd(ll_ratio_pts)
   v = sqrt(length(ll_ratio_pts))*m/s
@@ -56,8 +56,10 @@ vuong = function(d1, d2) {
   
   if (p1 < 0.5) {p2 = 2*p1} else {p2 = 2*(1-p1)}
   
-  list(total_ll_ratio = sum(ll_ratio_pts),
-       mean_ll_ratio = m, sd_ll_ratio = s, 
-       vuong_statistic = v, 
-       p_one_sided = p1, p_two_sided=p2)
+  
+  l = list(vuong_statistic = v, 
+           p_one_sided = p1, p_two_sided=p2, 
+           ratio = data.frame(x=q, ratio=ll_ratio_pts))
+  class(l) = "compare_distributions"
+  return(l)
 }
