@@ -44,6 +44,10 @@
 #' compare_distributions(m1, m2)
 #' @export
 compare_distributions = function(d1, d2) {
+  
+  if(!(inherits(d1, "discrete_distribution") == inherits(d2, "discrete_distribution")))
+    stop("You seem to be comparing a discrete distribution with a continuous distribution")
+  
   xmin1 = d1$getXmin(); xmin2 = d2$getXmin()
   if(xmin1 != xmin2)
     stop("Lower threshold, xmin, should be the same in both models")
