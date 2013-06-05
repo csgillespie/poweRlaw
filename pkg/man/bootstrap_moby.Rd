@@ -2,7 +2,7 @@
 \name{bootstrap_moby}
 \alias{bootstrap_moby}
 \alias{bootstrap_p_moby}
-\title{Bootstrap results for the full moby data set}
+\title{Example bootstrap results for the full Moby Dick data set}
 \format{A list}
 \source{
   M. E. J. Newman, "Power laws, Pareto distributions and
@@ -11,14 +11,16 @@
   further details.
 }
 \description{
-  The output from running \code{bootstrap} on the full moby
-  data set is found in the data set \code{bootstrap_moby}.
-  The output from running \code{bootstrap_p} on the full
-  moby data set is found in the data set
-  \code{bootstrap_p_moby}.
-
-  The \code{bootstrap_moby} values correspond to the first
-  row of table 6.1 in the Clauset et al paper: \describe{
+  To explore the uncertainity in the model fit, this
+  package provides a \code{bootstrap} function. \describe{
+  \item{bootstrap_moby}{The output from running 5000
+  bootstraps on the full Moby Dick data set (for a discrete
+  power law) using the \code{bootstrap} function. }
+  \item{bootstrap_p_moby}{The output from running 5000
+  bootstraps on the full Moby Dick data set (for a discrete
+  power law) using the \code{bootstrap_p} function.}} The
+  \code{bootstrap_moby} values correspond to the first row
+  of table 6.1 in the Clauset et al paper: \describe{
   \item{\code{bootstrap_moby$gof}}{the K-S statistic}
   \item{\code{bootstrap_moby$bootstraps}}{a data frame for
   the optimal values from the bootstrapping procedure.
@@ -27,9 +29,12 @@
   (the paper gives 2 and 0.02 respectively).} }
 
   The \code{bootstrap_p_moby} gives the p-value for the
-  hypthothesis test of whether the data follows a
-  power-law. For this simulation study, we get a value of
-  0.4306 (the paper gives 0.49).
+  hypothesis test of whether the data follows a power-law.
+  For this simulation study, we get a value of 0.43 (the
+  paper gives 0.49).
+}
+\seealso{
+  \code{moby}, \code{bootstrap}, \code{bootstrap_p}
 }
 \keyword{datasets}
 

@@ -10,13 +10,16 @@
 #' @source M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law." Contemporary Physics 46, 323 (2005). See http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm for further details.
 NULL
 
+
 #' @name bootstrap_moby
 #' @aliases bootstrap_moby bootstrap_p_moby
-#' @title Bootstrap results for the full moby data set
-#' @description The output from running \code{bootstrap} on the 
-#' full moby data set is found in the data set \code{bootstrap_moby}. The output from running \code{bootstrap_p} on the 
-#' full moby data set is found in the data set \code{bootstrap_p_moby}. 
-#' 
+#' @title Example bootstrap results for the full Moby Dick data set
+#' @description To explore the uncertainity in the model fit, this package provides a \code{bootstrap} function.
+#' \describe{
+#' \item{bootstrap_moby}{The output from running 5000 bootstraps on the full Moby Dick data set (for a discrete power law) 
+#' using the \code{bootstrap} function. }
+#' \item{bootstrap_p_moby}{The output from running 5000 bootstraps on the full Moby Dick data set (for a discrete power law) 
+#' using the \code{bootstrap_p} function.}}
 #' The \code{bootstrap_moby} values correspond to the first row of
 #' table 6.1 in the Clauset et al paper:
 #' \describe{
@@ -24,15 +27,15 @@ NULL
 #' \item{\code{bootstrap_moby$bootstraps}}{a data frame for the optimal values from the bootstrapping procedure. Column 1: K-S, Column 2: xmin, Column 3: alpha. So standard deviation of column 2 and 3 is 2.2 and 0.033 (the paper gives 2 and 0.02 respectively).}
 #' }
 #' 
-#' The \code{bootstrap_p_moby} gives the p-value for the hypthothesis 
-#' test of whether the data follows a power-law. For this simulation study, we get a value of 0.4306 (the paper gives 0.49).
+#' The \code{bootstrap_p_moby} gives the p-value for the hypothesis
+#' test of whether the data follows a power-law. For this simulation study, we get a value of 0.43 (the paper gives 0.49).
 #' @docType data
+#' @seealso \code{moby}, \code{bootstrap}, \code{bootstrap_p}
 #' @format A list
 #' @source M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law." Contemporary Physics 46, 323 (2005). See http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm for further details.
 NULL
 
-
-          
+    
    
 
 #' @name NativeAmerican           
@@ -40,16 +43,13 @@ NULL
 #' @title Casualities in the American Indian Wars (1776 and 1890)
 #' @description These data files contain the observed casualties in the American Indian Wars. The data sets 
 #' \code{NativeAmerican} and \code{USAmerican} contain the casualties on the Native American and US American 
-#' sides respectivitely. Each data set is a data frame, with two columns: the number of casualities and the
+#' sides respectively. Each data set is a data frame, with two columns: the number of casualities and the
 #' conflict date.
 #' 
 #' @docType data
 #' @format Data frame
 #' @source Friedman, Jeffrey A. "Using Power Laws to Estimate Conflict Size." (2013).
 NULL
-
-
-
 
 
 
@@ -64,3 +64,14 @@ NULL
 #' @source Arcaute, Elsa, et al. "City boundaries and the universality of scaling laws." 
 #' arXiv preprint arXiv:1301.1674 (2013).
 NULL
+
+
+
+
+
+
+
+
+
+
+

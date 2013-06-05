@@ -3,10 +3,7 @@
 \alias{bootstrap_p}
 \alias{estimate_xmin}
 \alias{get_KS_statistic}
-\title{KS statistic.
-This is the maximum distance between the data CDF and fitted model CDF.
-This corresponds to expression (3.9) in the Newman, et al, 2009 paper.
-The Kolmogorov-Smirnov statistic is used when estimating the cut-off, xmin.}
+\title{Estimates the lower bound (xmin)}
 \usage{
   bootstrap_p(m, xmins = NULL, pars = NULL,
     no_of_sims = 100, threads = 1, data_max = 1e+06)
@@ -20,12 +17,6 @@ The Kolmogorov-Smirnov statistic is used when estimating the cut-off, xmin.}
     data_max = 1e+05)
 }
 \arguments{
-  \item{threads}{number of concurrent threads used during
-  the bootstrap.}
-
-  \item{no_of_sims}{number of bootstrap simulations. This
-  can take a while to run.}
-
   \item{m}{A reference class object that contains the
   data.}
 
@@ -41,34 +32,29 @@ The Kolmogorov-Smirnov statistic is used when estimating the cut-off, xmin.}
   \item{data_max}{default 1e5. When estimating xmin for
   discrete distributions, a the search space when comparing
   the data_cdf and distribution_cdf runs from 1:data_max}
-}
-\value{
-  Returns a list containing the results of the bootstrap
-  procedure. The list gives, amongst other things, an
-  estimate of how long a single bootstrap takes.
 
-  \code{estimate_xmin} returns a vector containing the
-  optimal parameter value, xmin and the associated KS
-  statistic.
+  \item{threads}{number of concurrent threads used during
+  the bootstrap.}
+
+  \item{no_of_sims}{number of bootstrap simulations. This
+  can take a while to run.}
 }
 \description{
-  \code{bootstrap} estimates the unncertainity in the xmin
-  and parameter values using bootstraping. This function
-  runs in parallel with the number of threads specficied by
-  the \code{threads} argument.
-
-  \code{bootstrap_p} estimates the unncertainity in the
-  xmin and parameter values using bootstraping.
-
-  KS statistic. This is the maximum distance between the
-  data CDF and fitted model CDF. This corresponds to
-  expression (3.9) in the Newman, et al, 2009 paper. The
-  Kolmogorov-Smirnov statistic is used when estimating the
-  cut-off, xmin.
-
-  \code{estimate_xmin} estimates the lower cutoff using a
-  goodness-of-fit based approach. This method is described
-  in Clauset, Shalizi, Newman (2009)
+  When fitting heavy tailed distributions, sometimes it is
+  necessary to estimate the lower threshold, xmin. The
+  lower bound is estimated by calculating the minimising
+  the Kolmogorov-Smirnoff statistic (as described in
+  Clauset, Shalizi, Newman (2009)). \describe{
+  \item{\code{get_KS_statistic}}{Calculates the KS
+  statistic for a particular value of xmin}
+  \item{\code{estimate_xmin}}{Estimates the optimal lower
+  cutoff using a goodness-of-fit based approach}
+  \item{\code{bootstrap}}{Estimates the unncertainity in
+  the xmin and parameter values via bootstraping.}
+  \item{\code{bootstrap_p}}{Performs a bootstrapping
+  hypothesis test to determine whether a power law
+  distribution is plausible. This function only available
+  for power law distribution objects.}}
 }
 \note{
   Adapted from Laurent Dubroca's code found at
@@ -76,12 +62,14 @@ The Kolmogorov-Smirnov statistic is used when estimating the cut-off, xmin.}
 }
 \examples{
 #Load the data set
-data(moby_sample)
+x = 1:10
+
 #Create a discrete power-law object
-m = displ$new(moby_sample)
+m = displ$new(x)
+
 #Estimate xmin and pars
-estimate_xmin(m)
-estimate_xmin(m, xmins=10:12)
+est = estimate_xmin(m)
+m$setXmin(est)
 ############################
 ##Bootstrap examples
 bootstrap(m, no_of_sims=1, threads=1)

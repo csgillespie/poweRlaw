@@ -1,17 +1,3 @@
-#' The pl class
-#' 
-#' This class is depreciated. Do not use
-#' @name pl_data-class
-#' @aliases pl_data
-#' @docType class
-#' @param ... This class is depreciated.
-#' @exportClass pl_data
-pl_data = setRefClass("pl_data", 
-                      fields = list(x="numeric", 
-                                    values="numeric", 
-                                    freq="numeric"))
-
-
 distribution = setRefClass("distribution", 
                            fields=list(
                              dat = "ANY",

@@ -1,3 +1,12 @@
+Version 0.20.0
+--------------
+ * Added discrete exponential function
+ * Added compare_distribution functions
+ * dist_pdf now have a log argument
+ * Updated documentation
+ * Bug fixes
+
+
 Version 0.17.0
 --------------
  * Added discrete lognormal, lognormal and poisson distributions.
