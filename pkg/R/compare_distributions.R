@@ -52,7 +52,7 @@ compare_distributions = function(d1, d2) {
   if(xmin1 != xmin2)
     stop("Lower threshold, xmin, should be the same in both models")
   q = d1$getDat(); q = q[q >= d1$getXmin()]
-  ll_ratio_pts = dist_pdf(d1, q) - dist_pdf(d2, q)
+  ll_ratio_pts = dist_pdf(d1, q, log=TRUE) - dist_pdf(d2, q, log=TRUE)
   
   m = mean(ll_ratio_pts); s = sd(ll_ratio_pts)
   v = sqrt(length(ll_ratio_pts))*m/s

@@ -28,6 +28,7 @@ test_that("Testing Vuong's", {
   
 
   ##Test discrete
+  xmin = 2
   m1 = displ$new(moby)
   m1$setXmin(xmin)
   m1$setPars(2)
@@ -36,11 +37,7 @@ test_that("Testing Vuong's", {
   m2$setXmin(xmin)
   m2$setPars(c(-9, 4))
   v = compare_distributions(m1, m2)
-  expect_equal(sum(v$ratio$ratio), 2175, tol=1e0)
+  expect_equal(sum(v$ratio$ratio), -64.85, tol=1e0)
   
-  v$p_one_sided
-  
-  
-
 }
 )

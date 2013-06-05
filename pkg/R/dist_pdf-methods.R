@@ -2,11 +2,13 @@
 #' @aliases dist_pdf,displ-method
 setMethod("dist_pdf",
           signature = signature(m="displ"),
-          definition = function(m, q=NULL) {
+          definition = function(m, q=NULL, log=FALSE) {
               xmin = m$getXmin(); pars = m$getPars()
               if(is.null(q)) q = m$dat
               q = q[q >= m$xmin]
-              dpldis(q[q >= m$xmin], m$xmin, m$pars, TRUE)
+              pdf = dpldis(q[q >= m$xmin], m$xmin, m$pars, TRUE)
+              if(!log) pdf = exp(pdf)
+              pdf
           }
 )
 
@@ -14,14 +16,15 @@ setMethod("dist_pdf",
 #' @aliases dist_pdf,dislnorm-method
 setMethod("dist_pdf",
           signature = signature(m="dislnorm"),
-          definition = function(m, q=NULL) {
+          definition = function(m, q=NULL, log=FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
             if(is.null(q)) q = m$dat
             q = q[q >= m$xmin]
-            log(plnorm(q-0.5, pars[1], pars[2], lower.tail=FALSE) -
+            pdf = log(plnorm(q-0.5, pars[1], pars[2], lower.tail=FALSE) -
                   plnorm(q+0.5, pars[1], pars[2], lower.tail=FALSE)) - 
               plnorm(xmin-0.5, pars[1], pars[2], lower.tail=FALSE, log.p=TRUE)
-            
+            if(!log) pdf = exp(pdf)
+            pdf
             
           }
 )
@@ -31,12 +34,13 @@ setMethod("dist_pdf",
 #' @aliases dist_pdf,dispois-method
 setMethod("dist_pdf",
           signature = signature(m="dispois"),
-          definition = function(m, q=NULL) {
+          definition = function(m, q=NULL, log=FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
             if(is.null(q)) q = m$dat
             q = q[q >= m$xmin]
-            dpois(q, pars, log=TRUE) - 
-              ppois(xmin, pars, lower.tail=FALSE, log.p=TRUE)
+            pdf = dpois(q, pars, log=TRUE) - ppois(xmin, pars, lower.tail=FALSE, log.p=TRUE)
+            if(!log) pdf = exp(pdf)
+            pdf
           }
 )
 
@@ -44,13 +48,15 @@ setMethod("dist_pdf",
 #' @aliases dist_pdf,disexp-method
 setMethod("dist_pdf",
           signature = signature(m="disexp"),
-          definition = function(m, q=NULL) {
+          definition = function(m, q=NULL, log=FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
             if(is.null(q)) q = m$dat
             q = q[q >= m$xmin]
-            log(pexp(q-0.5, pars, lower.tail=FALSE) -
+            pdf = log(pexp(q-0.5, pars, lower.tail=FALSE) -
                   pexp(q+0.5, pars, lower.tail=FALSE)) - 
               pexp(xmin-0.5, pars, lower.tail=FALSE, log.p=TRUE)
+            if(!log) pdf = exp(pdf)
+            pdf
             
           }
 )
@@ -66,7 +72,7 @@ setMethod("dist_pdf",
 #' @aliases dist_pdf,conpl-method
 setMethod("dist_pdf",
           signature = signature(m="conpl"),
-          definition = function(m, q=NULL) {
+          definition = function(m, q=NULL, log=FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
             if(is.null(q)) {
               q = m$dat
@@ -75,7 +81,9 @@ setMethod("dist_pdf",
             } else {
               q[q >= xmin]
             }
-            dplcon(q, xmin, pars, TRUE)
+            pdf = dplcon(q, xmin, pars, TRUE)
+            if(!log) pdf = exp(pdf)
+            pdf
           }
 )
 
@@ -86,7 +94,7 @@ setMethod("dist_pdf",
 #' @aliases dist_pdf,conlnorm-method
 setMethod("dist_pdf",
           signature = signature(m="conlnorm"),
-          definition = function(m, q=NULL) {
+          definition = function(m, q=NULL, log=FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
             if(is.null(q)) {
               q = m$dat
@@ -95,8 +103,10 @@ setMethod("dist_pdf",
             } else {
               q[q >= m$xmin]
             }
-            dlnorm(q, pars[1], pars[2], log=TRUE) - 
+            pdf = dlnorm(q, pars[1], pars[2], log=TRUE) - 
               plnorm(xmin, pars[1], pars[2], lower.tail=FALSE, log.p=TRUE)
+            if(!log) pdf = exp(pdf)
+            pdf
             
           }
 )
@@ -107,7 +117,7 @@ setMethod("dist_pdf",
 #' @aliases dist_pdf,conexp-method
 setMethod("dist_pdf",
           signature = signature(m="conexp"),
-          definition = function(m, q=NULL) {
+          definition = function(m, q=NULL, log=FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
             
             if(is.null(q)) {
@@ -117,7 +127,8 @@ setMethod("dist_pdf",
             } else {
               q[q >= m$xmin]
             }
-            dexp(q, pars, log=TRUE) - 
-              pexp(xmin, pars, lower.tail=FALSE, log.p=TRUE)
+            pdf = dexp(q, pars, log=TRUE) - pexp(xmin, pars, lower.tail=FALSE, log.p=TRUE)
+            if(!log) pdf = exp(pdf)
+            pdf
           }
 )

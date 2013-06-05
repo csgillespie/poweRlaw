@@ -83,6 +83,7 @@ setGeneric("dist_data_cdf",
 #' @param m The distribution reference object.
 #' @param q a vector values where the function will be evaluated. 
 #' If \code{q} is \code{NULL} (default), then the data value will be used.
+#' @param log default \code{FALSE}. If \code{TRUE}, probabilities are given as log(p).
 #' @return The probability density (or mass) function
 #' 
 #' @seealso \code{\link{dist_cdf}}, \code{\link{dist_ll}} 
@@ -98,7 +99,7 @@ setGeneric("dist_data_cdf",
 #' m$setXmin(7);m$setPars(2)
 #' dist_pdf(m)
 setGeneric("dist_pdf", 
-           function(m, q=NULL) 
+           function(m, q=NULL, log=FALSE) 
              standardGeneric("dist_pdf"))
 
 

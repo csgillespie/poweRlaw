@@ -15,6 +15,9 @@
   \item{q}{a vector values where the function will be
   evaluated. If \code{q} is \code{NULL} (default), then the
   data value will be used.}
+
+  \item{log}{default \code{FALSE}. If \code{TRUE},
+  probabilities are given as log(p).}
 }
 \value{
   The probability density (or mass) function
