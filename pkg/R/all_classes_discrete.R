@@ -52,7 +52,7 @@ displ =
   setRefClass("displ", 
               contains="discrete_distribution",
               fields = list(
-                dat = function(x)
+                dat = function(x) {
                   if(!missing(x) && !is.null(x)) {
                     check_discrete_data(x)
                     x = sort(x)
@@ -67,7 +67,8 @@ displ =
                     internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
                     internal[["dat"]] <<- x
                     xmin <<- min(values)
-                  } else internal[["dat"]],
+                  } else internal[["dat"]]
+                },
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
                     if(class(x) == "estimate_xmin") {
@@ -76,12 +77,12 @@ displ =
                     }
                     internal[["xmin"]] <<- x
                     internal[["v"]] <<- 1:(x-1)
-                    
-  
-                    selection = min(which(
-                      internal[["values"]] >= x))
-                    internal[["slx"]] <<- internal[["cum_slx"]][selection]
-                    internal[["n"]] <<- internal[["cum_n"]][selection]    
+                    ##Check for empty data
+                    if(length(internal[["values"]])) {
+                      selection = min(which(internal[["values"]] >= x))
+                      internal[["slx"]] <<- internal[["cum_slx"]][selection]
+                      internal[["n"]] <<- internal[["cum_n"]][selection]    
+                    }
                   } else  internal[["xmin"]]
                 }, 
                 pars = function(x) {
@@ -100,7 +101,7 @@ dislnorm =
   setRefClass("dislnorm", 
               contains="discrete_distribution",
               fields = list(
-                dat = function(x)
+                dat = function(x) {
                   if(!missing(x) && !is.null(x)) {
                     check_discrete_data(x)
                     x = sort(x)
@@ -114,17 +115,19 @@ dislnorm =
                     internal[["dat"]] <<- x
                     
                     xmin <<- min(values)
-                  } else internal[["dat"]],
+                  } else internal[["dat"]]
+                },
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
                     if(class(x) == "estimate_xmin") {
                       pars <<- x$pars
                       x = x$xmin
                     }
-                    selection = min(which(
-                      internal[["values"]] >= x))
-                    internal[["n"]] <<- internal[["cum_n"]][selection]            
                     internal[["xmin"]] <<- x
+                    if(length(internal[["values"]])) {
+                      selection = min(which(internal[["values"]] >= x))
+                      internal[["n"]] <<- internal[["cum_n"]][selection]            
+                    }
                   } else  internal[["xmin"]]
                 }, 
                 pars = function(x) {
@@ -164,11 +167,12 @@ dispois =
                       pars <<- x$pars
                       x = x$xmin
                     }
-                    selection = min(which(
-                      internal[["values"]] >= x))
-                    internal[["slx"]] <<- internal[["cum_slx"]][selection]
-                    internal[["n"]] <<- internal[["cum_n"]][selection]            
                     internal[["xmin"]] <<- x
+                    if(length(internal[["values"]])) {
+                      selection = min(which(internal[["values"]] >= x))
+                      internal[["slx"]] <<- internal[["cum_slx"]][selection]
+                      internal[["n"]] <<- internal[["cum_n"]][selection]            
+                    }
                   } else  internal[["xmin"]]
                 }, 
                 pars = function(x) {
@@ -207,10 +211,12 @@ disexp =
                       pars <<- x$pars
                       x = x$xmin
                     }
-                    selection = min(which(
-                      internal[["values"]] >= x))
-                    internal[["n"]] <<- internal[["cum_n"]][selection]            
                     internal[["xmin"]] <<- x
+                    if(length(internal[["values"]])) {
+                      selection = min(which(internal[["values"]] >= x))
+                      internal[["n"]] <<- internal[["cum_n"]][selection]
+                    }
+                    
                   } else  internal[["xmin"]]
                 }, 
                 pars = function(x) {
