@@ -16,18 +16,25 @@
   The log-likelihood
 }
 \description{
-  This is generic function for distribution reference
-  objects. This function calculates the log-likelihood for
-  the current parameters and xmin value.
+  This is generic function for distribution objects. This
+  function calculates the log-likelihood for the current
+  parameters and xmin value.
 }
 \note{
   This method does *not* alter the internal state of the
-  distribubtion objects.
+  distribution objects.
 }
 \examples{
+##########################################
+#Load data and create distribution object#
+##########################################
 data(moby_sample)
 m = displ$new(moby_sample)
-m$setXmin(7);m$setPars(2)
+m$setXmin(7); m$setPars(2)
+
+##########################################
+#Calculate the log-likelihood            #
+##########################################
 dist_ll(m)
 }
 \seealso{

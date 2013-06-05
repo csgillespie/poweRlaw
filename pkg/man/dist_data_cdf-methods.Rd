@@ -11,15 +11,13 @@
   probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X >
   x]}.}
 
-  \item{all_values}{logical; if \code{FALSE} (default). If
-  \code{TRUE}, then the cdf is evaluated at points xmin,
-  xmin+1, ..., xmax.}
+  \item{all_values}{logical, if \code{FALSE} (default),
+  evaluate at the data values. If \code{TRUE}, then the cdf
+  is evaluated at points xmin, xmin+1, ..., xmax.}
 }
 \description{
-  This is generic function for distribution reference
-  objects. This function calculates the cumulative
-  probability density for the current parameters and xmin
-  value.
+  This is generic function for distribution objects. This
+  function calculates the data cdf.
 }
 \note{
   This method does *not* alter the internal state of the

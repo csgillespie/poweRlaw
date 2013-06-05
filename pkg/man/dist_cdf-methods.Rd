@@ -8,11 +8,11 @@
 \alias{dist_cdf,dislnorm-method}
 \alias{dist_cdf,displ-method}
 \alias{dist_cdf,dispois-method}
-\title{The cumulative distribution function}
+\title{The cumulative distribution function (cdf)}
 \arguments{
   \item{m}{a distribution object.}
 
-  \item{all_values}{logical; if \code{FALSE} (default). If
+  \item{all_values}{logical; \code{FALSE} (default). If
   \code{TRUE}, then the cdf is evaluated at points xmin,
   xmin+1, ..., xmax.}
 
@@ -25,9 +25,9 @@
   x]}.}
 }
 \description{
-  This is generic function for calculating the cumulative
-  distribution function (cdf) of reference objects. This is
-  similar to base R's \code{pnorm} for the normal
+  This is a generic function for calculating the cumulative
+  distribution function (cdf) of distribution objects. This
+  is similar to base R's \code{pnorm} for the normal
   distribution. The \code{dist_cdf} function calculates the
   cumulative probability distribution for the current
   parameters and xmin value.
@@ -37,11 +37,21 @@
   distribubtion objects.
 }
 \examples{
+##########################################
+#Load data and create distribution object#
+##########################################
 data(moby_sample)
 m = displ$new(moby_sample)
 m$setXmin(7); m$setPars(2)
-#CDF at a particular value
+
+##########################################
+#Calculate the CDF at a particular values#
+##########################################
 dist_cdf(m, 10:15)
-dist_cdf(m) #at the data values
+
+##########################################
+#Calculate the CDF at the data values    #
+##########################################
+dist_cdf(m)
 }
 

@@ -92,7 +92,8 @@ rng = function(u, pp, discrete_max) {
         return(NULL)
     else if(xend > discrete_max) {
         xmin = pp$get_xmin(); alpha = pp$get_alpha()
-        rngs = floor(xmin*(1-u)^(-1/(alpha-1)))
+        ##Expression D6 in Clausett
+        rngs = floor((xmin-0.5)*(1-u)^(-1/(alpha-1))+0.5)
     } else {
         xstart = pp$get_xstart(); xend = pp$get_xend()
         cdf = pp$cdf()

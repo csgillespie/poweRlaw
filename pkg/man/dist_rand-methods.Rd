@@ -21,12 +21,19 @@
 }
 \note{
   This method does *not* alter the internal state of the
-  distribubtion object.
+  distribubtion object. This method is only available for
+  discrete and continuous power law objects.
 }
 \examples{
-data(moby_sample)
-m = displ$new(moby_sample)
+##########################################
+#Create distribution object              #
+##########################################
+m = displ$new()
 m$setXmin(7);m$setPars(2)
+
+##########################################
+#Generate five random numbers            #
+##########################################
 dist_rand(m, 5)
 }
 \seealso{

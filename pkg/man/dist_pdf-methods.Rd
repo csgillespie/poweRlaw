@@ -8,7 +8,7 @@
 \alias{dist_pdf,dislnorm-method}
 \alias{dist_pdf,displ-method}
 \alias{dist_pdf,dispois-method}
-\title{The probability density function}
+\title{The probability density function (pdf)}
 \arguments{
   \item{m}{The distribution reference object.}
 
@@ -23,19 +23,25 @@
   The probability density (or mass) function
 }
 \description{
-  This is generic function for distribution reference
-  objects. This function calculates the probability density
-  function (pdf) for the current parameters and xmin value.
+  This is generic function for distribution objects. This
+  function calculates the probability density function
+  (pdf) for the current parameters and xmin value.
 }
 \note{
   This method does *not* alter the internal state of the
   distribubtion objects.
 }
 \examples{
-data(moby_sample)
-m = displ$new(moby_sample)
-m$setXmin(7);m$setPars(2)
-dist_pdf(m)
+##########################################
+#Create distribution object              #
+##########################################
+m = displ$new()
+m$setXmin(7); m$setPars(2)
+
+##########################################
+#Calculate the pdf at particular values  #
+##########################################
+dist_pdf(m, 7:10)
 }
 \seealso{
   \code{\link{dist_cdf}}, \code{\link{dist_ll}} and
