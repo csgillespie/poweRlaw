@@ -12,7 +12,7 @@ test_that("Testing Vuong's", {
   
   v = compare_distributions(m1, m2)
   expect_equal(dim(v$ratio), c(9694, 2))
-  expect_equal(v$vuong_statistic, 20.3, tol=1e-3)
+  expect_equal(v$test_statistic, 20.3, tol=1e-3)
   expect_equal(v$p_one_sided, 1)
   expect_equal(v$p_two_sided, 0)
   
@@ -22,7 +22,7 @@ test_that("Testing Vuong's", {
   m3$setXmin(xmin)
   m3$setPars(c(-6000, 75))
   v = compare_distributions(m1, m3)
-  expect_equal(v$vuong_statistic, 0.6737, tol=1e-4)
+  expect_equal(v$test_statistic, 0.6737, tol=1e-4)
   expect_equal(v$p_one_sided, 0.7498, tol=1e-4)
   expect_equal(v$p_two_sided, 0.5005, tol=1e-4)
   
