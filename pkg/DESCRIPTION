@@ -12,7 +12,7 @@ Description: This package implements both the discrete and continuous maximum
     likelihood estimators for fitting the power-law distribution to data.
     Additionally, a goodness-of-fit based approach is used to estimate the
     lower cut-off for the scaling region. The code developed in this package
-    has been heavily influnenced from the python and R code found at:
+    has been heavily influenced from the python and R code found at:
     http://tuvalu.santafe.edu/~aaronc/powerlaws/
 URL: https://github.com/csgillespie/poweRlaw
 BugReports: https://github.com/csgillespie/poweRlaw/issues
