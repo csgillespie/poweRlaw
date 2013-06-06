@@ -71,9 +71,16 @@ setGeneric("dist_cdf",
 #' @rdname dist_data_cdf-methods
 #' @export
 #' @examples
+#' ##########################################
+#' #Load data and create distribution object#
+#' ##########################################
 #' data(moby_sample)
 #' m = displ$new(moby_sample)
 #' m$setXmin(7);m$setPars(2)
+#' 
+#' ##########################################
+#' # The data cdf                           #
+#' ##########################################
 #' dist_data_cdf(m)
 setGeneric("dist_data_cdf", 
            function(m, lower_tail=TRUE, all_values=FALSE) 

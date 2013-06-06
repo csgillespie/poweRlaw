@@ -6,10 +6,10 @@
 \title{Estimates the lower bound (xmin)}
 \usage{
   bootstrap_p(m, xmins = NULL, pars = NULL,
-    no_of_sims = 100, threads = 1, data_max = 1e+06)
+    no_of_sims = 100, threads = 1, data_max = 1e+05)
 
   bootstrap(m, xmins = NULL, pars = NULL, no_of_sims = 100,
-    threads = 1)
+    threads = 1, data_max = 1e+05)
 
   get_KS_statistic(m)
 
@@ -30,14 +30,15 @@
   in exploring all possible xmin values.}
 
   \item{data_max}{default 1e5. When estimating xmin for
-  discrete distributions, a the search space when comparing
+  discrete distributions, the search space when comparing
   the data_cdf and distribution_cdf runs from 1:data_max}
 
   \item{threads}{number of concurrent threads used during
   the bootstrap.}
 
-  \item{no_of_sims}{number of bootstrap simulations. This
-  can take a while to run.}
+  \item{no_of_sims}{number of bootstrap simulations. When
+  \code{no_of_sims} is large, this can take a while to
+  run.}
 }
 \description{
   When fitting heavy tailed distributions, sometimes it is
@@ -58,20 +59,24 @@
 }
 \note{
   Adapted from Laurent Dubroca's code found at
-  http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r
+  \url{http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r}
 }
 \examples{
-#Load the data set
+###################################################
+# Load the data set and create distribution object#
+###################################################
 x = 1:10
-
-#Create a discrete power-law object
 m = displ$new(x)
 
-#Estimate xmin and pars
+###################################################
+# Estimate xmin and pars                          #
+###################################################
 est = estimate_xmin(m)
 m$setXmin(est)
-############################
-##Bootstrap examples
+
+###################################################
+# Bootstrap examples                              #
+###################################################
 bootstrap(m, no_of_sims=1, threads=1)
 bootstrap_p(m, no_of_sims=1, threads=1)
 }

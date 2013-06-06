@@ -32,28 +32,31 @@ get_KS_statistic = function(m) {
 #' @param xmins default NULL. A vector of possible values of xmin to explore. 
 #' The default, \code{xmins=NULL}, results in exploring all possible xmin values.
 #' @param data_max default 1e5. When estimating xmin for discrete distributions, 
-#' a the search space when comparing the data_cdf and distribution_cdf runs from 1:data_max
+#' the search space when comparing the data_cdf and distribution_cdf runs from 1:data_max
 #' @param threads number of concurrent threads used during the bootstrap.
-#' @param no_of_sims number of bootstrap simulations. This can 
+#' @param no_of_sims number of bootstrap simulations. When \code{no_of_sims} is large, this can 
 #' take a while to run.
 #' @importFrom parallel makeCluster parSapply 
 #' @importFrom parallel clusterExport stopCluster
 #' @note Adapted from Laurent Dubroca's code found at
-#' http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r
+#' \url{http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r}
 #' @export
 #' @examples
-#' #Load the data set
+#' ###################################################
+#' # Load the data set and create distribution object#
+#' ###################################################
 #' x = 1:10
-#' 
-#' #Create a discrete power-law object
 #' m = displ$new(x)
 #' 
-#' #Estimate xmin and pars
+#' ###################################################
+#' # Estimate xmin and pars                          #
+#' ###################################################
 #' est = estimate_xmin(m)
 #' m$setXmin(est)
-
-#' ############################
-#' ##Bootstrap examples
+#' 
+#' ###################################################
+#' # Bootstrap examples                              #    
+#' ###################################################
 #' bootstrap(m, no_of_sims=1, threads=1)
 #' bootstrap_p(m, no_of_sims=1, threads=1)
 estimate_xmin = function (m, 

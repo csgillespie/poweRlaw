@@ -1,4 +1,4 @@
-bootstrap_helper = function (i, m, xmins, pars) {
+bootstrap_helper = function (i, m, xmins, pars, data_max) {
   x = sample(m$dat, length(m$dat), replace=TRUE)
   
   m_cpy = m$getRefClass()$new(x)
@@ -8,9 +8,10 @@ bootstrap_helper = function (i, m, xmins, pars) {
 #' @rdname estimate_xmin
 #' @export
 bootstrap = function (m, xmins=NULL, pars=NULL, 
-                        no_of_sims=100, threads=1) {
+                        no_of_sims=100, threads=1,
+                        data_max=1e5) {
   m_cpy = m$copy()
-  gof_v = estimate_xmin(m_cpy, xmins=xmins, pars=pars)
+  gof_v = estimate_xmin(m_cpy, xmins=xmins, pars=pars, data_max=data_max)
   m_cpy$setXmin(gof_v)
   x = m_cpy$dat
   N = length(x)
@@ -21,7 +22,7 @@ bootstrap = function (m, xmins=NULL, pars=NULL,
   clusterExport(cl, c("estimate_xmin"))
   nof = parSapply(cl, 1:no_of_sims,
                   bootstrap_helper,  m_cpy, 
-                  xmins, pars)
+                  xmins, pars, data_max)
   stopCluster(cl)
   end_time = Sys.time()
   

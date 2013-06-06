@@ -63,16 +63,28 @@
   between objects and shouldn't be altered.}}
 }
 \examples{
+##############################################################
+#Load data and create distribution object                    #
+##############################################################
 data(moby)
 m = displ$new(moby)
+
+##############################################################
+#Xmin is initially the smallest x value                      #
+##############################################################
 m$getXmin()
 m$getPars()
-#Set Xmin and parameter
+
+##############################################################
+#Set Xmin and parameter                                      #
+##############################################################
 m$setXmin(2)
 m$setPars(2)
-#Plot the data
+
+##############################################################
+#Plot the data and fitted distribution                       #
+##############################################################
 plot(m)
-#Add fitted distributions
 lines(m)
 }
 

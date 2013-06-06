@@ -13,13 +13,15 @@
   This function returns \describe{
   \item{\code{test_statistic}}{The test statistic.}
   \item{\code{p_one_sided}}{A one-sided p-value, which is
-  an upper limit #' on getting that small a log likelihood
+  an upper limit on getting that small a log likelihood
   ratio if the first distribution, \code{d1}, is actually
   true.} \item{\code{p_two_sided}}{A two-sided p-value,
   which is the probability of getting a log likelihood
   ratio which deviates that much from zero in either
   direction, if the two distributions are actually equally
-  good.}}
+  good.} \item{\code{ratio}}{A data frame with two columns.
+  The first column is the \code{x} value and second column
+  is the difference in log likelihoods.}}
 }
 \description{
   Since it is possible to fit power law models to any data
@@ -31,8 +33,7 @@
   between the two competing models. The sign of \code{R}
   indicates which model is better. Since the value of R is
   obviously subject to error, we use the method proposed by
-  Vuong, 1989. See Appendix C in Clauset et al, 2009 for
-  further details.
+  Vuong, 1989.
 }
 \details{
   This function compares two models. The null hypothesis is
@@ -49,23 +50,34 @@
 }
 \note{
   Code initially based on R code developed by Cosma Rohilla
-  Shalizi (http://bactra.org/)
+  Shalizi (\url{http://bactra.org/}).Also see Appendix C in
+  Clauset et al, 2009.
 }
 \examples{
+########################################################
+# Example data                                         #
+########################################################
 x = 3:10; xmin = 2
-##Continuous power law
+
+########################################################
+##Continuous power law                                 #
+########################################################
 m1 = conpl$new(x)
 m1$setXmin(xmin)
 est1 = estimate_pars(m1)
 m1$setPars(est1$pars)
 
-##Exponential
+########################################################
+##Exponential                                          #
+########################################################
 m2 = conexp$new(x)
 m2$setXmin(xmin)
 est2 = estimate_pars(m2)
 m2$setPars(est2$pars)
 
-##Vuong's test
+########################################################
+##Vuong's test                                         #
+########################################################
 comp = compare_distributions(m1, m2)
 plot(comp)
 }
