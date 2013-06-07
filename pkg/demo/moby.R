@@ -28,9 +28,6 @@ lines(m, col=4)
 bs1 = bootstrap(m, no_of_sims=5000, threads=2)
 bs2 = bootstrap_p(m, no_of_sims=5000, threads=2)
 
-bootstrap_moby = bs1
-bootstrap_p_moby = bs2
-save(bootstrap_p_moby, file="pkg/data/bootstrap_p_moby.RData")
 
 
 ##This can take a while
