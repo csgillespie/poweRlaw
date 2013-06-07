@@ -58,7 +58,7 @@ The Moby Dick dataset contains the frequency of unique words in the the novel Mo
 <<>>=
 data(moby)
 @
-\noindent To fit a discrete power-law to this data\sidenote{The object \texttt{moby} is a simple R vector.}, we use the \texttt{displ} method
+\noindent To fit a discrete power-law to this data\sidenote{The object \texttt{moby} is a simple R vector.}, we use the \texttt{displ} constructor
 <<cache=TRUE>>=
 m_pl = displ$new(moby)
 @
@@ -77,7 +77,7 @@ estimate_xmin(m_pl, pars=seq(1.5, 2.5, 0.1))
 @
 \noindent The parameter scan method is more exact, but is slightly slower.
 
-To fit a discrete log-normal distribution, we follows a similar procedure, except we begin by creating a \cc{dislnorm}.\sidenote{\cc{dislnorm}: discrete log-normal object}
+To fit a discrete log-normal distribution, we follow a similar procedure, except we begin by creating a \cc{dislnorm}.\sidenote{\cc{dislnorm}: discrete log-normal object}
 
 <<warning=FALSE, cache=TRUE>>=
 m_ln = dislnorm$new(moby)
@@ -106,7 +106,7 @@ lines(m_pois, col=4)
 \begin{marginfigure}
 \centering
 \includegraphics[width=\textwidth]{graphics/v2_figure1a-crop}
-\caption{Data CDF of the Moby Dick data set. The fitted power-law (green line), log-normal (red line) and poisson (blue) distributions are also given.}\label{F1a}
+  \caption{Data CDF of the Moby Dick data set. The fitted power-law (green line), log-normal (red line) and poisson (blue) distributions are also given.}\label{F1a}
 \end{marginfigure}
 \noindent to obtain figure \ref{F1a}. It clear that the Poisson distribution is not appropriate for this data set. However, the log-normal and power-law distribution both provide reasonable fits to the data.
 
@@ -245,6 +245,40 @@ plot(bs_p)
 sink = dev.off()
 system("pdfcrop graphics/v2_figure1d.pdf")
 @
+
+\subsection{Comparing distributions}
+
+
+A second approach to assessing is a direct comparison of two models. A standard technique is
+to use Vuong's test, which a likelihood ratio test for model selection using the
+Kullback-Leibler criteria. The test statistic, $R$, is the ratio of the
+log-likelihoods of the data between the two competing models. The sign of $R$
+indicates which model is \textit{better}. Since the value of $R$ is obviously
+subject to error, we use the method proposed by Vuong, 1989\cite{Vuong1989}. 
+
+To compare two distributions, each distribution must have the same lower threshold. So we first set the log normal distribution object to have the same $\xmin$ as the power law object:
+<<cache=TRUE>>=
+m_ln$setXmin(m_pl$getXmin())
+@
+\noindent Next we estimate the parameters for this particular value of $\xmin$:
+<<cache=TRUE>>=
+est = estimate_pars(m_ln)
+m_ln$setPars(est)
+@
+\noindent Then we can compare distributions
+<<cache=TRUE>>=
+comp = compare_distributions(m_pl, m_ln)
+@
+\noindent This comparison gives a $p$-value of \Sexpr{comp[["p_two_sided"]]}. This $p$-value corresponds to the $p$-value on page 29 of the Clauset paper (the paper gives 0.69). The differences occur because we estimated the scaling parameter in the power law using the MLE, whereas Clauset et al, used a parameter scan, i.e.
+<<cache=TRUE>>=
+est = estimate_pars(m_pl, pars=seq(1.95, 1.96, 0.0005))
+m_pl$setPars(est)
+comp = compare_distributions(m_pl, m_ln)
+@
+\noindent now gives $p$=\Sexpr{comp[["p_two_sided"]]}.
+
+Overall these results suggest that one model can't be favoured over the other. 
+
 
 \subsection{Investigating the effect in $\xmin$}
 
@@ -425,7 +459,7 @@ sink = dev.off()
 system("pdfcrop graphics/v2_figure3b.pdf")
 
 @
-
+\clearpage
 
 \bibliography{poweRlaw}
 %\bibliographystyle{agsm}
