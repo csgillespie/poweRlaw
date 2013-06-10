@@ -8,7 +8,11 @@ The code developed in this package was influenced from the python and R code fou
 Installation
 ------------
 
-Currently, this package can only be installed from github and requires R >=2-15.0. The easiest way to install from github is to use the devtools package:
+This package is hosted on [CRAN](http://cran.r-project.org/web/packages/poweRlaw/index.html) and can be installed in the usual way:
+```r
+install.packages("poweRlaw")
+```
+Alternatively, the development version can be install from from github using the devtools package:
 ```r
 install.packages("devtools")
 library(devtools)
