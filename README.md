@@ -33,8 +33,19 @@ then work the through the two vignettes: [getting started](https://github.com/cs
 vignette("poweRlaw")
 vignette("examples")
 ```
-The plots below show the line of best fit to the Moby Dick and blackout data sets (from Clauset et al, 2009.)
+The plots below show the line of best fit to the Moby Dick and blackout data sets (from Clauset et al, 2009).
 
 
 ![Cumulative CDF of the Moby Dick and blackout data sets with line of best fit.](https://raw.github.com/csgillespie/poweRlaw/master/graphics/figure1.png)
+
+
+Other information
+-----------------
+
+ * If you have any suggestions or find bugs, please use the github [issue tracker](https://github.com/csgillespie/poweRlaw/issues)
+ * Feel free to submit pull requests
+ * The package does have an associated test suite (see directory tests above). However, since some of tests take a while to run, I've not included the suite with the package.
+ * The vignette source code is the directory vignette above.
+
+
 
