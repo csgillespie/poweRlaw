@@ -8,18 +8,18 @@
 \alias{points,distribution-method}
 \title{Plotting functions}
 \arguments{
-  \item{plot}{logical (default \code{TRUE}). Should the
-  plot function plot or return the data (in a data frame
-  object).}
-
-  \item{length.out}{numeric, default 1000. How many points
-  should the distribution be evaulated at. This argument is
-  only for plotting distribution objects}
+  \item{draw}{logical (default \code{TRUE}). Should the
+  plot/lines/points function plot or return the data (in a
+  data frame object).}
 
   \item{cut}{logical (default \code{FALSE}) - Where should
   the plot begin. If \code{cut=FALSE}, then the plot will
   start at the minimum data value. Otherwise, the plot will
   start from \code{xmin}}
+
+  \item{length.out}{numeric, default 100. How many points
+  should the distribution be evaulated at. This argument is
+  only for plotting the fitted lines.}
 }
 \description{
   These are generic functions for distribution reference

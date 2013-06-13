@@ -4,8 +4,8 @@ setMethod("points",
           signature = signature(x="distribution"),
           definition = function(x, 
                                 cut=FALSE, 
-                                length.out=10, 
                                 draw=TRUE,
+                                length.out=100, 
                                 ...) {
             d = lines(x, cut, length.out, FALSE, ...)
             if(draw)
