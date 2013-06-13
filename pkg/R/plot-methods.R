@@ -13,8 +13,8 @@ lseq = function(from, to, length.out) {
 #' objects. Standard plotting functions, i.e. plot, points, and lines work 
 #' with all distribution objects.
 #' 
-#' @param draw logical (default \code{TRUE}). Should the plot/lines/points function 
-#' plot or return the data (in a data frame object).
+#' @param draw logical (default \code{TRUE}). Should the plot/lines/points function plot or 
+#' return the data (in a data frame object).
 #' @param cut logical (default \code{FALSE}) - 
 #' Where should the plot begin. If \code{cut=FALSE}, then the 
 #' plot will start at the minimum data value. Otherwise, the plot
