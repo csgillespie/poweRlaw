@@ -4,8 +4,8 @@ setMethod("lines",
           signature = signature(x="distribution"),
           definition = function(x, 
                                 cut=FALSE, 
-                                length.out=100, 
                                 draw=TRUE,
+                                length.out=100, 
                                 ...) {
             scale = 1
             xmin = x$getXmin()
