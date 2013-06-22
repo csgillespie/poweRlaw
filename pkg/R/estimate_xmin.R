@@ -21,7 +21,11 @@ get_KS_statistic = function(m) {
 #' \describe{
 #' \item{\code{get_KS_statistic}}{Calculates the KS statistic for a particular value of xmin}
 #' \item{\code{estimate_xmin}}{Estimates the optimal lower cutoff using a 
-#' goodness-of-fit based approach}
+#' goodness-of-fit based approach. This function may issue \code{warnings} 
+#' when fitting lognormal, Poisson or Exponential distributions. The 
+#' warnings occur for large values of xmin. Essentially, we are discarding 
+#' the bult of the distribution and cannot calculate the tails to enough
+#' accuracy.}
 #' \item{\code{bootstrap}}{Estimates the unncertainity in the xmin and parameter values via bootstraping.}
 #' \item{\code{bootstrap_p}}{Performs a bootstrapping hypothesis test to determine whether a power law
 #' distribution is plausible. This function only available for power law distribution objects.}}
