@@ -4,9 +4,7 @@ distribution = setRefClass("distribution",
                              internal = "list", 
                              xmin = "ANY", 
                              pars="ANY",
-                             no_pars="numeric"), 
-                           
-)
+                             no_pars="numeric"))
 distribution$accessors(c("xmin", "pars", "dat", "no_pars"))
 
 
