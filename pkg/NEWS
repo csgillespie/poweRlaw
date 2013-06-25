@@ -1,6 +1,11 @@
 Version 0.20.1
 --------------
  * Updated documentation
+ * Added swiss_prot data set
+ * Renamed NativeAmerican to native_american 
+ * Renamed USAmerican to us_american 
+ * Changed license to GPL-2 | GPL-3
+
 
 Version 0.20.0
 --------------

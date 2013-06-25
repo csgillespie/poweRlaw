@@ -2,7 +2,7 @@ Package: poweRlaw
 Type: Package
 Title: Fitting heavy tailed distributions: the poweRlaw package
 Version: 0.20.1
-Date: 2013-06-21
+Date: 2013-06-26
 Authors@R: person("Gillespie", "Colin",
     email="colin.gillespie@newcastle.ac.uk",
     role = c("aut", "cre"))
