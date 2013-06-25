@@ -1,0 +1,15 @@
+citHeader("To cite the `poweRlaw` packages in publications use:")
+
+year = sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
+vers = paste("R package version", meta$Version)
+
+citEntry(entry = "Manual",
+         title = "Fitting heavy tailed distributions: the poweRlaw package",
+         author = personList(as.person("Colin S Gillespie")),
+         year = year,
+         note = vers,
+         textVersion =
+           paste0("Colin S Gillespie (",
+                  year,
+                  "). Fitting heavy tailed distributions: the poweRlaw package. ",
+                  vers, "."))

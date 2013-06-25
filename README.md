@@ -5,6 +5,13 @@ This package implements both the discrete and continuous maximum likelihood esti
 
 The code developed in this package was influenced from the python and R code found at [Aaron Clauset's website](http://tuvalu.santafe.edu/~aaronc/powerlaws/). In particular, the R code of Laurent Dubroca.
 
+To cite this package in academic work, please use:
+
+Colin S Gillespie (2013). *Fitting heavy tailed
+  distributions: the poweRlaw package.* R package version
+  **0.20.1**.
+
+
 Installation
 ------------
 
