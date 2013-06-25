@@ -56,7 +56,7 @@ The Moby Dick dataset contains the frequency of unique words in the the novel Mo
 \end{center}
 \noindent or loaded directly
 <<>>=
-data(moby)
+data("moby")
 @
 \noindent To fit a discrete power-law to this data\sidenote{The object \texttt{moby} is a simple R vector.}, we use the \texttt{displ} constructor
 <<cache=TRUE>>=
@@ -381,12 +381,12 @@ In a recent paper, \citeauthor{Bohorquez2009} investigated insurgent attacks in 
 
 The number of casualties observed in the American-Indian War can be obtained via
 <<>>=
-data(NativeAmerican)
-data(USAmerican)
+data("native_american")
+data("us_american")
 @
 \noindent Each data set is a data frame with two columns. The first column is number of casualties recorded, the second the conflict date
 <<>>=
-head(NativeAmerican, 3)
+head(native_american, 3)
 @
 \noindent The records span around one hundred years, 1776 -- 1890. The data is plotted in figure \ref{F3a}. 
 \begin{figure}[b]
@@ -397,8 +397,8 @@ head(NativeAmerican, 3)
 
 It is straightforward to fit a discrete power-law to this data set. First, we create discrete power-law objects:
 <<cache=TRUE>>=
-m_na = displ$new(NativeAmerican$Cas)
-m_us = displ$new(USAmerican$Cas)
+m_na = displ$new(native_american$Cas)
+m_us = displ$new(us_american$Cas)
 @
 \noindent then we estimate $\xmin$ for each data set:
 <<cache=TRUE>>=
@@ -434,13 +434,13 @@ lines(m_us, col=2)
 pdf("graphics/v2_figure3a.pdf", width=6, height=4)
 setnicepar()
 
-plot(NativeAmerican$Date, NativeAmerican$Cas, 
+plot(native_american$Date, native_american$Cas, 
      log="y", pch=21, bg=1, 
      ylim=c(1, 2000), 
      cex=0.5, panel.first=grid(col="grey70"), 
      xlab="Date", ylab="#Casualties")
 
-points(USAmerican$Date, USAmerican$Cas, 
+points(us_american$Date, us_american$Cas, 
        pch=24, bg=2, cex=0.5)
 sink = dev.off()
 system("pdfcrop graphics/v2_figure3a.pdf")
