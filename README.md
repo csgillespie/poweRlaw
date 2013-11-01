@@ -1,5 +1,6 @@
 The poweRlaw package
 ====================
+[![Build Status](https://travis-ci.org/csgillespie/poweRlaw.png?branch=travis)](https://travis-ci.org/csgillespie/poweRlaw)
 
 This package implements both the discrete and continuous maximum likelihood estimators for fitting the power-law distribution to data. It also provides function to fit log-normal and Poisson distributions. Additionally, a goodness-of-fit based approach is used to estimate the lower cut-off for the scaling region. 
 
