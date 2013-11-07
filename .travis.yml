@@ -1,10 +1,5 @@
-# Sample .travis.yml for R projects.
-#
-# See README.md for instructions.
-
 language: c
-# To build on OSX, switch the previous line to
-# language: objective-c
+
 script: ./travis-tool.sh run_tests
 before_install:
     - cd pkg
@@ -14,16 +9,9 @@ before_install:
 install:
     - ./travis-tool.sh install_deps
 #    - ./travis-tool.sh github_package 
-# Configuration options below this line are suggested options.
+
+
 notifications:
     email:
     on_success: change
     on_failure: change
-# One can also restrict the branches to test, see
-#   http://about.travis-ci.org/docs/user/build-configuration/#Specify-branches-to-build
-# This example tests all branches except those with suffix -expt ("experimental").
-# Note that in general it is advisable to test (almost) all branches in order to
-# automatically test pending pull requests.
-branches:
-    except:
-    - /-expt$/
