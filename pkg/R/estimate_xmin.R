@@ -71,7 +71,7 @@ estimate_xmin = function (m,
   m_cpy = m$getRefClass()$new(m$dat)
   if(is.null(xmins)) xmins = unique(m$dat)
   
-  nr = (length(xmins)-m_cpy$no_pars-1)
+  nr = length(xmins) - m_cpy$no_pars - 1
   dat = matrix(0, nrow=nr, ncol=(1 + m_cpy$no_pars))
   
   xm = 1

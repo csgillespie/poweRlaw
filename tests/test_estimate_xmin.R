@@ -31,12 +31,14 @@ test_that("Testing estimate_xmin function", {
   
   
   ##CTN Power-law
-  load("ctn_data.RData")
-  mt = conpl$new(ctn_data)
-  est = estimate_xmin(mt)
-  expect_equal(est$pars, 2.53282, tol=1e-4)
-  expect_equal(est$xmin, 1.43628, tol=1e-4)
-  
+  ##Takes a while
+  if(interactive()) {
+     load("ctn_data.RData")
+    mt = conpl$new(ctn_data)
+    est = estimate_xmin(mt)
+    expect_equal(est$pars, 2.53255, tol=1e-4)
+    expect_equal(est$xmin, 1.43628, tol=1e-4)
+  }
   ##Log-normal
   set.seed(1)
   x = rlnorm(10000, 3, 1)
@@ -57,7 +59,7 @@ test_that("Testing estimate_xmin function", {
   
   mt = conexp$new(x)
   est = estimate_xmin(mt, xmins=1:50)
-
+  
   expect_equal(est$pars, 0.01003, tol=1e-3)
   expect_equal(est$xmin, 4)
 }
