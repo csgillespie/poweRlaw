@@ -28,7 +28,10 @@
 \date{Last updated: \today}
 
 <<echo=FALSE>>=
-opts_chunk$set(prompt = FALSE,fig.path='graphics/', fig.align='center',fig.lp="")
+opts_chunk$set(prompt = FALSE,
+               cache.path="knitr_cache/",
+               fig.path='knitr_graphics/', 
+               fig.align='center',fig.lp="")
 options(width=75)
 knit_theme$set(knit_theme$get()[7])
 setnicepar = function(...)  par(mar=c(3,3,2,1), 
@@ -56,7 +59,7 @@ The package is hosted on CRAN and can be installed via
 <<eval=FALSE>>=
 install.packages("poweRlaw")
 @
-\noindent The developmental version is hosted on github and  can be installed using the \cc{devtools} package:\sidenote{If use Windows, you will need to install the \texttt{Rtools} package first.}
+\noindent The developmental version is hosted on github and  can be installed using the \cc{devtools} package:\sidenote{If you are using Windows, then you will need to install the \texttt{Rtools} package first.}
 <<eval=FALSE>>=
 install.packages("devtools")
 library(devtools)
@@ -64,7 +67,7 @@ install_github("poweRlaw", "csgillespie", subdir="pkg")
 @
 \noindent Once installed, the package can be loaded ready for use with the standard \cc{library} command
 <<>>=
-library(poweRlaw)
+library("poweRlaw")
 @
 
 \section{Accessing documentation}
@@ -139,24 +142,27 @@ m_m$getPars()
 m_m$setXmin(5)
 m_m$setPars(2)
 @
-\noindent For a given $\xmin$ value, we can estimate the corresponding $\alpha$ value using its maximum likelihood estimator (mle)\marginnote{Instead of using the mle, we could do a parameter scan:\\ \texttt{\mbox{estimate\_pars(m\_m, pars=seq(2, 3, 0.1))}}}
+\noindent For a given $\xmin$ value, we can estimate the corresponding $\alpha$ value by numerically maximising the likelihood \marginnote{Instead of calculating the MLE, we could use a parameter scan:\\ \texttt{\mbox{estimate\_pars(m\_m, pars=seq(2, 3, 0.1))}}}
 <<>>=
-estimate_pars(m_m)
+(est = estimate_pars(m_m))
 @
-\noindent To estimate the lower bound $\xmin$, we minimise the distance between the data and the fitted model CDF, that is
+\noindent For the Moby Dick data set, when $\xmin=\Sexpr{m$getXmin()}$, we estimate $\alpha$ to be $\Sexpr{signif(est$pars,4)}$.
+
+
+\newthought{To estimate} the lower bound $\xmin$, we minimise the distance between the data and the fitted model CDF, that is
 \[
 D(x) = \max_{x \ge \xmin} \vert S(x) - P(x) \vert
 \]
 \noindent where $S(x)$ is the data CDF and $P(x)$ is the theoretical CDF. The value $D(x)$ is known as the Kolmogorov-Smirnov statistic. Our estimate of $\xmin$ is then the value of $x$ that minimises $D(x)$:
 \begin{marginfigure}
 \centering
-\includegraphics[width=\textwidth]{graphics/figure1-crop}
+\includegraphics[width=\textwidth]{knitr_graphics/figure1-crop}
 \caption{Plot of the data CDF for the Moby Dick data set. This corresponds to figure 6.1(a) in Clauset, 2009. The line corresponds to a power-law distribution with parameters $\xmin=7$ and $\alpha=1.95$.}\label{F1}
 \end{marginfigure}
 <<>>=
 (est = estimate_xmin(m_m))
 @
-\noindent For the Moby-Dick data set, the minimum is achieved when $\xmin=7$ and $D(7) = \Sexpr{signif(est$KS, 3)}$.
+\noindent For the Moby-Dick data set, the minimum\sidenote{These estimates match the values in the Clausett, et al paper.} is achieved when $\xmin=7$ and $D(7) = \Sexpr{signif(est$KS, 3)}$.
 
 We can then set parameters of power-law distribution to these "optimal" values
 <<>>=
@@ -179,14 +185,14 @@ head(dd, 3)
 
 <<echo=FALSE>>=
 mypalette(1)
-pdf("graphics/figure1.pdf", width=4, height=4)
+pdf("knitr_graphics/figure1.pdf", width=4, height=4)
 setnicepar()
 plot(m_m, xlab="x", ylab="CDF", 
      pch=21, bg=1, cex=0.6, 
      panel.first=grid())
 lines(m_m, col=2, lwd=2)
 sink=dev.off()
-system("pdfcrop graphics/figure1.pdf")
+system("pdfcrop knitr_graphics/figure1.pdf")
 data(bootstrap_moby)
 bs = bootstrap_moby
 data(bootstrap_p_moby)
@@ -196,16 +202,6 @@ bs_p = bootstrap_p_moby
 
 
 \subsection{Uncertainty in $\xmin$}
-\begin{marginfigure}
-\centering
-\includegraphics[width=\textwidth]{graphics/figure2-crop}
-\caption{Characterising uncertainty in parameter values. (a) $\xmin$ uncertainty (standard deviation 2) (b) $\alpha$ uncertainty (std dev. 0.03)}\label{F2}
-\end{marginfigure}
-\begin{marginfigure}
-\centering
-\includegraphics[width=\textwidth]{graphics/figure3-crop}
-\caption{Characterising uncertainty in parameter values. Bivariate scatter plot of $\xmin$ and $\alpha$.}\label{F3}
-\end{marginfigure}
 
 Clauset, \textit{el al}, 2009 recommend a bootstrap procedure to get a handle on parameter uncertainty. Essentially, we sample with replacement from the data set and then re-infer the parameters.
 \begin{table}[t]
@@ -227,6 +223,18 @@ To run the bootstrapping procedure, we use the \texttt{bootstrap} function
 <<eval=FALSE>>=
 bs = bootstrap(m_m, no_of_sims=1000, threads=1)
 @
+
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{knitr_graphics/figure2-crop}
+\caption{Characterising uncertainty in parameter values. (a) $\xmin$ uncertainty (standard deviation 2) (b) $\alpha$ uncertainty (std dev. 0.03)}\label{F2}
+\end{marginfigure}
+
+\begin{marginfigure}
+\centering
+\includegraphics[width=\textwidth]{knitr_graphics/figure3-crop}
+\caption{Characterising uncertainty in parameter values. Bivariate scatter plot of $\xmin$ and $\alpha$.}\label{F3}
+\end{marginfigure}
 
 \noindent this function runs in parallel, with the number of threads used determined by the \texttt{threads} argument. To detect the number of cores on your machine, you can run:
 <<>>=
@@ -276,12 +284,12 @@ Since it is possible to fit a power-law distribution to \textit{any} data set, i
 \end{table}  
 \begin{marginfigure}
 \centering
-\includegraphics[width=\textwidth]{graphics/figure4-crop}
+\includegraphics[width=\textwidth]{knitr_graphics/figure4-crop}
 \caption{Histograms of the bootstrap results.}\label{F4}
 \end{marginfigure}
 \begin{marginfigure}
 \centering
-\includegraphics[width=\textwidth]{graphics/figure5-crop}
+\includegraphics[width=\textwidth]{knitr_graphics/figure5-crop}
 \caption{Bivariate scatter plot of the bootstrap results. The values of $\xmin$ and $\alpha$ are obviously strongly correlated.}\label{F5}
 \end{marginfigure}
 
@@ -315,50 +323,50 @@ The results of this procedure are shown in figures \ref{F4} and \ref{F5}.
 
 
 <<echo=FALSE>>=
-pdf("graphics/figure2.pdf", width=4, height=7)
+pdf("knitr_graphics/figure2.pdf", width=4, height=7)
 setnicepar(mfrow=c(2, 1))
-hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 1600), 
+hist(bs$bootstraps[,2], xlab=expression(x[min]), ylim=c(0, 1600), 
      xlim=c(0, 25), main=NULL, breaks="fd")
 grid()
 hist(bs$bootstraps[,3], xlab=expression(alpha), 
      ylim=c(0, 400), xlim=c(1.85, 2.05), main=NULL, breaks="fd")
 grid()
 sink=dev.off()
-system("pdfcrop graphics/figure2.pdf")
+system("pdfcrop knitr_graphics/figure2.pdf")
 
-pdf("graphics/figure3.pdf", width=4, height=4)
+pdf("knitr_graphics/figure3.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
 plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3], 
-     xlab="xmin", ylab=expression(alpha), 
+     xlab=expression(x[min]), ylab=expression(alpha), 
      xlim=c(0, 25), ylim=c(1.85, 2.05), cex=0.35, 
      pch=21, bg=1, panel.first=grid())
 sink = dev.off()
-system("pdfcrop graphics/figure3.pdf")
+system("pdfcrop knitr_graphics/figure3.pdf")
 @
 
 
 
 <<echo=FALSE>>=
-pdf("graphics/figure4.pdf", width=4, height=7)
+pdf("knitr_graphics/figure4.pdf", width=4, height=7)
 setnicepar(mfrow=c(2, 1))
-hist(bs_p$bootstraps[,2], xlab="xmin", ylim=c(0, 1600), 
+hist(bs_p$bootstraps[,2], xlab=expression(x[min]), ylim=c(0, 1600), 
      xlim=c(0, 45), main=NULL, breaks="fd")
 grid()
 hist(bs_p$bootstraps[,3], xlab=expression(alpha), 
      ylim=c(0, 400), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
 grid()
 sink=dev.off()
-system("pdfcrop graphics/figure4.pdf")
+system("pdfcrop knitr_graphics/figure4.pdf")
 
-pdf("graphics/figure5.pdf", width=4, height=4)
+pdf("knitr_graphics/figure5.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
 plot(jitter(bs_p$bootstraps[,2], factor=1.2), bs_p$bootstraps[,3], 
-     xlab="xmin", ylab=expression(alpha), 
+     xlab=expression(x[xmin]), ylab=expression(alpha), 
      xlim=c(0, 40), ylim=c(1.8, 2.05), cex=0.35, 
      pch=21, bg=1,
      panel.first= grid())
 sink = dev.off()
-system("pdfcrop graphics/figure5.pdf")
+system("pdfcrop knitr_graphics/figure5.pdf")
 @
 
 
@@ -446,18 +454,18 @@ m_bl = conpl$new(blackouts$V1)
 @
 \begin{marginfigure}[5\baselineskip]
 \centering
-\includegraphics[width=\textwidth]{graphics/figure6-crop}
+\includegraphics[width=\textwidth]{knitr_graphics/figure6-crop}
 \caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more it efficient.}\label{F6}
 \end{marginfigure}
 <<echo=FALSE>>=
 est = estimate_xmin(m_bl)
 m_bl$setXmin(est)
-pdf("graphics/figure6.pdf", width=4, height=4)
+pdf("knitr_graphics/figure6.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
 plot(m_bl, panel.first=grid())
 lines(m_bl, col=2)
 sink = dev.off()
-system("pdfcrop graphics/figure6.pdf")
+system("pdfcrop knitr_graphics/figure6.pdf")
 @
 
 
@@ -511,7 +519,7 @@ r = rplcon(1000, 10, 2.5)
 <<>>=
 plfit(r)
 @
-\noindent Fitting with the \texttt{poweRlaw} package gives the same values
+\noindent Fitting with the \texttt{poweRlaw} package gives approximately the same values
 <<>>=
 m_r = conpl$new(r)
 (est = estimate_xmin(m_r))
@@ -519,7 +527,7 @@ m_r = conpl$new(r)
 \noindent Of course, using the \texttt{poweRlaw} package we can easily plot the data
 \begin{marginfigure}
 \centering
-\includegraphics[width=\textwidth]{graphics/figure7-crop}
+\includegraphics[width=\textwidth]{knitr_graphics/figure7-crop}
 \caption{CDF plot of one thousand random numbers generated from a power-law with parameters $\alpha=2.5$ and $\xmin = 10$. The line of best fit is also shown.}\label{F7}
 \end{marginfigure}
 <<fig.keep='none'>>=
@@ -530,21 +538,21 @@ lines(m_r, col=2)
 \noindent to get figure \ref{F7}.
 
 <<echo=FALSE>>=
-pdf("graphics/figure7.pdf", width=4, height=4)
+pdf("knitr_graphics/figure7.pdf", width=4, height=4)
 setnicepar(mfrow=c(1,1))
 plot(m_r, ylab="CDF", 
      pch=21, bg=1, cex=0.5, 
      panel.first=grid(), xlim=c(10, 1000))
 lines(m_r, col=2, lwd=2)
 sink = dev.off()
-system("pdfcrop graphics/figure7.pdf")
+system("pdfcrop knitr_graphics/figure7.pdf")
 @
 
 
 
 \clearpage
 
-\section*{Package and R version}
+\section*{Session Info}
 
 \begin{table}
 \centering
@@ -561,10 +569,10 @@ VGAM & \Sexpr{packageDescription("VGAM")$Version}\\
 \end{table}
 
 
-<<>>=
-version
-@
 
+<<>>=
+print(sessionInfo(), locale = FALSE)
+@
 
 \noindent This vignette was created using the excellent \cc{knitr} package.\cite{Xie13}
 
@@ -573,7 +581,6 @@ version
 
 \bibliography{poweRlaw}
 \bibliographystyle{plainnat}
-
 
 
 \end{document}
@@ -594,7 +601,7 @@ sink = dev.off()
 
 png("../graphics/figure2.png", width=6*ppi, height=4*ppi, res=ppi)
 setnicepar(mfrow=c(1,2))
-hist(bs$bootstraps[,2], xlab="xmin", ylim=c(0, 2000), 
+hist(bs$bootstraps[,2], xlab=expression(x[min]), ylim=c(0, 2000), 
      xlim=c(0, 30), main=NULL, breaks="fd")
 grid()
 hist(bs$bootstraps[,3], xlab=expression(alpha), 

@@ -1,51 +1,23 @@
 Package: poweRlaw
 Type: Package
 Title: Fitting heavy tailed distributions: the poweRlaw package
-Version: 0.20.1
-Date: 2013-06-26
-Authors@R: person("Gillespie", "Colin",
-    email="colin.gillespie@newcastle.ac.uk",
-    role = c("aut", "cre"))
+Version: 0.20.2
+Date: 2013-11-12
+Authors@R: person("Gillespie", "Colin", email="colin.gillespie@newcastle.ac.uk", role = c("aut", "cre"))
 Author: Colin Gillespie
 Maintainer: Colin Gillespie <colin.gillespie@newcastle.ac.uk>
-Description: This package implements both the discrete and continuous maximum
-    likelihood estimators for fitting the power-law distribution to data.
-    Additionally, a goodness-of-fit based approach is used to estimate the
-    lower cut-off for the scaling region.
+Description: This package implements both the discrete and continuous maximum likelihood estimators for
+           fitting the power-law distribution to data. Additionally, a goodness-of-fit based approach
+           is used to estimate the lower cut-off for the scaling region.
 URL: https://github.com/csgillespie/poweRlaw
 BugReports: https://github.com/csgillespie/poweRlaw/issues
-Depends:
-    stats,
-    R (>= 2.15.0)
-Imports:
-    VGAM,
-    parallel,
-    methods
+Depends: stats, R (>= 2.15.0)
+Imports: VGAM, parallel, methods
 License: GPL-2 | GPL-3
-Collate:
-    'aaa_all_classes.R'
-    'all_classes_ctn.R'
-    'all_classes_discrete.R'
-    'AllGenerics.R'
-    'bootstrap_p.R'
-    'bootstrap.R'
-    'ctn_helper_functions.R'
-    'data_help_files.R'
-    'discrete_helper_functions.R'
-    'dist_cdf-methods.R'
-    'dist_data_cdf-methods.R'
-    'dist_ll-methods.R'
-    'dist_pdf-methods.R'
-    'dist_rand-methods.R'
-    'estimate_pars.R'
-    'estimate_xmin.R'
-    'initialize-methods.R'
-    'lines-methods.R'
-    'mle-methods.R'
-    'plcon.R'
-    'pldis.R'
-    'plot-methods.R'
-    'points-methods.R'
-    'poweRlaw-package.R'
-    'checks.R'
-    'compare_distributions.R'
+Collate: 'aaa_all_classes.R' 'all_classes_ctn.R' 'all_classes_discrete.R' 'AllGenerics.R'
+           'bootstrap_p.R' 'bootstrap.R' 'ctn_helper_functions.R' 'data_help_files.R'
+           'discrete_helper_functions.R' 'dist_cdf-methods.R' 'dist_data_cdf-methods.R'
+           'dist_ll-methods.R' 'dist_pdf-methods.R' 'dist_rand-methods.R' 'estimate_pars.R'
+           'estimate_xmin.R' 'initialize-methods.R' 'lines-methods.R' 'mle-methods.R' 'plcon.R'
+           'pldis.R' 'plot-methods.R' 'points-methods.R' 'poweRlaw-package.R' 'checks.R'
+           'compare_distributions.R'

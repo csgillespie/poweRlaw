@@ -18,8 +18,8 @@ displ$methods(
       r
     }
     
-    mle = optim(par=theta_0, fn=negloglike, 
-                method="L-BFGS-B", lower=1)       
+    mle = suppressWarnings(optim(par=theta_0, fn=negloglike, 
+                method="L-BFGS-B", lower=1))
     
     
     if(set)  pars <<- mle$par
@@ -47,10 +47,10 @@ dislnorm$methods(
       r
     }
     
-    mle = optim(par=theta_0, 
+    mle = suppressWarnings(optim(par=theta_0, 
                 fn=negloglike, 
                 method="L-BFGS-B", 
-                lower=c(-Inf, .Machine$double.eps))
+                lower=c(-Inf, .Machine$double.eps)))
     if(set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
@@ -73,7 +73,7 @@ dispois$methods(
       if(!is.finite(r)) r = 1e12
       r
     }
-    mle = optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=0)
+    mle = suppressWarnings(optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=0))
     if(set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
@@ -97,7 +97,7 @@ disexp$methods(
       if(!is.finite(r)) r = 1e12
       r
     }
-    mle = optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=0)
+    mle = suppressWarnings(optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=0))
     if(set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
@@ -127,8 +127,8 @@ conpl$methods(
       r
     }
     
-    mle = optim(par=theta_0, fn=negloglike, 
-                method="L-BFGS-B", lower=1)       
+    mle = suppressWarnings(optim(par=theta_0, fn=negloglike, 
+                method="L-BFGS-B", lower=1))       
     
     
     if(set)  pars <<- mle$par
@@ -152,10 +152,10 @@ conlnorm$methods(
       if(!is.finite(r)) r = 1e12
       r
     }
-    mle = optim(par=theta_0, 
+    mle = suppressWarnings(optim(par=theta_0, 
                 fn=negloglike, 
                 method="L-BFGS-B", 
-                lower=c(-Inf, .Machine$double.eps))
+                lower=c(-Inf, .Machine$double.eps)))
     if(set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
@@ -179,7 +179,7 @@ conexp$methods(
       if(!is.finite(r)) r = 1e12
       r
     }
-    mle = optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=0)
+    mle = suppressWarnings(optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=0))
     if(set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
