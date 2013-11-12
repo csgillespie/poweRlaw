@@ -1,4 +1,5 @@
 ##Plotting generics
+#' @importFrom methods setGeneric
 #' @exportMethod lines
 setGeneric("lines")
 
