@@ -3,7 +3,7 @@ blackouts.txt
 *-concordance.tex
 poweRlaw.pdf
 poweRlaw.tex
-graphics/figure?.pdf
+knitr_*
 *.acn
 *.acr
 *.alg

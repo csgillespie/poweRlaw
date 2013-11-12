@@ -1,14 +1,14 @@
 test_that("Testing estimate_pars function", {
-
+  
   ##Discrete Power-law
   load("discrete_data.RData")
   mt = displ$new(discrete_data)
   mt$setXmin(2)
   est = estimate_pars(mt, pars=seq(2, 3, 0.01))
-  expect_equal(est$pars, 2.58, tol=1e-1)
+  expect_equal(est$pars, 2.58, tol=1e-3)
   est = estimate_pars(mt)
-  expect_equal(est$pars, 2.437, tol=1e-1)
-
+  expect_equal(est$pars, 2.583, tol=1e-3)
+  
   ##Discrete Poisson
   x = rep(2, 10000)
   mt = dispois$new(x)
@@ -35,10 +35,11 @@ test_that("Testing estimate_pars function", {
   mt$setXmin(1.43628)
   
   est = estimate_pars(mt)
-  expect_equal(est$pars, 2.532, tol=1e-3)
+  expect_equal(est$pars, 2.533, tol=1e-3)
   
   est = estimate_pars(mt, pars=seq(2.3, 2.7, 0.0001))
   expect_equal(est$pars, 2.53282, tol=1e-3)
+  
   
   ##Log normal
   set.seed(1)
@@ -59,7 +60,7 @@ test_that("Testing estimate_pars function", {
   expect_equal(est$pars, 1/2, tol=1e-5)
   est = estimate_pars(mt, pars=seq(0.1, 1, 0.01))
   expect_equal(est$pars, 1/2)
-
+  
   
 }
 )

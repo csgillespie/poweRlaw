@@ -8,7 +8,7 @@ setMethod("dist_cdf",
                                 all_values=FALSE) {
             
             xmin = m$getXmin(); pars = m$getPars()
-            if(is.null(pars)) stop("Parameters not set")  
+            if(is.null(pars)) stop("Model parameters not set.")  
 
             if(all_values) {
               inter = m$internal
@@ -33,7 +33,7 @@ setMethod("dist_cdf",
                                 lower_tail=TRUE,
                                 all_values=FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
-            if(is.null(pars)) stop("Parameters not set")  
+            if(is.null(pars)) stop("Model parameters not set.")  
             
             if(all_values) {
               xmax = max(m$dat)
@@ -63,7 +63,7 @@ setMethod("dist_cdf",
                                 all_values=FALSE) {
             xmin = m$getXmin()
             pars = m$getPars()
-            if(is.null(pars)) stop("Parameters not set")  
+            if(is.null(pars)) stop("Model parameters not set.")  
 
             if(all_values) {
               xmax = max(m$dat)
@@ -92,7 +92,7 @@ setMethod("dist_cdf",
                                 lower_tail=TRUE,
                                 all_values=FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
-            if(is.null(pars)) stop("Parameters not set")  
+            if(is.null(pars)) stop("Model parameters not set.")  
             
             if(all_values) {
               xmax = max(m$dat)
@@ -126,7 +126,7 @@ setMethod("dist_cdf",
                                 all_values=FALSE) {
             xmin = m$xmin
             pars = m$pars
-            if(is.null(pars)) stop("Parameters not set")  
+            if(is.null(pars)) stop("Model parameters not set.")  
             
             if(all_values) {
               xmax = max(m$dat)
@@ -151,7 +151,7 @@ setMethod("dist_cdf",
                                 lower_tail=TRUE,
                                 all_values=FALSE) {
             pars = m$pars; xmin = m$xmin
-            if(is.null(pars)) stop("Parameters not set")  
+            if(is.null(pars)) stop("Model parameters not set.")  
             if(all_values) {
               xmax = max(m$dat)
               q = xmin:xmax
@@ -181,7 +181,7 @@ setMethod("dist_cdf",
                                 lower_tail=TRUE,
                                 all_values=FALSE) {
             pars = m$pars; xmin = m$xmin
-            if(is.null(pars)) stop("Parameters not set")  
+            if(is.null(pars)) stop("Model parameters not set.")  
             if(all_values) {
               xmax = max(m$dat)
               q = xmin:xmax
