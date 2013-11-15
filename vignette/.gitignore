@@ -39,3 +39,4 @@ graphics/figure?.pdf
 examples.tex
 examples.pdf
 cache
+knitr_*

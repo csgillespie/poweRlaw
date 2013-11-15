@@ -33,11 +33,10 @@ setMethod("lines",
                   y_dif*(xmin - x$internal[["values"]][lower])/x_dif
               } else {
                 dif = x$internal[["dat"]] - xmin
-                upper = which(dif > 0)[1]
+                upper = which(dif >= 0)[1]
                 lower = max(upper - 1, 1)
                 x_dif = x$internal[["dat"]][lower] - x$internal[["dat"]][upper]
                 y_dif = d_cdf[lower] - d_cdf[upper]
-                
                 scale = d_cdf[lower] + 
                   y_dif*(xmin - x$internal[["dat"]][lower])/x_dif
                 
