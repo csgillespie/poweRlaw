@@ -1,6 +1,7 @@
 Version 0.20.2
 --------------
  * Discrete power-law mle now use L-BFGS-B optimiser by default. 
+ * Bug fix in lines methods
 
 
 Version 0.20.1

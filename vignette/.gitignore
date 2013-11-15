@@ -39,3 +39,4 @@ knitr_*
 examples.tex
 examples.pdf
 cache
+knitr_*
