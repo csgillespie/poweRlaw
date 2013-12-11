@@ -1,6 +1,6 @@
 %\VignetteIndexEntry{poweRlaw}
 %!Snw weave = knitr
-%\VignetteEngine{knitr::knit
+%\VignetteEngine{knitr::knit}
 \documentclass[a4paper,justified,openany]{tufte-handout}
 \setcounter{secnumdepth}{2}
 
