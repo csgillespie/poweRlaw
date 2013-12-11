@@ -19,6 +19,9 @@ Depends:
 Imports:
     VGAM,
     parallel
+VignetteBuilder: knitr
+Suggests:
+    knitr, R.matlab
 License: GPL-2 | GPL-3
 Collate:
     'aaa_all_classes.R'
