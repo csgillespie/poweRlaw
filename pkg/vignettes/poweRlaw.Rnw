@@ -239,10 +239,10 @@ bs = bootstrap(m_m, no_of_sims=1000, threads=1)
 <<echo=FALSE, fig.width=4, fig.height=8>>=
 par(mfrow=c(2, 1))
 hist(bs$bootstraps[,2], xlab=expression(x[min]), ylim=c(0, 1600), 
-     xlim=c(0, 25), main=NULL, breaks="fd")
+     xlim=c(0, 30), main=NULL, breaks="fd")
 grid()
 hist(bs$bootstraps[,3], xlab=expression(alpha), 
-     ylim=c(0, 400), xlim=c(1.85, 2.05), main=NULL, breaks="fd")
+     ylim=c(0, 500), xlim=c(1.8, 2.1), main=NULL, breaks="fd")
 grid()
 @
 \caption{Characterising uncertainty in parameter values. (a) $\xmin$ uncertainty (standard deviation 2) (b) $\alpha$ uncertainty (std dev. 0.03)}\label{F2}
@@ -253,7 +253,7 @@ grid()
 <<echo=FALSE>>=
 plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3], 
      xlab=expression(x[min]), ylab=expression(alpha), 
-     xlim=c(0, 25), ylim=c(1.85, 2.05), cex=0.35, 
+     xlim=c(0, 30), ylim=c(1.8, 2.1), cex=0.35, 
      pch=21, bg=1, panel.first=grid())
 @
 \caption{Characterising uncertainty in parameter values. Bivariate scatter plot of $\xmin$ and $\alpha$.}\label{F3}

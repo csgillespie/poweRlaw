@@ -193,7 +193,7 @@ hist(bs$bootstraps[,2], xlab=expression(x[min]), ylim=c(0, 1600),
      xlim=c(0, 20), main=NULL, breaks="fd")
 grid()
 hist(bs$bootstraps[,3], xlab=expression(alpha), 
-     ylim=c(0, 400), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
+     ylim=c(0, 500), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
 grid()
 
 @
