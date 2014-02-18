@@ -24,10 +24,10 @@ setMethod("dist_rand",
             result <- numeric()
             min <- log(m$xmin)
             while (length(result) < n) {
-              candidates <- rnorm(n, m$pars[1], m$pars[2])
+              candidates <- round(rnorm(n, m$pars[1], m$pars[2]))
               result <- c(result, candidates[candidates >= min])
             }
-            floor(exp(result))
+            exp(result)
           }
 )
 
@@ -38,9 +38,9 @@ setMethod("dist_rand",
           definition = function(m, n="numeric") {
             result <- numeric()
             while (length(result) < n) {
-              candidates <- rexp(n, m$pars)
+              candidates <- round(rexp(n, m$pars))
               result <- c(result, candidates[candidates >= m$xmin])
             }
-            floor(result)
+            result
           }
 )
