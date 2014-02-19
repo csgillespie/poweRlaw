@@ -21,13 +21,18 @@ setMethod("dist_rand",
 setMethod("dist_rand",
           signature = signature(m="dislnorm"),
           definition = function(m, n="numeric") {
-            result <- numeric()
-            min <- log(m$xmin)
-            while (length(result) < n) {
-              candidates <- round(rnorm(n, m$pars[1], m$pars[2]))
-              result <- c(result, candidates[candidates >= min])
+            result <- numeric(n)
+            min <- round(m$xmin)
+            i <- 1
+            while (i <= n) {
+              candidates <- round(rlnorm(n, m$pars[1], m$pars[2]))
+              candidates <- candidates[candidates >= min]
+              for (c in candidates) {
+                result[i] <- c
+                i <- i + 1
+              }
             }
-            exp(result)
+            result
           }
 )
 
@@ -36,11 +41,7 @@ setMethod("dist_rand",
 setMethod("dist_rand",
           signature = signature(m="disexp"),
           definition = function(m, n="numeric") {
-            result <- numeric()
-            while (length(result) < n) {
-              candidates <- round(rexp(n, m$pars))
-              result <- c(result, candidates[candidates >= m$xmin])
-            }
-            result
+            u = runif(n, 0, exp(-m$pars*(m$xmin-0.5)))
+            round(-log(u)/m$pars)
           }
 )
