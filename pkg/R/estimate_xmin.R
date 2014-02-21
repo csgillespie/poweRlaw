@@ -73,6 +73,7 @@ estimate_xmin = function (m,
   
   ## xmin scan
   nr = length(xmins) - m_cpy$no_pars - 1
+  if(nr < 1) stop("Insufficient data to estimate parameters")
   nr = min(data_max, nr)
   dat = matrix(0, nrow=nr, ncol=(1 + m_cpy$no_pars))
   
