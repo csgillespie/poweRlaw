@@ -81,7 +81,7 @@ displ =
                 },
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_xmin") {
+                    if("estimate_xmin" %in% class(x)) {
                       pars <<- x$pars
                       x = x$xmin
                     }
@@ -97,7 +97,7 @@ displ =
                 }, 
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_pars") x = x$pars            
+                    if("estimate_pars" %in% class(x)) x = x$pars            
                     internal[["pars"]] <<- x
                     internal[["constant"]] <<- zeta(x)
                   } else internal[["pars"]]
@@ -129,7 +129,7 @@ dislnorm =
                 },
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_xmin") {
+                    if("estimate_xmin" %in% class(x)) {
                       pars <<- x$pars
                       x = x$xmin
                     }
@@ -142,7 +142,7 @@ dislnorm =
                 }, 
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_pars") x = x$pars            
+                    if("estimate_pars" %in% class(x)) x = x$pars            
                     internal[["pars"]] <<- x            
                   } else internal[["pars"]]
                 }
@@ -173,7 +173,7 @@ dispois =
                   } else internal[["dat"]],
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_xmin") {
+                    if("estimate_xmin" %in% class(x)) {
                       pars <<- x$pars
                       x = x$xmin
                     }
@@ -187,7 +187,7 @@ dispois =
                 }, 
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_pars") x = x$pars            
+                    if("estimate_pars" %in% class(x)) x = x$pars            
                     internal[["pars"]] <<- x            
                   } else internal[["pars"]]
                 }
@@ -217,7 +217,7 @@ disexp =
                   } else internal[["dat"]],
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_xmin") {
+                    if("estimate_xmin" %in% class(x)) {
                       pars <<- x$pars
                       x = x$xmin
                     }
@@ -231,7 +231,7 @@ disexp =
                 }, 
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_pars") x = x$pars            
+                    if("estimate_pars" %in% class(x)) x = x$pars            
                     internal[["pars"]] <<- x            
                   } else internal[["pars"]]
                 }

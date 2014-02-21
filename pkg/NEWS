@@ -4,7 +4,8 @@ Version 0.20.2
  * Vignette source now included within the package
  * Bug fix in lines methods
  * Bug fix: use data_max argument in estimate_xmin (https://github.com/csgillespie/poweRlaw/issues/13) Thanks to @pgoldberg.
-
+ * Bug fix: When setting parameters in distributions, no longer a strict class comparison
+ 
 
 Version 0.20.1
 --------------

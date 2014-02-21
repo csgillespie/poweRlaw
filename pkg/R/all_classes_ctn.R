@@ -19,7 +19,7 @@ conpl =
                 },
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_xmin") {
+                    if("estimate_xmin" %in% class(x)) {
                       pars <<- x$pars
                       x = x$xmin
                     }
@@ -33,7 +33,7 @@ conpl =
                 }, 
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_pars") x = x$pars
+                    if("estimate_pars" %in% class(x)) x = x$pars
                     internal[["pars"]] <<- x
                   } else internal[["pars"]]
                 }
@@ -60,7 +60,7 @@ conlnorm =
                 },
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_xmin") {
+                    if("estimate_xmin" %in% class(x)) {
                       pars <<- x$pars
                       x = x$xmin
                     }
@@ -73,7 +73,7 @@ conlnorm =
                 }, 
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_pars") x = x$pars
+                    if("estimate_pars" %in% class(x)) x = x$pars
                     internal[["pars"]] <<- x
                   } else internal[["pars"]]
                 }
@@ -100,7 +100,7 @@ conexp =
                 },
                 xmin = function(x) {
                   if(!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_xmin") {
+                    if("estimate_xmin" %in% class(x)) {
                       pars <<- x$pars
                       x = x$xmin
                     }
@@ -114,7 +114,7 @@ conexp =
                 }, 
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
-                    if(class(x) == "estimate_pars") x = x$pars
+                    if("estimate_pars" %in% class(x)) x = x$pars
                     internal[["pars"]] <<- x
                   } else internal[["pars"]]
                 }
