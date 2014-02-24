@@ -20,6 +20,7 @@ Imports:
     parallel
 Suggests:
     knitr,
-    R.matlab
+    R.matlab, 
+    testthat
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
