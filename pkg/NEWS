@@ -1,12 +1,17 @@
+Version 0.20.3
+--------------
+ * Test suite now included in the package
+ * Improved numerical stability when working out discrete exp and lognormal pdfs (https://github.com/csgillespie/poweRlaw/issues/21) 
+ * Bug fix: When setting parameters in distributions, no longer a strict class comparison
+ * Bug fix: Error when the length of xmins is 1 in estimate_xmin (https://github.com/csgillespie/poweRlaw/issues/20).
+Thanks to @linzhp
+
 Version 0.20.2
 --------------
  * Discrete power-law mle now uses L-BFGS-B optimiser by default
  * Vignette source now included within the package
  * Bug fix in lines methods
  * Bug fix: use data_max argument in estimate_xmin (https://github.com/csgillespie/poweRlaw/issues/13) Thanks to @pgoldberg.
- * Bug fix: When setting parameters in distributions, no longer a strict class comparison
- * Bug fix: Error when the length of xmins is 1 in estimate_xmin (https://github.com/csgillespie/poweRlaw/issues/20).
-Thanks to @linzhp
 
 
 Version 0.20.1
