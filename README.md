@@ -52,8 +52,6 @@ Other information
 
  * If you have any suggestions or find bugs, please use the github [issue tracker](https://github.com/csgillespie/poweRlaw/issues)
  * Feel free to submit pull requests
- * The package does have an associated test suite (see directory tests above). However, since some of tests take a while to run, I've not included the suite with the package.
- * The vignette source code is the directory vignette above.
 
 
 
