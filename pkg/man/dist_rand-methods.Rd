@@ -3,12 +3,18 @@
 \name{dist_rand}
 \alias{dist_rand}
 \alias{dist_rand,conpl-method}
+\alias{dist_rand,disexp-method}
+\alias{dist_rand,dislnorm-method}
 \alias{dist_rand,displ-method}
 \title{Random number generation for the distribution objects}
 \usage{
 dist_rand(m, n)
 
 \S4method{dist_rand}{displ}(m, n = "numeric")
+
+\S4method{dist_rand}{dislnorm}(m, n = "numeric")
+
+\S4method{dist_rand}{disexp}(m, n = "numeric")
 
 \S4method{dist_rand}{conpl}(m, n = "numeric")
 }
