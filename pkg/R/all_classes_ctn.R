@@ -1,5 +1,5 @@
 #' @rdname displ
-#' @aliases conpl-class
+#' @aliases conpl-class conpl
 #' @exportClass conpl
 #' @export conpl
 conpl = 
@@ -42,7 +42,7 @@ conpl =
 
 
 #' @rdname displ
-#' @aliases conlnorm-class
+#' @aliases conlnorm-class conlnorm
 #' @exportClass conlnorm
 #' @export conlnorm
 conlnorm = 
@@ -82,7 +82,7 @@ conlnorm =
 
 
 #' @rdname displ
-#' @aliases conexp-class
+#' @aliases conexp-class conexp
 #' @exportClass conexp
 #' @export conexp
 conexp = 

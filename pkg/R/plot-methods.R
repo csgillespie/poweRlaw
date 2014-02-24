@@ -121,7 +121,7 @@ create_plots = function(l, no_plots) {
 #CI for s is sqrt((n-1)*s/chi(n-1))
 
 #' @method plot bs_xmin
-#' @S3method plot bs_xmin
+#' @export
 plot.bs_xmin = function(x, trim=0.1, ...){
   no_plots = ncol(x$bootstraps) - 1
   l = list()
@@ -135,7 +135,7 @@ plot.bs_xmin = function(x, trim=0.1, ...){
 
 
 #' @method plot bs_p_xmin
-#' @S3method plot bs_p_xmin
+#' @export
 plot.bs_p_xmin = function(x, trim=0.1, ...){
   no_plots = ncol(x$bootstraps)
   l = list()
@@ -153,7 +153,7 @@ plot.bs_p_xmin = function(x, trim=0.1, ...){
 
 
 #' @method plot compare_distributions
-#' @S3method plot compare_distributions
+#' @export
 plot.compare_distributions = function(x, ...) {
   dd = x$ratio[!duplicated(x$ratio$x),]
   defaults = list(xlab = "x", ylab = "Log-likelihood Ratio")

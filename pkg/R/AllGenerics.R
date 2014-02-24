@@ -18,11 +18,11 @@ setGeneric("points")
 #' current parameters and xmin value.
 #' 
 #' @param m a distribution object.
-#' @param all_values logical; \code{FALSE} (default). If \code{TRUE},
-#' then the cdf is evaluated at points xmin, xmin+1, ..., xmax.
 #' @param q a vector values where the function will be evaluated. 
 #' If \code{q} is \code{NULL} (default), then the data values 
 #' will be used.
+#' @param all_values logical; \code{FALSE} (default). If \code{TRUE},
+#' then the cdf is evaluated at points xmin, xmin+1, ..., xmax.
 #' @param lower_tail logical; if \code{TRUE} (default), 
 #' probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.
 #' @docType methods
@@ -49,7 +49,7 @@ setGeneric("points")
 #' ##########################################
 #' dist_cdf(m)
 setGeneric("dist_cdf", 
-           function(m, q=NULL, lower_tail=FALSE, ...) 
+           function(m, q=NULL, lower_tail=FALSE, all_values=FALSE) 
              standardGeneric("dist_cdf"))
 
 
@@ -103,6 +103,7 @@ setGeneric("dist_data_cdf",
 #' and \code{\link{dist_rand}}
 #' @note This method does *not* alter the internal state of
 #' the distribubtion objects.
+#' @exportMethod dist_pdf
 #' @export
 #' @docType methods
 #' @rdname dist_pdf-methods
@@ -135,6 +136,7 @@ setGeneric("dist_pdf",
 #' and \code{\link{dist_rand}}
 #' @note This method does *not* alter the internal state of
 #' the distribution objects.
+#' @exportMethod dist_ll
 #' @export
 #' @docType methods
 #' @rdname dist_ll-methods
@@ -170,6 +172,7 @@ setGeneric("dist_ll",
 #' @note This method does *not* alter the internal state of
 #' the distribubtion object. This method is only available for
 #' discrete and continuous power law objects.
+#' @exportMethod dist_rand
 #' @export
 #' @docType methods
 #' @rdname dist_rand-methods

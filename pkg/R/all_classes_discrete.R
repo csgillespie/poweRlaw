@@ -29,7 +29,8 @@
 #' Each field has standard setters and getters.
 #' 
 #' @return a reference object
-#' @aliases displ-class
+#' @rdname displ
+#' @aliases displ-class displ
 #' @docType class
 #' @aliases conpl
 #' @importFrom VGAM zeta
@@ -104,7 +105,7 @@ displ =
                 }
               ))
 #' @rdname displ
-#' @aliases dislnorm-class
+#' @aliases dislnorm-class dislnorm
 #' @exportClass dislnorm
 #' @export dislnorm
 dislnorm = 
@@ -150,7 +151,7 @@ dislnorm =
 
 
 #' @rdname displ
-#' @aliases dispois-class
+#' @aliases dispois-class dispois
 #' @exportClass dispois
 #' @export dispois
 dispois = 
@@ -194,7 +195,7 @@ dispois =
               ))
 
 #' @rdname displ
-#' @aliases disexp-class
+#' @aliases disexp-class disexp
 #' @exportClass disexp
 #' @export disexp
 disexp = 

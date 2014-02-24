@@ -155,7 +155,7 @@ m_m$setPars(2)
 <<>>=
 (est = estimate_pars(m_m))
 @
-\noindent For the Moby Dick data set, when $\xmin=\Sexpr{m$getXmin()}$, we estimate $\alpha$ to be $\Sexpr{signif(est$pars,4)}$.
+\noindent For the Moby Dick data set, when $\xmin=\Sexpr{m_m$getXmin()}$, we estimate $\alpha$ to be $\Sexpr{signif(est$pars,4)}$.
 
 
 \newthought{To estimate} the lower bound $\xmin$, we minimise the distance between the data and the fitted model CDF, that is
