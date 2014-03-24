@@ -1,14 +1,14 @@
-#' Discrete powerlaw distribution. 
+#' Discrete powerlaw distribution
 #' 
 #' Density, distribution function and random number generation 
 #' for the discrete power law distribution with parameters xmin and alpha.
 #' @param x,q vector of quantiles. The discrete 
-#' power-law distribution is defined for x > xmin
+#' power-law distribution is defined for x > xmin.
 #' @param xmin The lower bound of the power-law distribution. 
-#' For the continuous power-law, xmin >= 0 
-#' for the discrete distribution, xmin >0
-#' @param alpha The scaling parameter: alpha > 1
-#' @param log logical (default FALSE) if TRUE, log values are returned
+#' For the continuous power-law, xmin >= 0. 
+#' for the discrete distribution, xmin > 0.
+#' @param alpha The scaling parameter: alpha > 1.
+#' @param log logical (default FALSE) if TRUE, log values are returned.
 #' @param lower.tail logical; 
 #' if TRUE (default), probabilities are \eqn{P[X \le x]}, 
 #' otherwise, \eqn{P[X > x]}.
@@ -16,10 +16,13 @@
 #' and rpldis return random numbers.
 #' @note The naming of these functions mirrors standard R functions, i.e. dnorm.
 #' When alpha is close to one, generating random number can be very slow.
+#' @references Clauset, Aaron, Cosma Rohilla Shalizi, and Mark EJ Newman. 
+#' "Power-law distributions in empirical data." SIAM review 51.4 (2009): 661-703.
 #' @export
 #' @examples
-#' xmin = 1; alpha = 1.5
+#' xmin = 1; alpha = 2
 #' x = xmin:100
+#' 
 #' plot(x, dpldis(x, xmin, alpha), type="l")
 dpldis = function(x, xmin, alpha, log=FALSE) {
     x = x[round(x) >= round(xmin)]
@@ -38,17 +41,17 @@ dpldis = function(x, xmin, alpha, log=FALSE) {
 #'@details The Clausett, 2009 paper provides an algorithm for generating discrete random numbers. However, if this
 #'algorithm is implemented in R, it gives terrible performance. This is because the algorithm involves "growing vectors". 
 #'Another problem is when alpha is close to 1, this can result in very large random number being generated (which means we need 
-#'to calculate the discrete CDF). 
+#'to calculate the discrete CDF for very large values). 
 #'
 #'The algorithm provided in this package generates true 
-#'discrete random numbers up to 1e5 then switches to
+#'discrete random numbers up to 10,000 then switches to
 #'using continuous random numbers. This switching point can altered by 
-#'changing the \code{discrete_max} argument.
+#'changing the \code{discrete_max} argument. 
 #'
 #'In order to get a efficient power-law discrete random number generator, the algorithm needs to be implemented in C.
 #'@examples
 #' plot(x, ppldis(x, xmin, alpha), type="l", main="Distribution function")
-#' rpldis(x, xmin, alpha)
+#' dpldis(1, xmin, alpha)
 ppldis = function(q, xmin, alpha, lower.tail=TRUE) {
     q = q[round(q) >= round(xmin)]
     xmin = floor(xmin)
@@ -63,52 +66,51 @@ ppldis = function(q, xmin, alpha, lower.tail=TRUE) {
 }
 
 
-internal_ppldis_cumsum = function(xmin, alpha, incr, discrete) {
-    xmin = floor(xmin)
-    alpha = alpha
-    constant = zeta(alpha)
-    if(xmin > 1) 
-        constant = constant - sum((1:(xmin-1))^(-alpha))
-    upper = 0
-    xstart = xmin; xend = xmin + incr
-    cdf = function()  {
-        cdf = 1-(constant - cumsum((xstart:xend)^(-alpha)))/constant+ upper
-        upper <<- cdf[length(cdf)-1]
-        xstart <<- xend; xend <<- xend + 2*incr
-        return(cdf)
-    }
-    get_xstart = function() xstart
-    get_xend = function() xend
-    get_alpha = function() alpha
-    get_xmin = function() xmin
-    list(cdf = cdf, get_xstart=get_xstart, get_xend=get_xend, 
-         get_alpha= get_alpha, get_xmin=get_xmin)
-}
-
-
-rng = function(u, pp, discrete_max) {
-    xend = pp$get_xend()
-    if(!length(u))
-        return(NULL)
-    else if(xend > discrete_max) {
-        xmin = pp$get_xmin(); alpha = pp$get_alpha()
-        ##Expression D6 in Clausett
-        rngs = floor((xmin-0.5)*(1-u)^(-1/(alpha-1))+0.5)
-    } else {
-        xstart = pp$get_xstart(); xend = pp$get_xend()
-        cdf = pp$cdf()
-        rngs = colSums(sapply(u, ">", cdf)) + xstart
-        rngs[rngs == (xend+1)] = rng(u[rngs==(xend+1)], pp, discrete_max)
-    }
-    return(rngs)
-}
-
-#' @param n number of observations.
-#' @param discrete_max The value when we switch from the discrete random numbers to a CTN approximation
+#' @param n Number of observations. If \code{length(n) > 1}, the length is taken to be the number required.
+#' @param discrete_max The value when we switch from the discrete random numbers to a CTN approximation.
 #' @rdname dpldis
 #' @export
-rpldis = function(n, xmin, alpha, discrete_max=1e5) {
-    u = runif(n)
-    pp = internal_ppldis_cumsum(xmin, alpha, discrete_max)
-    rng(u, pp, discrete_max)
+#' @examples
+#' 
+#' ###############################################
+#' ## Random number generation                   #
+#' ###############################################
+#' n = 1e5
+#' x1 = rpldis(n, xmin, alpha)
+#' ## Compare with exact (dpldis(1, xmin, alpha))
+#' sum(x1==1)/n
+#' ## Using only the approximation
+#' x2 = rpldis(n, xmin, alpha, 0)
+#' sum(x2==1)/n
+#' 
+rpldis = function(n, xmin, alpha, discrete_max = 10000) {
+  ## Initialise parameters
+  if(length(n) > 1L) n = length(n)
+  
+  xmin = floor(xmin); alpha = alpha
+  u = runif(n)
+  
+  ## Work out CDF
+  if(discrete_max > 0.5) {
+    constant = zeta(alpha)
+    if(xmin > 1) constant = constant - sum((1:(xmin-1))^(-alpha))
+    cdf = c(0, 1-(constant - cumsum((xmin:discrete_max)^(-alpha)))/constant)
+  
+    ## Due to numerical instability
+    ## Not enough precision to exactly calculate the CDF
+    dups = duplicated(cdf, fromLast=TRUE) 
+    if(any(dups)) cdf = cdf[1:which.min(!dups)]
+    
+    ## Simulate using look up method 
+    rngs = as.numeric(cut(u,cdf))
+  
+    ## Fill in blanks using Clausett approximation
+    is_na = is.na(rngs)
+    if(any(is_na)) rngs[is_na] = floor((xmin-0.5)*(1-u[is_na])^(-1/(alpha-1))+0.5)
+  } else {
+    ## Using only the approximation
+    rngs = floor((xmin-0.5)*(1-u)^(-1/(alpha-1))+0.5)
+  }
+  
+  rngs
 }

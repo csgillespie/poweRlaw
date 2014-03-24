@@ -19,19 +19,20 @@ rplcon(n, xmin, alpha)
   distribution is defined for x > xmin}
 
   \item{xmin}{The lower bound of the power-law
-  distribution. For the continuous power-law, xmin >= 0 for
-  the discrete distribution, xmin >0}
+  distribution. For the continuous power-law, xmin >= 0.
+  for the discrete distribution, xmin > 0.}
 
-  \item{alpha}{The scaling parameter: alpha > 1}
+  \item{alpha}{The scaling parameter: alpha > 1.}
 
   \item{log}{logical (default FALSE) if TRUE, log values
-  are returned}
+  are returned.}
 
   \item{lower.tail}{logical; if TRUE (default),
   probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X >
   x]}.}
 
-  \item{n}{number of observations.}
+  \item{n}{Number of observations. If \code{length(n) > 1},
+  the length is taken to be the number required.}
 }
 \value{
 dplcon gives the denisty and pplcon gives the distribution function.
