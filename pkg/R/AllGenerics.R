@@ -1,3 +1,4 @@
+#' @include aaa_all_classes.R
 ##Plotting generics
 #' @importFrom methods setGeneric
 #' @exportMethod lines

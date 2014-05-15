@@ -6,9 +6,9 @@
 compare_distributions(d1, d2)
 }
 \arguments{
-  \item{d1}{A distribution object}
+\item{d1}{A distribution object}
 
-  \item{d2}{A distribution object}
+\item{d2}{A distribution object}
 }
 \value{
 This function returns

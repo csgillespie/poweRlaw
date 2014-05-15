@@ -4,7 +4,7 @@
 \alias{lines,distribution-method}
 \alias{plot,distribution,ANY-method}
 \alias{points,distribution-method}
-\title{Plotting functions}
+\title{Generic plotting functions}
 \usage{
 \S4method{lines}{distribution}(x, cut = FALSE, draw = TRUE,
   length.out = 100, ...)
@@ -15,27 +15,25 @@
   length.out = 100, ...)
 }
 \arguments{
-  \item{draw}{logical (default \code{TRUE}). Should the
-  plot/lines/points function plot or return the data (in a
-  data frame object).}
+\item{draw}{logical (default \code{TRUE}). Should the plot/lines/points function plot or
+return the data (in a data frame object).}
 
-  \item{cut}{logical (default \code{FALSE}) - Where should
-  the plot begin. If \code{cut=FALSE}, then the plot will
-  start at the minimum data value. Otherwise, the plot will
-  start from \code{xmin}}
+\item{cut}{logical (default \code{FALSE}) -
+Where should the plot begin. If \code{cut=FALSE}, then the
+plot will start at the minimum data value. Otherwise, the plot
+will start from \code{xmin}}
 
-  \item{length.out}{numeric, default 100. How many points
-  should the distribution be evaulated at. This argument is
-  only for plotting the fitted lines.}
+\item{length.out}{numeric, default 100. How many points should the
+distribution be evaulated at. This argument is only
+for plotting the fitted lines.}
 
-  \item{x}{coordinate vectors of points to join.}
+\item{x}{coordinate vectors of points to join.}
 
-  \item{...}{Further graphical parameters (see
-  \code{\link{par}}) may also be supplied as arguments,
-  particularly, line type, \code{lty}, line width,
-  \code{lwd}, color, \code{col} and for \code{type = "b"},
-  \code{pch}.  Also the line characteristics \code{lend},
-  \code{ljoin} and \code{lmitre}.}
+\item{...}{Further graphical parameters (see \code{\link{par}}) may
+    also be supplied as arguments, particularly, line type, \code{lty},
+    line width, \code{lwd}, color, \code{col} and for \code{type = "b"},
+    \code{pch}.  Also the line characteristics \code{lend}, \code{ljoin}
+    and \code{lmitre}.}
 }
 \description{
 These are generic functions for distribution  reference

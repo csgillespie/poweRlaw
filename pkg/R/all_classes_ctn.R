@@ -1,3 +1,4 @@
+#' @include aaa_all_classes.R 
 #' @rdname displ
 #' @aliases conpl-class conpl
 #' @exportClass conpl

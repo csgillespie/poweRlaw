@@ -28,7 +28,7 @@ dist_ll(m)
 \S4method{dist_ll}{conexp}(m)
 }
 \arguments{
-  \item{m}{The distribution reference object.}
+\item{m}{The distribution reference object.}
 }
 \value{
 The log-likelihood

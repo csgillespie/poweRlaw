@@ -19,9 +19,9 @@ dist_rand(m, n)
 \S4method{dist_rand}{conpl}(m, n = "numeric")
 }
 \arguments{
-  \item{m}{a distribution reference object.}
+\item{m}{a distribution reference object.}
 
-  \item{n}{number of observations to be generated.}
+\item{n}{number of observations to be generated.}
 }
 \value{
 n random numbers

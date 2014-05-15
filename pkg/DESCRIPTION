@@ -2,7 +2,7 @@ Package: poweRlaw
 Type: Package
 Title: Fitting heavy tailed distributions: the poweRlaw package
 Version: 0.20.3
-Date: 2014-03-24
+Date: 2014-05-15
 Authors@R: person(given="Colin", family="Gillespie",
     email="csgillespie@gmail.com", role = c("aut", "cre"))
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
@@ -25,3 +25,30 @@ Suggests:
     testthat
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
+Collate:
+    'aaa_all_classes.R'
+    'AllGenerics.R'
+    'all_classes_ctn.R'
+    'all_classes_discrete.R'
+    'bootstrap.R'
+    'bootstrap_p.R'
+    'checks.R'
+    'compare_distributions.R'
+    'ctn_helper_functions.R'
+    'data_help_files.R'
+    'discrete_helper_functions.R'
+    'dist_cdf-methods.R'
+    'dist_data_cdf-methods.R'
+    'dist_ll-methods.R'
+    'dist_pdf-methods.R'
+    'dist_rand-methods.R'
+    'estimate_pars.R'
+    'estimate_xmin.R'
+    'initialize-methods.R'
+    'lines-methods.R'
+    'mle-methods.R'
+    'plcon.R'
+    'pldis.R'
+    'plot-methods.R'
+    'points-methods.R'
+    'poweRlaw-package.R'

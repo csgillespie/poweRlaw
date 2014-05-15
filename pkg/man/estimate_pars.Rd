@@ -6,13 +6,11 @@
 estimate_pars(m, pars = NULL)
 }
 \arguments{
-  \item{m}{A reference class object that contains the
-  data.}
+\item{m}{A reference class object that contains the data.}
 
-  \item{pars}{default NULL. A vector of parameters used to
-  optimise over. Otherwise, for each value of xmin, the mle
-  will be used, i.e. \code{estimate_pars(m)}. For small
-  samples, the mle may be biased.}
+\item{pars}{default \code{NULL}. A vector of parameters used to optimise over.
+Otherwise, for each value of \code{xmin}, the mle will be used, i.e. \code{estimate_pars(m)}.
+For small samples, the mle may be biased.}
 }
 \value{
 returns list.
