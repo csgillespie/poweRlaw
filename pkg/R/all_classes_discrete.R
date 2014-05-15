@@ -28,6 +28,11 @@
 #' data using the \code{dat} field. 
 #' Each field has standard setters and getters.
 #' 
+#' @section Copying objects:
+#' Distribution objects are reference classes. This means that when we copy
+#' objects, we need to use the \code{copy} method, i.e. \code{obj$copy()}. 
+#' See the examples below for further details.
+#'
 #' @return a reference object
 #' @rdname displ
 #' @aliases displ-class displ
@@ -55,11 +60,22 @@
 #' m$setXmin(2)
 #' m$setPars(2)
 #' 
+#' 
 #' ##############################################################
 #' #Plot the data and fitted distribution                       #
 #' ##############################################################
 #' plot(m)
 #' lines(m)
+#' ##############################################################
+#' #Copying                                                     #
+#' ##############################################################
+#' ## Shallow copy
+#' m_cpy = m
+#' m_cpy$setXmin(5)
+#' m$getXmin()
+#' ## Instead
+#' m_cpy = m$copy()
+
 displ = 
   setRefClass("displ", 
               contains="discrete_distribution",

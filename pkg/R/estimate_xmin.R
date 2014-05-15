@@ -46,7 +46,7 @@ get_KS_statistic = function(m) {
 #' @details When estimating \code{xmin}
 #' for discrete distributions, the search space when 
 #' comparing the data-cdf (empirical cdf)
-#' and the distribution_cdf runs from 1 to \code{min(data_max, x)}
+#' and the distribution_cdf runs from 1 to \code{max(x)}
 #' where \code{x} is the data set. This \strong{can} often be 
 #' computationally brutal. In particular, when bootstrapping
 #' we generate random numbers from the power law distribution, 
@@ -95,7 +95,6 @@ estimate_xmin = function (m,
   
   ## Initialise xmin scan
   nr = length(xmins) - m_cpy$no_pars - 1
-  ## nr = min(data_max, nr)
   
   ## Bootstrapping may generate strange data
   if(nr < m_cpy$no_pars || length(unique(m$dat)) == 1L) {

@@ -51,6 +51,13 @@ distributions, xmin >0}
 \item{pars}{A parameter vector. Typically set after initialisation. Note the lognormal distribution has two parameters.}
 \item{internal}{A list. This list differs between objects and shouldn't be altered.}}
 }
+
+\section{Copying objects}{
+
+Distribution objects are reference classes. This means that when we copy
+objects, we need to use the \code{copy} method, i.e. \code{obj$copy()}.
+See the examples below for further details.
+}
 \examples{
 ##############################################################
 #Load data and create distribution object                    #
@@ -70,10 +77,20 @@ m$getPars()
 m$setXmin(2)
 m$setPars(2)
 
+
 ##############################################################
 #Plot the data and fitted distribution                       #
 ##############################################################
 plot(m)
 lines(m)
+##############################################################
+#Copying                                                     #
+##############################################################
+## Shallow copy
+m_cpy = m
+m_cpy$setXmin(5)
+m$getXmin()
+## Instead
+m_cpy = m$copy()
 }
 
