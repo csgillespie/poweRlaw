@@ -1,5 +1,5 @@
-require(poweRlaw)
-##Load in the full Moby dick data set
+require("poweRlaw")
+## Load in the full Moby dick data set
 data(moby)
 
 ##Create a distribution object
@@ -25,8 +25,8 @@ m$setXmin(est)
 lines(m, col=4)
 
 ##Uncertainity in xmin
-bs1 = bootstrap(m, no_of_sims=5000, threads=2)
-bs2 = bootstrap_p(m, no_of_sims=5000, threads=2)
+bs1 = bootstrap(m, no_of_sims=100, threads=2)
+bs2 = bootstrap_p(m, no_of_sims=100, threads=2)
 
 
 
