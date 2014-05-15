@@ -98,7 +98,7 @@ estimate_xmin = function (m,
   ## nr = min(data_max, nr)
   
   ## Bootstrapping may generate strange data
-  if(nr < m_cpy$no_pars) {
+  if(nr < m_cpy$no_pars || length(unique(m$dat)) == 1L) {
     ## Insufficient data to estimate parameters
     dat = matrix(0, nrow=1, ncol=(1 + m_cpy$no_pars))
     dat[1,] = c(Inf, rep(NA, m_cpy$no_pars))
@@ -126,7 +126,7 @@ estimate_xmin = function (m,
   
   I = which.min(dat[,1L])
   xmin = xmins[I]
-  n = sum(m_cpy$dat >= xmin)
+ # n = sum(m_cpy$dat >= xmin)
   pars = dat[I, 2:ncol(dat)]
   
   l = list(KS=dat[I, 1L], xmin=xmin, pars=pars)
