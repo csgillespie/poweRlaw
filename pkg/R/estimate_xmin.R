@@ -13,7 +13,7 @@ get_KS_statistic = function(m) {
 }
 
 
-#' Estimates the lower bound (xmin)
+#' Estimating the lower bound (xmin)
 #' 
 #' When fitting heavy tailed distributions, sometimes it 
 #' is necessary to estimate the lower threshold, xmin. The
@@ -32,16 +32,32 @@ get_KS_statistic = function(m) {
 #' \item{\code{bootstrap_p}}{Performs a bootstrapping hypothesis test to determine whether a power law
 #' distribution is plausible. This function only available for power law distribution objects.}}
 #' @param m A reference class object that contains the data.
-#' @param pars default \code{NULL}. A vector of parameters used to optimise over. 
+#' @param pars default \code{NULL}. A vector of parameters used to 
+#' optimise over. 
 #' Otherwise, for each value of \code{xmin}, the mle will be used, i.e. \code{estimate_pars(m)}.
 #' For small samples, the mle may be biased. 
-#' @param xmins default \code{NULL}. A vector of possible values of xmin to explore. 
-#' The default, \code{xmins=NULL}, results in exploring all possible xmin values.
-#' @param data_max default 1e5. When estimating xmin for discrete distributions, 
-#' the search space when comparing the data_cdf and distribution_cdf runs from 1:data_max
+#' @param xmins default \code{1e5}. A vector of possible values 
+#' of xmin to explore. When a single value is passed, this represents
+#' the maximum value to search, i.e. by default we search from
+#' (1, 1e5). See details for further information.
 #' @param threads number of concurrent threads used during the bootstrap.
 #' @param no_of_sims number of bootstrap simulations. When \code{no_of_sims} is large, this can 
 #' take a while to run.
+#' @details When estimating \code{xmin}
+#' for discrete distributions, the search space when 
+#' comparing the data-cdf (empirical cdf)
+#' and the distribution_cdf runs from 1 to \code{min(data_max, x)}
+#' where \code{x} is the data set. This \strong{can} often be 
+#' computationally brutal. In particular, when bootstrapping
+#' we generate random numbers from the power law distribution, 
+#' which has a long tail. 
+#' 
+#' To speed up computations for discrete distributions, it is sensible to put an 
+#' upper bound or explicitly give values of where to search. 
+#' If a single value is used in \code{xmins}, this will be used 
+#' as the maximum search space value. 
+#' If \code{length(xmins) > 1}, this will explicitly
+#' define the search space.
 #' @importFrom parallel makeCluster parSapply 
 #' @importFrom parallel clusterExport stopCluster
 #' @note Adapted from Laurent Dubroca's code found at
@@ -66,17 +82,20 @@ get_KS_statistic = function(m) {
 #' bootstrap(m, no_of_sims=1, threads=1)
 #' bootstrap_p(m, no_of_sims=1, threads=1)
 estimate_xmin = function (m, 
-                          xmins = NULL, 
-                          pars=NULL,
-                          data_max = 1e5) {
+                          xmins = 1e5, 
+                          pars=NULL) {
   ##Make thread safe
   m_cpy = m$getRefClass()$new(m$dat)
   m_cpy$pars = pars
-  if(is.null(xmins)) xmins = unique(m$dat)
+  if(length(xmins) == 1) {
+    space = unique(m$dat)
+    space = space[space <= xmins]
+    xmins = space
+  }
   
   ## Initialise xmin scan
   nr = length(xmins) - m_cpy$no_pars - 1
-  nr = min(data_max, nr)
+  ## nr = min(data_max, nr)
   
   ## Bootstrapping may generate strange data
   if(nr < m_cpy$no_pars) {

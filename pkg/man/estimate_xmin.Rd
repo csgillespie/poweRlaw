@@ -4,30 +4,29 @@
 \alias{bootstrap_p}
 \alias{estimate_xmin}
 \alias{get_KS_statistic}
-\title{Estimates the lower bound (xmin)}
+\title{Estimating the lower bound (xmin)}
 \usage{
-bootstrap(m, xmins = NULL, pars = NULL, no_of_sims = 100, threads = 1,
-  data_max = 1e+05)
+bootstrap(m, xmins = 1e+05, pars = NULL, no_of_sims = 100, threads = 1)
 
-bootstrap_p(m, xmins = NULL, pars = NULL, no_of_sims = 100, threads = 1,
-  data_max = 1e+05)
+bootstrap_p(m, xmins = 1e+05, pars = NULL, no_of_sims = 100,
+  threads = 1)
 
 get_KS_statistic(m)
 
-estimate_xmin(m, xmins = NULL, pars = NULL, data_max = 1e+05)
+estimate_xmin(m, xmins = 1e+05, pars = NULL)
 }
 \arguments{
 \item{m}{A reference class object that contains the data.}
 
-\item{pars}{default \code{NULL}. A vector of parameters used to optimise over.
+\item{pars}{default \code{NULL}. A vector of parameters used to
+optimise over.
 Otherwise, for each value of \code{xmin}, the mle will be used, i.e. \code{estimate_pars(m)}.
 For small samples, the mle may be biased.}
 
-\item{xmins}{default \code{NULL}. A vector of possible values of xmin to explore.
-The default, \code{xmins=NULL}, results in exploring all possible xmin values.}
-
-\item{data_max}{default 1e5. When estimating xmin for discrete distributions,
-the search space when comparing the data_cdf and distribution_cdf runs from 1:data_max}
+\item{xmins}{default \code{1e5}. A vector of possible values
+of xmin to explore. When a single value is passed, this represents
+the maximum value to search, i.e. by default we search from
+(1, 1e5). See details for further information.}
 
 \item{threads}{number of concurrent threads used during the bootstrap.}
 
@@ -51,6 +50,23 @@ accuracy.}
 \item{\code{bootstrap}}{Estimates the unncertainity in the xmin and parameter values via bootstraping.}
 \item{\code{bootstrap_p}}{Performs a bootstrapping hypothesis test to determine whether a power law
 distribution is plausible. This function only available for power law distribution objects.}}
+}
+\details{
+When estimating \code{xmin}
+for discrete distributions, the search space when
+comparing the data-cdf (empirical cdf)
+and the distribution_cdf runs from 1 to \code{min(data_max, x)}
+where \code{x} is the data set. This \strong{can} often be
+computationally brutal. In particular, when bootstrapping
+we generate random numbers from the power law distribution,
+which has a long tail.
+
+To speed up computations for discrete distributions, it is sensible to put an
+upper bound or explicitly give values of where to search.
+If a single value is used in \code{xmins}, this will be used
+as the maximum search space value.
+If \code{length(xmins) > 1}, this will explicitly
+define the search space.
 }
 \note{
 Adapted from Laurent Dubroca's code found at
