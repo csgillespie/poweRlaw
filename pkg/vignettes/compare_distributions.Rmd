@@ -1,0 +1,92 @@
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{An Introduction to the pkg package}
+-->
+  
+
+```{r echo=FALSE}
+library("poweRlaw")
+```
+Comparing distributions
+=======================
+  
+This short vignette aims to provide some guidance when comparing
+distributions using Vuong's test statistics. The hypothesis being tested 
+is
+\[
+H_0: \text{Both distributions are equally far from the true distribution}
+\]
+and
+\[
+H_1: \text{One of the test distributions is closer to the true distribution.}
+\]
+
+### Example 1
+
+First let's generate some data from a power-law distribution
+```{r}
+set.seed(1)
+x = rpldis(100, xmin=2, alpha=2.1)
+```
+and fit a discrete power law distribution
+```{r}
+m1 = displ$new(x)
+m1$setPars(estimate_pars(m1))
+```
+The estimate value of `xmin` and $\alpha$ are `r m1$getXmin()` and `r m1$getPars()`. As an alternative distribution, we will fit a Log-normal
+```{r}
+m2 = dislnorm$new(x)
+m2$setPars(estimate_pars(m2))
+```
+Plotting both models
+```{r fig.width=5, fig.height=4, echo=2:4}
+par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01, cex.axis=0.9, las=1)
+plot(m2)
+lines(m1)
+lines(m2, col=2, lty=2)
+grid()
+```
+suggests that both models provide a reasonable fit. Investigating this formally 
+```{r}
+comp = compare_distributions(m1, m2)
+comp$p_two_sided
+```
+suggests  we can not reject $H_0$. 
+
+### Example 2
+
+This time 
+```{r}
+data("moby")
+```
+
+```{r}
+m1 = displ$new(moby)
+m1$setXmin(estimate_xmin(m1))
+m2 = dislnorm$new(moby)
+m2$setXmin(m1$getXmin())
+m2$setPars(estimate_pars(m2))
+m2$getPars()
+```
+```{r fig.width=5, fig.height=4, echo=2:4}
+par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01, cex.axis=0.9, las=1)
+plot(m2)
+lines(m1)
+lines(m2, col=2, lty=2)
+grid()
+```
+
+
+```{r}
+comp = compare_distributions(m1, m2)
+comp$p_two_sided
+```
+
+
+
+
+
+
+
+
+
