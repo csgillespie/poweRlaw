@@ -102,11 +102,12 @@ rpldis = function(n, xmin, alpha, discrete_max = 10000) {
     if(any(dups)) cdf = cdf[1:which.min(!dups)]
     
     ## Simulate using look up method 
-    rngs = as.numeric(cut(u,cdf))
+    rngs = as.numeric(cut(u,cdf)) + xmin - 1
   
     ## Fill in blanks using Clausett approximation
     is_na = is.na(rngs)
-    if(any(is_na)) rngs[is_na] = floor((xmin-0.5)*(1-u[is_na])^(-1/(alpha-1))+0.5)
+    if(any(is_na)) rngs[is_na] = 
+      floor((xmin-0.5)*(1-u[is_na])^(-1/(alpha-1))+0.5)
   } else {
     ## Using only the approximation
     rngs = floor((xmin-0.5)*(1-u)^(-1/(alpha-1))+0.5)
