@@ -42,13 +42,17 @@ setMethod("dist_cdf",
               q = m$dat
               q = q[q >= xmin]
             } 
-            p = plnorm(q + 0.5, pars[1], pars[2], lower.tail=lower_tail) 
+            
+            ## lower_tail == TRUE numerical unstable
+            ## Not sure how best to fix it
             if(lower_tail) {
+              p = plnorm(q + 0.5, pars[1], pars[2], lower.tail=lower_tail) 
               C = plnorm(xmin-0.5, pars[1], pars[2], lower.tail=FALSE) 
               (p/C-1/C+1)
             } else {
-              C = 1-plnorm(xmin+0.5, pars[1], pars[2]) 
-              p/C
+              log_p = plnorm(q + 0.5, pars[1], pars[2], lower.tail=FALSE, log.p=T) 
+              log_C = plnorm(xmin+0.5, pars[1], pars[2], lower.tail=FALSE, log.p=T) 
+              exp(log_p-log_C)
             }
           }
 )

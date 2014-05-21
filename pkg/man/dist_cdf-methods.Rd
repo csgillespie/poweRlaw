@@ -35,17 +35,19 @@ dist_cdf(m, q = NULL, lower_tail = FALSE, all_values = FALSE)
   all_values = FALSE)
 }
 \arguments{
-\item{m}{a distribution object.}
+  \item{m}{a distribution object.}
 
-\item{q}{a vector values where the function will be evaluated.
-If \code{q} is \code{NULL} (default), then the data values
-will be used.}
+  \item{q}{a vector values where the function will be
+  evaluated. If \code{q} is \code{NULL} (default), then the
+  data values will be used.}
 
-\item{all_values}{logical; \code{FALSE} (default). If \code{TRUE},
-then the cdf is evaluated at points xmin, xmin+1, ..., xmax.}
+  \item{all_values}{logical; \code{FALSE} (default). If
+  \code{TRUE}, then the cdf is evaluated at points xmin,
+  xmin+1, ..., xmax.}
 
-\item{lower_tail}{logical; if \code{TRUE} (default),
-probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
+  \item{lower_tail}{logical; if \code{TRUE} (default),
+  probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X >
+  x]}.}
 }
 \description{
 This is a generic function for calculating
