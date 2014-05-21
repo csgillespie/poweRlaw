@@ -24,9 +24,7 @@ lseq = function(from, to, length.out) {
 #' @docType methods
 #' @note This method does *not* alter the internal state of
 #' the distribubtion objects.
-#' @aliases plot,distribution,ANY-method
-#' @rdname plotting-methods-distribution
-#' @exportMethod plot
+#' @export
 setMethod("plot",
           signature = signature(x="distribution"),
           definition = function(x, 

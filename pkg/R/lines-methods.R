@@ -1,5 +1,5 @@
-#' @rdname plotting-methods-distribution
-#' @aliases lines,distribution-method
+#' @rdname plot-distribution-ANY-method
+#' @export
 setMethod("lines",
           signature = signature(x="distribution"),
           definition = function(x, 
