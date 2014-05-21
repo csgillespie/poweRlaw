@@ -40,3 +40,5 @@ examples.tex
 examples.pdf
 cache
 knitr_*
+compare_distributions.md
+compare_distributions.html

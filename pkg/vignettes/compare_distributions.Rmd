@@ -1,18 +1,36 @@
+---
+title: "Comparing distributions"
+author: "Colin Gillespie"
+date: "`r as.character(Sys.Date())`"  
+output: html_document
+---
 <!--
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{An Introduction to the pkg package}
+%\VignetteIndexEntry{Comparing distributions}
 -->
   
 
 ```{r echo=FALSE}
+library("knitr")
+opts_chunk$set(fig.path='knitr_figure/graphics-', 
+               cache.path='knitr_cache/graphics-', 
+               fig.align='center', 
+                fig.width=5, fig.height=5, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+
+
+knit_hooks$set(par=function(before, options, envir){
+    if (before && options$fig.show!='none') {
+        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+            mgp=c(2,.7,0),tcl=-.01, las=1)
+}})
 library("poweRlaw")
 ```
 Comparing distributions
 =======================
   
-This short vignette aims to provide some guidance when comparing
-distributions using Vuong's test statistics. The hypothesis being tested 
-is
+This short vignette aims to provide some guidance when comparing distributions using Vuong's test statistic. 
+The hypothesis being tested is
 \[
 H_0: \text{Both distributions are equally far from the true distribution}
 \]
@@ -20,73 +38,80 @@ and
 \[
 H_1: \text{One of the test distributions is closer to the true distribution.}
 \]
+To perform this test we use the `compare_distributions` function and look at the `p_two_sided` value.
 
 ### Example 1
 
-First let's generate some data from a power-law distribution
+First, let's generate some data from a power-law distribution
 ```{r}
 set.seed(1)
-x = rpldis(100, xmin=2, alpha=2.1)
+x = rpldis(10000, xmin=2, alpha=2.1)
 ```
 and fit a discrete power law distribution
 ```{r}
 m1 = displ$new(x)
 m1$setPars(estimate_pars(m1))
 ```
-The estimate value of `xmin` and $\alpha$ are `r m1$getXmin()` and `r m1$getPars()`. As an alternative distribution, we will fit a Log-normal
+The estimated values of `xmin` and $\alpha$ are `r m1$getXmin()` and `r m1$getPars()`. As an alternative distribution, we will fit a log-normal distribution
 ```{r}
 m2 = dislnorm$new(x)
 m2$setPars(estimate_pars(m2))
 ```
 Plotting both models
-```{r fig.width=5, fig.height=4, echo=2:4}
-par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01, cex.axis=0.9, las=1)
-plot(m2)
+```{r echo=1:3}
+plot(m2, ylab="CDF")
 lines(m1)
 lines(m2, col=2, lty=2)
 grid()
 ```
-suggests that both models provide a reasonable fit. Investigating this formally 
+suggests that the power-law model gives a better fit. Investigating this formally 
 ```{r}
 comp = compare_distributions(m1, m2)
 comp$p_two_sided
 ```
-suggests  we can not reject $H_0$. 
+means we can reject $H_0$ since $p=`r signif(comp$p_two_sided, 4)`$.
 
 ### Example 2
 
-This time 
+This time we will look at the Moby Dick data set
 ```{r}
 data("moby")
 ```
-
+Again we fit a power-law model
 ```{r}
 m1 = displ$new(moby)
 m1$setXmin(estimate_xmin(m1))
+```
+and a log-normal
+```{r}
 m2 = dislnorm$new(moby)
 m2$setXmin(m1$getXmin())
 m2$setPars(estimate_pars(m2))
-m2$getPars()
 ```
-```{r fig.width=5, fig.height=4, echo=2:4}
-par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01, cex.axis=0.9, las=1)
-plot(m2)
+In order to compare distributions, the `xmin` must be equal for both distributions. Plotting the CDFs
+```{r echo=1:3}
+plot(m2, ylab="CDF")
 lines(m1)
 lines(m2, col=2, lty=2)
 grid()
 ```
-
-
+suggests that both models perform equally well. The formal hypothesis test
 ```{r}
 comp = compare_distributions(m1, m2)
-comp$p_two_sided
 ```
+gives a $p$-value and test statistic of
+```{r}
+comp$p_two_sided
+comp$test_statistic
+```
+which means we can not reject $H_0$. The $p$-value and test statistic are similar to the values found in table 6.3 of Clauset, *et al*.
 
 
 
-
-
-
+```{r clean-up, include=FALSE}
+# R compiles all vignettes in the same session, which can be bad
+rm(list = ls(all = TRUE))
+```
 
 
 
