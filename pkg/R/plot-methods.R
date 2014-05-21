@@ -116,25 +116,32 @@ create_plots = function(l, no_plots) {
 }
 #CI for s is sqrt((n-1)*s/chi(n-1))
 
-#' @method plot bs_xmin
+#' Plot methods for bootstrap objects
+#' 
+#' A simple wrapper around the plot function to aid with visualising the bootstrap results. 
+#' The values plotted are returned as an invisible object.
+#' 
+#' @param x an object of class \code{bs_xmin} or \code{bs_p_xmin}
+#' @param trim When plotting the cummulative means and standard deviation, the first trim percentage of values are not displayed.
+#' default \code{trim=0.1}
+#' @param ...  graphics parameters to be passed to the plotting routines.
 #' @export
 plot.bs_xmin = function(x, trim=0.1, ...){
   ## Remove any problem bootstraps
   bs = x$bootstraps
   x$bootstraps = bs[!apply(bs, 1, anyNA),]
   
-  no_plots = ncol(x$bootstraps)
+  no_plots = ncol(x$bootstraps) - 1
   l = list()
-  for(i in 1:(no_plots-1)){
+  for(i in 1:no_plots){
     d = x$bootstraps[, i+1]
     l[[i]] = get_cum_summary(d, trim)
   }
-  names(l) = c("Xmin", paste("Par", 2:(no_plots-1)))
+  names(l) = c("Xmin", paste("Par", 2:no_plots))
   create_plots(l, no_plots)
 }
 
-
-#' @method plot bs_p_xmin
+#' @rdname plot.bs_xmin
 #' @export
 plot.bs_p_xmin = function(x, trim=0.1, ...){
   ## Remove any problem bootstraps
@@ -155,7 +162,6 @@ plot.bs_p_xmin = function(x, trim=0.1, ...){
 }
 
 
-#' @method plot compare_distributions
 #' @export
 plot.compare_distributions = function(x, ...) {
   dd = x$ratio[!duplicated(x$ratio$x),]
