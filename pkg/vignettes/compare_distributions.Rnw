@@ -1,0 +1,184 @@
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Comparing distributions}
+
+\documentclass[a4paper,justified,openany]{tufte-handout}
+\setcounter{secnumdepth}{2}
+\usepackage{microtype}
+\usepackage{url}  % Formatting web addresses  
+\usepackage[utf8]{inputenc} %unicode support
+\usepackage{color,hyperref,comment, booktabs}
+\urlstyle{rm}
+\usepackage{algorithmic, algorithm,amsmath}
+\newcommand{\cc}{\texttt}
+\newcommand{\xmin}{x_{\min}}
+
+\usepackage{etoolbox}
+\makeatletter
+\preto{\@verbatim}{\topsep=-20pt \partopsep=0pt }
+\makeatother
+
+\date{Last updated: \today}  
+\title{The poweRlaw package: Examples}
+\author[Colin S. Gillespie]{Colin S. Gillespie}
+\date{Last updated: \today}
+
+<<echo=FALSE>>=
+  library(knitr)
+library(poweRlaw)
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='knitr_figure/graphics-', 
+               cache.path='knitr_cache/graphics-', 
+               fig.align='center', 
+               dev='pdf', fig.width=5, fig.height=5, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+
+knit_hooks$set(par=function(before, options, envir){
+  if (before && options$fig.show!='none') {
+    par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+        mgp=c(2,.7,0),tcl=-.01, las=1)
+  }}, crop=hook_pdfcrop)
+
+#options(width=60)
+#knit_theme$set(knit_theme$get()[7])
+set.seed(1)
+palette(c(rgb(170,93,152, maxColorValue=255),
+          rgb(103,143,57, maxColorValue=255),
+          rgb(196,95,46, maxColorValue=255),
+          rgb(79,134,165, maxColorValue=255),
+          rgb(205,71,103, maxColorValue=255),
+          rgb(203,77,202, maxColorValue=255),
+          rgb(115,113,206, maxColorValue=255)))
+
+@
+
+\begin{document}
+\maketitle
+\begin{abstract}
+The \verb$poweRlaw$ package provides an easy to use interface for fitting and visualising heavy tailed distributions, including power-laws. This vignette provides examples of comparing competing distributions.
+\end{abstract}
+
+\section{Comparing distributions}
+
+  
+This short vignette aims to provide some guidance when comparing distributions using Vuong's test statistic. 
+The hypothesis being tested is
+\[
+H_0: \text{Both distributions are equally far from the true distribution}
+\]
+and
+\[
+H_1: \text{One of the test distributions is closer to the true distribution.}
+\]
+To perform this test we use the \cc{compare\_distributions} function\sidenote{The \cc{compare\_distributions} function also returns a one sided $p$-value. Essentially, the one side $p$-value is testing whether the first model is better than the second, i.e. a \textbf{one} sided test.} and look at the \cc{p\_two\_sided} value.
+
+\section{Example 1}
+
+\noindent First let's generate some data from a power-law distribution
+<<>>=
+set.seed(1)
+x = rpldis(10000, xmin=2, alpha=2.1)
+@
+\noindent and fit a discrete power-law distribution
+<<>>=
+m1 = displ$new(x)
+m1$setPars(estimate_pars(m1))
+@
+\noindent The estimated values of $\xmin$ and $\alpha$ are \Sexpr{m1$getXmin()} and \Sexpr{m1$getPars()}, respectively. As an alternative distribution, we will fit a discrete log-normal distribution\marginnote{When comparing distributions, each model must have the same $\xmin$ value. In this example, both models have $\xmin=\Sexpr{m1$getXmin()}$.}
+<<>>=
+m2 = dislnorm$new(x)
+m2$setPars(estimate_pars(m2))
+@
+\noindent Plotting both models
+<<F1,echo=1:3,fig.keep='none'>>=
+plot(m2, ylab="CDF")
+lines(m1)
+lines(m2, col=2, lty=2)
+grid()
+@
+
+\begin{marginfigure}
+\centering
+<<F1,echo=FALSE>>=
+@
+\caption{Plot of the simulated data CDF, with power law and log normal lines
+of best fit.}\label{F1}
+\end{marginfigure}
+\noindent suggests that the power-law model gives a better fit (figure \ref{F1}). Investigating this formally 
+<<>>=
+comp = compare_distributions(m1, m2)
+comp$p_two_sided
+@
+\noindent means we can reject $H_0$ since $p=\Sexpr{signif(comp$p_two_sided, 4)}$ and conclude that one model is closer to the true distribution.
+
+\section{Example 2}
+
+\noindent This time we will look at the Moby Dick data set
+<<>>=
+data("moby")
+@
+\noindent Again we fit a power law
+<<>>=
+m1 = displ$new(moby)
+m1$setXmin(estimate_xmin(m1))
+@
+\noindent and a log-normal model
+<<>>=
+m2 = dislnorm$new(moby)
+m2$setXmin(m1$getXmin())
+m2$setPars(estimate_pars(m2))
+@
+\noindent In order to compare distributions, $\xmin$ must be equal for both distributions. Plotting the CDFs
+<<F2,echo=1:3, fig.keep='none'>>=
+plot(m2, ylab="CDF")
+lines(m1)
+lines(m2, col=2, lty=2)
+grid()
+@
+\begin{marginfigure}
+\centering
+<<F2,echo=FALSE>>=
+@
+\end{marginfigure}
+\noindent suggests that both models perform equally well. The formal hypothesis test
+<<>>=
+comp = compare_distributions(m1, m2)
+@
+\noindent gives a $p$-value and test statistic of
+<<>>=
+comp$p_two_sided
+comp$test_statistic
+@
+\noindent which means we can not reject $H_0$. The $p$-value and test statistic are similar to the values found in table 6.3 of Clauset \textit{et al.}\cite{clauset2009}.
+
+
+
+<<clean-up, include=FALSE>>=
+# R compiles all vignettes in the same session, which can be bad
+rm(list = ls(all = TRUE))
+@
+
+\clearpage
+
+\bibliography{poweRlaw}
+\bibliographystyle{plainnat}
+
+\clearpage
+
+\section*{Session Info}
+
+<<>>=
+print(sessionInfo(), locale = FALSE)
+@
+
+
+
+
+
+
+
+
+\end{document}
+
+
