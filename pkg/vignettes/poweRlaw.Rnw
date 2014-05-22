@@ -25,7 +25,7 @@
 \author[Colin S. Gillespie]{Colin S. Gillespie}
 \date{Last updated: \today}
 
-<<echo=FALSE>>=
+<<echo=FALSE, >>=
 library(poweRlaw)
 library(knitr)
 options(replace.assign=FALSE,width=50)
@@ -39,12 +39,10 @@ knit_hooks$set(crop=hook_pdfcrop)
 
 knit_hooks$set(par=function(before, options, envir){
     if (before && options$fig.show!='none') {
-        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
-            mgp=c(2,.7,0),tcl=-.01, las=1)
+        par(mar=c(3,3,2,1), cex.lab=.95, cex.axis=.9,
+            mgp=c(2,.7,0), tcl=-.01, las=1)
 }}, crop=hook_pdfcrop)
 
-#options(width=60)
-#knit_theme$set(knit_theme$get()[7])
 set.seed(1)
 palette(c(rgb(170,93,152, maxColorValue=255),
               rgb(103,143,57, maxColorValue=255),
@@ -59,20 +57,21 @@ palette(c(rgb(170,93,152, maxColorValue=255),
 \maketitle
  \begin{abstract}
 The \cc{poweRlaw} package provides code to fit heavy tailed distributions, including discrete and continuous power-law distributions. 
-The fitting procedure follows the method detailed in Clauset \textit{et al.}\cite{clauset2009} The parameter values are obtained by maximising the likelihood. The cut-off value, $\xmin$, is estimated by minimising the Kolmogorov-Smirnoff statistic.
+Each model is fitted using a maximum likelihood procedure and  cut-off value, $\xmin$, is estimated by 
+minimising the Kolmogorov-Smirnoff statistic.
 \end{abstract}
 
 \section{Installation}
 
-The package is hosted on CRAN and can be installed via
+The package is hosted on CRAN and can be installed in the standard way
 <<eval=FALSE>>=
 install.packages("poweRlaw")
 @
-\noindent The developmental version is hosted on github and  can be installed using the \cc{devtools} package:\sidenote{If you are using Windows, then you will need to install the \texttt{Rtools} package first.}
+\noindent The developmental version is hosted on github and  can be installed using the \cc{devtools} package\sidenote{If you are using Windows, then you will need to install the \texttt{Rtools} package first.}
 <<eval=FALSE>>=
 install.packages("devtools")
 library("devtools")
-install_github("csgillespie/poweRlaw", subdir="pkg")
+install_github("poweRlaw", "csgillespie", subdir="pkg")
 @
 \noindent Once installed, the package can be loaded ready for use with the standard \cc{library} command
 <<>>=
@@ -89,10 +88,9 @@ help(package="poweRlaw")
 <<results='hide'>>=
 vignette(package="poweRlaw")
 @
-\noindent Currently, there are two vignettes available. This vignette, which gives an overview of the functionality, and a worked examples vignette. These documents can be accessed via the commands
-<<eval=FALSE>>=
-vignette("poweRlaw", package="poweRlaw")
-vignette("examples", package="poweRlaw")
+\noindent or
+<<results='hide'>>=
+browseVignettes("poweRlaw")
 @
 \noindent Help on functions can be obtained using the usual R mechanisms. For example, help on the method \verb$displ$ can be obtained with
 <<message=FALSE,results='hide', tidy=FALSE>>=
@@ -137,11 +135,11 @@ data("moby")
 
 \subsection{Fitting a discrete power-law}
 
-To fit a discrete power-law,\sidenote{The examples vignette contains a more thorough analysis of this particular data set.} we create a discrete power-law object, using the \texttt{displ} method\sidenote{\cc{displ}: discrete power-law.}
+To fit a discrete power-law,\sidenote{The examples vignette contains a more thorough analysis of this particular data set.} we create a discrete power-law object using the \cc{displ} method\sidenote{\cc{displ}: discrete power-law.}
 <<>>=
 m_m = displ$new(moby)
 @
-\noindent Initially the lower cut-off $\xmin$, is set to the smallest $x$ value and the scaling parameter, $\alpha$, is set to \texttt{NULL}
+\noindent Initially the lower cut-off $\xmin$ is set to the smallest $x$ value and the scaling parameter $\alpha$ is set to \texttt{NULL}
 <<tidy=FALSE>>=
 m_m$getXmin()
 m_m$getPars()
@@ -181,19 +179,19 @@ lines(m_m, col=2, lwd=2)
 \end{marginfigure}
 <<m_m, echo=1, eval=TRUE>>=
 @
-\noindent For the Moby-Dick data set, the minimum\sidenote{These estimates match the values in the Clausett, et al paper.} is achieved when $\xmin=7$ and $D(7) = \Sexpr{signif(est$KS, 3)}$.
+\noindent For the Moby-Dick data set, the minimum\sidenote{These estimates match the values in the Clausett, \textit{et al} paper.} is achieved when $\xmin=7$ and $D(7) = \Sexpr{signif(est$KS, 3)}$.
 
 We can then set parameters of power-law distribution to these "optimal" values
 <<m_m, echo=2, eval=FALSE, results='hide'>>=
 @
-\noindent All distribution objects have generic plot methods:\sidenote{Generic \texttt{lines} and \texttt{points} functions are also available.}
+\noindent All distribution objects have generic plot methods\sidenote{Generic \texttt{lines} and \texttt{points} functions are also available.}
 <<fig.keep='none'>>=
 ## Plot the data (from xmin)
 plot(m_m)
 ## Add in the fitted distribution
 lines(m_m, col=2)
 @
-\noindent which gives figure \ref{F1}. When calling the \texttt{plot} and \texttt{lines} function, the data plotted is actually invisibly returned, i.e.
+\noindent which gives figure \ref{F1}. When calling the \texttt{plot} and \texttt{lines} functions, the data plotted is actually invisibly returned, i.e.
 <<fig.keep='none'>>=
 dd = plot(m_m)
 head(dd, 3)
@@ -213,7 +211,7 @@ bs_p = bootstrap_p_moby
 
 \subsection{Uncertainty in $\xmin$}
 
-Clauset, \textit{el al}, 2009 recommend a bootstrap procedure to get a handle on parameter uncertainty. Essentially, we sample with replacement from the data set and then re-infer the parameters.
+Clauset, \textit{el al}, 2009 recommend a bootstrap procedure to get a handle on parameter uncertainty. Essentially, we sample with replacement from the data set and then re-infer the parameters (algorithm 1).
 \begin{table}[t]
 \centering
   \begin{tabular}{@{}ll@{}}
@@ -276,7 +274,7 @@ hist(bs$bootstraps[,3], breaks="fd")
 @
 \noindent and a bivariate scatter plot
 <<fig.keep='none'>>=
-plot(bs$bootstraps[,2], bs$bootstraps[,3])
+plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3])
 @
 \noindent These commands give figures \ref{F2} and \ref{F3}.
 
@@ -291,8 +289,8 @@ Since it is possible to fit a power-law distribution to \textit{any} data set, i
     \hline
     \multicolumn{2}{@{} l}{\textbf{Algorithm 2:} Do we have a power-law?}\\
     \hline
-    {\small 1:} & Calculate point estimates $\xmin$ and the scaling parameter $\alpha$. \\
-    {\small 2:} & Calculate the data KS statistic, $KS_d$, for the original data set.\\
+    {\small 1:} & Calculate point estimates of $\xmin$ and the scaling parameter $\alpha$. \\
+    {\small 2:} & Calculate the KS statistic, $KS_d$, for the original data set.\\
     {\small 3:} & Set $n_1$ equal to the number of values below \texttt{xmin}. \\
     {\small 4:} & Set $n_2 = n - n_1$ and $P = 0$.\\
     {\small 5:} & \textbf{for} \texttt{i} in \texttt{1:B}:\\
@@ -342,14 +340,13 @@ this set is combined with an additional $10^5$ values from
 10^5, \ldots, \max(x)
 \]
 \end{enumerate}
-To determine whether the underlying distribution may be a power-law, we use the \cc{bootstrap\_p} function
+To determine whether the underlying distribution is a power-law we use the \cc{bootstrap\_p} function
 <<eval=FALSE, tidy=FALSE>>=
 ## This may take a while
 ## Use the mle to estimate the parameters
 bs_p = bootstrap_p(m_m, no_of_sims=1000, threads=2)
 @
 \noindent The object returned from the bootstrap procedure contains four elements
-
 \begin{itemize}
 \item A $p$-value - \verb|bs_p$p|. For this example, $p=\Sexpr{bs_p[["p"]]}$ which indicates that we can not rule out the power law model. See section 4.2 of the Clauset paper for further details.
 \item The original goodness of fit statistic  - \verb|bs_p$gof|.
@@ -390,12 +387,12 @@ m_m$setXmin(est)
 
 \noindent All distribution objects listed in table \ref{T1} are reference classes.\marginnote{See \texttt{\mbox{?setRefClass}} for further details on references classes.} Each distribution object has four fields:
 \begin{itemize}
-\item \texttt{dat}: a copy of the data.
+\item \texttt{dat}: a copy of the data set.
 \item \texttt{xmin}: the lower cut-off $\xmin$.
 \item \texttt{pars}: a vector of parameter values.
 \item \texttt{internal}: a list of values use in different numerical procedures. This will differ between distribution objects.
 \end{itemize}
-By using the mutable states of reference objects, we are able to have efficient caching of data structures, that can be reused. For example, the mle of discrete power-laws uses the statistic:
+By using the mutable states of reference objects, we are able to create efficient caching. For example, the mle of discrete power-laws uses the statistic:
 \[
 \sum_{i=\xmin}^n \log(x_i)
 \]
@@ -409,7 +406,7 @@ All distribution objects have a number of methods available. A list of methods i
     Method Name & Description \\
     \midrule
     \texttt{dist\_cdf} & Cumulative density/mass function (CDF)\\
- %   \texttt{dist\_pdf} & Probability density/mass function (pdf)\\
+    \texttt{dist\_pdf} & Probability density/mass function (pdf)\\
     \texttt{dist\_rand}& Random number generator\\
     \texttt{dist\_data\_cdf} & Data CDF \\
     \texttt{dist\_ll} & Log-likelihood\\
@@ -433,7 +430,7 @@ blackouts = read.table("blackouts.txt")
 
 \section{Loading data}
 
-Typically, data is stored in a csv or text file. To use this data, we load it in the usual way\sidenote{The blackouts data set can be obtained from Clauset's website: \url{http://goo.gl/BsqnP} . }
+Typically, data is stored in a csv or text file. To use this data, we load it in the usual way\sidenote{The blackouts data set can be obtained from Clauset's website: \mbox{\url{http://goo.gl/BsqnP}}}
 <<eval=FALSE>>=
 blackouts = read.table("blackouts.txt")
 @
@@ -441,6 +438,7 @@ blackouts = read.table("blackouts.txt")
 <<>>=
 m_bl = conpl$new(blackouts$V1)
 @
+\noindent will create a continuous power law object.
 \begin{marginfigure}[5\baselineskip]
 \centering
 <<echo=FALSE>>=
@@ -449,7 +447,7 @@ m_bl$setXmin(est)
 plot(m_bl, panel.first=grid())
 lines(m_bl, col=2)
 @
-\caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more it efficient.}\label{F6}
+\caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more efficient.}\label{F6}
 \end{marginfigure}
 
 
