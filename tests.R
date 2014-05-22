@@ -7,3 +7,6 @@ test_dir("pkg/tests/testthat/")
 
 test_file("tests/test_bootstrap.R")
 test_file("tests/test_bootstrap_p.R")
+
+
+roxygen2::roxygenise("pkg/")

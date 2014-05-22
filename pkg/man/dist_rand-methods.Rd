@@ -10,13 +10,13 @@
 \usage{
 dist_rand(m, n)
 
-\S4method{dist_rand}{displ}(m, n = "numeric")
-
-\S4method{dist_rand}{dislnorm}(m, n = "numeric")
+\S4method{dist_rand}{conpl}(m, n = "numeric")
 
 \S4method{dist_rand}{disexp}(m, n = "numeric")
 
-\S4method{dist_rand}{conpl}(m, n = "numeric")
+\S4method{dist_rand}{dislnorm}(m, n = "numeric")
+
+\S4method{dist_rand}{displ}(m, n = "numeric")
 }
 \arguments{
 \item{m}{a distribution reference object.}

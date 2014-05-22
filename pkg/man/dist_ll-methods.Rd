@@ -13,19 +13,19 @@
 \usage{
 dist_ll(m)
 
-\S4method{dist_ll}{displ}(m)
-
-\S4method{dist_ll}{dislnorm}(m)
-
-\S4method{dist_ll}{dispois}(m)
-
-\S4method{dist_ll}{disexp}(m)
-
-\S4method{dist_ll}{conpl}(m)
+\S4method{dist_ll}{conexp}(m)
 
 \S4method{dist_ll}{conlnorm}(m)
 
-\S4method{dist_ll}{conexp}(m)
+\S4method{dist_ll}{conpl}(m)
+
+\S4method{dist_ll}{disexp}(m)
+
+\S4method{dist_ll}{dislnorm}(m)
+
+\S4method{dist_ll}{displ}(m)
+
+\S4method{dist_ll}{dispois}(m)
 }
 \arguments{
 \item{m}{The distribution reference object.}

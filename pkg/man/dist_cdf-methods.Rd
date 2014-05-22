@@ -13,25 +13,25 @@
 \usage{
 dist_cdf(m, q = NULL, lower_tail = FALSE, all_values = FALSE)
 
-\S4method{dist_cdf}{displ}(m, q = NULL, lower_tail = TRUE,
-  all_values = FALSE)
-
-\S4method{dist_cdf}{dislnorm}(m, q = NULL, lower_tail = TRUE,
-  all_values = FALSE)
-
-\S4method{dist_cdf}{dispois}(m, q = NULL, lower_tail = TRUE,
-  all_values = FALSE)
-
-\S4method{dist_cdf}{disexp}(m, q = NULL, lower_tail = TRUE,
-  all_values = FALSE)
-
-\S4method{dist_cdf}{conpl}(m, q = NULL, lower_tail = TRUE,
+\S4method{dist_cdf}{conexp}(m, q = NULL, lower_tail = TRUE,
   all_values = FALSE)
 
 \S4method{dist_cdf}{conlnorm}(m, q = NULL, lower_tail = TRUE,
   all_values = FALSE)
 
-\S4method{dist_cdf}{conexp}(m, q = NULL, lower_tail = TRUE,
+\S4method{dist_cdf}{conpl}(m, q = NULL, lower_tail = TRUE,
+  all_values = FALSE)
+
+\S4method{dist_cdf}{disexp}(m, q = NULL, lower_tail = TRUE,
+  all_values = FALSE)
+
+\S4method{dist_cdf}{dislnorm}(m, q = NULL, lower_tail = TRUE,
+  all_values = FALSE)
+
+\S4method{dist_cdf}{displ}(m, q = NULL, lower_tail = TRUE,
+  all_values = FALSE)
+
+\S4method{dist_cdf}{dispois}(m, q = NULL, lower_tail = TRUE,
   all_values = FALSE)
 }
 \arguments{
