@@ -125,6 +125,7 @@ create_plots = function(l, no_plots) {
 #' @param trim When plotting the cummulative means and standard deviation, the first trim percentage of values are not displayed.
 #' default \code{trim=0.1}
 #' @param ...  graphics parameters to be passed to the plotting routines.
+#' @method plot bs_xmin
 #' @export
 plot.bs_xmin = function(x, trim=0.1, ...){
   ## Remove any problem bootstraps
@@ -142,6 +143,7 @@ plot.bs_xmin = function(x, trim=0.1, ...){
 }
 
 #' @rdname plot.bs_xmin
+#' @method plot bs_p_xmin
 #' @export
 plot.bs_p_xmin = function(x, trim=0.1, ...){
   ## Remove any problem bootstraps
@@ -162,6 +164,8 @@ plot.bs_p_xmin = function(x, trim=0.1, ...){
 }
 
 
+#' @rdname plot.bs_xmin
+#' @method plot compare_distributions
 #' @export
 plot.compare_distributions = function(x, ...) {
   dd = x$ratio[!duplicated(x$ratio$x),]

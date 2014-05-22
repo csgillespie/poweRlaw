@@ -2,11 +2,14 @@
 \name{plot.bs_xmin}
 \alias{plot.bs_p_xmin}
 \alias{plot.bs_xmin}
+\alias{plot.compare_distributions}
 \title{Plot methods for bootstrap objects}
 \usage{
-plot.bs_xmin(x, trim = 0.1, ...)
+\method{plot}{bs_xmin}(x, trim = 0.1, ...)
 
-plot.bs_p_xmin(x, trim = 0.1, ...)
+\method{plot}{bs_p_xmin}(x, trim = 0.1, ...)
+
+\method{plot}{compare_distributions}(x, ...)
 }
 \arguments{
 \item{x}{an object of class \code{bs_xmin} or \code{bs_p_xmin}}
