@@ -18,12 +18,12 @@
 \makeatother
 
 \date{Last updated: \today}  
-\title{The poweRlaw package: Examples}
+\title{The poweRlaw package: Comparing distributions}
 \author[Colin S. Gillespie]{Colin S. Gillespie}
 \date{Last updated: \today}
 
 <<echo=FALSE>>=
-  library(knitr)
+library(knitr)
 library(poweRlaw)
 options(replace.assign=FALSE,width=50)
 
@@ -73,7 +73,7 @@ H_1: \text{One of the test distributions is closer to the true distribution.}
 \]
 To perform this test we use the \cc{compare\_distributions} function\sidenote{The \cc{compare\_distributions} function also returns a one sided $p$-value. Essentially, the one side $p$-value is testing whether the first model is better than the second, i.e. a \textbf{one} sided test.} and look at the \cc{p\_two\_sided} value.
 
-\section{Example 1}
+\section{Example: Simulated data}
 
 \noindent First let's generate some data from a power-law distribution
 <<>>=
@@ -112,7 +112,7 @@ comp$p_two_sided
 @
 \noindent means we can reject $H_0$ since $p=\Sexpr{signif(comp$p_two_sided, 4)}$ and conclude that one model is closer to the true distribution.
 
-\section{Example 2}
+\section{Example: Moby Dick data set}
 
 \noindent This time we will look at the Moby Dick data set
 <<>>=
@@ -123,13 +123,13 @@ data("moby")
 m1 = displ$new(moby)
 m1$setXmin(estimate_xmin(m1))
 @
-\noindent and a log-normal model
+\noindent and a log-normal model\sidenote{In order to compare distributions, $\xmin$ must be equal for both distributions.}
 <<>>=
 m2 = dislnorm$new(moby)
 m2$setXmin(m1$getXmin())
 m2$setPars(estimate_pars(m2))
 @
-\noindent In order to compare distributions, $\xmin$ must be equal for both distributions. Plotting the CDFs
+\noindent  Plotting the CDFs
 <<F2,echo=1:3, fig.keep='none'>>=
 plot(m2, ylab="CDF")
 lines(m1)
@@ -140,8 +140,9 @@ grid()
 \centering
 <<F2,echo=FALSE>>=
 @
+\caption{The Moby Dick data set with power law and log normal lines of best fit.}\label{F2}
 \end{marginfigure}
-\noindent suggests that both models perform equally well. The formal hypothesis test
+\noindent suggests that both models perform equally well (figure \ref{F2}). The formal hypothesis test
 <<>>=
 comp = compare_distributions(m1, m2)
 @
@@ -150,7 +151,7 @@ comp = compare_distributions(m1, m2)
 comp$p_two_sided
 comp$test_statistic
 @
-\noindent which means we can not reject $H_0$. The $p$-value and test statistic are similar to the values found in table 6.3 of Clauset \textit{et al.}\cite{clauset2009}.
+\noindent which means we can not reject $H_0$. The $p$-value and test statistic are similar to the values found in table 6.3 of \citeauthor{clauset2009}\cite{clauset2009}.
 
 
 

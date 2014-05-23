@@ -8,7 +8,7 @@
 \title{Casualities in the American Indian Wars (1776 and 1890)}
 \format{Data frame}
 \source{
-Friedman, Jeffrey A. "Using Power Laws to Estimate Conflict Size." (2013).
+Friedman, Jeffrey A. "Using Power Laws to Estimate Conflict Size." The Journal of conflict resolution (2014).
 }
 \description{
 These data files contain the observed casualties in the American Indian Wars. The data sets

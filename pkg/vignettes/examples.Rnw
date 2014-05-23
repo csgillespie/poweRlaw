@@ -36,12 +36,10 @@ knit_hooks$set(crop=hook_pdfcrop)
 
 knit_hooks$set(par=function(before, options, envir){
     if (before && options$fig.show!='none') {
-        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
-            mgp=c(2,.7,0),tcl=-.01, las=1)
+        par(mar=c(3.5,4,2,1),cex.lab=.95,cex.axis=.9,
+      mgp=c(2.5,.7,0),tcl=-.01, las=1)
 }}, crop=hook_pdfcrop)
 
-#options(width=60)
-#knit_theme$set(knit_theme$get()[7])
 set.seed(1)
 palette(c(rgb(170,93,152, maxColorValue=255),
               rgb(103,143,57, maxColorValue=255),
@@ -56,7 +54,7 @@ palette(c(rgb(170,93,152, maxColorValue=255),
 \begin{document}
 \maketitle
 \begin{abstract}
-The \verb$poweRlaw$ package provides an easy to use interface for fitting and visualising heavy tailed distributions, including power-laws. The fitting procedure follows the method detailed in Clauset \textit{et al.}\cite{clauset2009} This vignette provides examples of the fitting procedure.
+The \verb$poweRlaw$ package provides an easy to use interface for fitting and visualising heavy tailed distributions, including power-laws. This vignette provides examples of the fitting procedure.
 \end{abstract}
 
 <<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
@@ -79,22 +77,24 @@ data("moby")
 <<cache=TRUE>>=
 m_pl = displ$new(moby)
 @
-\noindent The resulting object, \cc{m\_pl}, is a \cc{displ}\sidenote{\cc{displ}: discrete power-law.} object. It also inherits the \cc{discrete\_distribution} class. After creating the \cc{displ} object, a typical first step would be to infer model parameters.\sidenote{When the \cc{displ} object is first created, the default parameter values are \cc{NULL} and $\xmin$ is set to the minimum $x$-value.} We can estimate the lower threshold, via:
+\noindent The resulting object, \cc{m\_pl}, is a \cc{displ}\sidenote{\cc{displ}: discrete power-law.} object. It also inherits the \cc{discrete\_distribution} class. After creating the \cc{displ} object, a typical first step would be to infer model parameters.\sidenote{When the \cc{displ} object is first created, the default parameter values are \cc{NULL} and $\xmin$ is set to the minimum $x$-value.} We can estimate the lower threshold, via
 <<cache=TRUE>>=
 est = estimate_xmin(m_pl)
 m_pl$setXmin(est)
 @
-\noindent For a given value $\xmin$, the scaling parameter is estimated by numerically optimising the log-likelihood. The optimiser is initialised using the analytical MLE
+\noindent For a given value $\xmin$, the scaling parameter is estimated by numerically optimising the log-likelihood. The optimiser is \textit{initialised} using the analytical MLE
 \[
 \hat \alpha \simeq 1 + n \left[\sum_{i=1}^n \log \left(\frac{x_i}{\xmin -0.5}\right)\right]^{-1} \;.
 \]
-\noindent This yields a threshold estimate of $\xmin=\Sexpr{est$xmin}$ and scaling parameter $\alpha=\Sexpr{signif(est$pars, 3)}$, which matches results found in \citet{clauset2009}. Alternatively, we could perform a parameter scan for each value of $\xmin$:
+\noindent This yields a threshold estimate of $\xmin=\Sexpr{est$xmin}$ and scaling parameter $\alpha=\Sexpr{signif(est$pars, 3)}$, which matches results found in \citet{clauset2009}. 
+
+Alternatively, we could perform a parameter scan for each value of $\xmin$
 <<cache=TRUE,results='hide'>>=
 estimate_xmin(m_pl, pars=seq(1.5, 2.5, 0.1))
 @
 \noindent The parameter scan will typically be slower than using the optimiser.
 
-To fit a discrete log-normal distribution, we follow a similar procedure, except we begin by creating a \cc{dislnorm}.\sidenote{\cc{dislnorm}: discrete log-normal object}
+To fit a discrete log-normal distribution, we follow a similar procedure, except we begin by creating a \cc{dislnorm}.\sidenote{\cc{dislnorm}: discrete log normal object}
 
 <<cache=TRUE,warning=FALSE>>=
 m_ln = dislnorm$new(moby)
@@ -111,7 +111,7 @@ m_pois$setXmin(est)
 
 \noindent which yields a lower threshold of $\xmin=\Sexpr{est_ln$xmin}$ and parameters $(\Sexpr{est_ln$pars[1]},$ $\Sexpr{est_ln$pars[2]})$. A similar procedure is applied to fit the Poisson distribution; we create a distribution object using \cc{dispois}, then fit as before.
 
-The data CDF and lines of best fit can be easily plotted:
+The data CDF and lines of best fit can be easily plotted
 <<fig.keep='none', cache=TRUE>>=
 plot(m_pl)
 lines(m_pl, col=2)
@@ -183,7 +183,7 @@ sd(bs$bootstraps[,3])
 ## trim=0.1 only displays the final 90% of iterations 
 plot(bs, trim=0.1)
 @
-\noindent to obtain figure \ref{F1b}. This top row of graphics in figure \ref{F1b} give a 95\% confidence interval for mean estimate of the parameters. The bottom row of graphics give a 95\% confidence for the standard deviation of the parameters. The parameter \texttt{trim} in the \texttt{plot} function controls the percentage of samples displayed.\sidenote[][-5\baselineskip]{When \cc{trim=0}, all iterations are displayed.} When \texttt{trim=0.1}, we only display the final 90\% of data. 
+\noindent to obtain figure \ref{F1b}. This top row of graphics in figure \ref{F1b} give a 95\% confidence interval for the mean estimate of the parameters. The bottom row of graphics give a 95\% confidence for the standard deviation of the parameters. The parameter \texttt{trim} in the \texttt{plot} function controls the percentage of samples displayed.\sidenote[][-5\baselineskip]{When \cc{trim=0}, all iterations are displayed.} When \texttt{trim=0.1}, we only display the final 90\% of data. 
 \begin{marginfigure}[-7\baselineskip]
 \centering
 <<echo=FALSE, fig.width=4, fig.height=8, cache=TRUE>>=
@@ -226,7 +226,7 @@ plot(bs_p)
 
 \subsection{Testing the power-law hypothesis}
 
-Since it is possible to fit a power-law distribution to \textit{any} data set, it is appropriate to test whether it the observed data set actually follows a power-law. Clauset \textit{et al}, suggest that this hypothesis is tested using a goodness-of-fit test, via a bootstrapping procedure. This test generates a $p$-value that can be used to quantify the plausibility of the hypothesis. If the $p$-value is large, than any difference between the empirical data and the model can be explained with statistical fluctuations. If $p \simeq 0$, then the model does not provide a plausible fit to the data and another distribution may be more appropriate. In this scenario, 
+Since it is possible to fit a power-law distribution to \textit{any} data set, it is appropriate to test whether the observed data set actually follows a power-law. \citet{clauset2009} suggest that this hypothesis is tested using a goodness-of-fit test, via a bootstrapping procedure. This test generates a $p$-value that can be used to quantify the plausibility of the hypothesis. If the $p$-value is large, than any difference between the empirical data and the model can be explained with statistical fluctuations. If $p \simeq 0$, then the model does not provide a plausible fit to the data and another distribution may be more appropriate. In this scenario, 
 \begin{align*}
 &H_0: \mbox{data is generated from a power-law distribution.}\\
 &H_1: \mbox{data is not generated from a power-law distribution.}
@@ -250,15 +250,16 @@ plot(bs_p)
 
 
 \subsection{Comparing distributions}
+\marginnote{See the "Comparing distributions" vignette for other examples.}
 
-A second approach to assessing is a direct comparison of two models. A standard technique is
+A second approach to test the power law hypothesis is a direct comparison of two models.\marginnote{While the bootstrap method is useful, it is computationally intensive.} A standard technique is
 to use Vuong's test, which a likelihood ratio test for model selection using the
 Kullback-Leibler criteria. The test statistic, $R$, is the ratio of the
 log-likelihoods of the data between the two competing models. The sign of $R$
 indicates which model is \textit{better}. Since the value of $R$ is obviously
 subject to error, we use the method proposed by Vuong, 1989.\cite{Vuong1989}
 
-To compare two distributions, each distribution must have the same lower threshold. So we first set the log normal distribution object to have the same $\xmin$ as the power law object:
+To compare two distributions, each distribution must have the same lower threshold. So we first set the log normal distribution object to have the same $\xmin$ as the power law object
 <<cache=TRUE>>=
 m_ln$setXmin(m_pl$getXmin())
 @
@@ -271,13 +272,7 @@ m_ln$setPars(est)
 <<cache=TRUE>>=
 comp = compare_distributions(m_pl, m_ln)
 @
-\noindent This comparison gives a $p$-value of \Sexpr{comp[["p_two_sided"]]}. This $p$-value corresponds to the $p$-value on page 29 of the Clauset paper (the paper gives 0.69). The differences occur because we estimated the scaling parameter in the power law using the MLE, whereas Clauset et al, used a parameter scan, i.e.
-<<cache=TRUE>>=
-est = estimate_pars(m_pl, pars=seq(1.95, 1.96, 0.0005))
-m_pl$setPars(est)
-comp = compare_distributions(m_pl, m_ln)
-@
-\noindent now gives $p=\Sexpr{comp[["p_two_sided"]]}$.
+\noindent This comparison gives a $p$-value of \Sexpr{comp[["p_two_sided"]]}. This $p$-value corresponds to the $p$-value on page 29 of the Clauset paper (the paper gives 0.69). 
 
 Overall these results suggest that one model can't be favoured over the other. 
 
@@ -311,7 +306,7 @@ abline(h=1.95, col=2, lty=2)
 \noindent then a vector to store the results
 <<est_scan, echo=1, eval=FALSE>>=
 @
-\noindent Next, we loop over the $\xmin$ values and estimate the parameter value conditional on the $\xmin$ value:
+\noindent Next, we loop over the $\xmin$ values and estimate the parameter value conditional on the $\xmin$ value
 <<est_scan, echo=2:4>>=
 @
 \noindent The results are plotted figure \ref{F1e}. For this data set, as the lower threshold increases, so does the point estimate of $\alpha$.
@@ -323,11 +318,11 @@ abline(h=1.95, col=2, lty=2)
 
 \section{Continuous data: electrical blackouts}
 
-In this example, we will investigate the numbers of customers affected in electrical blackouts in the United States between 1984 and 2002.\cite{newman2005} The data set can be downloaded from Clauset's website:\sidenote{\url{http://goo.gl/BsqnP}} 
+In this example, we will investigate the numbers of customers affected in electrical blackouts in the United States between 1984 and 2002.\cite{newman2005} The data set can be downloaded from Clauset's website\sidenote{\url{http://goo.gl/BsqnP}} 
 <<>>=
 blackouts = read.table("blackouts.txt")
 @
-\noindent Although the \texttt{blackouts} data set is discrete, since the values are large, it makes sense to treat the data as continuous. Continuous power-law objects take vectors as inputs, so
+\noindent Although the \texttt{blackouts} data set is discrete, since the values are large it makes sense to treat the data as continuous. Continuous power-law objects take vectors as inputs, so
 <<cache=TRUE>>=
 m_bl = conpl$new(blackouts$V1)
 @
@@ -335,16 +330,16 @@ m_bl = conpl$new(blackouts$V1)
 <<cache=TRUE>>=
 est = estimate_xmin(m_bl)
 @
-\noindent This gives a point estimate of $\xmin=\Sexpr{est$xmin}$. We can then update distribution object:
+\noindent This gives a point estimate of $\xmin=\Sexpr{est$xmin}$. We can then update the distribution object
 <<cache=TRUE>>=
 m_bl$setXmin(est)
 @
-\noindent Using generic plot method
+\noindent and plot the data with line of best fit
 <<fig.keep='none', cache=TRUE>>=
 plot(m_bl)
 lines(m_bl, col=2, lwd=2)
 @
-\noindent we get figure \ref{F2a}. To fit a discrete log-normal distribution we follow a similar procedure:
+\noindent to get figure \ref{F2a}. To fit a discrete log-normal distribution we follow a similar procedure:
 <<m_bl_ln, echo=FALSE, cache=TRUE>>=
 m_bl_ln = conlnorm$new(blackouts$V1)
 est = estimate_xmin(m_bl_ln)
@@ -400,7 +395,7 @@ plot(native_american$Date, native_american$Cas,
 points(us_american$Date, us_american$Cas, 
        pch=24, bg=2, cex=0.5)
 @
-\caption{Casualty record for the Indian-American war, 1776 -- 1890. Native Americans casualties (purple circles) and US Americans casualties (green triangles). Data taken from \citeauthor{Friedman2013}.}\label{F3a}
+\caption{Casualty record for the Indian-American war, 1776 -- 1890. Native Americans casualties (purple circles) and US Americans casualties (green triangles). Data taken from \citet{Friedman2013}.}\label{F3a}
 \end{figure}
 
 It is straightforward to fit a discrete power-law to this data set. First, we create discrete power-law objects:
@@ -422,8 +417,8 @@ m_us$setXmin(est_us)
 <<fig.keep='none', cache=TRUE, tidy=FALSE>>=
 plot(m_na)
 lines(m_na)
-##Don't create a new plot
-##Just store the output
+## Don't create a new plot
+## Just store the output
 d = plot(m_us, draw=FALSE)
 points(d$x, d$y, col=2)
 lines(m_us, col=2)
@@ -459,6 +454,12 @@ print(sessionInfo(), locale = FALSE)
 
 
 
+<<clean-up, include=FALSE>>=
+# R compiles all vignettes in the same session, which can be bad
+rm(list = ls(all = TRUE))
+@
+
+     
 
 
 

@@ -48,7 +48,7 @@ NULL
 #' 
 #' @docType data
 #' @format Data frame
-#' @source Friedman, Jeffrey A. "Using Power Laws to Estimate Conflict Size." (2013).
+#' @source Friedman, Jeffrey A. "Using Power Laws to Estimate Conflict Size." The Journal of conflict resolution (2014).
 NULL
 
 

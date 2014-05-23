@@ -85,11 +85,11 @@ Each function and dataset in the package is documented. The command
 help(package="poweRlaw")
 @
 \noindent will give a brief overview of the package and a complete list of all functions. The list of vignettes associated with the package can be obtained with
-<<results='hide'>>=
+<<results='hide', eval=FALSE>>=
 vignette(package="poweRlaw")
 @
 \noindent or
-<<results='hide'>>=
+<<results='hide', eval=FALSE>>=
 browseVignettes("poweRlaw")
 @
 \noindent Help on functions can be obtained using the usual R mechanisms. For example, help on the method \verb$displ$ can be obtained with
@@ -588,8 +588,11 @@ sink=dev.off()
 
 @
 
-       
-       
+<<clean-up, include=FALSE>>=
+# R compiles all vignettes in the same session, which can be bad
+rm(list = ls(all = TRUE))
+@
+
        
        
        

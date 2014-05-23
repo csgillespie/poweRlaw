@@ -138,7 +138,7 @@ plot.bs_xmin = function(x, trim=0.1, ...){
     d = x$bootstraps[, i+1]
     l[[i]] = get_cum_summary(d, trim)
   }
-  names(l) = c("Xmin", paste("Par", 2:no_plots))
+  names(l) = c("Xmin", paste("Par", 1:(no_plots-1)))
   create_plots(l, no_plots)
 }
 
