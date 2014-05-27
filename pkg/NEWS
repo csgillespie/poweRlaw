@@ -4,6 +4,7 @@ Version 0.20.3
  * Improved numerical stability when working out discrete exp and lognormal pdfs (https://github.com/csgillespie/poweRlaw/issues/21) 
  * Merged data_max and xmins argument in estimate_xmin function 
  * Added example on copying distribution objects (https://github.com/csgillespie/poweRlaw/issues/9)
+ * Added new vignette on comparing distributions (https://github.com/csgillespie/poweRlaw/issues/8)
  * Bug fix: When estimating xmin is not possible (e.g. not enough data), estimate_xmin now returns NA rather than an error (https://github.com/csgillespie/poweRlaw/issues/25)
  * Bug fix: When setting parameters in distributions, no longer a strict class comparison
  * Bug fix: Error when the length of xmins is 1 in estimate_xmin (https://github.com/csgillespie/poweRlaw/issues/20).
