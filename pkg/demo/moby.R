@@ -28,8 +28,6 @@ lines(m, col=4)
 bs1 = bootstrap(m, no_of_sims=100, threads=2)
 bs2 = bootstrap_p(m, no_of_sims=100, threads=2)
 
-
-
 ##This can take a while
 bs1 = bootstrap(m, no_of_sims=5000, threads=4, pars = seq(1.6, 2.5, 0.01))
 bs2 = bootstrap(m, no_of_sims=5000, threads=4)
@@ -38,7 +36,6 @@ bs2 = bootstrap(m, no_of_sims=5000, threads=4)
 par(mfrow=c(1, 2))
 hist(bs1$bootstraps[,2], breaks="fd")
 hist(bs1$bootstraps[,3], breaks="fd")
-
 
 hist(bs2$bootstraps[,2], breaks="fd")
 hist(bs2$bootstraps[,3], breaks="fd")
