@@ -87,7 +87,7 @@ rpldis = function(n, xmin, alpha, discrete_max = 10000) {
   ## Initialise parameters
   if(length(n) > 1L) n = length(n)
   
-  xmin = floor(xmin); alpha = alpha
+  xmin = floor(xmin)
   u = runif(n)
   
   ## Work out CDF
@@ -112,6 +112,5 @@ rpldis = function(n, xmin, alpha, discrete_max = 10000) {
     ## Using only the approximation
     rngs = floor((xmin-0.5)*(1-u)^(-1/(alpha-1))+0.5)
   }
-  
   rngs
 }
