@@ -5,7 +5,7 @@ test_that("Testing estimate_xmin function", {
   mt = displ$new(discrete_data)
   est = estimate_xmin(mt, pars=seq(2, 3, 0.01))
   expect_equal(est$pars, 2.58, tol=1e-1)
-  expect_equal(est$xmin, 2)
+  expect_equal(est$xmin, 2, tol=1e-3)
   
   ##Poisson
   set.seed(1)
@@ -16,7 +16,7 @@ test_that("Testing estimate_xmin function", {
   mt = dispois$new(x)
   est = estimate_xmin(mt)
   expect_equal(est$pars, 9.948, tol=1e-4)
-  expect_equal(est$xmin, 13)
+  expect_equal(est$xmin, 13, tol=1e-3)
   
   ##Discrete Log-normal
   set.seed(1)
@@ -27,7 +27,7 @@ test_that("Testing estimate_xmin function", {
   mt = dislnorm$new(x)
   est = estimate_xmin(mt)
   expect_equal(est$pars, c(2.981, 1.012), tol=1e-3)
-  expect_equal(est$xmin, 10)
+  expect_equal(est$xmin, 10, tol=1e-3)
   
   
   ##CTN Power-law
@@ -48,7 +48,7 @@ test_that("Testing estimate_xmin function", {
   mt = conlnorm$new(x)
   est = estimate_xmin(mt, xmins=1:50)
   expect_equal(est$pars, c(2.966, 1.022), tol=1e-4)
-  expect_equal(est$xmin, 10)
+  expect_equal(est$xmin, 10, tol=1e-3)
   
   
   ##Exponential
@@ -61,6 +61,6 @@ test_that("Testing estimate_xmin function", {
   est = estimate_xmin(mt, xmins=1:50)
   
   expect_equal(est$pars, 0.01003, tol=1e-3)
-  expect_equal(est$xmin, 4)
+  expect_equal(est$xmin, 4, tol=1e-3)
 }
 )
