@@ -1,10 +1,11 @@
 Package: poweRlaw
 Type: Package
 Title: Fitting heavy tailed distributions: the poweRlaw package
-Version: 0.20.3
-Date: 2014-05-15
+Version: 0.20.4
+Date: 2014-05-28
 Authors@R: person(given="Colin", family="Gillespie",
     email="csgillespie@gmail.com", role = c("aut", "cre"))
+Maintainer: Colin Gillespie <csgillespie@gmail.com>
 Description: This package implements both the discrete and continuous maximum
     likelihood estimators for fitting the power-law distribution to data.
     Additionally, a goodness-of-fit based approach is used to estimate the

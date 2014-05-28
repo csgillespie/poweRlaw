@@ -10,13 +10,13 @@ To cite this package in academic work, please use:
 
 Colin S Gillespie (2013). *Fitting heavy tailed
   distributions: the poweRlaw package.* R package version
-  **0.20.1**.
+  **0.20.3**.
 
 
 Installation
 ------------
 
-This package is hosted on [CRAN](http://cran.r-project.org/web/packages/poweRlaw/index.html) and can be installed in the usual way:
+This package is hosted on [CRAN](http://cran.r-project.org/web/packages/poweRlaw/) and can be installed in the usual way:
 ```r
 install.packages("poweRlaw")
 ```
@@ -34,12 +34,15 @@ Getting Started
 
 To get started, load the package
 ```r
-library(poweRlaw)
+library("poweRlaw"")
 ```
-then work the through the two vignettes: [getting started](https://github.com/csgillespie/poweRlaw/blob/master/pkg/inst/doc/poweRlaw.pdf?raw=true) and [examples](https://github.com/csgillespie/poweRlaw/blob/master/pkg/inst/doc/examples.pdf?raw=true). Alternatively, you can access the vignettes from within the package:
+then work the through the two vignettes: 
+ * [getting started](http://cran.r-project.org/web/packages/poweRlaw/vignettes/poweRlaw.pdf)
+ * [examples](http://cran.r-project.org/web/packages/poweRlaw/vignettes/examples.pdf)
+ * [Comparing distributions](http://cran.r-project.org/web/packages/poweRlaw/vignettes/compare_distributions.pdf
+Alternatively, you can access the vignettes from within the package:
 ```r
-vignette("poweRlaw")
-vignette("examples")
+browseVignettes("poweRlaw")
 ```
 The plots below show the line of best fit to the Moby Dick and blackout data sets (from Clauset et al, 2009).
 
