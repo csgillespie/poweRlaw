@@ -1,61 +1,77 @@
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{examples}
 
-\documentclass[a4paper,justified,openany]{tufte-handout}
-\setcounter{secnumdepth}{2}
-\usepackage{microtype}
-\usepackage{url}  % Formatting web addresses  
+\documentclass[11pt,BCOR2mm,DIV14]{scrartcl}
+
+%For fancy tables
+\usepackage{booktabs}
+% References
+\usepackage[round]{natbib}
+%For symbols in T1 encoding.
+
+\usepackage{amsmath,amsfonts}
+\usepackage{xcomment,scrpage2}
+\usepackage{algorithmic, algorithm}
 \usepackage[utf8]{inputenc} %unicode support
-\usepackage{color,hyperref,comment, booktabs}
+\usepackage{color,hyperref}
 \urlstyle{rm}
-\usepackage{algorithmic, algorithm,amsmath}
+
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+\pagestyle{scrheadings}  
+\setheadsepline{.4pt}
+\ihead[]{Examples}
+\chead[]{}
+\ohead[]{}
+\ifoot[]{}
+\cfoot[]{}
+\ofoot[\pagemark]{\pagemark}
 \newcommand{\cc}{\texttt}
 \newcommand{\xmin}{x_{\min}}
 
-\usepackage{etoolbox}
-\makeatletter
-\preto{\@verbatim}{\topsep=-20pt \partopsep=0pt }
-\makeatother
 
-\date{Last updated: \today}  
-\title{The poweRlaw package: Examples}
-\author[Colin S. Gillespie]{Colin S. Gillespie}
-\date{Last updated: \today}
-
-<<echo=FALSE>>=
+<<echo=FALSE, message=FALSE>>=
 library(knitr)
 library(poweRlaw)
-options(replace.assign=FALSE,width=50)
+options(replace.assign=FALSE)
 
-opts_chunk$set(fig.path='knitr_figure/graphics-', 
-               cache.path='knitr_cache/graphics-', 
+opts_chunk$set(fig.path='knitr_figure_examples/graphics-', 
+               cache.path='knitr_cache_examples/', 
                fig.align='center', 
                dev='pdf', fig.width=5, fig.height=5, 
-               fig.show='hold', cache=FALSE, par=TRUE)
+               fig.show='hold', cache=FALSE, par=TRUE,
+               out.width='0.4\\textwidth')
 knit_hooks$set(crop=hook_pdfcrop)
 
 knit_hooks$set(par=function(before, options, envir){
-    if (before && options$fig.show!='none') {
-        par(mar=c(3.5,4,2,1),cex.lab=.95,cex.axis=.9,
-      mgp=c(2.5,.7,0),tcl=-.01, las=1)
-}}, crop=hook_pdfcrop)
+  if (before && options$fig.show!='none') {
+    par(mar=c(3,4,2,1),cex.lab=.95,cex.axis=.9,
+        mgp=c(3,.7,0),tcl=-.01, las=1)
+  }}, crop=hook_pdfcrop)
 
 set.seed(1)
 palette(c(rgb(170,93,152, maxColorValue=255),
-              rgb(103,143,57, maxColorValue=255),
-              rgb(196,95,46, maxColorValue=255),
-              rgb(79,134,165, maxColorValue=255),
-              rgb(205,71,103, maxColorValue=255),
-              rgb(203,77,202, maxColorValue=255),
-              rgb(115,113,206, maxColorValue=255)))
+          rgb(103,143,57, maxColorValue=255),
+          rgb(196,95,46, maxColorValue=255),
+          rgb(79,134,165, maxColorValue=255),
+          rgb(205,71,103, maxColorValue=255),
+          rgb(203,77,202, maxColorValue=255),
+          rgb(115,113,206, maxColorValue=255)))
 
 @
-
+% 
 \begin{document}
+\date{Last updated: \today}  
+\title{The poweRlaw package: Examples}
+\author{Colin S. Gillespie}
+
 \maketitle
-\begin{abstract}
-The \verb$poweRlaw$ package provides an easy to use interface for fitting and visualising heavy tailed distributions, including power-laws. This vignette provides examples of the fitting procedure.
-\end{abstract}
 
 <<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
 if(!file.exists("blackouts.txt"))
@@ -73,11 +89,11 @@ The Moby Dick dataset contains the frequency of unique words in the novel Moby D
 library("poweRlaw")
 data("moby")
 @
-\noindent To fit a discrete power-law to this data\sidenote{The object \texttt{moby} is a simple R vector.}, we use the \texttt{displ} constructor
+\noindent To fit a discrete power law to this data\footnote{The object \texttt{moby} is a simple R vector.}, we use the \texttt{displ} constructor
 <<cache=TRUE>>=
 m_pl = displ$new(moby)
 @
-\noindent The resulting object, \cc{m\_pl}, is a \cc{displ}\sidenote{\cc{displ}: discrete power-law.} object. It also inherits the \cc{discrete\_distribution} class. After creating the \cc{displ} object, a typical first step would be to infer model parameters.\sidenote{When the \cc{displ} object is first created, the default parameter values are \cc{NULL} and $\xmin$ is set to the minimum $x$-value.} We can estimate the lower threshold, via
+\noindent The resulting object, \cc{m\_pl}, is a \cc{displ}\footnote{\cc{displ}: discrete power law.} object. It also inherits the \cc{discrete\_distribution} class. After creating the \cc{displ} object, a typical first step would be to infer model parameters.\footnote{When the \cc{displ} object is first created, the default parameter values are \cc{NULL} and $\xmin$ is set to the minimum $x$-value.} We can estimate the lower threshold, via
 <<cache=TRUE>>=
 est = estimate_xmin(m_pl)
 m_pl$setXmin(est)
@@ -92,9 +108,12 @@ Alternatively, we could perform a parameter scan for each value of $\xmin$
 <<cache=TRUE,results='hide'>>=
 estimate_xmin(m_pl, pars=seq(1.5, 2.5, 0.1))
 @
-\noindent The parameter scan will typically be slower than using the optimiser.
 
-To fit a discrete log-normal distribution, we follow a similar procedure, except we begin by creating a \cc{dislnorm}.\sidenote{\cc{dislnorm}: discrete log normal object}
+
+
+To fit a discrete log-normal distribution, we follow a similar procedure, except
+we begin by creating a \cc{dislnorm} object\footnote{\cc{dislnorm}: discrete log
+  normal object}
 
 <<cache=TRUE,warning=FALSE>>=
 m_ln = dislnorm$new(moby)
@@ -118,21 +137,20 @@ lines(m_pl, col=2)
 lines(m_ln, col=3)
 lines(m_pois, col=4)
 @
-\begin{marginfigure}
+\begin{figure}[t]
 \centering
 <<echo=FALSE, cache=TRUE>>=
 plot(m_pl, xlab="x", ylab="CDF", 
-     panel.first=grid(col="grey80"), 
-     pch=21, bg=1)
+       panel.first=grid(col="grey80"), 
+       pch=21, bg=1)
 
 lines(m_pl, col=2, lwd=2)
 lines(m_ln, col=3, lwd=2)
 lines(m_pois, col=4, lwd=2)
 @
-\caption{Data CDF of the Moby Dick data set. The fitted power-law (green line), log-normal (red line) and poisson (blue) distributions are also given.}\label{F1a}
-\end{marginfigure}
-\noindent to obtain figure \ref{F1a}. It clear that the Poisson distribution is not appropriate for this data set. However, the log-normal and power-law distribution both provide reasonable fits to the data.
-
+\caption{Data CDF of the Moby Dick data set. The fitted power law (green line), log-normal (red line) and poisson (blue) distributions are also given.}\label{F1a}
+\end{figure}
+\noindent to obtain figure \ref{F1a}. It clear that the Poisson distribution is not appropriate for this data set. However, the log-normal and power law distribution both provide reasonable fits to the data.
 
 
 \subsection{Parameter uncertainty}
@@ -142,7 +160,12 @@ data(bootstrap_moby)
 bs = bootstrap_moby
 @
 
-To get a handle on the uncertainty in the parameter estimates, we use a bootstrapping procedure, via the \texttt{bootstrap} function. This procedure can be applied to any distribution object.\sidenote{For example, \mbox{bootstrap(m\_ln)}.} Furthermore, the bootstrap procedure can utilize multiple CPU cores to speed up inference.\sidenote{The output of this bootstrapping procedure can be obtained via \cc{data(bootstrap\_moby)}.}
+To get a handle on the uncertainty in the parameter estimates, we use a
+bootstrapping procedure, via the \texttt{bootstrap} function. This procedure can
+be applied to any distribution object.\footnote{For example,
+  \mbox{bootstrap(m\_ln)}.} Furthermore, the bootstrap procedure can utilize
+multiple CPU cores to speed up inference.\footnote{The output of this
+  bootstrapping procedure can be obtained via \cc{data(bootstrap\_moby)}.}
 <<eval=FALSE, tidy=FALSE>>=
 ## 5000 bootstraps using two cores
 bs = bootstrap(m_pl, no_of_sims=5000, threads=2)
@@ -153,12 +176,12 @@ bootstrap(m_pl, xmins = seq(2, 20, 2))
 @
 \noindent will only calculate the Kolmogorov-Smirnoff statistics at values of $\xmin$ equal to
 \[
-2, 4, 6, \ldots, 20\;.
-\]
-A similar argument exists for the parameters.\sidenote{For single parameter models, \cc{pars} should be a vector. For the log-normal distribution, \cc{pars} should be a matrix of values.}
+  2, 4, 6, \ldots, 20\;.
+  \]
+A similar argument exists for the parameters.\footnote{For single parameter models, \cc{pars} should be a vector. For the log-normal distribution, \cc{pars} should be a matrix of values.}
 
 The bootstrap function, returns \cc{bs\_xmin} object that has three components:
-\begin{enumerate}
+  \begin{enumerate}
 \item The goodness of fit statistic obtained from the Kolmogorov-Smirnoff test. This value should correspond to the value obtained from the \mbox{\cc{estimate\_xmin}} function.
 \item A data frame containing the results for the bootstrap procedure. 
 \item The average simulation time, in seconds, for a single bootstrap.
@@ -167,12 +190,10 @@ The boostrap results can be explored in a variety way. First we can estimate the
 
 \begin{figure}[t]
 \centering
-<<echo=FALSE, fig.width=12, fig.height=9>>=
+<<echo=FALSE, fig.width=8, fig.height=8, out.width='0.7\\textwidth'>>=
 plot(bs)
 @
-\caption{Results from the standard bootstrap procedure (for the power-law model) using the Moby Dick data set: \mbox{\texttt{bootstrap(m\_pl)}}. The top row shows the mean estimate of parameters $\xmin$ and $\alpha$. The bottom row shows the estimate of standard deviation for each parameter. The dashed-lines give approximate 95\% confidence intervals.
-
-After 5000 iterations, the standard deviation of $\xmin$ and $\alpha$ is estimated to be 2.1 and 0.03 respectively.}\label{F1b}
+\caption{Results from the standard bootstrap procedure (for the power law model) using the Moby Dick data set: \mbox{\texttt{bootstrap(m\_pl)}}. The top row shows the mean estimate of parameters $\xmin$ and $\alpha$. The bottom row shows the estimate of standard deviation for each parameter. The dashed-lines give approximate 95\% confidence intervals. After 5,000 iterations, the standard deviation of $\xmin$ and $\alpha$ is estimated to be 2.1 and 0.03 respectively.}\label{F1b}
 \end{figure}
 <<>>=
 sd(bs$bootstraps[,2])
@@ -183,11 +204,11 @@ sd(bs$bootstraps[,3])
 ## trim=0.1 only displays the final 90% of iterations 
 plot(bs, trim=0.1)
 @
-\noindent to obtain figure \ref{F1b}. This top row of graphics in figure \ref{F1b} give a 95\% confidence interval for the mean estimate of the parameters. The bottom row of graphics give a 95\% confidence for the standard deviation of the parameters. The parameter \texttt{trim} in the \texttt{plot} function controls the percentage of samples displayed.\sidenote[][-5\baselineskip]{When \cc{trim=0}, all iterations are displayed.} When \texttt{trim=0.1}, we only display the final 90\% of data. 
-\begin{marginfigure}[-7\baselineskip]
+\noindent to obtain figure \ref{F1b}. This top row of graphics in figure \ref{F1b} give a 95\% confidence interval for the mean estimate of the parameters. The bottom row of graphics give a 95\% confidence for the standard deviation of the parameters. The parameter \texttt{trim} in the \texttt{plot} function controls the percentage of samples displayed.\footnote{When \cc{trim=0}, all iterations are displayed.} When \texttt{trim=0.1}, we only display the final 90\% of data. 
+\begin{figure}[t]
 \centering
-<<echo=FALSE, fig.width=4, fig.height=8, cache=TRUE>>=
-par(mfrow=c(2, 1))
+<<echo=FALSE, fig.width=6, fig.height=3, cache=TRUE, out.width='0.8\\textwidth'>>=
+  par(mfrow=c(1, 2))
 hist(bs$bootstraps[,2], xlab=expression(x[min]), ylim=c(0, 1600), 
      xlim=c(0, 20), main=NULL, breaks="fd")
 grid()
@@ -197,7 +218,7 @@ grid()
 
 @
 \caption{Characterising uncertainty in parameter values. (a) $\xmin$ uncertainty (standard deviation 2) (b) $\alpha$ uncertainty (std dev. 0.03)}\label{F1c}
-\end{marginfigure}
+\end{figure}
 
 We can also construct histograms. 
 <<fig.keep='none'>>=
@@ -205,6 +226,7 @@ hist(bs$bootstraps[,2])
 hist(bs$bootstraps[,3]) 
 @
 \noindent to get figure \ref{F1c}. 
+
 
 A similar bootstrap analysis can be obtained for the log-normal distribution
 <<eval=FALSE>>=
@@ -218,24 +240,27 @@ bs_p = bootstrap_p_moby
 @
 \begin{figure}[t]
 \centering
-<<echo=FALSE, fig.width=12, fig.height=9, cache=TRUE>>=
+<<echo=FALSE, fig.width=6, fig.height=4, cache=TRUE, out.width='\\textwidth'>>=
 plot(bs_p)
 @
-\caption{Results from the bootstrap procedure (for the power-law model) using the Moby Dick data set: \mbox{\texttt{bootstrap\_p(m\_pl)}}. The top row shows the mean estimate of parameters $\xmin$,  $\alpha$ and the $p$-value. The bottom row shows the estimate of standard deviation for each parameter. The dashed-lines give approximate 95\% confidence intervals.}\label{F1d}
+\caption{Results from the bootstrap procedure (for the power law model) using the Moby Dick data set: \mbox{\texttt{bootstrap\_p(m\_pl)}}. The top row shows the mean estimate of parameters $\xmin$,  $\alpha$ and the $p\,$-value. The bottom row shows the estimate of standard deviation for each parameter. The dashed-lines give approximate 95\% confidence intervals.}\label{F1d}
 \end{figure}
 
-\subsection{Testing the power-law hypothesis}
+\subsection{Testing the power law hypothesis}
 
-Since it is possible to fit a power-law distribution to \textit{any} data set, it is appropriate to test whether the observed data set actually follows a power-law. \citet{clauset2009} suggest that this hypothesis is tested using a goodness-of-fit test, via a bootstrapping procedure. This test generates a $p$-value that can be used to quantify the plausibility of the hypothesis. If the $p$-value is large, than any difference between the empirical data and the model can be explained with statistical fluctuations. If $p \simeq 0$, then the model does not provide a plausible fit to the data and another distribution may be more appropriate. In this scenario, 
+Since it is possible to fit a power law distribution to \textit{any} data set, it is appropriate to test whether the observed data set actually follows a power law. \citet{clauset2009} suggest that this hypothesis is tested using a goodness-of-fit test, via a bootstrapping procedure. This test generates a $p\,$-value that can be used to quantify the plausibility of the hypothesis. If the $p\,$-value is large, than any difference between the empirical data and the model can be explained with statistical fluctuations. If $p \simeq 0$, then the model does not provide a plausible fit to the data and another distribution may be more appropriate. In this scenario, 
 \begin{align*}
-&H_0: \mbox{data is generated from a power-law distribution.}\\
-&H_1: \mbox{data is not generated from a power-law distribution.}
+&H_0: \mbox{data is generated from a power law distribution.}\\
+&H_1: \mbox{data is not generated from a power law distribution.}
 \end{align*}
 \noindent To test these hypothesis, we use the \texttt{bootstrap\_p} function
 <<eval=FALSE>>=
 bs_p = bootstrap_p(m_pl)
 @
-\noindent The point estimate of the $p$-value is one of the elements of the \texttt{bs\_p} object\sidenote{Also given is the average time in seconds of a single bootstrap: \mbox{\texttt{bs\_p\$sim\_time} = \Sexpr{signif(bs_p$sim_time, 3)}}.}
+\noindent The point estimate of the $p\,$-value is one of the elements of the
+\texttt{bs\_p} object\footnote{Also given is the average time of a single
+  bootstrap: \mbox{\texttt{bs\_p\$sim\_time} = \Sexpr{signif(bs_p$sim_time, 3)}}
+  seconds.}
 <<>>=
 bs_p$p
 @
@@ -245,21 +270,29 @@ bs_p$p
 plot(bs_p)
 @
 
-\noindent to obtain figure \ref{F1d}. The graph in the top right hand corner gives the cumulative estimate of the $p$-value; the final value of the purple line corresponds to \texttt{bs\_p\$p}. Also given are approximate 95\% confidence intervals. 
+\noindent to obtain figure \ref{F1d}. The graph in the top right hand corner
+gives the cumulative estimate of the $p\,$-value; the final value of the purple
+line corresponds to \texttt{bs\_p\$p}. Also given are approximate 95\%
+confidence intervals.
+
+
 
 
 
 \subsection{Comparing distributions}
-\marginnote{See the "Comparing distributions" vignette for other examples.}
 
-A second approach to test the power law hypothesis is a direct comparison of two models.\marginnote{While the bootstrap method is useful, it is computationally intensive.} A standard technique is
-to use Vuong's test, which a likelihood ratio test for model selection using the
+A second approach to test the power law hypothesis is a direct comparison of two
+models.\footnote{While the bootstrap method is useful, it is computationally
+  intensive and will be unsuitable for most models.} A standard technique is to
+use Vuong's test, which a likelihood ratio test for model selection using the
 Kullback-Leibler criteria. The test statistic, $R$, is the ratio of the
 log-likelihoods of the data between the two competing models. The sign of $R$
 indicates which model is \textit{better}. Since the value of $R$ is obviously
-subject to error, we use the method proposed by Vuong, 1989.\cite{Vuong1989}
+subject to error, we use the method proposed by \cite{Vuong1989}.
 
-To compare two distributions, each distribution must have the same lower threshold. So we first set the log normal distribution object to have the same $\xmin$ as the power law object
+To compare two distributions, each distribution must have the same lower
+threshold. So we first set the log normal distribution object to have the same
+$\xmin$ as the power law object
 <<cache=TRUE>>=
 m_ln$setXmin(m_pl$getXmin())
 @
@@ -272,19 +305,23 @@ m_ln$setPars(est)
 <<cache=TRUE>>=
 comp = compare_distributions(m_pl, m_ln)
 @
-\noindent This comparison gives a $p$-value of \Sexpr{comp[["p_two_sided"]]}. This $p$-value corresponds to the $p$-value on page 29 of the Clauset paper (the paper gives 0.69). 
+\noindent This comparison gives a $p$-value of \Sexpr{comp[["p_two_sided"]]}.
+This $p\,$-value corresponds to the $p$-value on page 29 of the
+\citeauthor{clauset2009} paper (the paper gives 0.69).
 
 Overall these results suggest that one model can't be favoured over the other. 
 
 
 \subsection{Investigating the effect in $\xmin$}
 
-The estimate of the scaling parameter, $\alpha$, is typically highly correlated with the threshold limit, $\xmin$. This relationship can be easily investigated with the \cc{poweRlaw} package. First, we create a vector of thresholds to scan
+The estimate of the scaling parameter, $\alpha$, is typically highly correlated
+with the threshold limit, $\xmin$. This relationship can be easily investigated
+with the \cc{poweRlaw} package. First, we create a vector of thresholds to scan
 <<>>=
 xmins = 1:1500
 @
 
-<<est_scan, echo=FALSE>>=
+<<est_scan, echo=FALSE, cache=TRUE>>=
 est_scan = 0*xmins
 for(i in seq_along(xmins)){
   m_pl$setXmin(xmins[i])
@@ -292,24 +329,27 @@ for(i in seq_along(xmins)){
 }
 @
 
-\begin{marginfigure}
+\begin{figure}[t]
 \centering
-<<echo=FALSE>>=
-plot(xmins, est_scan, type="l", 
-     panel.first=grid(), 
-     xlab=expression(x[min]), ylab=expression(alpha), 
-     ylim=c(1.6, 2.8), col=1)
+<<echo=FALSE, cache=TRUE>>=
+  plot(xmins, est_scan, type="l", 
+       panel.first=grid(), 
+       xlab=expression(x[min]), ylab=expression(alpha), 
+       ylim=c(1.6, 2.8), col=1)
 abline(h=1.95, col=2, lty=2)
 @
-\caption{Estimated parameter values conditional on the threshold, $\xmin$. The horizontal line corresponds to $\alpha=1.95$.}\label{F1e}
-\end{marginfigure}
+\caption{Estimated parameter values conditional on the threshold, $\xmin$. The
+  horizontal line corresponds to $\alpha=1.95$.}\label{F1e}
+\end{figure}
 \noindent then a vector to store the results
-<<est_scan, echo=1, eval=FALSE>>=
+<<est_scan, echo=1, eval=FALSE, cache=TRUE>>=
 @
-\noindent Next, we loop over the $\xmin$ values and estimate the parameter value conditional on the $\xmin$ value
-<<est_scan, echo=2:4>>=
+\noindent Next, we loop over the $\xmin$ values and estimate the parameter value
+conditional on the $\xmin$ value
+<<est_scan, echo=2:4, cache=TRUE>>=
 @
-\noindent The results are plotted figure \ref{F1e}. For this data set, as the lower threshold increases, so does the point estimate of $\alpha$.
+\noindent The results are plotted figure \ref{F1e}. For this data set, as the
+lower threshold increases, so does the point estimate of $\alpha$.
 
 
 
@@ -318,11 +358,18 @@ abline(h=1.95, col=2, lty=2)
 
 \section{Continuous data: electrical blackouts}
 
-In this example, we will investigate the numbers of customers affected in electrical blackouts in the United States between 1984 and 2002.\cite{newman2005} The data set can be downloaded from Clauset's website\sidenote{\url{http://goo.gl/BsqnP}} 
+In this example, we will investigate the numbers of customers affected in
+electrical blackouts in the United States between 1984 and 2002 (see
+\cite{newman2005} for further details).The data set can be downloaded from
+Clauset's website
+\begin{center}
+  \url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data/blackouts.txt}
+\end{center}
+and loaded into R in the usual way
 <<>>=
 blackouts = read.table("blackouts.txt")
 @
-\noindent Although the \texttt{blackouts} data set is discrete, since the values are large it makes sense to treat the data as continuous. Continuous power-law objects take vectors as inputs, so
+\noindent Although the \texttt{blackouts} data set is discrete, since the values are large it makes sense to treat the data as continuous. Continuous power law objects take vectors as inputs, so
 <<cache=TRUE>>=
 m_bl = conpl$new(blackouts$V1)
 @
@@ -339,7 +386,7 @@ m_bl$setXmin(est)
 plot(m_bl)
 lines(m_bl, col=2, lwd=2)
 @
-\noindent to get figure \ref{F2a}. To fit a discrete log-normal distribution we follow a similar procedure:
+\noindent to get figure \ref{F2a}. To fit a discrete log-normal distribution we follow a similar procedure
 <<m_bl_ln, echo=FALSE, cache=TRUE>>=
 m_bl_ln = conlnorm$new(blackouts$V1)
 est = estimate_xmin(m_bl_ln)
@@ -347,18 +394,18 @@ m_bl_ln$setXmin(est)
 @
 
 
-\begin{marginfigure}[5\baselineskip]
+\begin{figure}[b]
 \centering
 <<echo=FALSE, fig.width=4, fig.height=4>>=
 plot(m_bl, pch=21, bg=1, 
-     panel.first=grid(col="grey80"), 
-     xlab="Blackouts", ylab="CDF")
+panel.first=grid(col="grey80"), 
+xlab="Blackouts", ylab="CDF")
 lines(m_bl, col=2, lwd=3)
 lines(m_bl_ln, col=3, lwd=3)
 @
 
-\caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more it efficient. The power-law fit is the green line, the discrete log-normal is the red line.}\label{F2a}
-\end{marginfigure}
+\caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power law as this is more it efficient. The power law fit is the green line, the discrete log-normal is the red line.}\label{F2a}
+\end{figure}
 <<m_bl_ln, eval=FALSE>>=
 @
 \noindent and add the line of best fit to the plot via
@@ -371,7 +418,12 @@ lines(m_bl_ln, col=3, lwd=2)
 
 \section{Multiple data sets: the American-Indian war}
 
-In a recent paper, \citeauthor{Bohorquez2009} investigated insurgent attacks in Afghanistan, Iraq, Colombia, and Peru.\cite{Bohorquez2009} Each time, the data resembled power laws. \citeauthor{Friedman2013} used the power-law nature of casualties to infer under-reporting in the American-Indian war. Briefly, by fitting a power-law distribution to the observed process, the latent, unobserved casualties can be inferred.\cite{Friedman2013}  
+In a recent paper, \citeauthor{Bohorquez2009} investigated insurgent attacks in
+Afghanistan, Iraq, Colombia, and Peru. Each time, the data resembled power laws.
+\citeauthor{Friedman2013} used the power law nature of casualties to infer
+under-reporting in the American-Indian war. Briefly, by fitting a power law
+distribution to the observed process, the latent, unobserved casualties can be
+inferred (\cite{Friedman2013}).
 
 The number of casualties observed in the American-Indian War can be obtained via
 <<>>=
@@ -385,30 +437,33 @@ head(native_american, 3)
 \noindent The records span around one hundred years, 1776 -- 1890. The data is plotted in figure \ref{F3a}. 
 \begin{figure}[!b]
 \centering
-<<echo=FALSE, fig.width=6, fig.height=4>>=
+<<echo=FALSE, fig.width=6, fig.height=4, out.width="0.8\\textwidth">>=
 plot(native_american$Date, native_american$Cas, 
-     log="y", pch=21, bg=1, 
-     ylim=c(1, 2000), 
-     cex=0.5, panel.first=grid(col="grey70"), 
-     xlab="Date", ylab="#Casualties")
+log="y", pch=21, bg=1, 
+ylim=c(1, 2000), 
+cex=0.5, panel.first=grid(col="grey70"), 
+xlab="Date", ylab="#Casualties")
 
 points(us_american$Date, us_american$Cas, 
-       pch=24, bg=2, cex=0.5)
+pch=24, bg=2, cex=0.5)
 @
-\caption{Casualty record for the Indian-American war, 1776 -- 1890. Native Americans casualties (purple circles) and US Americans casualties (green triangles). Data taken from \citet{Friedman2013}.}\label{F3a}
+\caption{Casualty record for the Indian-American war, 1776 -- 1890. Native
+  Americans casualties (purple circles) and US Americans casualties (green
+  triangles). Data taken from \citet{Friedman2013}.}\label{F3a}
 \end{figure}
 
-It is straightforward to fit a discrete power-law to this data set. First, we create discrete power-law objects:
+It is straightforward to fit a discrete power law to this data set. First, we
+create discrete power law objects
 <<cache=TRUE>>=
 m_na = displ$new(native_american$Cas)
 m_us = displ$new(us_american$Cas)
 @
-\noindent then we estimate $\xmin$ for each data set:
+\noindent then we estimate $\xmin$ for each data set
 <<cache=TRUE>>=
 est_na = estimate_xmin(m_na, pars=seq(1.5, 2.5, 0.001))
 est_us = estimate_xmin(m_us, pars=seq(1.5, 2.5, 0.001))
 @
-\noindent and update the power-law objects
+\noindent and update the power law objects
 <<cache=TRUE>>=
 m_na$setXmin(est_na)
 m_us$setXmin(est_us)
@@ -417,52 +472,37 @@ m_us$setXmin(est_us)
 <<fig.keep='none', cache=TRUE, tidy=FALSE>>=
 plot(m_na)
 lines(m_na)
-## Don't create a new plot
-## Just store the output
+## Don't create a new plot, just store the output
 d = plot(m_us, draw=FALSE)
 points(d$x, d$y, col=2)
 lines(m_us, col=2)
 @
-\begin{marginfigure}
-<<echo=FALSE, fig.width=4, fig.height=4>>=
+\begin{figure}[t]
+<<echo=FALSE>>=
 plot(m_na, bg=1, pch=21, cex=0.5,  
-     panel.first=grid(col="grey70"), 
-     xlab="#Casualties", ylab="CDF")
+       panel.first=grid(col="grey70"), 
+       xlab="#Casualties", ylab="CDF")
 lines(m_na, lwd=2, col=1)
 
 d = plot(m_us, draw=FALSE)
 points(d$x, d$y, bg=2, pch=24, cex=0.5)
 lines(m_us, lwd=2, col=2)
 @
-\caption{Plots of the CDFs for the Native American and US American casualties. The lines of best fit are also given.}\label{F3b}
-\end{marginfigure}
-\noindent The result is given in figure \ref{F3b}. The tails of the distributions appear to follow a power-law. This is consistent with the expectation that smaller-scale engagements are less likely to be recorded. However, for larger scale engagements, it is very likely that a record is made.
-
-
-\clearpage
-
-\bibliography{poweRlaw}
-\bibliographystyle{plainnat}
-
-\clearpage
-
-\section*{Session Info}
-
-<<>>=
-print(sessionInfo(), locale = FALSE)
-@
-
-
+\caption{Plots of the CDFs for the Native American and US American casualties.
+  The lines of best fit are also given.}\label{F3b}
+\end{figure}
+\noindent The result is given in figure \ref{F3b}. The tails of the
+distributions appear to follow a power law. This is consistent with the
+expectation that smaller-scale engagements are less likely to be recorded.
+However, for larger scale engagements, it is very likely that a record is made.
 
 <<clean-up, include=FALSE>>=
 # R compiles all vignettes in the same session, which can be bad
 rm(list = ls(all = TRUE))
 @
 
-     
 
-
-
-
+\bibliography{poweRlaw}
+\bibliographystyle{plainnat}
 
 \end{document}

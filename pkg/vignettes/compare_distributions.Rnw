@@ -1,37 +1,52 @@
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{Comparing distributions}
 
-\documentclass[a4paper,justified,openany]{tufte-handout}
-\setcounter{secnumdepth}{2}
-\usepackage{microtype}
-\usepackage{url}  % Formatting web addresses  
+\documentclass[11pt,BCOR2mm,DIV14]{scrartcl}
+
+%For fancy tables
+\usepackage{booktabs}
+% References
+\usepackage[round]{natbib}
+%For symbols in T1 encoding.
+\usepackage{textcomp}
+\usepackage{amsmath,amsfonts}
+\usepackage{xcomment,scrpage2}
+\usepackage{algorithmic, algorithm}
 \usepackage[utf8]{inputenc} %unicode support
-\usepackage{color,hyperref,comment, booktabs}
+\usepackage{color,hyperref}
 \urlstyle{rm}
-\usepackage{algorithmic, algorithm,amsmath}
+
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+\pagestyle{scrheadings}  
+\setheadsepline{.4pt}
+\ihead[]{Comparing distributions}
+\chead[]{}
+\ohead[]{}
+\ifoot[]{}
+\cfoot[]{}
+\ofoot[\pagemark]{\pagemark}
 \newcommand{\cc}{\texttt}
 \newcommand{\xmin}{x_{\min}}
 
-\usepackage{etoolbox}
-\makeatletter
-\preto{\@verbatim}{\topsep=-20pt \partopsep=0pt }
-\makeatother
 
-\date{Last updated: \today}  
-\title{The poweRlaw package: Comparing distributions}
-\author[Colin S. Gillespie]{Colin S. Gillespie}
-\date{Last updated: \today}
-
-<<echo=FALSE>>=
+<<echo=FALSE,message=FALSE>>=
 library(knitr)
 library(poweRlaw)
 options(replace.assign=FALSE,width=50)
 
-opts_chunk$set(fig.path='knitr_figure/graphics-', 
-               cache.path='knitr_cache/graphics-', 
+opts_chunk$set(fig.path='knitr_figure_compare/graphics-', 
+               cache.path='knitr_cache_compare/', 
                fig.align='center', 
                dev='pdf', fig.width=5, fig.height=5, 
-               fig.show='hold', cache=FALSE, par=TRUE)
+               fig.show='hold', cache=FALSE, par=TRUE,
+               out.width='0.4\\textwidth')
 knit_hooks$set(crop=hook_pdfcrop)
 
 knit_hooks$set(par=function(before, options, envir){
@@ -40,8 +55,6 @@ knit_hooks$set(par=function(before, options, envir){
         mgp=c(2,.7,0),tcl=-.01, las=1)
   }}, crop=hook_pdfcrop)
 
-#options(width=60)
-#knit_theme$set(knit_theme$get()[7])
 set.seed(1)
 palette(c(rgb(170,93,152, maxColorValue=255),
           rgb(103,143,57, maxColorValue=255),
@@ -52,18 +65,24 @@ palette(c(rgb(170,93,152, maxColorValue=255),
           rgb(115,113,206, maxColorValue=255)))
 
 @
-
+% 
 \begin{document}
+\date{Last updated: \today}  
+\title{The poweRlaw package: Comparing distributions}
+\author{Colin S. Gillespie}
+
 \maketitle
 \begin{abstract}
-The \verb$poweRlaw$ package provides an easy to use interface for fitting and visualising heavy tailed distributions, including power-laws. This vignette provides examples of comparing competing distributions.
+  The \verb$poweRlaw$ package provides an easy to use interface for fitting and
+  visualising heavy tailed distributions, including power-laws. This vignette
+  provides examples of comparing competing distributions.
 \end{abstract}
 
 \section{Comparing distributions}
 
-  
-This short vignette aims to provide some guidance when comparing distributions using Vuong's test statistic. 
-The hypothesis being tested is
+
+This short vignette aims to provide some guidance when comparing distributions
+using Vuong's test statistic. The hypothesis being tested is
 \[
 H_0: \text{Both distributions are equally far from the true distribution}
 \]
@@ -71,11 +90,16 @@ and
 \[
 H_1: \text{One of the test distributions is closer to the true distribution.}
 \]
-To perform this test we use the \cc{compare\_distributions} function\sidenote{The \cc{compare\_distributions} function also returns a one sided $p$-value. Essentially, the one side $p$-value is testing whether the first model is better than the second, i.e. a \textbf{one} sided test.} and look at the \cc{p\_two\_sided} value.
+To perform this test we use the \cc{compare\_distributions}
+function\footnote{The \cc{compare\_distributions} function also returns a one
+  sided $p$-value. Essentially, the one side $p$-value is testing whether the
+  first model is better than the second, i.e. a \textbf{one} sided test.} and
+examine the \cc{p\_two\_sided} value.
+
 
 \section{Example: Simulated data}
 
-\noindent First let's generate some data from a power-law distribution
+First let's generate some data from a power-law distribution
 <<>>=
 set.seed(1)
 x = rpldis(10000, xmin=2, alpha=2.1)
@@ -85,7 +109,7 @@ x = rpldis(10000, xmin=2, alpha=2.1)
 m1 = displ$new(x)
 m1$setPars(estimate_pars(m1))
 @
-\noindent The estimated values of $\xmin$ and $\alpha$ are \Sexpr{m1$getXmin()} and \Sexpr{m1$getPars()}, respectively. As an alternative distribution, we will fit a discrete log-normal distribution\marginnote{When comparing distributions, each model must have the same $\xmin$ value. In this example, both models have $\xmin=\Sexpr{m1$getXmin()}$.}
+\noindent The estimated values of $\xmin$ and $\alpha$ are \Sexpr{m1$getXmin()} and \Sexpr{m1$getPars()}, respectively. As an alternative distribution, we will fit a discrete log-normal distribution\footnote{When comparing distributions, each model must have the same $\xmin$ value. In this example, both models have $\xmin=\Sexpr{m1$getXmin()}$.}
 <<>>=
 m2 = dislnorm$new(x)
 m2$setPars(estimate_pars(m2))
@@ -98,19 +122,21 @@ lines(m2, col=2, lty=2)
 grid()
 @
 
-\begin{marginfigure}
+\begin{figure}[t]
 \centering
 <<F1,echo=FALSE>>=
 @
 \caption{Plot of the simulated data CDF, with power law and log normal lines
 of best fit.}\label{F1}
-\end{marginfigure}
+\end{figure}
 \noindent suggests that the power-law model gives a better fit (figure \ref{F1}). Investigating this formally 
 <<>>=
 comp = compare_distributions(m1, m2)
 comp$p_two_sided
 @
 \noindent means we can reject $H_0$ since $p=\Sexpr{signif(comp$p_two_sided, 4)}$ and conclude that one model is closer to the true distribution.
+
+
 
 \section{Example: Moby Dick data set}
 
@@ -123,7 +149,7 @@ data("moby")
 m1 = displ$new(moby)
 m1$setXmin(estimate_xmin(m1))
 @
-\noindent and a log-normal model\sidenote{In order to compare distributions, $\xmin$ must be equal for both distributions.}
+\noindent and a log-normal model\footnote{In order to compare distributions, $\xmin$ must be equal for both distributions.}
 <<>>=
 m2 = dislnorm$new(moby)
 m2$setXmin(m1$getXmin())
@@ -136,50 +162,31 @@ lines(m1)
 lines(m2, col=2, lty=2)
 grid()
 @
-\begin{marginfigure}
+\begin{figure}[t]
 \centering
 <<F2,echo=FALSE>>=
 @
 \caption{The Moby Dick data set with power law and log normal lines of best fit.}\label{F2}
-\end{marginfigure}
-\noindent suggests that both models perform equally well (figure \ref{F2}). The formal hypothesis test
+\end{figure}
+\noindent suggests that both models perform equally well (figure \ref{F2}). The
+formal hypothesis test
 <<>>=
 comp = compare_distributions(m1, m2)
 @
-\noindent gives a $p$-value and test statistic of
+\noindent gives a $p\,$-value and test statistic of
 <<>>=
 comp$p_two_sided
 comp$test_statistic
 @
-\noindent which means we can not reject $H_0$. The $p$-value and test statistic are similar to the values found in table 6.3 of \citeauthor{clauset2009}\cite{clauset2009}.
-
-
+\noindent which means we can not reject $H_0$. The $p\,$-value and test
+statistic are similar to the values found in table 6.3 of \citet{clauset2009}.
 
 <<clean-up, include=FALSE>>=
 # R compiles all vignettes in the same session, which can be bad
 rm(list = ls(all = TRUE))
 @
 
-\clearpage
-
 \bibliography{poweRlaw}
 \bibliographystyle{plainnat}
 
-\clearpage
-
-\section*{Session Info}
-
-<<>>=
-print(sessionInfo(), locale = FALSE)
-@
-
-
-
-
-
-
-
-
 \end{document}
-
-

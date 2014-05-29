@@ -1,64 +1,83 @@
-%\VignettePackage{poweRlaw}
-%\VignetteIndexEntry{poweRlaw}
 %\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{An overview}
+\documentclass[11pt,BCOR2mm,DIV14]{scrartcl}
 
-\documentclass[a4paper,justified,openany]{tufte-handout}
-\setcounter{secnumdepth}{2}
+%For fancy tables
+\usepackage{booktabs}
+% References
+\usepackage[round]{natbib}
+%For symbols in T1 encoding.
 
-\usepackage{microtype}
-\usepackage{url}  % Formatting web addresses  
-\usepackage[utf8]{inputenc} %unicode support
-\usepackage{color,hyperref, booktabs}
-\urlstyle{rm}
+\usepackage{amsmath,amsfonts}
+\usepackage{xcomment,scrpage2}
 \usepackage{algorithmic, algorithm}
+\usepackage[utf8]{inputenc} %unicode support
+\usepackage{color,hyperref}
+\urlstyle{rm}
+
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+\pagestyle{scrheadings}  
+\setheadsepline{.4pt}
+\ihead[]{An overview of the \cc{poweRlaw} package}
+\chead[]{}
+\ohead[]{}
+\ifoot[]{}
+\cfoot[]{}
+\ofoot[\pagemark]{\pagemark}
 \newcommand{\cc}{\texttt}
 \newcommand{\xmin}{x_{\min}}
-\newcommand{\note}[1]{{\color{red}#1}}
 
-\usepackage{etoolbox}
-\makeatletter
-\preto{\@verbatim}{\topsep=-20pt \partopsep=0pt}
-\makeatother
 
-\date{Last updated: \today} 
-\title{The poweRlaw package: a general overview}
-\author[Colin S. Gillespie]{Colin S. Gillespie}
-\date{Last updated: \today}
-
-<<echo=FALSE, >>=
-library(poweRlaw)
+<<echo=FALSE, message=FALSE>>=
 library(knitr)
-options(replace.assign=FALSE,width=50)
+library(poweRlaw)
+options(replace.assign=FALSE)
 
-opts_chunk$set(fig.path='knitr_figure/graphics-', 
-               cache.path='knitr_cache/graphics-', 
+opts_chunk$set(fig.path='knitr_figure_poweRlaw/graphics-', 
+               cache.path='knitr_cache_poweRlaw/', 
                fig.align='center', 
                dev='pdf', fig.width=5, fig.height=5, 
-               fig.show='hold', cache=FALSE, par=TRUE)
+               fig.show='hold', cache=FALSE, par=TRUE,
+               out.width='0.4\\textwidth')
 knit_hooks$set(crop=hook_pdfcrop)
 
 knit_hooks$set(par=function(before, options, envir){
-    if (before && options$fig.show!='none') {
-        par(mar=c(3,3,2,1), cex.lab=.95, cex.axis=.9,
-            mgp=c(2,.7,0), tcl=-.01, las=1)
-}}, crop=hook_pdfcrop)
+  if (before && options$fig.show!='none') {
+    par(mar=c(3,4,2,1),cex.lab=.95,cex.axis=.9,
+        mgp=c(3,.7,0),tcl=-.01, las=1)
+  }}, crop=hook_pdfcrop)
 
 set.seed(1)
 palette(c(rgb(170,93,152, maxColorValue=255),
-              rgb(103,143,57, maxColorValue=255),
-              rgb(196,95,46, maxColorValue=255),
-              rgb(79,134,165, maxColorValue=255),
-              rgb(205,71,103, maxColorValue=255),
-              rgb(203,77,202, maxColorValue=255),
-              rgb(115,113,206, maxColorValue=255)))
-@
+          rgb(103,143,57, maxColorValue=255),
+          rgb(196,95,46, maxColorValue=255),
+          rgb(79,134,165, maxColorValue=255),
+          rgb(205,71,103, maxColorValue=255),
+          rgb(203,77,202, maxColorValue=255),
+          rgb(115,113,206, maxColorValue=255)))
 
+@
+% 
 \begin{document}
+\date{Last updated: \today}  
+\title{The poweRlaw package: a general overview}
+\author{Colin S. Gillespie}
+
+
+
 \maketitle
- \begin{abstract}
-The \cc{poweRlaw} package provides code to fit heavy tailed distributions, including discrete and continuous power-law distributions. 
-Each model is fitted using a maximum likelihood procedure and  cut-off value, $\xmin$, is estimated by 
-minimising the Kolmogorov-Smirnoff statistic.
+\begin{abstract}
+   \noindent The \cc{poweRlaw} package provides code to fit heavy tailed distributions,
+   including discrete and continuous power-law distributions. Each model is
+   fitted using a maximum likelihood procedure and cut-off value, $\xmin$, is
+   estimated by minimising the Kolmogorov-Smirnoff statistic.
 \end{abstract}
 
 \section{Installation}
@@ -67,7 +86,7 @@ The package is hosted on CRAN and can be installed in the standard way
 <<eval=FALSE>>=
 install.packages("poweRlaw")
 @
-\noindent The developmental version is hosted on github and  can be installed using the \cc{devtools} package\sidenote{If you are using Windows, then you will need to install the \texttt{Rtools} package first.}
+\noindent The developmental version is hosted on github and  can be installed using the \cc{devtools} package\footnote{If you are using Windows, then you will need to install the \texttt{Rtools} package first.}
 <<eval=FALSE>>=
 install.packages("devtools")
 library("devtools")
@@ -81,7 +100,7 @@ library("poweRlaw")
 \section{Accessing documentation}
 
 Each function and dataset in the package is documented. The command
-<<results='hide'>>=
+<<eval=FALSE>>=
 help(package="poweRlaw")
 @
 \noindent will give a brief overview of the package and a complete list of all functions. The list of vignettes associated with the package can be obtained with
@@ -93,11 +112,11 @@ vignette(package="poweRlaw")
 browseVignettes("poweRlaw")
 @
 \noindent Help on functions can be obtained using the usual R mechanisms. For example, help on the method \verb$displ$ can be obtained with
-<<message=FALSE,results='hide', tidy=FALSE>>=
+<<tidy=FALSE, eval=FALSE>>=
 ?displ
 @
-\noindent and the associated example can be run with
-<<results='hide',fig.keep='none'>>=
+\noindent and the associated examples can be run with
+<<eval=FALSE>>=
 example(displ)
 @
 \noindent A list of demos and data sets associated with the package can be obtained with
@@ -105,7 +124,7 @@ example(displ)
 demo(package="poweRlaw")
 data(package="poweRlaw")
 @
-\noindent For example, the Moby dick data set can be load using\marginnote{The package also contains the data set \texttt{moby\_sample}. This data set is two thousand randomly sampled values from the larger \cc{moby} data set.}
+\noindent For example, the Moby dick data set can be load using\footnote{The package also contains the data set \texttt{moby\_sample}. This data set is two thousand randomly sampled values from the larger \cc{moby} data set.}
 <<>>=
 data("moby")
 @
@@ -120,11 +139,18 @@ If you use this package, please cite it. The appropriate citation can be obtaine
 citation("poweRlaw")
 @
 
-
+<<echo=FALSE>>=
+data(bootstrap_moby)
+bs = bootstrap_moby
+data(bootstrap_p_moby)
+bs_p = bootstrap_p_moby
+@ 
 
 \section{Example: Word frequency in Moby Dick}
 
-This example investigates the frequency of occurrence of unique words in the novel Moby Dick by Herman Melville.\cite{clauset2009,newman2005} The data can be downloaded from
+This example investigates the frequency of occurrence of unique words in the
+novel Moby Dick by Herman Melville (see \cite{clauset2009,newman2005}). The data
+can be downloaded from
 \begin{center}
 \url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm}
 \end{center}
@@ -135,7 +161,9 @@ data("moby")
 
 \subsection{Fitting a discrete power-law}
 
-To fit a discrete power-law,\sidenote{The examples vignette contains a more thorough analysis of this particular data set.} we create a discrete power-law object using the \cc{displ} method\sidenote{\cc{displ}: discrete power-law.}
+To fit a discrete power-law,\footnote{The examples vignette contains a more
+  thorough analysis of this particular data set.} we create a discrete power-law
+object using the \cc{displ} method\footnote{\cc{displ}: discrete power-law.}
 <<>>=
 m_m = displ$new(moby)
 @
@@ -149,14 +177,14 @@ m_m$getPars()
 m_m$setXmin(5)
 m_m$setPars(2)
 @
-\noindent For a given $\xmin$ value, we can estimate the corresponding $\alpha$ value by numerically maximising the likelihood \marginnote{Instead of calculating the MLE, we could use a parameter scan:\\ \texttt{\mbox{estimate\_pars(m\_m, pars=seq(2, 3, 0.1))}}}
+\noindent For a given $\xmin$ value, we can estimate the corresponding $\alpha$ value by numerically maximising the likelihood \footnote{Instead of calculating the MLE, we could use a parameter scan: \texttt{\mbox{estimate\_pars(m\_m, pars=seq(2, 3, 0.1))}}}
 <<>>=
 (est = estimate_pars(m_m))
 @
 \noindent For the Moby Dick data set, when $\xmin=\Sexpr{m_m$getXmin()}$, we estimate $\alpha$ to be $\Sexpr{signif(est$pars,4)}$.
 
 
-\newthought{To estimate} the lower bound $\xmin$, we minimise the distance between the data and the fitted model CDF, that is
+To estimate the lower bound $\xmin$, we minimise the distance between the data and the fitted model CDF, that is
 \[
 D(x) = \max_{x \ge \xmin} \vert S(x) - P(x) \vert
 \]
@@ -167,24 +195,42 @@ D(x) = \max_{x \ge \xmin} \vert S(x) - P(x) \vert
 m_m$setXmin(est)
 @
 
-\begin{marginfigure}
+\begin{figure}[t]
 \centering
-<<echo=FALSE, fig.width=4, fig.height=4>>=
+<<echo=FALSE, fig.width=8, fig.height=8, out.width="0.8\\textwidth">>=
+par(mfrow=c(2, 2))
 plot(m_m, xlab="x", ylab="CDF", 
      pch=21, bg=1, cex=0.6, 
      panel.first=grid())
 lines(m_m, col=2, lwd=2)
+hist(bs$bootstraps[,2], xlab=expression(x[min]), ylim=c(0, 1600), 
+     xlim=c(0, 30), main=NULL, breaks="fd")
+grid()
+hist(bs$bootstraps[,3], xlab=expression(alpha), 
+     ylim=c(0, 500), xlim=c(1.8, 2.1), main=NULL, breaks="fd")
+grid()
+plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3], 
+     xlab=expression(x[min]), ylab=expression(alpha), 
+     xlim=c(0, 30), ylim=c(1.8, 2.1), cex=0.35, 
+     pch=21, bg=1, panel.first=grid())
+
 @
-\caption{Plot of the data CDF for the Moby Dick data set. This corresponds to figure 6.1(a) in Clauset, 2009. The line corresponds to a power-law distribution with parameters $\xmin=\Sexpr{est$xmin}$ and $\alpha=\Sexpr{signif(est$pars, 3)}$.}\label{F1}
-\end{marginfigure}
+\caption{(a) Plot of the data CDF for the Moby Dick data set. This corresponds
+  to figure 6.1(a) in \cite{clauset2009}. The line corresponds to a power-law
+  distribution with parameters $\xmin=\Sexpr{est$xmin}$ and
+  $\alpha=\Sexpr{signif(est$pars, 3)}$.(b) Characterising uncertainty in
+  parameter values using the bootstrap $\xmin$ uncertainty, (c) $\alpha$
+  uncertainty (d) Bivariate scatter plot of $\xmin$ and $\alpha$.}\label{F1}
+\end{figure}
 <<m_m, echo=1, eval=TRUE>>=
 @
-\noindent For the Moby-Dick data set, the minimum\sidenote{These estimates match the values in the Clausett, \textit{et al} paper.} is achieved when $\xmin=7$ and $D(7) = \Sexpr{signif(est$KS, 3)}$.
-
-We can then set parameters of power-law distribution to these "optimal" values
+\noindent For the Moby-Dick data set, the minimum\footnote{These estimates match
+  the values in the \citeauthor{clauset2009} paper.} is achieved when $\xmin=7$
+and $D(7) = \Sexpr{signif(est$KS, 3)}$. We can then set parameters of power-law
+distribution to these "optimal" values
 <<m_m, echo=2, eval=FALSE, results='hide'>>=
 @
-\noindent All distribution objects have generic plot methods\sidenote{Generic \texttt{lines} and \texttt{points} functions are also available.}
+\noindent All distribution objects have generic plot methods\footnote{Generic \texttt{lines} and \texttt{points} functions are also available.}
 <<fig.keep='none'>>=
 ## Plot the data (from xmin)
 plot(m_m)
@@ -199,19 +245,12 @@ head(dd, 3)
 \noindent This makes it straight forward to create graphics using other R packages, such as \cc{ggplot2}.
 
 
-<<echo=FALSE>>=
-
-data(bootstrap_moby)
-bs = bootstrap_moby
-data(bootstrap_p_moby)
-bs_p = bootstrap_p_moby
-@
-
-
 
 \subsection{Uncertainty in $\xmin$}
 
-Clauset, \textit{el al}, 2009 recommend a bootstrap procedure to get a handle on parameter uncertainty. Essentially, we sample with replacement from the data set and then re-infer the parameters (algorithm 1).
+\citeauthor{clauset2009} recommend a bootstrap procedure to get a handle on
+parameter uncertainty. Essentially, we sample with replacement from the data set
+and then re-infer the parameters (algorithm 1).
 \begin{table}[t]
 \centering
   \begin{tabular}{@{}ll@{}}
@@ -232,30 +271,7 @@ To run the bootstrapping procedure, we use the \texttt{bootstrap} function
 bs = bootstrap(m_m, no_of_sims=1000, threads=1)
 @
 
-\begin{marginfigure}
-\centering
-<<echo=FALSE, fig.width=4, fig.height=8>>=
-par(mfrow=c(2, 1))
-hist(bs$bootstraps[,2], xlab=expression(x[min]), ylim=c(0, 1600), 
-     xlim=c(0, 30), main=NULL, breaks="fd")
-grid()
-hist(bs$bootstraps[,3], xlab=expression(alpha), 
-     ylim=c(0, 500), xlim=c(1.8, 2.1), main=NULL, breaks="fd")
-grid()
-@
-\caption{Characterising uncertainty in parameter values. (a) $\xmin$ uncertainty (standard deviation 2) (b) $\alpha$ uncertainty (std dev. 0.03)}\label{F2}
-\end{marginfigure}
 
-\begin{marginfigure}
-\centering
-<<echo=FALSE>>=
-plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3], 
-     xlab=expression(x[min]), ylab=expression(alpha), 
-     xlim=c(0, 30), ylim=c(1.8, 2.1), cex=0.35, 
-     pch=21, bg=1, panel.first=grid())
-@
-\caption{Characterising uncertainty in parameter values. Bivariate scatter plot of $\xmin$ and $\alpha$.}\label{F3}
-\end{marginfigure}
 
 \noindent this function runs in parallel, with the number of threads used determined by the \texttt{threads} argument. To detect the number of cores on your machine, you can run:
 <<>>=
@@ -276,13 +292,13 @@ hist(bs$bootstraps[,3], breaks="fd")
 <<fig.keep='none'>>=
 plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3])
 @
-\noindent These commands give figures \ref{F2} and \ref{F3}.
+\noindent These commands give figure \ref{F1}b--d..
 
-\clearpage
+
 
 \subsection{Do we have a power-law?}
 
-Since it is possible to fit a power-law distribution to \textit{any} data set, it is appropriate to test whether it the observed data set actually follows a power-law.\marginnote{Algorithm 2 can be easily extended for other distributions.} Clauset \textit{et al}, suggest that this hypothesis is tested using a goodness-of-fit test, via a bootstrapping procedure. Essentially, we perform a hypothesis test by generating multiple data sets (with parameters $\xmin$ and $\alpha$) and then "re-inferring" the model parameters. The algorithm is detailed in Algorithm 2.
+Since it is possible to fit a power-law distribution to \textit{any} data set, it is appropriate to test whether it the observed data set actually follows a power-law.\footnote{Algorithm 2 can be easily extended for other distributions.} Clauset \textit{et al}, suggest that this hypothesis is tested using a goodness-of-fit test, via a bootstrapping procedure. Essentially, we perform a hypothesis test by generating multiple data sets (with parameters $\xmin$ and $\alpha$) and then "re-inferring" the model parameters. The algorithm is detailed in Algorithm 2.
 \begin{table}[t]
 \centering
   \begin{tabular}{@{}ll@{}}
@@ -303,30 +319,25 @@ Since it is possible to fit a power-law distribution to \textit{any} data set, i
     \hline
   \end{tabular}
 \end{table}  
-\begin{marginfigure}
+\begin{figure}[t]
 \centering
-<<echo=FALSE, fig.width=4, fig.height=8>>=
-par(mfrow=c(2, 1))
+<<echo=FALSE, fig.width=8, fig.height=4, out.width="\\textwidth">>=
+par(mfrow=c(1, 3))
 hist(bs_p$bootstraps[,2], xlab=expression(x[min]), ylim=c(0, 1600), 
      xlim=c(0, 45), main=NULL, breaks="fd")
 grid()
 hist(bs_p$bootstraps[,3], xlab=expression(alpha), 
-     ylim=c(0, 400), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
+     ylim=c(0, 500), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
 grid()
-@
-\caption{Histograms of the bootstrap results.}\label{F4}
-\end{marginfigure}
-\begin{marginfigure}
-\centering
-<<echo=FALSE, fig.width=4,  fig.height=4>>=
+
 plot(jitter(bs_p$bootstraps[,2], factor=1.2), bs_p$bootstraps[,3], 
      xlab=expression(x[xmin]), ylab=expression(alpha), 
      xlim=c(0, 40), ylim=c(1.8, 2.05), cex=0.35, 
      pch=21, bg=1,
      panel.first= grid())
 @
-\caption{Bivariate scatter plot of the bootstrap results. The values of $\xmin$ and $\alpha$ are obviously strongly correlated.}\label{F5}
-\end{marginfigure}
+\caption{Histograms of the bootstrap results and bivariate scatter plot of the bootstrap results. The values of $\xmin$ and $\alpha$ are obviously strongly correlated.}\label{F4}
+\end{figure}
 
 When $\alpha$ is close to one, this algorithm can be particularly time consuming to run, for two reasons:
 \begin{enumerate}
@@ -353,7 +364,7 @@ bs_p = bootstrap_p(m_m, no_of_sims=1000, threads=2)
 \item The result of the bootstrap procedure - a data frame with three columns.
 \item The average time (in seconds) for a single bootstrap realisation.
 \end{itemize}
-The results of this procedure are shown in figures \ref{F4} and \ref{F5}.
+The results of this procedure are shown in figure \ref{F4}.
 
 
 
@@ -385,7 +396,7 @@ m_m = displ$new(moby)
 m_m$setXmin(est)
 @
 
-\noindent All distribution objects listed in table \ref{T1} are reference classes.\marginnote{See \texttt{\mbox{?setRefClass}} for further details on references classes.} Each distribution object has four fields:
+\noindent All distribution objects listed in table \ref{T1} are reference classes.\footnote{See \texttt{\mbox{?setRefClass}} for further details on references classes.} Each distribution object has four fields:
 \begin{itemize}
 \item \texttt{dat}: a copy of the data set.
 \item \texttt{xmin}: the lower cut-off $\xmin$.
@@ -425,12 +436,12 @@ if(!file.exists("blackouts.txt"))
 blackouts = read.table("blackouts.txt")
 @
 
-\newpage
+
 
 
 \section{Loading data}
 
-Typically, data is stored in a csv or text file. To use this data, we load it in the usual way\sidenote{The blackouts data set can be obtained from Clauset's website: \mbox{\url{http://goo.gl/BsqnP}}}
+Typically, data is stored in a csv or text file. To use this data, we load it in the usual way\footnote{The blackouts data set can be obtained from Clauset's website: \mbox{\url{http://goo.gl/BsqnP}}}
 <<eval=FALSE>>=
 blackouts = read.table("blackouts.txt")
 @
@@ -439,7 +450,7 @@ blackouts = read.table("blackouts.txt")
 m_bl = conpl$new(blackouts$V1)
 @
 \noindent will create a continuous power law object.
-\begin{marginfigure}[5\baselineskip]
+\begin{figure}[t]
 \centering
 <<echo=FALSE>>=
 est = estimate_xmin(m_bl)
@@ -448,7 +459,7 @@ plot(m_bl, panel.first=grid())
 lines(m_bl, col=2)
 @
 \caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more efficient.}\label{F6}
-\end{marginfigure}
+\end{figure}
 
 
 
@@ -512,52 +523,24 @@ plot(m_r)
 lines(m_r, col=2)
 @
 \noindent to get figure \ref{F7}.
-\begin{marginfigure}
+\begin{figure}[t]
 \centering
-<<echo=FALSE, fig.width=4, fig.height=4>>=
+<<echo=FALSE>>=
 plot(m_r, ylab="CDF", 
      pch=21, bg=1, cex=0.5, 
      panel.first=grid(), xlim=c(10, 1000))
 lines(m_r, col=2, lwd=2)
 @
 \caption{CDF plot of one thousand random numbers generated from a power-law with parameters $\alpha=2.5$ and $\xmin = 10$. The line of best fit is also shown.}\label{F7}
-\end{marginfigure}
-
-
-
-
-\clearpage
-
-\section*{Session Info}
-
-\begin{table}
-\centering
-\begin{tabular}{@{} llll @{}}
-\toprule
-Package & Version\\
-\midrule
-parallel & \Sexpr{packageDescription("parallel")$Version}\\
-poweRlaw & \Sexpr{packageDescription("poweRlaw")$Version}\\
-VGAM & \Sexpr{packageDescription("VGAM")$Version}\\
-\bottomrule
-\end{tabular}
-\caption{A list of packages and versions used.}\label{A1}
-\end{table}
-
-
-
-<<>>=
-print(sessionInfo(), locale = FALSE)
-@
-
-\noindent This vignette was created using the excellent \cc{knitr} package.\cite{Xie13}
-
-\clearpage
-
-
+\end{figure}
+ 
 \bibliography{poweRlaw}
 \bibliographystyle{plainnat}
 
+<<clean-up, include=FALSE>>=
+# R compiles all vignettes in the same session, which can be bad
+rm(list = ls(all = TRUE))
+@
 
 \end{document}
 
@@ -586,15 +569,7 @@ grid()
 sink=dev.off()
 
 
-@
-
-<<clean-up, include=FALSE>>=
-# R compiles all vignettes in the same session, which can be bad
-rm(list = ls(all = TRUE))
-@
-
-       
-       
+@    
        
        
        
