@@ -130,7 +130,9 @@ create_plots = function(l, no_plots) {
 plot.bs_xmin = function(x, trim=0.1, ...){
   ## Remove any problem bootstraps
   bs = x$bootstraps
-  x$bootstraps = bs[!apply(bs, 1, anyNA),]
+  
+  ## Change to anyNA in future (need R >= 3.1.0)
+  x$bootstraps = bs[apply(bs, 1, function(i) any(is.na(i))),]
   
   no_plots = ncol(x$bootstraps) - 1
   l = list()
@@ -148,7 +150,7 @@ plot.bs_xmin = function(x, trim=0.1, ...){
 plot.bs_p_xmin = function(x, trim=0.1, ...){
   ## Remove any problem bootstraps
   bs = x$bootstraps
-  x$bootstraps = bs[!apply(bs, 1, anyNA),]
+  x$bootstraps = bs[!apply(bs, 1, function(i) any(is.na(i))),]
   
   no_plots = ncol(x$bootstraps)
   l = list()
