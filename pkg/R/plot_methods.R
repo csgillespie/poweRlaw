@@ -132,7 +132,7 @@ plot.bs_xmin = function(x, trim=0.1, ...){
   bs = x$bootstraps
   
   ## Change to anyNA in future (need R >= 3.1.0)
-  x$bootstraps = bs[apply(bs, 1, function(i) any(is.na(i))),]
+  x$bootstraps = bs[!apply(bs, 1, function(i) any(is.na(i))),]
   
   no_plots = ncol(x$bootstraps) - 1
   l = list()
