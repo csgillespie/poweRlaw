@@ -11,10 +11,10 @@ test_that("Testing Vuong's", {
   m2$setPars(0.03643)
   
   v = compare_distributions(m1, m2)
-  expect_equal(dim(v$ratio), c(9694, 2))
+  expect_equal(dim(v$ratio), c(9694, 2), tol=1e-4)
   expect_equal(v$test_statistic, 20.3, tol=1e-3)
-  expect_equal(v$p_one_sided, 1)
-  expect_equal(v$p_two_sided, 0)
+  expect_equal(v$p_one_sided, 1, tol=1e-4)
+  expect_equal(v$p_two_sided, 0, tol=1e-4)
   
   
   ##CTN PL vs lognormal

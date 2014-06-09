@@ -14,7 +14,7 @@ test_that("Testing estimate_pars function", {
   mt = dispois$new(x)
   mt$setXmin(0)
   est = estimate_pars(mt)
-  expect_equal(est$pars, 2)
+  expect_equal(est$pars, 2, tol=1e-3)
   est = estimate_pars(mt, pars=seq(1.5, 2.5, 0.01))
   expect_equal(est$pars, 2, tol=1e-3)
   
