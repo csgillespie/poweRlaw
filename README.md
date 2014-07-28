@@ -2,15 +2,13 @@ The poweRlaw package
 ====================
 [![Build Status](https://travis-ci.org/csgillespie/poweRlaw.png?branch=master,dev)](https://travis-ci.org/csgillespie/poweRlaw)
 
-This package implements both the discrete and continuous maximum likelihood estimators for fitting the power-law distribution to data. It also provides function to fit log-normal and Poisson distributions. Additionally, a goodness-of-fit based approach is used to estimate the lower cut-off for the scaling region. 
+This package implements both the discrete and continuous maximum likelihood estimators for fitting the power-law distribution to data using the methods described in [Clauset et al, 2009](http://arxiv.org/abs/0706.1062). It also provides function to fit log-normal and Poisson distributions. Additionally, a goodness-of-fit based approach is used to estimate the lower cut-off for the scaling region. 
 
-The code developed in this package was influenced from the python and R code found at [Aaron Clauset's website](http://tuvalu.santafe.edu/~aaronc/powerlaws/). In particular, the R code of Laurent Dubroca.
+The code developed in this package was influenced from the python and R code found at [Aaron Clauset's website](http://tuvalu.santafe.edu/~aaronc/powerlaws/). In particular, the R code of Laurent Dubroca and Cosma Shalizi.
 
 To cite this package in academic work, please use:
 
-Colin S Gillespie (2013). *Fitting heavy tailed
-  distributions: the poweRlaw package.* R package version
-  **0.20.3**.
+Gillespie, C. S. "*Fitting heavy tailed distributions: the poweRlaw package.*" arXiv preprint arXiv:1407.3492 (2014).
 
 
 Installation
@@ -34,12 +32,12 @@ Getting Started
 
 To get started, load the package
 ```r
-library("poweRlaw"")
+library("poweRlaw")
 ```
 then work the through the two vignettes: 
  * [getting started](http://cran.r-project.org/web/packages/poweRlaw/vignettes/poweRlaw.pdf)
  * [examples](http://cran.r-project.org/web/packages/poweRlaw/vignettes/examples.pdf)
- * [Comparing distributions](http://cran.r-project.org/web/packages/poweRlaw/vignettes/compare_distributions.pdf
+ * [Comparing distributions](http://cran.r-project.org/web/packages/poweRlaw/vignettes/compare_distributions.pdf)
 Alternatively, you can access the vignettes from within the package:
 ```r
 browseVignettes("poweRlaw")
