@@ -3,7 +3,6 @@ bootstrap_p_helper = function (i, m, N, y, xmins, pars) {
   n1 = sum(runif(N) > pz)
   q = dist_rand(m, N-n1)
   
-  q = q[q < max(xmins)]
   if(inherits(m, "discrete_distribution"))
     q = c(y[sample(N-nz, n1, replace=TRUE)], q)
   else 
@@ -16,7 +15,7 @@ bootstrap_p_helper = function (i, m, N, y, xmins, pars) {
 #' @rdname estimate_xmin
 #' @export
 bootstrap_p = function (m, xmins=1e5, pars=NULL, 
-                           no_of_sims=100, threads=1) {
+                        no_of_sims=100, threads=1) {
   m_cpy = m$copy()
   gof_v = estimate_xmin(m_cpy, xmins=xmins, pars=pars)
   m_cpy$setXmin(gof_v)
@@ -31,17 +30,15 @@ bootstrap_p = function (m, xmins=1e5, pars=NULL,
   cl = makeCluster(threads)
   clusterExport(cl, c("dist_rand", "estimate_xmin"))
   nof = parSapply(cl, 1:no_of_sims,
-                 bootstrap_p_helper,  m_cpy, 
-                 N, y, xmins, pars)
+                  bootstrap_p_helper,  m_cpy, 
+                  N, y, xmins, pars)
   stopCluster(cl)
   end_time = Sys.time()
   total_time = difftime(end_time, start_time, units="secs")
   l = list(p=sum(nof[1,] >= gof_v[["KS"]])/no_of_sims, 
-       gof = gof_v[["KS"]], 
-       bootstraps = as.data.frame(t(nof)), 
-       sim_time = total_time[[1]]/no_of_sims)
+           gof = gof_v[["KS"]], 
+           bootstraps = as.data.frame(t(nof)), 
+           sim_time = total_time[[1]]/no_of_sims)
   class(l) = "bs_p_xmin"
   l
 }
-
-
