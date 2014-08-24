@@ -8,7 +8,7 @@ The code developed in this package was influenced from the python and R code fou
 
 To cite this package in academic work, please use:
 
-Gillespie, C. S. "*Fitting heavy tailed distributions: the poweRlaw package.*" arXiv preprint arXiv:1407.3492 (2014).
+Gillespie, C. S. "*Fitting heavy tailed distributions: the poweRlaw package.*" arXiv preprint [arXiv:1407.3492](http://arxiv.org/abs/1407.3492) (2014).
 
 
 Installation
