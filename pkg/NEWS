@@ -1,3 +1,8 @@
+Version 0.20.6
+--------------
+ * Bug fix: Bootstrap edge cases (https://github.com/csgillespie/poweRlaw/issues/29) @jkeirstead
+
+
 Version 0.20.5
 --------------
  * Further changes to the tolarance in the test suite comparison (solaris-sparc failed to build)

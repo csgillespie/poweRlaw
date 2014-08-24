@@ -137,7 +137,9 @@ setMethod("dist_ll",
 ########################################################
 conexp_tail_ll = function(x, rate, xmin) {
   n = length(x)
-  joint_prob = colSums(sapply(rate, function(i) dexp(x, i, log=TRUE)))
+  joint_prob = colSums(
+                  matrix(## Needed for edge cases
+                    sapply(rate, function(i) dexp(x, i, log=TRUE)), nrow=length(x)))
   prob_over = sapply(rate, 
                      function(i) 
                        pexp(xmin, i, 

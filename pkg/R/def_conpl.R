@@ -175,7 +175,7 @@ conpl$methods(
     }
     
     
-    x = dat[dat > xmin]
+    x = dat[dat >= xmin]
     negloglike = function(par) {
       r = -con_pl_ll(x, par, xmin)
       if(!is.finite(r)) r = 1e12

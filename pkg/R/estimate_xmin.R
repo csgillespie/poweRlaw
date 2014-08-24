@@ -58,6 +58,10 @@ get_KS_statistic = function(m) {
 #' as the maximum search space value. 
 #' If \code{length(xmins) > 1}, this will explicitly
 #' define the search space.
+#' 
+#' Occassionally, bootstrapping can generate strange situations. For example, 
+#' all values in the simulated data set are below the minimum xmin value. In this case, 
+#' the estimated KS statistic will be \code{Inf} and the parameter values, \code{NA}.
 #' @importFrom parallel makeCluster parSapply 
 #' @importFrom parallel clusterExport stopCluster
 #' @note Adapted from Laurent Dubroca's code found at
@@ -84,36 +88,53 @@ get_KS_statistic = function(m) {
 estimate_xmin = function (m, 
                           xmins = 1e5, 
                           pars=NULL) {
-  ##Make thread safe
-  m_cpy = m$getRefClass()$new(m$dat)
-  m_cpy$pars = pars
-  if(length(xmins) == 1) {
-    space = unique(m$dat)
-    space = space[space <= xmins]
-    xmins = space
+  ## Flag. Go through a bunch of checks to test whether we 
+  ## can estimate xmin 
+  estimate = length(unique(m$dat)) > 1
+  
+  ## Make thread safe
+  if(estimate) {
+    m_cpy = m$getRefClass()$new(m$dat)
+    m_cpy$pars = pars
+    if(length(xmins) == 1) {
+      space = unique(m$dat)
+      space = space[space <= xmins]
+      xmins = space
+    }
   }
   
-  ## Initialise xmin scan
-  nr = length(xmins) - m_cpy$no_pars - 1
+  ## Need to have at least no_pars + 1 data points
+  ## to estimate parameters. 
+  ## Find (largest - no_pars) data point and subset xmins
+  if(estimate) {
+    unique_dat = unique(m_cpy$dat)
+    q_len = length(unique_dat)
+    max_data_pt_needed = sort(unique_dat, 
+                              partial=q_len-m_cpy$no_pars)[q_len-m_cpy$no_pars]
+    xmins = xmins[xmins <= max_data_pt_needed]
+    
+    ## Initialise xmin scan
+    nr = length(xmins)
+  }
   
   ## Bootstrapping may generate strange data
-  if(nr < m_cpy$no_pars || length(unique(m$dat)) == 1L) {
+  if(!estimate || nr < 1) {
     ## Insufficient data to estimate parameters
-    dat = matrix(0, nrow=1, ncol=(1 + m_cpy$no_pars))
-    dat[1,] = c(Inf, rep(NA, m_cpy$no_pars))
+    dat = matrix(0, nrow=1, ncol=(1 + m$no_pars))
+    dat[1, ] = c(Inf, rep(NA, m$no_pars))
+    estimate = FALSE
   } else {
     dat = matrix(0, nrow=nr, ncol=(1 + m_cpy$no_pars))   
     est = estimate_pars(m_cpy)$pars
   }
-
+  
   xm = 0L
-  while(nr >= m_cpy$no_pars && xm < nr)   {
-    #for(xm in 1:nr){
+  while(estimate && xm < nr)   {
     m_cpy$xmin = xmins[xm + 1L]
     if(is.null(pars)) m_cpy$mle(initialise=est)
     else m_cpy$pars = pars
     
-    ##Doesn't work for lognormal - need par matrix    
+    ## Doesn't work for lognormal - need par matrix    
     if(!is.null(pars)) {
       L = dist_ll(m_cpy)
       I = which.max(L)
@@ -125,7 +146,6 @@ estimate_xmin = function (m,
   
   I = which.min(dat[,1L])
   xmin = xmins[I]
- # n = sum(m_cpy$dat >= xmin)
   pars = dat[I, 2:ncol(dat)]
   
   l = list(KS=dat[I, 1L], xmin=xmin, pars=pars)

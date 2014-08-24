@@ -33,11 +33,11 @@ test_that("Testing estimate_xmin function", {
   ##CTN Power-law
   ##Takes a while
   if(interactive()) {
-     load("ctn_data.RData")
+    load("ctn_data.RData")
     mt = conpl$new(ctn_data)
     est = estimate_xmin(mt)
-    expect_equal(est$pars, 2.53255, tol=1e-4)
-    expect_equal(est$xmin, 1.43628, tol=1e-4)
+    expect_equal(est$pars, 2.53255, tol=1e-3)
+    expect_equal(est$xmin, 1.43628, tol=1e-3)
   }
   ##Log-normal
   set.seed(1)
@@ -62,5 +62,20 @@ test_that("Testing estimate_xmin function", {
   
   expect_equal(est$pars, 0.01003, tol=1e-3)
   expect_equal(est$xmin, 4, tol=1e-3)
+  
+  #########################################
+  ## Edge cases
+  x = c(2, 2,2)
+  mt = displ$new(x)
+  est = estimate_xmin(mt)
+  expect_true(is.infinite(est$KS))
+  expect_true(is.na(est$pars))
+
+  ## Empty object
+  mt = displ$new()
+  est = estimate_xmin(mt)
+  expect_true(is.infinite(est$KS))
+  expect_true(is.na(est$pars))
+
 }
 )

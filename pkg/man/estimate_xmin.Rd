@@ -67,6 +67,10 @@ If a single value is used in \code{xmins}, this will be used
 as the maximum search space value.
 If \code{length(xmins) > 1}, this will explicitly
 define the search space.
+
+Occassionally, bootstrapping can generate strange situations. For example,
+all values in the simulated data set are below the minimum xmin value. In this case,
+the estimated KS statistic will be \code{Inf} and the parameter values, \code{NA}.
 }
 \note{
 Adapted from Laurent Dubroca's code found at
