@@ -1,7 +1,7 @@
 Package: poweRlaw
 Type: Package
 Title: Fitting heavy tailed distributions: the poweRlaw package
-Version: 0.20.6
+Version: 0.3.0.9001
 Date: 2014-08-24
 Authors@R: person(given="Colin", family="Gillespie",
     email="csgillespie@gmail.com", role = c("aut", "cre"))
@@ -21,8 +21,7 @@ Imports:
     parallel
 Suggests:
     knitr,
-    R.matlab,
-    testthat
+    R.matlab
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
 Collate:
