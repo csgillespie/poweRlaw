@@ -1,5 +1,8 @@
-Version 0.20.6
+Version 0.30.0
 --------------
+
+ * Added seed argument to bootstrap and bootstrap_p functions
+ * Added warning message to handle estimation in tail regions (https://github.com/csgillespie/poweRlaw/issues/31)
  * Bug fix: Bootstrap edge cases (https://github.com/csgillespie/poweRlaw/issues/29) @jkeirstead
 
 

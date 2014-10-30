@@ -144,11 +144,21 @@ estimate_xmin = function (m,
     dat[xm <- xm + 1L,] = c(gof, m_cpy$pars)
   }
   
-  I = which.min(dat[,1L])
-  xmin = xmins[I]
-  pars = dat[I, 2:ncol(dat)]
+  row = which.min(dat[,1L])
+  ## Check for numerical instabilities
+  ## Can happen in the tails of the LN
+  if(!length(row)) {
+    row = 1L
+    dat[row,] = NA_real_
+    xmins[row] = NA_real_
+    warning("Unable to estimate xmin. This may be due to numerical instabilities. 
+            For example, the parameter estimates are in the distribution tails.")
+  }
   
-  l = list(KS=dat[I, 1L], xmin=xmin, pars=pars)
+  xmin = xmins[row]
+  pars = dat[row, 2:ncol(dat)]
+  
+  l = list(KS=dat[row, 1L], xmin=xmin, pars=pars)
   class(l) = "estimate_xmin"
   return(l)
 }
