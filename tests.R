@@ -1,12 +1,6 @@
-##All other tests are included in the package
-## At present, testthat doesn't seem to handle cluster function calls
+## Moved tests from package to avoid CRAN god wrath
 library(poweRlaw)
 library(testthat)
 
-test_dir("pkg/tests/testthat/")
+test_dir("tests/")
 
-test_file("tests/test_bootstrap.R")
-test_file("tests/test_bootstrap_p.R")
-
-
-roxygen2::roxygenise("pkg/")
