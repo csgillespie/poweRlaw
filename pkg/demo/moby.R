@@ -1,4 +1,4 @@
-require("poweRlaw")
+library("poweRlaw")
 ## Load in the full Moby dick data set
 data(moby)
 
@@ -43,4 +43,4 @@ hist(bs2$bootstraps[,3], breaks="fd")
 apply(bs1[[2]], 2, sd)
 apply(bs2[[3]], 2, sd)
 
-bs2$p
+bootstrap(m, no_of_sims = 4, threads=4)

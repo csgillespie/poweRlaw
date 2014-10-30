@@ -6,16 +6,20 @@
 \alias{get_KS_statistic}
 \title{Estimating the lower bound (xmin)}
 \usage{
-bootstrap(m, xmins = 1e+05, pars = NULL, no_of_sims = 100, threads = 1)
+bootstrap(m, xmins = 1e+05, pars = NULL, no_of_sims = 100, threads = 1,
+  seed = NULL)
 
 bootstrap_p(m, xmins = 1e+05, pars = NULL, no_of_sims = 100,
-  threads = 1)
+  threads = 1, seed = NULL)
 
 get_KS_statistic(m)
 
 estimate_xmin(m, xmins = 1e+05, pars = NULL)
 }
 \arguments{
+\item{seed}{default \code{NULL}. An integer to be supplied to \code{set.seed}, or \code{NULL}
+not to set reproducible seeds. This argument is passed \code{clusterSetRNGStream}.}
+
 \item{m}{A reference class object that contains the data.}
 
 \item{pars}{default \code{NULL}. A vector of parameters used to

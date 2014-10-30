@@ -15,7 +15,8 @@ bootstrap_p_helper = function (i, m, N, y, xmins, pars) {
 #' @rdname estimate_xmin
 #' @export
 bootstrap_p = function (m, xmins=1e5, pars=NULL, 
-                        no_of_sims=100, threads=1) {
+                        no_of_sims=100, threads=1, 
+                        seed=NULL) {
   m_cpy = m$copy()
   gof_v = estimate_xmin(m_cpy, xmins=xmins, pars=pars)
   m_cpy$setXmin(gof_v)
@@ -25,15 +26,21 @@ bootstrap_p = function (m, xmins=1e5, pars=NULL,
   z = x[x >= m_cpy$xmin]
   y = x[x < m_cpy$xmin]
   
+  ## Start clock and parallel boostrap
   start_time = Sys.time()
-  ##Parallel bootstrap
-  cl = makeCluster(threads)
+  cl = makeCluster(threads)  
+  
+  ## Set cluster seed
+  clusterSetRNGStream(cl, seed)
+  
   clusterExport(cl, c("dist_rand", "estimate_xmin"))
   nof = parSapply(cl, 1:no_of_sims,
                   bootstrap_p_helper,  m_cpy, 
                   N, y, xmins, pars)
-  stopCluster(cl)
+  ## Stop clock and cluster
   end_time = Sys.time()
+  stopCluster(cl)
+  
   total_time = difftime(end_time, start_time, units="secs")
   l = list(p=sum(nof[1,] >= gof_v[["KS"]])/no_of_sims, 
            gof = gof_v[["KS"]], 

@@ -7,7 +7,8 @@
 #' sampled from the moby data set.
 #' @docType data
 #' @format A vector
-#' @source M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law." Contemporary Physics 46, 323 (2005). See http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm for further details.
+#' @source M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law." 
+#' Contemporary Physics 46, 323 (2005). See http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm for further details.
 NULL
 
 
@@ -24,15 +25,32 @@ NULL
 #' table 6.1 in the Clauset et al paper:
 #' \describe{
 #' \item{\code{bootstrap_moby$gof}}{the K-S statistic}
-#' \item{\code{bootstrap_moby$bootstraps}}{a data frame for the optimal values from the bootstrapping procedure. Column 1: K-S, Column 2: xmin, Column 3: alpha. So standard deviation of column 2 and 3 is 2.2 and 0.033 (the paper gives 2 and 0.02 respectively).}
+#' \item{\code{bootstrap_moby$bootstraps}}{a data frame for the optimal values from the bootstrapping procedure. 
+#' Column 1: K-S, Column 2: xmin, Column 3: alpha. 
+#' So standard deviation of column 2 and 3 is 2.2 and 0.033 (the paper gives 2 and 0.02 respectively).}
 #' }
 #' 
 #' The \code{bootstrap_p_moby} gives the p-value for the hypothesis
-#' test of whether the data follows a power-law. For this simulation study, we get a value of 0.43 (the paper gives 0.49).
+#' test of whether the data follows a power-law. For this simulation study, 
+#' we get a value of 0.43 (the paper gives 0.49).
 #' @docType data
 #' @seealso \code{moby}, \code{bootstrap}, \code{bootstrap_p}
 #' @format A list
-#' @source M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law." Contemporary Physics 46, 323 (2005). See http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm for further details.
+#' @source M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law." 
+#' Contemporary Physics 46, 323 (2005). See http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm for further details.
+#' @examples
+#' ## Generate the bootstrap_moby data set
+#' \dontrun{
+#' data(moby)
+#' m = displ$new(moby)
+#' bs = bootstrap(m, no_of_sims=5000, threads=4, seed=1)
+#' }
+#' 
+#' #' ## Generate the bootstrap_p_moby data set
+#' \dontrun{
+#' bs_p = bootstrap_p(m, no_of_sims=5000, threads=4, seed=1)
+#' }
+#' 
 NULL
 
     
