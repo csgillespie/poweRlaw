@@ -1,6 +1,7 @@
 Version 0.30.0
 --------------
 
+ * Added random number generators for log normal and exponential functions (https://github.com/csgillespie/poweRlaw/issues/32)
  * Added seed argument to bootstrap and bootstrap_p functions
  * Added warning message to handle estimation in tail regions (https://github.com/csgillespie/poweRlaw/issues/31)
  * Bug fix: Bootstrap edge cases (https://github.com/csgillespie/poweRlaw/issues/29) @jkeirstead
@@ -8,17 +9,17 @@ Version 0.30.0
 
 Version 0.20.5
 --------------
- * Further changes to the tolarance in the test suite comparison (solaris-sparc failed to build)
+ * Further changes to the tolerance in the test suite comparison (Solaris-sparc failed to build)
 
 Version 0.20.4
 --------------
- * Added tolarance to test suite comparison (solaris-sparc failed to build)
+ * Added tolerance to test suite comparison (Solaris-sparc failed to build)
  * Removed tufte vignette styles
 
 Version 0.20.3
 --------------
  * Test suite now included in the package
- * Improved numerical stability when working out discrete exp and lognormal pdfs (https://github.com/csgillespie/poweRlaw/issues/21) 
+ * Improved numerical stability when working out discrete exp and log normal pdfs (https://github.com/csgillespie/poweRlaw/issues/21) 
  * Merged data_max and xmins argument in estimate_xmin function 
  * Added example on copying distribution objects (https://github.com/csgillespie/poweRlaw/issues/9)
  * Added new vignette on comparing distributions (https://github.com/csgillespie/poweRlaw/issues/8)
@@ -56,7 +57,7 @@ Version 0.20.0
 
 Version 0.17.0
 --------------
- * Added discrete lognormal, lognormal and poisson distributions.
+ * Added discrete log normal, log normal and poisson distributions.
  * Generic plot functions added for bootstrap output.
  * Test suite.
  * New examples vignette.

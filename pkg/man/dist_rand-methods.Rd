@@ -2,6 +2,8 @@
 \docType{methods}
 \name{dist_rand}
 \alias{dist_rand}
+\alias{dist_rand,conexp-method}
+\alias{dist_rand,conlnorm-method}
 \alias{dist_rand,conpl-method}
 \alias{dist_rand,disexp-method}
 \alias{dist_rand,dislnorm-method}
@@ -9,6 +11,10 @@
 \title{Random number generation for the distribution objects}
 \usage{
 dist_rand(m, n)
+
+\S4method{dist_rand}{conexp}(m, n = "numeric")
+
+\S4method{dist_rand}{conlnorm}(m, n = "numeric")
 
 \S4method{dist_rand}{conpl}(m, n = "numeric")
 

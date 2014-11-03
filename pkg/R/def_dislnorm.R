@@ -174,19 +174,19 @@ setMethod("dist_rand",
             xmin = m$getXmin(); pars = m$getPars()
             lower = xmin - 0.5
             rns = numeric(n)
-            i = 1; N = 0
+            i = 0; N = 0
             ## n-0.5 to avoid floating point sillyness.
-            while (i <= (n-0.5)) {
+            while (i < (n-0.5)) {
               ## Since we reject RNs less than lower=xmin - 0.5 we should simulate >> n rns
               ## If we simulate N Rns (below), we will keep n-i (or reject N-(n-i))
               N = ceiling((n-i)/plnorm(lower, pars[1L], pars[2L], lower.tail=FALSE))
               
-              ## Simulate, then select, t
+              ## Simple rejection sampler
               x = rlnorm(N, pars[1L], pars[2L])
               x = x[x >= lower]
               if(length(x)) {
-                x = x[1:min(length(x), n-i+1)]
-                rns[i:(i+length(x)-1L)] = x
+                x = x[1:min(length(x), n-i)]
+                rns[(i+1L):(i+length(x))] = x
                 i = i + length(x)
               }
             }

@@ -153,7 +153,32 @@ conlnorm_tail_ll = function(x, pars, xmin) {
 ########################################################
 #Rand number generator
 ########################################################
-
+#' @rdname dist_rand-methods
+#' @aliases dist_rand,conlnorm-method
+setMethod("dist_rand",
+          signature = signature(m="conlnorm"),
+          definition = function(m, n="numeric") {
+            xmin = m$getXmin(); pars = m$getPars()
+            rns = numeric(n)
+            i = 0; N = 0
+            ## n-0.5 to avoid floating point sillyness.
+            while (i < (n-0.5)) {
+              ## Since we reject RNs less than xmin we should simulate N > n rns
+              ## If we simulate N Rns (below), we will keep n-i (or reject N-(n-i))
+              N = ceiling((n-i)/plnorm(xmin, pars[1L], pars[2L], lower.tail=FALSE))
+              
+              ## Simple rejection sampler
+              x = rlnorm(N, pars[1L], pars[2L])
+              x = x[x > xmin]
+              if(length(x)) {
+                x = x[1:min(length(x), n-i)]
+                rns[(i+1L):(i+length(x))] = x
+                i = i + length(x)
+              }
+            }
+            rns
+          }
+)
 
 #############################################################
 #MLE method

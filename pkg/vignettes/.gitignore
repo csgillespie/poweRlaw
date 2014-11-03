@@ -42,3 +42,5 @@ cache
 knitr_*
 compare_distributions.md
 compare_distributions.html
+compare_distributions.pdf
+compare_distributions.tex

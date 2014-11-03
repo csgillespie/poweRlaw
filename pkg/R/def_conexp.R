@@ -147,6 +147,25 @@ conexp_tail_ll = function(x, rate, xmin) {
   return(joint_prob - n*prob_over)
 }
 
+
+########################################################
+#Rand number generator
+########################################################
+#' @rdname dist_rand-methods
+#' @aliases dist_rand,conexp-method
+setMethod("dist_rand",
+          signature = signature(m="conexp"),
+          definition = function(m, n="numeric") {
+            ## Rearrange the usual formula for generating
+            ## exp random numbers: -log(u)/lambda > xmin
+            u = runif(n, 0, exp(-m$pars*m$xmin))
+            -log(u)/m$pars
+          }
+)
+            
+            
+
+
 #############################################################
 #MLE method
 #############################################################
