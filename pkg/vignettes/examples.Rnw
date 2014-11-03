@@ -1,5 +1,5 @@
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{examples}
+%\VignetteIndexEntry{Worked examples}
 
 \documentclass[11pt,BCOR2mm,DIV14]{scrartcl}
 
