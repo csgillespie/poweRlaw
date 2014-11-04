@@ -83,7 +83,7 @@ palette(c(rgb(170,93,152, maxColorValue=255),
 \section{Installation}
 
 The package is hosted on CRAN and can be installed in the standard way
-<<eval=FALSE>>=
+<<installation, eval=FALSE>>=
 install.packages("poweRlaw")
 @
 \noindent The developmental version is hosted on github and  can be installed using the \cc{devtools} package\footnote{If you are using Windows, then you will need to install the \texttt{Rtools} package first.}
@@ -155,7 +155,7 @@ can be downloaded from
 \url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm}
 \end{center}
 \noindent or loaded directly
-<<>>=
+<<example_word>>=
 data("moby")
 @
 
@@ -164,7 +164,7 @@ data("moby")
 To fit a discrete power-law,\footnote{The examples vignette contains a more
   thorough analysis of this particular data set.} we create a discrete power-law
 object using the \cc{displ} method\footnote{\cc{displ}: discrete power-law.}
-<<>>=
+<<fitting>>=
 m_m = displ$new(moby)
 @
 \noindent Initially the lower cut-off $\xmin$ is set to the smallest $x$ value and the scaling parameter $\alpha$ is set to \texttt{NULL}
@@ -190,7 +190,7 @@ D(x) = \max_{x \ge \xmin} \vert S(x) - P(x) \vert
 \]
 \noindent where $S(x)$ is the data CDF and $P(x)$ is the theoretical CDF. The value $D(x)$ is known as the Kolmogorov-Smirnov statistic. Our estimate of $\xmin$ is then the value of $x$ that minimises $D(x)$:
 
-<<m_m, echo=FALSE, results='hide'>>=
+<<m_m, echo=1>>=
 (est = estimate_xmin(m_m))
 m_m$setXmin(est)
 @
@@ -222,8 +222,6 @@ plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3],
   parameter values using the bootstrap $\xmin$ uncertainty, (c) $\alpha$
   uncertainty (d) Bivariate scatter plot of $\xmin$ and $\alpha$.}\label{F1}
 \end{figure}
-<<m_m, echo=1, eval=TRUE>>=
-@
 \noindent For the Moby-Dick data set, the minimum\footnote{These estimates match
   the values in the \citeauthor{clauset2009} paper.} is achieved when $\xmin=7$
 and $D(7) = \Sexpr{signif(est$KS, 3)}$. We can then set parameters of power-law
@@ -267,7 +265,7 @@ and then re-infer the parameters (algorithm 1).
 \end{table}  
 
 To run the bootstrapping procedure, we use the \texttt{bootstrap} function
-<<eval=FALSE>>=
+<<uncertainty, eval=FALSE>>=
 bs = bootstrap(m_m, no_of_sims=1000, threads=1)
 @
 
@@ -313,15 +311,15 @@ Since it is possible to fit a power-law distribution to \textit{any} data set, i
     {\small 6:} & $\quad$ Simulate $n_1$ values from a discrete uniform distribution: $U(1, \xmin)$ and \\
     & $\quad$ $n_2$ values from a discrete power-law distribution (with parameter $\alpha$).\\
     {\small 7:} & $\quad$ Calculate the associated KS statistic, $KS_{sim}$.\\
-{\small 8:} & $\quad$ If $KS_d > KS_{sim}$, then $P = P + 1$.\\
+    {\small 8:} & $\quad$ If $KS_d > KS_{sim}$, then $P = P + 1$.\\
     {\small 9:} & \textbf{end for} \\
-{\small 10:} & p = P/B\\
+    {\small 10:} & p = P/B.\\
     \hline
   \end{tabular}
 \end{table}  
 \begin{figure}[t]
 \centering
-<<echo=FALSE, fig.width=8, fig.height=4, out.width="\\textwidth">>=
+<<do_we_have_a_power,echo=FALSE, fig.width=8, fig.height=4, out.width="\\textwidth">>=
 par(mfrow=c(1, 3))
 hist(bs_p$bootstraps[,2], xlab=expression(x[min]), ylim=c(0, 1600), 
      xlim=c(0, 45), main=NULL, breaks="fd")
@@ -371,7 +369,7 @@ The results of this procedure are shown in figure \ref{F4}.
 \section{Distribution objects}
 
 For the Moby Dick example, we created a \texttt{displ} object
-<<>>=
+<<distribution_objects>>=
 m_m = displ$new(moby)
 @
 \noindent The object \cc{m\_m} has class \cc{displ} and inherits the \texttt{discrete\_distribution} class. A list of available distributions are given in table \ref{T1}. 
@@ -442,7 +440,7 @@ blackouts = read.table("blackouts.txt")
 \section{Loading data}
 
 Typically, data is stored in a csv or text file. To use this data, we load it in the usual way\footnote{The blackouts data set can be obtained from Clauset's website: \mbox{\url{http://goo.gl/BsqnP}}}
-<<eval=FALSE>>=
+<<loading_data,eval=FALSE>>=
 blackouts = read.table("blackouts.txt")
 @
 \noindent Distribution objects take vectors as inputs, so
@@ -467,10 +465,12 @@ lines(m_bl, col=2)
 if(!file.exists("plfit.R"))
   download.file("http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r", destfile="plfit.R")
 source("plfit.R")
-
-if(!file.exists("plpva.r"))
-  download.file("http://tuvalu.santafe.edu/~aaronc/powerlaws/plpva.r", destfile="plpva.r")
-source("plpva.r")
+if(file.exists("plfit_res.rds")) {
+  plfit_res = readRDS("plfit_res.rds")
+} else {
+  plfit_res = plfit(moby)  
+  saveRDS(plfit_res, file="plfit_res.rds")
+}
 @
 
 \section{Comparison with the \texttt{plfit} script}
@@ -485,11 +485,11 @@ In particular, the script for estimating $\xmin$ can be loaded using
 <<eval=FALSE>>=
 source("http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r")
 @
-\noindent The results are directly comparable to the \cc{poweRlaw} package. For example, consider the Moby Dick data set again, we have
-<<>>=
-plfit(moby)
+\noindent The results are directly comparable to the \cc{poweRlaw} package. For example, consider the Moby Dick data set again. Running
+<<eval=FALSE>>=
+plfit_res = plfit(moby)
 @
-\noindent Notice that the results are slightly different. This is because the \cc{plfit} by default does a parameter scan over the range
+\noindent gives estimates of $\alpha=\Sexpr{plfit_res$alpha}$ and $\xmin = \Sexpr{plfit_res$xmin}$. These results are slightly different than those obtained by the \cc{poweRlaw} package. This is because the \cc{plfit} by default does a parameter scan over the range
 \[
 1.50, 1.51, 1.52, \ldots, 2.49, 2.50
 \]
@@ -501,10 +501,8 @@ estimate_xmin(m_m, pars=seq(1.5, 2.5, 0.01))
 
 \subsection{The continuous case}
 
-The \texttt{plfit} script also fits continuous power-laws. Again the results are comparable. 
-
-For example, suppose we have one thousand random numbers from a continuous power-law distributions with parameters $\alpha = 2.5$ and $\xmin = 10.0$
-<<>>=
+The \texttt{plfit} script also fits continuous power-laws. Again the results are comparable. For example, suppose we have one thousand random numbers from a continuous power-law distributions with parameters $\alpha = 2.5$ and $\xmin = 10.0$
+<<the_ctn_case>>=
 r = rplcon(1000, 10, 2.5)
 @
 \noindent The \texttt{plfit} automatically detects if the data is continuous

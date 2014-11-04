@@ -18,10 +18,10 @@
 
 \usepackage{xcolor}
 \hypersetup{
-    colorlinks,
-    linkcolor={red!50!black},
-    citecolor={blue!50!black},
-    urlcolor={blue!80!black}
+colorlinks,
+linkcolor={red!50!black},
+citecolor={blue!50!black},
+urlcolor={blue!80!black}
 }
 
 \pagestyle{scrheadings}  
@@ -85,7 +85,7 @@ The Moby Dick dataset contains the frequency of unique words in the novel Moby D
 \url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm}
 \end{center}
 \noindent or loaded directly
-<<>>=
+<<dis_data>>=
 library("poweRlaw")
 data("moby")
 @
@@ -105,27 +105,32 @@ m_pl$setXmin(est)
 \noindent This yields a threshold estimate of $\xmin=\Sexpr{est$xmin}$ and scaling parameter $\alpha=\Sexpr{signif(est$pars, 3)}$, which matches results found in \citet{clauset2009}. 
 
 Alternatively, we could perform a parameter scan for each value of $\xmin$
-<<cache=TRUE,results='hide'>>=
-estimate_xmin(m_pl, pars=seq(1.5, 2.5, 0.1))
+<<eval=FALSE>>=
+estimate_xmin(m_pl, pars=seq(1.8, 2.3, 0.1))
 @
-
-
 
 To fit a discrete log-normal distribution, we follow a similar procedure, except
 we begin by creating a \cc{dislnorm} object\footnote{\cc{dislnorm}: discrete log
-  normal object}
+normal object}
 
-<<cache=TRUE,warning=FALSE>>=
+<<warning=FALSE, eval=FALSE>>=
 m_ln = dislnorm$new(moby)
 est = estimate_xmin(m_ln)
 @
-<<echo=FALSE, cache=TRUE>>=
-est_ln = est
-est_ln$pars = signif(est_ln$pars, 3)
-m_ln$setXmin(est)
-m_pois = dispois$new(moby)
-est = estimate_xmin(m_pois)
-m_pois$setXmin(est)
+<<echo=FALSE>>=
+if(file.exists("examples1.rds")) {
+  load("examples1.rds")
+} else {
+  m_ln = dislnorm$new(moby)
+  est = estimate_xmin(m_ln)
+  est_ln = est
+  est_ln$pars = signif(est_ln$pars, 3)
+  m_ln$setXmin(est)
+  m_pois = dispois$new(moby)
+  est = estimate_xmin(m_pois)
+  m_pois$setXmin(est)
+  save(m_pois, m_ln, est_ln, file="examples1.rds")
+}
 @
 
 \noindent which yields a lower threshold of $\xmin=\Sexpr{est_ln$xmin}$ and parameters $(\Sexpr{est_ln$pars[1]},$ $\Sexpr{est_ln$pars[2]})$. A similar procedure is applied to fit the Poisson distribution; we create a distribution object using \cc{dispois}, then fit as before.
@@ -141,8 +146,8 @@ lines(m_pois, col=4)
 \centering
 <<echo=FALSE, cache=TRUE>>=
 plot(m_pl, xlab="x", ylab="CDF", 
-       panel.first=grid(col="grey80"), 
-       pch=21, bg=1)
+     panel.first=grid(col="grey80"), 
+     pch=21, bg=1)
 
 lines(m_pl, col=2, lwd=2)
 lines(m_ln, col=3, lwd=2)
@@ -155,7 +160,7 @@ lines(m_pois, col=4, lwd=2)
 
 \subsection{Parameter uncertainty}
 
-<<echo=FALSE>>=
+<<par_uncertainty, echo=FALSE>>=
 data(bootstrap_moby)
 bs = bootstrap_moby
 @
@@ -163,9 +168,9 @@ bs = bootstrap_moby
 To get a handle on the uncertainty in the parameter estimates, we use a
 bootstrapping procedure, via the \texttt{bootstrap} function. This procedure can
 be applied to any distribution object.\footnote{For example,
-  \mbox{bootstrap(m\_ln)}.} Furthermore, the bootstrap procedure can utilize
+\mbox{bootstrap(m\_ln)}.} Furthermore, the bootstrap procedure can utilize
 multiple CPU cores to speed up inference.\footnote{The output of this
-  bootstrapping procedure can be obtained via \cc{data(bootstrap\_moby)}.}
+bootstrapping procedure can be obtained via \cc{data(bootstrap\_moby)}.}
 <<eval=FALSE, tidy=FALSE>>=
 ## 5000 bootstraps using two cores
 bs = bootstrap(m_pl, no_of_sims=5000, threads=2)
@@ -176,12 +181,12 @@ bootstrap(m_pl, xmins = seq(2, 20, 2))
 @
 \noindent will only calculate the Kolmogorov-Smirnoff statistics at values of $\xmin$ equal to
 \[
-  2, 4, 6, \ldots, 20\;.
-  \]
+2, 4, 6, \ldots, 20\;.
+\]
 A similar argument exists for the parameters.\footnote{For single parameter models, \cc{pars} should be a vector. For the log-normal distribution, \cc{pars} should be a matrix of values.}
 
 The bootstrap function, returns \cc{bs\_xmin} object that has three components:
-  \begin{enumerate}
+\begin{enumerate}
 \item The goodness of fit statistic obtained from the Kolmogorov-Smirnoff test. This value should correspond to the value obtained from the \mbox{\cc{estimate\_xmin}} function.
 \item A data frame containing the results for the bootstrap procedure. 
 \item The average simulation time, in seconds, for a single bootstrap.
@@ -208,14 +213,13 @@ plot(bs, trim=0.1)
 \begin{figure}[t]
 \centering
 <<echo=FALSE, fig.width=6, fig.height=3, cache=TRUE, out.width='0.8\\textwidth'>>=
-  par(mfrow=c(1, 2))
+par(mfrow=c(1, 2))
 hist(bs$bootstraps[,2], xlab=expression(x[min]), ylim=c(0, 1600), 
      xlim=c(0, 20), main=NULL, breaks="fd")
 grid()
 hist(bs$bootstraps[,3], xlab=expression(alpha), 
      ylim=c(0, 500), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
 grid()
-
 @
 \caption{Characterising uncertainty in parameter values. (a) $\xmin$ uncertainty (standard deviation 2) (b) $\alpha$ uncertainty (std dev. 0.03)}\label{F1c}
 \end{figure}
@@ -226,7 +230,6 @@ hist(bs$bootstraps[,2])
 hist(bs$bootstraps[,3]) 
 @
 \noindent to get figure \ref{F1c}. 
-
 
 A similar bootstrap analysis can be obtained for the log-normal distribution
 <<eval=FALSE>>=
@@ -254,13 +257,13 @@ Since it is possible to fit a power law distribution to \textit{any} data set, i
 &H_1: \mbox{data is not generated from a power law distribution.}
 \end{align*}
 \noindent To test these hypothesis, we use the \texttt{bootstrap\_p} function
-<<eval=FALSE>>=
+<<testing_pl, eval=FALSE>>=
 bs_p = bootstrap_p(m_pl)
 @
 \noindent The point estimate of the $p\,$-value is one of the elements of the
 \texttt{bs\_p} object\footnote{Also given is the average time of a single
-  bootstrap: \mbox{\texttt{bs\_p\$sim\_time} = \Sexpr{signif(bs_p$sim_time, 3)}}
-  seconds.}
+bootstrap: \mbox{\texttt{bs\_p\$sim\_time} = \Sexpr{signif(bs_p$sim_time, 3)}}
+seconds.}
 <<>>=
 bs_p$p
 @
@@ -283,7 +286,7 @@ confidence intervals.
 
 A second approach to test the power law hypothesis is a direct comparison of two
 models.\footnote{While the bootstrap method is useful, it is computationally
-  intensive and will be unsuitable for most models.} A standard technique is to
+intensive and will be unsuitable for most models.} A standard technique is to
 use Vuong's test, which a likelihood ratio test for model selection using the
 Kullback-Leibler criteria. The test statistic, $R$, is the ratio of the
 log-likelihoods of the data between the two competing models. The sign of $R$
@@ -293,7 +296,7 @@ subject to error, we use the method proposed by \cite{Vuong1989}.
 To compare two distributions, each distribution must have the same lower
 threshold. So we first set the log normal distribution object to have the same
 $\xmin$ as the power law object
-<<cache=TRUE>>=
+<<comp_dist, cache=TRUE>>=
 m_ln$setXmin(m_pl$getXmin())
 @
 \noindent Next we estimate the parameters for this particular value of $\xmin$:
@@ -312,13 +315,13 @@ This $p\,$-value corresponds to the $p$-value on page 29 of the
 Overall these results suggest that one model can't be favoured over the other. 
 
 
-\subsection{Investigating the effect in $\xmin$}
+\subsection{Investigating the lower bound}
 
 The estimate of the scaling parameter, $\alpha$, is typically highly correlated
 with the threshold limit, $\xmin$. This relationship can be easily investigated
 with the \cc{poweRlaw} package. First, we create a vector of thresholds to scan
 <<>>=
-xmins = 1:1500
+xmins = seq(1, 1001, 5)
 @
 
 <<est_scan, echo=FALSE, cache=TRUE>>=
@@ -332,26 +335,24 @@ for(i in seq_along(xmins)){
 \begin{figure}[t]
 \centering
 <<echo=FALSE, cache=TRUE>>=
-  plot(xmins, est_scan, type="l", 
-       panel.first=grid(), 
-       xlab=expression(x[min]), ylab=expression(alpha), 
-       ylim=c(1.6, 2.8), col=1)
+plot(xmins, est_scan, type="l", 
+     panel.first=grid(), 
+     xlab=expression(x[min]), ylab=expression(alpha), 
+     ylim=c(1.6, 2.8), col=1)
 abline(h=1.95, col=2, lty=2)
 @
 \caption{Estimated parameter values conditional on the threshold, $\xmin$. The
-  horizontal line corresponds to $\alpha=1.95$.}\label{F1e}
+horizontal line corresponds to $\alpha=1.95$.}\label{F1e}
 \end{figure}
 \noindent then a vector to store the results
-<<est_scan, echo=1, eval=FALSE, cache=TRUE>>=
+<<est_scan, echo=1, eval=FALSE>>=
 @
 \noindent Next, we loop over the $\xmin$ values and estimate the parameter value
 conditional on the $\xmin$ value
-<<est_scan, echo=2:4, cache=TRUE>>=
+<<est_scan, echo=2:4, eval=FALSE>>=
 @
 \noindent The results are plotted figure \ref{F1e}. For this data set, as the
 lower threshold increases, so does the point estimate of $\alpha$.
-
-
 
 
 \clearpage
@@ -363,7 +364,7 @@ electrical blackouts in the United States between 1984 and 2002 (see
 \cite{newman2005} for further details).The data set can be downloaded from
 Clauset's website
 \begin{center}
-  \url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data/blackouts.txt}
+\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data/blackouts.txt}
 \end{center}
 and loaded into R in the usual way
 <<>>=
@@ -398,8 +399,8 @@ m_bl_ln$setXmin(est)
 \centering
 <<echo=FALSE, fig.width=4, fig.height=4>>=
 plot(m_bl, pch=21, bg=1, 
-panel.first=grid(col="grey80"), 
-xlab="Blackouts", ylab="CDF")
+     panel.first=grid(col="grey80"), 
+     xlab="Blackouts", ylab="CDF")
 lines(m_bl, col=2, lwd=3)
 lines(m_bl_ln, col=3, lwd=3)
 @
@@ -439,17 +440,17 @@ head(native_american, 3)
 \centering
 <<echo=FALSE, fig.width=6, fig.height=4, out.width="0.8\\textwidth">>=
 plot(native_american$Date, native_american$Cas, 
-log="y", pch=21, bg=1, 
-ylim=c(1, 2000), 
-cex=0.5, panel.first=grid(col="grey70"), 
-xlab="Date", ylab="#Casualties")
+     log="y", pch=21, bg=1, 
+     ylim=c(1, 2000), 
+     cex=0.5, panel.first=grid(col="grey70"), 
+     xlab="Date", ylab="#Casualties")
 
 points(us_american$Date, us_american$Cas, 
-pch=24, bg=2, cex=0.5)
+       pch=24, bg=2, cex=0.5)
 @
 \caption{Casualty record for the Indian-American war, 1776 -- 1890. Native
-  Americans casualties (purple circles) and US Americans casualties (green
-  triangles). Data taken from \citet{Friedman2013}.}\label{F3a}
+Americans casualties (purple circles) and US Americans casualties (green
+triangles). Data taken from \citet{Friedman2013}.}\label{F3a}
 \end{figure}
 
 It is straightforward to fit a discrete power law to this data set. First, we
@@ -460,8 +461,8 @@ m_us = displ$new(us_american$Cas)
 @
 \noindent then we estimate $\xmin$ for each data set
 <<cache=TRUE>>=
-est_na = estimate_xmin(m_na, pars=seq(1.5, 2.5, 0.001))
-est_us = estimate_xmin(m_us, pars=seq(1.5, 2.5, 0.001))
+est_na = estimate_xmin(m_na, pars=seq(1.5, 2.5, 0.01))
+est_us = estimate_xmin(m_us, pars=seq(1.5, 2.5, 0.01))
 @
 \noindent and update the power law objects
 <<cache=TRUE>>=
@@ -480,8 +481,8 @@ lines(m_us, col=2)
 \begin{figure}[t]
 <<echo=FALSE>>=
 plot(m_na, bg=1, pch=21, cex=0.5,  
-       panel.first=grid(col="grey70"), 
-       xlab="#Casualties", ylab="CDF")
+     panel.first=grid(col="grey70"), 
+     xlab="#Casualties", ylab="CDF")
 lines(m_na, lwd=2, col=1)
 
 d = plot(m_us, draw=FALSE)
@@ -489,7 +490,7 @@ points(d$x, d$y, bg=2, pch=24, cex=0.5)
 lines(m_us, lwd=2, col=2)
 @
 \caption{Plots of the CDFs for the Native American and US American casualties.
-  The lines of best fit are also given.}\label{F3b}
+The lines of best fit are also given.}\label{F3b}
 \end{figure}
 \noindent The result is given in figure \ref{F3b}. The tails of the
 distributions appear to follow a power law. This is consistent with the
