@@ -1,4 +1,5 @@
 #' @rdname plot-distribution-ANY-method
+#' @param x a distribution reference object.
 #' @export
 setMethod("lines",
           signature = signature(x="distribution"),

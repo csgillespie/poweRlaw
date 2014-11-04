@@ -15,6 +15,8 @@
   length.out = 100, ...)
 }
 \arguments{
+\item{x}{a distribution reference object.}
+
 \item{cut}{logical (default \code{FALSE}) -
 Where should the plot begin. If \code{cut=FALSE}, then the
 plot will start at the minimum data value. Otherwise, the plot
