@@ -6,7 +6,7 @@
 \alias{dist_data_cdf,discrete_distribution-method}
 \title{The data cumulative distribution function}
 \usage{
-dist_data_cdf(m, lower_tail = TRUE, all_values = FALSE)
+dist_data_cdf(m, lower_tail = TRUE, all_values = FALSE, xmins = 1e+05)
 
 \S4method{dist_data_cdf}{discrete_distribution}(m, lower_tail = TRUE,
   all_values = FALSE)
@@ -23,10 +23,18 @@ otherwise, \eqn{P[X > x]}.}
 \item{all_values}{logical, if \code{FALSE} (default), evaluate
 at the data values. If \code{TRUE},
 then the cdf is evaluated at points xmin, xmin+1, ..., xmax.}
+
+\item{xmins}{default \code{NULL}. The maximum cdf value to calculate.
+See details for further information. If \code{NULL}, then no maximum is imposed.}
 }
 \description{
 This is generic function for distribution objects.
 This function calculates the data cdf.
+}
+\details{
+When calculating the KS distance, the data and distribution cdf are compared.
+However, during the bootstrap_p procedure very large values generated. The \code{xmins}
+limits this comparison.
 }
 \note{
 This method does *not* alter the internal state of

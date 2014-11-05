@@ -41,7 +41,7 @@ bootstrap_p = function (m, xmins=1e5, pars=NULL,
   end_time = Sys.time()
   stopCluster(cl)
   
-  total_time = difftime(end_time, start_time, units="secs")
+  total_time = difftime(end_time, start_time, units="secs")*threads
   l = list(p=sum(nof[1,] >= gof_v[["KS"]])/no_of_sims, 
            gof = gof_v[["KS"]], 
            bootstraps = as.data.frame(t(nof)), 

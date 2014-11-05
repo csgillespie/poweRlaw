@@ -11,7 +11,8 @@
 \alias{dist_cdf,dispois-method}
 \title{The cumulative distribution function (cdf)}
 \usage{
-dist_cdf(m, q = NULL, lower_tail = FALSE, all_values = FALSE)
+dist_cdf(m, q = NULL, lower_tail = FALSE, all_values = FALSE,
+  xmins = NULL)
 
 \S4method{dist_cdf}{conexp}(m, q = NULL, lower_tail = TRUE,
   all_values = FALSE)
@@ -46,6 +47,9 @@ probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 
 \item{all_values}{logical; \code{FALSE} (default). If \code{TRUE},
 then the cdf is evaluated at points xmin, xmin+1, ..., xmax.}
+
+\item{xmins}{default \code{NULL}. The maximum cdf value to calculate.
+See details for further information. If \code{NULL}, then no maximum is imposed.}
 }
 \description{
 This is a generic function for calculating
@@ -55,6 +59,11 @@ for the normal distribution.
 The \code{dist_cdf} function calculates the
 cumulative probability distribution for the
 current parameters and xmin value.
+}
+\details{
+When calculating the KS distance, the data and distribution cdf are compared.
+However, during the bootstrap_p procedure very large values generated. The \code{xmins}
+limits this comparison.
 }
 \note{
 This method does *not* alter the internal state of

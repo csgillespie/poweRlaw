@@ -1,6 +1,7 @@
 Version 0.30.0
 --------------
 
+ * The xmins argument is now passed the get_KS_statistic, making the bootstrap functions more efficient
  * Added random number generators for log normal and exponential functions (https://github.com/csgillespie/poweRlaw/issues/32)
  * Added seed argument to bootstrap and bootstrap_p functions
  * Added warning message to handle estimation in tail regions (https://github.com/csgillespie/poweRlaw/issues/31)

@@ -12,7 +12,7 @@ bootstrap(m, xmins = 1e+05, pars = NULL, no_of_sims = 100, threads = 1,
 bootstrap_p(m, xmins = 1e+05, pars = NULL, no_of_sims = 100,
   threads = 1, seed = NULL)
 
-get_KS_statistic(m)
+get_KS_statistic(m, xmins = 1e+05)
 
 estimate_xmin(m, xmins = 1e+05, pars = NULL)
 }

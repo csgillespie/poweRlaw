@@ -1,12 +1,12 @@
 #' @rdname estimate_xmin
 #' @export
-get_KS_statistic = function(m) {
+get_KS_statistic = function(m, xmins=1e5) {
   if(is(m, "discrete_distribution")) {
-    data_cdf = dist_data_cdf(m, all_values=TRUE)
-    fit_cdf = dist_cdf(m, all_values=TRUE)
+    data_cdf = dist_data_cdf(m, all_values=TRUE, xmins=max(xmins))
+    fit_cdf = dist_cdf(m, all_values=TRUE, xmins=max(xmins))
   } else {
-    data_cdf = dist_data_cdf(m)
-    fit_cdf = dist_cdf(m)
+    data_cdf = dist_data_cdf(m, xmins=max(xmins))
+    fit_cdf = dist_cdf(m, xmins=max(xmins))
   }
   gof = max(abs(data_cdf - fit_cdf))
   return(gof)
@@ -94,9 +94,11 @@ estimate_xmin = function (m,
   
   ## Make thread safe
   if(estimate) {
-    m_cpy = m$getRefClass()$new(m$dat)
+    q = m$dat[m$dat <= max(xmins)]
+    m_cpy = m$getRefClass()$new(q)
     m_cpy$pars = pars
     if(length(xmins) == 1) {
+      ## Limit while loop below
       space = unique(m$dat)
       space = space[space <= xmins]
       xmins = space
@@ -140,7 +142,7 @@ estimate_xmin = function (m,
       I = which.max(L)
       m_cpy$pars = m_cpy$pars[I]
     }
-    gof = get_KS_statistic(m_cpy)
+    gof = get_KS_statistic(m_cpy, xmins)
     dat[xm <- xm + 1L,] = c(gof, m_cpy$pars)
   }
   
