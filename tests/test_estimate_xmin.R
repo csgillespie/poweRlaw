@@ -62,7 +62,7 @@ test_that("Testing estimate_xmin function", {
   
   expect_equal(est$pars, 0.01003, tol=1e-3)
   expect_equal(est$xmin, 4, tol=1e-3)
-  
+ 
   #########################################
   ## Edge cases
   x = c(2, 2,2)

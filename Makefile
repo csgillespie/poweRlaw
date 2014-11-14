@@ -5,7 +5,7 @@
 .SUFFIXES: .tex .pdf .Rnw .R
 
 DIR = pkg/vignettes
-PKG = poweRlaw
+PKG = pkg
 
 ALL =  examples compare_distributions poweRlaw
 
@@ -26,7 +26,7 @@ view:
 
 build:
 	make clean
-	cd ../ && R CMD build $(PKG)
+	R CMD build $(PKG)
 
 .Rnw.pdf:
 	Rscript  -e "require(knitr); knit('$*.Rnw', output='$*.tex')" && \

@@ -7,7 +7,7 @@ test_that("Testing dist_cdf function", {
                c(0.6079, 0.6079, 0.8275), 
                tol=1e-4)
   
-  expect_equal(dist_cdf(mt, all_values=TRUE), 
+  expect_equal(dist_all_cdf(mt), 
                c(0.6079,0.7599,0.8275), 
                tol=1e-4)
   
@@ -25,7 +25,7 @@ test_that("Testing dist_cdf function", {
   cdf2 = (plnorm(2.5, 1, 1)-plnorm(0.5, 1, 1))/(1 - plnorm(0.5, 1, 1))
   cdf3 = (plnorm(3.5, 1, 1)-plnorm(0.5, 1, 1))/(1 - plnorm(0.5, 1, 1))
   expect_equal(dist_cdf(mt), c(cdf1, cdf1, cdf3), tol=1e-4)
-  expect_equal(dist_cdf(mt, all_values=TRUE), c(cdf1, cdf2, cdf3), tol=1e-4)
+  expect_equal(dist_all_cdf(mt), c(cdf1, cdf2, cdf3), tol=1e-4)
   expect_equal(dist_cdf(mt, q=c(1, 3)), c(cdf1, cdf3), tol=1e-4)
   
   mt$setXmin(2)
@@ -43,7 +43,7 @@ test_that("Testing dist_cdf function", {
   cdf2 = sum(dpois(1:2, 1))/(1 - dpois(0, 1))
   cdf3 = sum(dpois(1:3, 1))/(1 - dpois(0, 1))
   expect_equal(dist_cdf(mt), c(cdf1, cdf1, cdf3), tol=1e-4)
-  expect_equal(dist_cdf(mt, all_values=TRUE), c(cdf1, cdf2, cdf3), tol=1e-4)
+  expect_equal(dist_all_cdf(mt), c(cdf1, cdf2, cdf3), tol=1e-4)
   expect_equal(dist_cdf(mt, q=c(1, 3)), c(cdf1, cdf3), tol=1e-4)
   
   mt$setXmin(2)
@@ -61,7 +61,7 @@ test_that("Testing dist_cdf function", {
   cdf2 = (pexp(2.5, 1, 1)-pexp(0.5, 1, 1))/(1 - pexp(0.5, 1, 1))
   cdf3 = (pexp(3.5, 1, 1)-pexp(0.5, 1, 1))/(1 - pexp(0.5, 1, 1))
   expect_equal(dist_cdf(mt), c(cdf1, cdf1, cdf3), tol=1e-4)
-  expect_equal(dist_cdf(mt, all_values=TRUE), c(cdf1, cdf2, cdf3), tol=1e-4)
+  expect_equal(dist_all_cdf(mt), c(cdf1, cdf2, cdf3), tol=1e-4)
   expect_equal(dist_cdf(mt, q=c(1, 3)), c(cdf1, cdf3), tol=1e-4)
   
   mt$setXmin(2)
@@ -82,7 +82,7 @@ test_that("Testing dist_cdf function", {
   mt = conpl$new(x); 
   mt$setXmin(1); mt$setPars(2)
   expect_equal(dist_cdf(mt), c(0.5, 0.5, 0.75), tol=1e-4)
-  expect_equal(dist_cdf(mt, all_values=T), 
+  expect_equal(dist_all_cdf(mt), 
                c(0, 0.5, 2/3, 0.75), tol=1e-4)
   expect_equal(dist_cdf(mt, q=c(2, 4)), c(0.5, 0.75), tol=1e-4)
   
@@ -99,7 +99,7 @@ test_that("Testing dist_cdf function", {
   cdf3 = (plnorm(3, 1, 1)-plnorm(1, 1, 1))/(1 - plnorm(1, 1, 1))
   cdf4 = (plnorm(4, 1, 1)-plnorm(1, 1, 1))/(1 - plnorm(1, 1, 1))
   expect_equal(dist_cdf(mt), c(cdf2, cdf2, cdf4), tol=1e-4)
-  expect_equal(dist_cdf(mt, all_values=TRUE), c(0, cdf2, cdf3, cdf4), tol=1e-4)
+  expect_equal(dist_all_cdf(mt), c(0, cdf2, cdf3, cdf4), tol=1e-4)
   expect_equal(dist_cdf(mt, q=c(2, 4)), c(cdf2, cdf4), tol=1e-4)
 
   cdf4 = (plnorm(4, 1, 1)-plnorm(2, 1, 1))/(1 - plnorm(2, 1, 1))
@@ -118,7 +118,7 @@ test_that("Testing dist_cdf function", {
   cdf3 = (pexp(3, 1)-pexp(1, 1))/(1 - pexp(1, 1))
   cdf4 = (pexp(4, 1)-pexp(1, 1))/(1 - pexp(1, 1))
   expect_equal(dist_cdf(mt), c(cdf2, cdf2, cdf4), tol=1e-4)
-  expect_equal(dist_cdf(mt, all_values=TRUE), c(0, cdf2, cdf3, cdf4), tol=1e-4)
+  expect_equal(dist_all_cdf(mt), c(0, cdf2, cdf3, cdf4), tol=1e-4)
   expect_equal(dist_cdf(mt, q=c(2, 4)), c(cdf2, cdf4), tol=1e-4)
   
   cdf4 = (pexp(4, 1)-pexp(2, 1))/(1 - pexp(2, 1))
