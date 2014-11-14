@@ -1,7 +1,9 @@
 Version 0.30.0
 --------------
 
- * The xmins argument is now passed the get_KS_statistic, making the bootstrap functions more efficient
+ * A new xmax argument has been added to the bootstrap and estimate_xmin functions. This argument limits 
+the search space when calculating the KS statistic. 
+ * The all_values argument has been removed from dist_cdf. A new function dist_all_cdf has been created.
  * Added random number generators for log normal and exponential functions (https://github.com/csgillespie/poweRlaw/issues/32)
  * Added seed argument to bootstrap and bootstrap_p functions
  * Added warning message to handle estimation in tail regions (https://github.com/csgillespie/poweRlaw/issues/31)
