@@ -1,5 +1,5 @@
 ## Moved tests from package to avoid BDR's wrath
-library(poweRlaw)
+install.packages("pkg/", repo=NULL)
 library(testthat)
 
 test_dir("tests/")
