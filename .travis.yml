@@ -2,7 +2,7 @@ language: c
 
 script: 
     - ./travis-tool.sh run_tests
-    - Rscript tests.R
+    - cd ../ && Rscript tests.R
 
 before_install:
     - cd pkg
