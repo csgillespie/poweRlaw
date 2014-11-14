@@ -98,17 +98,11 @@ setMethod("dist_pdf",
 #' @aliases dist_cdf,disexp-method
 setMethod("dist_cdf",
           signature = signature(m="disexp"),
-          definition = function(m, 
-                                q=NULL, 
-                                lower_tail=TRUE,
-                                all_values=FALSE) {
+          definition = function(m, q=NULL, lower_tail=TRUE) {
             xmin = m$getXmin(); pars = m$getPars()
             if(is.null(pars)) stop("Model parameters not set.")  
             
-            if(all_values) {
-              xmax = max(m$dat)
-              q = xmin:xmax
-            } else if(is.null(q)) {
+            if(is.null(q)) {
               q = m$dat
               q = q[q>=xmin]
             } 
@@ -122,6 +116,20 @@ setMethod("dist_cdf",
             }
           }
 )
+
+#' @rdname dist_cdf-methods
+#' @aliases dist_all_cdf,disexp-method
+setMethod("dist_all_cdf",
+          signature = signature(m="disexp"),
+          definition = function(m, lower_tail=TRUE, xmax=1e5) {
+            xmin = m$getXmin()
+            xmax = min(max(m$dat), xmax)
+            dist_cdf(m, q=xmin:xmax, lower_tail=lower_tail)
+          }
+)
+
+
+
 #############################################################
 #ll method
 #############################################################

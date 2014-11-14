@@ -174,27 +174,37 @@ setMethod("dist_pdf",
 #' @aliases dist_cdf,displ-method
 setMethod("dist_cdf",
           signature = signature(m="displ"),
-          definition = function(m, 
-                                q=NULL, 
-                                lower_tail=TRUE,
-                                all_values=FALSE) {
+          definition = function(m, q=NULL, lower_tail=TRUE) {
             
             xmin = m$getXmin(); pars = m$getPars()
             if(is.null(pars)) stop("Model parameters not set.")  
             
-            if(all_values) {
-              inter = m$internal
-              xmax = max(m$dat)
-              v = ifelse(xmin==1, 0, sum((1:(xmin-1))^-pars))
-              cumsum((((xmin:xmax)^-pars))/(inter[["constant"]] - v))                
-            } else if(is.null(q)) {
-              q = m$dat
-              ppldis(q, xmin, pars, lower_tail)
-            } else {
-              ppldis(q, xmin, pars, lower_tail)
-            } 
+            if(is.null(q)) q = m$dat
+            ppldis(q, xmin, pars, lower_tail)
           }
 )
+
+#' @rdname dist_cdf-methods
+#' @aliases dist_all_cdf,displ-method
+setMethod("dist_all_cdf",
+          signature = signature(m="displ"),
+          definition = function(m, lower_tail=TRUE, xmax=1e5) {
+            
+            xmin = m$getXmin(); pars = m$getPars()
+            if(is.null(pars)) stop("Model parameters not set.")  
+            
+            inter = m$internal
+            xmax = min(max(m$dat), xmax)
+            v = ifelse(xmin==1, 0, sum((1:(xmin-1))^-pars))
+            cumsum((((xmin:xmax)^-pars))/(inter[["constant"]] - v))                
+            
+          }
+)
+
+
+
+
+
 
 #############################################################
 #ll method
@@ -261,7 +271,7 @@ displ$methods(
     } else {
       theta_0 = initialise
     }
-
+    
     x = dat[dat > (xmin-0.5)]
     negloglike = function(par) {
       r = -dis_pl_ll(x, par, xmin)

@@ -94,18 +94,11 @@ setMethod("dist_pdf",
 #' @aliases dist_cdf,conpl-method
 setMethod("dist_cdf",
           signature = signature(m="conpl"),
-          definition = function(m, 
-                                q=NULL, 
-                                lower_tail=TRUE,
-                                all_values=FALSE) {
-            xmin = m$xmin
-            pars = m$pars
+          definition = function(m, q=NULL, lower_tail=TRUE) {
+            xmin = m$xmin;  pars = m$pars
             if(is.null(pars)) stop("Model parameters not set.")  
             
-            if(all_values) {
-              xmax = max(m$dat)
-              1 - (xmin:xmax/xmin)^(-pars + 1)
-            } else if(is.null(q)) {
+            if(is.null(q)) {
               q = m$dat
               n = m$internal[["n"]]; N = length(q)
               q = q[(N-n+1):N]
@@ -115,6 +108,23 @@ setMethod("dist_cdf",
             }
           }
 )
+
+#' @rdname dist_cdf-methods
+#' @aliases dist_all_cdf,conpl-method
+setMethod("dist_all_cdf",
+          signature = signature(m="conpl"),
+          definition = function(m, lower_tail=TRUE, xmax=1e5) {
+            xmin = m$xmin; pars = m$pars
+            if(is.null(pars)) stop("Model parameters not set.")  
+            
+            xmax = min(max(m$dat), xmax)
+            1 - (xmin:xmax/xmin)^(-pars + 1)
+          }
+)
+
+
+
+
 
 #############################################################
 #ll method

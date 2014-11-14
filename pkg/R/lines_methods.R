@@ -1,5 +1,6 @@
 #' @rdname plot-distribution-ANY-method
 #' @param x a distribution reference object.
+#' @param ... Further arguments passed to the \code{lines} functions.
 #' @export
 setMethod("lines",
           signature = signature(x="distribution"),

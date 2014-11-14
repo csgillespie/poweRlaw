@@ -6,15 +6,15 @@
 \alias{get_KS_statistic}
 \title{Estimating the lower bound (xmin)}
 \usage{
-bootstrap(m, xmins = 1e+05, pars = NULL, no_of_sims = 100, threads = 1,
-  seed = NULL)
-
-bootstrap_p(m, xmins = 1e+05, pars = NULL, no_of_sims = 100,
+bootstrap(m, xmins = NULL, pars = NULL, xmax = 1e+05, no_of_sims = 100,
   threads = 1, seed = NULL)
 
-get_KS_statistic(m, xmins = 1e+05)
+bootstrap_p(m, xmins = NULL, pars = NULL, xmax = 1e+05,
+  no_of_sims = 100, threads = 1, seed = NULL)
 
-estimate_xmin(m, xmins = 1e+05, pars = NULL)
+get_KS_statistic(m, xmax = 1e+05)
+
+estimate_xmin(m, xmins = NULL, pars = NULL, xmax = 1e+05)
 }
 \arguments{
 \item{m}{A reference class object that contains the data.}
@@ -28,6 +28,9 @@ the maximum value to search, i.e. by default we search from
 optimise over.
 Otherwise, for each value of \code{xmin}, the mle will be used, i.e. \code{estimate_pars(m)}.
 For small samples, the mle may be biased.}
+
+\item{xmax}{default \code{1e5}. The maximum x value calculated when working out the CDF. See details for further
+information.}
 
 \item{no_of_sims}{number of bootstrap simulations. When \code{no_of_sims} is large, this can
 take a while to run.}
@@ -44,7 +47,7 @@ lower bound is estimated by calculating the minimising the
 Kolmogorov-Smirnoff statistic
 (as described in Clauset, Shalizi, Newman (2009)).
 \describe{
-\item{\code{get_KS_statistic}}{Calculates the KS statistic for a particular value of xmin}
+\item{\code{get_KS_statistic}}{Calculates the KS statistic for a particular value of xmin.}
 \item{\code{estimate_xmin}}{Estimates the optimal lower cutoff using a
 goodness-of-fit based approach. This function may issue \code{warnings}
 when fitting lognormal, Poisson or Exponential distributions. The
@@ -56,24 +59,22 @@ accuracy.}
 distribution is plausible. This function only available for power law distribution objects.}}
 }
 \details{
-When estimating \code{xmin}
-for discrete distributions, the search space when
+When estimating \code{xmin} for discrete distributions, the search space when
 comparing the data-cdf (empirical cdf)
-and the distribution_cdf runs from 1 to \code{max(x)}
+and the distribution_cdf runs from xmin to \code{max(x)}
 where \code{x} is the data set. This \strong{can} often be
 computationally brutal. In particular, when bootstrapping
 we generate random numbers from the power law distribution,
 which has a long tail.
 
 To speed up computations for discrete distributions, it is sensible to put an
-upper bound or explicitly give values of where to search.
-If a single value is used in \code{xmins}, this will be used
-as the maximum search space value.
-If \code{length(xmins) > 1}, this will explicitly
-define the search space.
+upper bound, i.e. \code{xmax} or explicitly give values of where to search, i.e. \code{xmin}.
+When calculating the kolmogorov-smirnov, the CDF is caculate up to the
+maximum value of the data. However, for some data sets and during bootstrapping, very large
+values can be generated. This may cause both speed and memory problems.
 
 Occassionally, bootstrapping can generate strange situations. For example,
-all values in the simulated data set are below the minimum xmin value. In this case,
+all values in the simulated data set less then the \code{xmin} value. In this case,
 the estimated KS statistic will be \code{Inf} and the parameter values, \code{NA}.
 }
 \note{

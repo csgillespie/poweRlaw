@@ -22,15 +22,9 @@ setGeneric("points")
 #' @param q a vector values where the function will be evaluated. 
 #' If \code{q} is \code{NULL} (default), then the data values 
 #' will be used.
-#' @param all_values logical; \code{FALSE} (default). If \code{TRUE},
-#' then the cdf is evaluated at points xmin, xmin+1, ..., xmax.
 #' @param lower_tail logical; if \code{TRUE} (default), 
 #' probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.
-#' @param xmins default \code{NULL}. The maximum cdf value to calculate. 
-#' See details for further information. If \code{NULL}, then no maximum is imposed.
-#' @details When calculating the KS distance, the data and distribution cdf are compared.
-#' However, during the bootstrap_p procedure very large values generated. The \code{xmins}
-#' limits this comparison.
+#' @param xmax default \code{1e5}. The maximum x value calculated when working out the CDF.
 #' @docType methods
 #' @exportMethod dist_cdf
 #' @note This method does *not* alter the internal state of
@@ -55,8 +49,15 @@ setGeneric("points")
 #' ##########################################
 #' dist_cdf(m)
 setGeneric("dist_cdf", 
-           function(m, q=NULL, lower_tail=FALSE, all_values=FALSE, xmins=NULL) 
+           function(m, q=NULL, lower_tail=FALSE) 
              standardGeneric("dist_cdf"))
+
+#' @export
+#' @rdname dist_data_cdf-methods
+setGeneric("dist_all_cdf", 
+           function(m, lower_tail=TRUE, xmax=1e5) 
+             standardGeneric("dist_all_cdf"))
+
 
 
 #' The data cumulative distribution function
@@ -68,14 +69,7 @@ setGeneric("dist_cdf",
 #' @param lower_tail logical; 
 #' if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, 
 #' otherwise, \eqn{P[X > x]}.
-#' @param all_values logical, if \code{FALSE} (default), evaluate
-#' at the data values. If \code{TRUE},
-#' then the cdf is evaluated at points xmin, xmin+1, ..., xmax.
-#' @param xmins default \code{NULL}. The maximum cdf value to calculate. 
-#' See details for further information. If \code{NULL}, then no maximum is imposed.
-#' @details When calculating the KS distance, the data and distribution cdf are compared.
-#' However, during the bootstrap_p procedure very large values generated. The \code{xmins}
-#' limits this comparison.
+#' @param xmax default \code{1e5}. The maximum x value calculated when working out the CDF
 #' @docType methods
 #' @exportMethod dist_data_cdf
 #' @note This method does *not* alter the internal state of
@@ -95,8 +89,20 @@ setGeneric("dist_cdf",
 #' ##########################################
 #' dist_data_cdf(m)
 setGeneric("dist_data_cdf", 
-           function(m, lower_tail=TRUE, all_values=FALSE, xmins=1e5) 
+           function(m, lower_tail=TRUE, xmax=1e5) 
              standardGeneric("dist_data_cdf"))
+
+
+#' @export
+#' @rdname dist_data_cdf-methods
+#' @description The functions \code{dist_data_all_cdf} and \code{dist_all_cdf} are only available for discrete distributions.
+#' Theremain purpose is to optimise the bootstrap procedure, where generating a vector \code{xmin:xmax} is
+#' very quick. Also, when bootstrapping very large values can be generated. 
+setGeneric("dist_data_all_cdf", 
+           function(m, lower_tail=TRUE, xmax=1e5) 
+             standardGeneric("dist_data_all_cdf"))
+
+
 
 #' The probability density function (pdf)
 #'

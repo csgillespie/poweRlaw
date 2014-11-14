@@ -1,4 +1,4 @@
-bootstrap_p_helper = function (i, m, N, y, xmins, pars) {
+bootstrap_p_helper = function (i, m, N, y, xmins, pars, xmax) {
   ny = length(y);  nz = N - ny; pz = nz/N
   n1 = sum(runif(N) > pz)
   q = dist_rand(m, N-n1)
@@ -9,16 +9,16 @@ bootstrap_p_helper = function (i, m, N, y, xmins, pars) {
     q = c(runif(n1, 0, N-nz), q)
   
   m_cpy = m$getRefClass()$new(q)
-  unlist(estimate_xmin(m_cpy, xmins=xmins, pars=pars))
+  unlist(estimate_xmin(m_cpy, xmins=xmins, pars=pars, xmax=xmax))
 }
 
 #' @rdname estimate_xmin
 #' @export
-bootstrap_p = function (m, xmins=1e5, pars=NULL, 
+bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
                         no_of_sims=100, threads=1, 
                         seed=NULL) {
   m_cpy = m$copy()
-  gof_v = estimate_xmin(m_cpy, xmins=xmins, pars=pars)
+  gof_v = estimate_xmin(m_cpy, xmins=xmins, pars=pars, xmax=xmax)
   m_cpy$setXmin(gof_v)
   
   x = m_cpy$dat
@@ -36,7 +36,7 @@ bootstrap_p = function (m, xmins=1e5, pars=NULL,
   clusterExport(cl, c("dist_rand", "estimate_xmin"))
   nof = parSapply(cl, 1:no_of_sims,
                   bootstrap_p_helper,  m_cpy, 
-                  N, y, xmins, pars)
+                  N, y, xmins, pars, xmax)
   ## Stop clock and cluster
   end_time = Sys.time()
   stopCluster(cl)
