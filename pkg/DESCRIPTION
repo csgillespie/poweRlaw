@@ -1,7 +1,7 @@
 Package: poweRlaw
 Type: Package
 Title: Fitting Heavy Tailed Distributions: The poweRlaw Package
-Version: 0.30.0.9009
+Version: 0.30.0.9010
 Date: 2015-02-10
 Authors@R: person(given="Colin", family="Gillespie",
     email="csgillespie@gmail.com", role = c("aut", "cre"))

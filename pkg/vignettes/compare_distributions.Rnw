@@ -1,5 +1,5 @@
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{Comparing distributions}
+%\VignetteIndexEntry{3. Comparing distributions with the poweRlaw package}
 
 \documentclass[11pt,BCOR2mm,DIV14]{scrartcl}
 

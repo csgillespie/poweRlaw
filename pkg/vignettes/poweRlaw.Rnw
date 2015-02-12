@@ -1,5 +1,5 @@
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{An introduction of the poweRlaw package}
+%\VignetteIndexEntry{1. An introduction to the poweRlaw package}
 \documentclass[11pt,BCOR2mm,DIV14]{scrartcl}
 
 %For fancy tables
