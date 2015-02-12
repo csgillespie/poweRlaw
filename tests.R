@@ -4,5 +4,5 @@ library(poweRlaw)
 library(testthat)
 
 y = test_dir("tests/")
-if(y$failed) stop("Errors")
+if(any(!y$failed) stop("Errors")
 
