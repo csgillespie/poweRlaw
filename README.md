@@ -21,8 +21,7 @@ install.packages("poweRlaw")
 Alternatively, the development version can be install from from github using the devtools package:
 ```r
 install.packages("devtools")
-library(devtools)
-install_github("poweRlaw", "csgillespie", subdir="pkg")
+devtools::install_github("poweRlaw", "csgillespie", subdir="pkg")
 ```
 
 Note Windows users have to first install [Rtools](http://cran.rstudio.com/bin/windows/Rtools/).
@@ -34,10 +33,11 @@ To get started, load the package
 ```r
 library("poweRlaw")
 ```
-then work the through the two vignettes: 
- * [getting started](http://cran.r-project.org/web/packages/poweRlaw/vignettes/poweRlaw.pdf)
- * [examples](http://cran.r-project.org/web/packages/poweRlaw/vignettes/examples.pdf)
+then work the through the three vignettes (links to the current CRAN version): 
+ * [Getting started](http://cran.r-project.org/web/packages/poweRlaw/vignettes/poweRlaw.pdf)
+ * [Worked examples](http://cran.r-project.org/web/packages/poweRlaw/vignettes/examples.pdf)
  * [Comparing distributions](http://cran.r-project.org/web/packages/poweRlaw/vignettes/compare_distributions.pdf)
+
 Alternatively, you can access the vignettes from within the package:
 ```r
 browseVignettes("poweRlaw")
