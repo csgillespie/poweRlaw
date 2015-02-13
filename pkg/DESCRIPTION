@@ -1,15 +1,15 @@
 Package: poweRlaw
 Type: Package
-Title: Fitting Heavy Tailed Distributions: The poweRlaw Package
-Version: 0.30.0.9010
+Title: Analysis of Heavy Tailed Distributions
+Version: 0.30.0.9011
 Date: 2015-02-10
 Authors@R: person(given="Colin", family="Gillespie",
     email="csgillespie@gmail.com", role = c("aut", "cre"))
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
-Description: This package implements both the discrete and continuous maximum
-    likelihood estimators for fitting the power-law distribution to data.
-    Additionally, a goodness-of-fit based approach is used to estimate the
-    lower cut-off for the scaling region.
+Description: An implementation of maximum likelihood estimators for a variety 
+  of heavy tailed distributions, including both the discrete and continuous
+  power law distributions. Additionally, a goodness-of-fit based approach is 
+  used to estimate the lower cut-off for the scaling region.
 URL: https://github.com/csgillespie/poweRlaw
 BugReports: https://github.com/csgillespie/poweRlaw/issues
 Roxygen: list(wrap = FALSE)
