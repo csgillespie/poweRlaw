@@ -1,5 +1,5 @@
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{2. Example using the poweRlaw package}
+%\VignetteIndexEntry{2. Examples using the poweRlaw package}
 
 \documentclass[11pt,BCOR2mm,DIV14]{scrartcl}
 

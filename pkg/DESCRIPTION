@@ -6,10 +6,10 @@ Date: 2015-02-10
 Authors@R: person(given="Colin", family="Gillespie",
     email="csgillespie@gmail.com", role = c("aut", "cre"))
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
-Description: An implementation of maximum likelihood estimators for a variety 
-  of heavy tailed distributions, including both the discrete and continuous
-  power law distributions. Additionally, a goodness-of-fit based approach is 
-  used to estimate the lower cut-off for the scaling region.
+Description: An implementation of maximum likelihood estimators for a variety
+    of heavy tailed distributions, including both the discrete and continuous
+    power law distributions. Additionally, a goodness-of-fit based approach is
+    used to estimate the lower cut-off for the scaling region.
 URL: https://github.com/csgillespie/poweRlaw
 BugReports: https://github.com/csgillespie/poweRlaw/issues
 Roxygen: list(wrap = FALSE)
