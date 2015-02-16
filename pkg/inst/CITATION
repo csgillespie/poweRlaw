@@ -4,12 +4,15 @@ citEntry(entry = "Article",
   title        = "Fitting Heavy Tailed Distributions: The {poweRlaw} Package",
   author       = personList(as.person("Colin S. Gillespie")),
   journal      = "Journal of Statistical Software",
-  year         = "2014",
-  url          = "http://www.jstatsoft.org/v61/i10/",
+  year         = "2015",
+  volume       = "64",
+  number       = "2",
+  pages        = "1--16",
+  url          = "http://www.jstatsoft.org/v64/i02/",
 
   textVersion  =
-  paste("Colin S. Gillespie (2014).",
+  paste("Colin S. Gillespie (2015).",
         "Fitting Heavy Tailed Distributions: The poweRlaw Package.",
-        "Journal of Statistical Software.",
-        "URL http://www.jstatsoft.org/v61/i10/.")
+        "Journal of Statistical Software, 64(2), 1-16.",
+        "URL http://www.jstatsoft.org/v64/i02/.")
 )
