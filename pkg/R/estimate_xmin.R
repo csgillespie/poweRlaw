@@ -90,8 +90,10 @@ get_KS_statistic = function(m, xmax=1e5) {
 #' ###################################################
 #' # Bootstrap examples                              #    
 #' ###################################################
+#' \dontrun{
 #' bootstrap(m, no_of_sims=1, threads=1)
 #' bootstrap_p(m, no_of_sims=1, threads=1)
+#' }
 estimate_xmin = function (m, xmins = NULL, pars=NULL, xmax=1e5) {
   ## Flag. Go through a bunch of checks to test whether we 
   ## can estimate xmin 

@@ -98,7 +98,9 @@ m$setXmin(est)
 ###################################################
 # Bootstrap examples                              #
 ###################################################
+\dontrun{
 bootstrap(m, no_of_sims=1, threads=1)
 bootstrap_p(m, no_of_sims=1, threads=1)
+}
 }
 
