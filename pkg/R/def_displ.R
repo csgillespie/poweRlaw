@@ -194,7 +194,7 @@ setMethod("dist_all_cdf",
             if(is.null(pars)) stop("Model parameters not set.")  
             
             inter = m$internal
-            xmax = min(max(m$dat), xmax)
+            xmax = max(m$dat[m$dat <= xmax])
             v = ifelse(xmin==1, 0, sum((1:(xmin-1))^-pars))
             cumsum((((xmin:xmax)^-pars))/(inter[["constant"]] - v))                
             

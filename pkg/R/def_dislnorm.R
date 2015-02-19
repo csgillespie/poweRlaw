@@ -130,7 +130,7 @@ setMethod("dist_all_cdf",
           signature = signature(m="dislnorm"),
           definition = function(m, lower_tail=TRUE, xmax=1e5) {
             xmin = m$getXmin()
-            xmax = min(max(m$dat), xmax)
+            xmax = max(m$dat[m$dat <= xmax])
             dist_cdf(m, q=xmin:xmax, lower_tail=lower_tail)
 
           }
