@@ -444,7 +444,7 @@ R> ln_m$setXmin(est_ln)
 and add the corresponding line to the plot
 \begin{Schunk}
 \begin{Sinput}
-R> lines(ln_m, col=2)
+R> lines(ln_m, col=3)
 \end{Sinput}
 \end{Schunk}
 giving Figure~\ref{F1}a. 
@@ -466,7 +466,7 @@ it provides an easy comparison with other distributions.
   bottom row shows the sequential estimate of standard deviation for each
   parameter. The dashed-green lines give approximate 95\% confidence intervals.
   After 5000 iterations, the standard deviation of $\xmin$ and $\alpha$ is
-  estimated to be 1.9 and 0.02 respectively.}\label{F2}
+  estimated to be 1.8 and 0.02 respectively.}\label{F2}
 \end{figure}                    %
 
 To get a handle on the uncertainty in the parameter estimates, we use a
@@ -543,7 +543,7 @@ data.
 \caption{Characterizing uncertainty in parameter values using five
   thousand bootstraps.\newline
   (a) Histogram of $\xmin$ (standard deviation
-  1.9). (b) Histogram of $\alpha$ (standard deviation 0.02). (c)
+  1.8). (b) Histogram of $\alpha$ (standard deviation 0.02). (c)
   Scatter-plot of the $\xmin$ against $\alpha$.\label{F3}}
 \end{figure}
 
@@ -609,7 +609,7 @@ $p$~value for the hypothesis test:
 H_0\!\!:& \text{ the power law distribution can not be ruled out;}\\
 H_1\!\!:& \text{ the power law distribution can be ruled out.}
 \end{align*}
-In this particular example, we estimate $p=0.681$, i.e., the
+In this particular example, we estimate $p=0.682$, i.e., the
 underlying distribution for generating the Moby Dick data set could be
 a power law distribution. Again, the output can be easily visualized with
 \begin{Schunk}
