@@ -8,8 +8,7 @@ The code developed in this package was influenced from the python and R code fou
 
 To cite this package in academic work, please use:
 
-Gillespie, C. S. "*Fitting heavy tailed distributions: the poweRlaw package.*" Journal of Statistical Software, 2015. ([arXiv preprint](http://arxiv.org/abs/1407.3492)).
-
+Gillespie, C. S. "*Fitting heavy tailed distributions: the poweRlaw package.*" Journal of Statistical Software, 64(2) 2015. ([arXiv preprint](http://arxiv.org/abs/1407.3492)).
 
 Installation
 ------------
@@ -33,7 +32,8 @@ To get started, load the package
 ```r
 library("poweRlaw")
 ```
-then work the through the three vignettes (links to the current CRAN version): 
+then work the through the four vignettes (links to the current CRAN version): 
+
  * [Getting started](http://cran.r-project.org/web/packages/poweRlaw/vignettes/poweRlaw.pdf)
  * [Worked examples](http://cran.r-project.org/web/packages/poweRlaw/vignettes/examples.pdf)
  * [Comparing distributions](http://cran.r-project.org/web/packages/poweRlaw/vignettes/compare_distributions.pdf)
