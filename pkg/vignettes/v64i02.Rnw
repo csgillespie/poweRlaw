@@ -32,10 +32,10 @@
 \Keywords{power laws, heavy tailed, fitting, estimation, \proglang{R}, Zipf, Pareto}
 \Plainkeywords{power laws, heavy tailed, fitting, estimation, R, Zipf, Pareto}
  
-\Volume{61}
-\Issue{10}
-\Month{October}
-\Year{2014}
+\Volume{64}
+\Issue{2}
+\Month{February}
+\Year{2015}
 \Submitdate{2013-06-10}
 \Acceptdate{2014-05-28}
 
@@ -97,23 +97,32 @@ principled and statistical rigorous approach should be applied (see
 
 In this paper we describe the \proglang{R} \citep{RCoreTeam2013} package
 \pkg{poweRlaw} \citep{poweRlaw}. This package enables power laws and other heavy
-tailed distributions, to be fitted in a straightforward manner. In particular,
+tailed distributions to be fitted in a straightforward manner. In particular,
 the package provides an easy to use interface to the techniques proposed by
 \cite{Clauset2009}. Functions are provided for plotting, comparing distributions
 and estimating parameter uncertainty.
 
-\begin{figure}[t] 
+\begin{figure}[t!] 
   \centering
-  \includegraphics[width=\textwidth, trim = 0 0 0 0, clip]{figure1.pdf}
-   \vspace*{-0.5cm}
- \caption{The cumulative distribution functions (CDFs) and their maximum
-    likelihood power law (green) and log normal (orange) fit.  (a):
-    Unique words in the novel Moby Dick. (b): Native American
-    Casualities in the American Indian War. (c): Word frequency in the
-    Swiss-Prot database (version 9). Further details of the data sets
-    are given in Section~\ref{S1}.\label{F1}}
+  \includegraphics[width=\textwidth, trim = 0 0 0 0, clip]{figure1}
+  \vspace*{-0.5cm}
+  \caption{The cumulative distribution functions (CDFs) and their maximum
+    likelihood power law (green) and log normal (orange) fit. (a): Unique words
+    in the novel Moby Dick. (b): Native American Casualities in the American
+    Indian War. (c): Word frequency in the Swiss-Prot database (version 9).
+    Further details of the data sets are given in Section~\ref{S1}.\label{F1}}
 \end{figure}
 
+
+\section{Mathematical background}
+
+In this section, we introduce the discrete and continuous power law
+distributions. We will discuss methods for fitting these distributions. While
+this section just considers power law distributions, the techniques discussed
+in Sections~\ref{2.2} and \ref{2.3} are general and can be applied to any
+distribution.
+
+\subsection{The power law distribution}
 
 At the most basic level, there are two types of power law
 distributions: discrete and continuous. The continuous version has
@@ -171,9 +180,9 @@ instead we use the approximation
 \begin{equation}\label{7}
 \hat \alpha \simeq 1 + n \left[\sum_{i=1}^n \ln \frac{x_i}{\xmin - 0.5}\right]^{-1} \;.
 \end{equation}
-The discrete MLE approximation is
-identical to the exact continuous MLE, except for the additional $0.5$ in the
-denominator (see \cite{Clauset2009} for a complete derivation). 
+The discrete MLE approximation is identical to the exact continuous MLE, except
+for the additional $0.5$ in the denominator (see \cite{Clauset2009} for a
+complete derivation).
 
 When calculating the MLE for $\alpha$, we \textit{condition} on a particular
 value of $\xmin$. When power laws are used in practice, it is usually argued
@@ -234,8 +243,8 @@ plausible fit to the data and another distribution may be more
 appropriate. When testing against the power law distribution the
 hypotheses are:
 \begin{align*}
-H_0\!\!:& \text{ the power law distribution can not be ruled out;}\\
-H_1\!\!:& \text{ the power law distribution can be ruled out.}
+H_0\!\!:& \text{ data is generated from a power law distribution;}\\
+H_1\!\!:& \text{ data is not generated from a power law distribution.}
 \end{align*}
 The bootstrapping procedure is detailed in
 Algorithm~\ref{A2}. Essentially, we perform a hypothesis test by
@@ -287,8 +296,7 @@ be downloaded from
 or directly loaded from the \pkg{poweRlaw} package 
 \begin{Schunk}
 \begin{Sinput}
-R> library("poweRlaw")
-R> data("moby")
+R> data("moby", package = "poweRlaw")
 \end{Sinput}
 \end{Schunk}
 This data set contains the frequency of 18855 words. The most
@@ -298,9 +306,10 @@ commonly occurring word occurred 14086 times.
 
 To fit a discrete power law, we first create a discrete power law
 object using the \code{displ} constructor\footnote{\code{displ}:
-  \textbf{dis}crete \textbf{p}ower \textbf{l}aw.}
+  \textbf{dis}crete \textbf{p}ower \textbf{l}aw.}.
 \begin{Schunk}
 \begin{Sinput}
+R> library("poweRlaw")
 R> pl_m <- displ$new(moby)
 \end{Sinput}
 \end{Schunk}
@@ -358,7 +367,7 @@ attr(,"class")
 Alternatively, we can estimate the exponent using a parameter scan
 \begin{Schunk}
 \begin{Sinput}
-R> estimate_pars(pl_m, pars=seq(1.5, 2.5, 0.01))
+R> estimate_pars(pl_m, pars = seq(1.5, 2.5, 0.01))
 \end{Sinput}
 \end{Schunk}
 To estimate the lower bound $\xmin$, we use the Kolmogorov-Smirnov approach
@@ -403,7 +412,7 @@ R> plot(pl_m)
 creates a log-log plot of the data, while the \code{lines} function
 \begin{Schunk}
 \begin{Sinput}
-R> lines(pl_m, col=2)
+R> lines(pl_m, col = 2)
 \end{Sinput}
 \end{Schunk}
 adds the fitted distribution (to get Figure~\ref{F1}a). When calling the
@@ -432,7 +441,7 @@ parameters\footnote{\code{dislnorm}: \textbf{dis}crete
 \begin{Schunk}
 \begin{Sinput}
 R> ln_m <- dislnorm$new(moby)
-R> (est_ln <- estimate_xmin(ln_m))
+R> est_ln <- estimate_xmin(ln_m)
 \end{Sinput}
 \end{Schunk}
 Then we update the object
@@ -444,7 +453,7 @@ R> ln_m$setXmin(est_ln)
 and add the corresponding line to the plot
 \begin{Schunk}
 \begin{Sinput}
-R> lines(ln_m, col=3)
+R> lines(ln_m, col = 3)
 \end{Sinput}
 \end{Schunk}
 giving Figure~\ref{F1}a. 
@@ -457,27 +466,27 @@ it provides an easy comparison with other distributions.
 
 \subsection{Parameter uncertainty}
 
-\begin{figure}[t]
+\begin{figure}[t!]
  \centering
-\includegraphics[width=0.7\textwidth]{figure2}
-\caption{Results from the standard bootstrap procedure (for the power law model)
-  using the Moby Dick data set: \mbox{\code{bootstrap(pl\_m)}}. The top row
-  shows the sequential mean estimate of parameters $\xmin$ and $\alpha$. The
-  bottom row shows the sequential estimate of standard deviation for each
-  parameter. The dashed-green lines give approximate 95\% confidence intervals.
-  After 5000 iterations, the standard deviation of $\xmin$ and $\alpha$ is
-  estimated to be 1.8 and 0.02 respectively.}\label{F2}
+ \includegraphics[width=0.7\textwidth, trim = 0 0 0 0, clip]{figure2}
+ \caption{Results from the standard bootstrap procedure (for the power law
+   model) using the Moby Dick data set: \mbox{\code{bootstrap(pl\_m)}}. The top
+   row shows the sequential mean estimate of parameters $\xmin$ and $\alpha$.
+   The bottom row shows the sequential estimate of standard deviation for each
+   parameter. The dashed-green lines give approximate 95\% confidence intervals.
+   After 5000 iterations, the standard deviation of $\xmin$ and $\alpha$ is
+   estimated to be 1.8 and 0.02 respectively.}\label{F2}
 \end{figure}                    %
 
 To get a handle on the uncertainty in the parameter estimates, we use a
 bootstrapping procedure, via the \code{bootstrap} function. This procedure can
 be applied to \textbf{any} distribution object. Furthermore, the bootstrap
 procedure can utilize multiple CPU cores to speed up inference using the base
-package \pkg{parallel}. To generate five thousand bootstrap samples, using two
+package \pkg{parallel}. To generate five thousand bootstrap samples, using four
 cores, we use the following command.
 \begin{Schunk}
 \begin{Sinput}
-R> bs <- bootstrap(pl_m, no_of_sims=5000, threads=2)
+R> bs <- bootstrap(pl_m, no_of_sims = 5000, threads = 4, seed = 1)
 \end{Sinput}
 \end{Schunk}
 By default the \code{bootstrap} function will use the MLE to infer the
@@ -486,7 +495,7 @@ search space is large, then it is recommend that it is truncated.  For
 example
 \begin{Schunk}
 \begin{Sinput}
-R> bootstrap(pl_m, xmins=seq(2, 20, 2))
+R> bootstrap(pl_m, xmins = seq(2, 20, 2))
 \end{Sinput}
 \end{Schunk}
 will only calculate the Kolmogorov-Smirnov statistics at values of $\xmin$ equal to
@@ -509,13 +518,13 @@ can estimate the standard deviation of the parameter uncertainty,
 i.e.,
 \begin{Schunk}
 \begin{Sinput}
-R> sd(bs$bootstraps[,2])
+R> sd(bs$bootstraps[, 2])
 \end{Sinput}
 \begin{Soutput}
 [1] 1.781
 \end{Soutput}
 \begin{Sinput}
-R> sd(bs$bootstraps[,3])
+R> sd(bs$bootstraps[, 3])
 \end{Sinput}
 \begin{Soutput}
 [1] 0.02429
@@ -525,7 +534,7 @@ Alternatively, we can visualize the results using the \code{plot}
 method
 \begin{Schunk}
 \begin{Sinput}
-R> plot(bs, trim=0.1)
+R> plot(bs, trim = 0.1)
 \end{Sinput}
 \end{Schunk}
 to obtain Figure~\ref{F2}. The top row of graphics in Figure~\ref{F2}
@@ -533,25 +542,24 @@ give a sequential 95\% confidence interval for the mean estimate of
 the parameters. The bottom row of graphics give a 95\% confidence
 interval for the standard deviation of the parameters. The parameter
 \code{trim} in the \code{plot} function controls the percentage of
-samples displayed. When \code{trim=0}, all iterations are
-displayed. When \code{trim=0.1}, we only display the final 90\% of
+samples displayed. When \code{trim = 0}, all iterations are
+displayed. When \code{trim = 0.1}, we only display the final 90\% of
 data.
-\begin{figure}[t]
-\centering 
-\includegraphics[width=\textwidth]{figure3}
+\begin{figure}[t!]
+  \centering 
+  \includegraphics[width=\textwidth, trim = 0 0 0 0, clip]{figure3}
   \vspace*{-0.5cm}
-\caption{Characterizing uncertainty in parameter values using five
-  thousand bootstraps.\newline
-  (a) Histogram of $\xmin$ (standard deviation
-  1.8). (b) Histogram of $\alpha$ (standard deviation 0.02). (c)
-  Scatter-plot of the $\xmin$ against $\alpha$.\label{F3}}
+  \caption{Characterizing uncertainty in parameter values using five thousand
+    bootstraps.\newline (a) Histogram of $\xmin$ (standard deviation 1.8). (b)
+    Histogram of $\alpha$ (standard deviation 0.02). (c) Scatter-plot of the
+    $\xmin$ against $\alpha$.\label{F3}}
 \end{figure}
 
 We can also construct histograms of the parameters
 \begin{Schunk}
 \begin{Sinput}
-R> hist(bs$bootstraps[,2], breaks="fd")
-R> hist(bs$bootstraps[,3], breaks="fd") 
+R> hist(bs$bootstraps[, 2], breaks = "fd")
+R> hist(bs$bootstraps[, 3], breaks = "fd") 
 \end{Sinput}
 \end{Schunk}
 
@@ -560,7 +568,7 @@ the strong dependency that often exists between the scaling parameter $\alpha$
 and $\xmin$
 \begin{Schunk}
 \begin{Sinput}
-R> plot(bs$bootstraps[,2], bs$bootstraps[,3])
+R> plot(bs$bootstraps[, 2], bs$bootstraps[, 3])
 \end{Sinput}
 \end{Schunk}
 and yields Figure~\ref{F3}c.
@@ -580,7 +588,7 @@ characterized as having a power law distribution, could equally come from anothe
 heavy tailed distribution. The \pkg{poweRlaw} package provides two methods for
 testing the power law hypotheses.
 
-\begin{figure}[t]
+\begin{figure}[t!]
 \centering 
 \includegraphics[width=\textwidth]{figure4}
  \vspace*{-0.5cm}
@@ -596,7 +604,7 @@ The first method uses the bootstrapping technique described in Algorithm~\ref{A2
 is accessed using a similar interface as the standard bootstrap function.
 \begin{Schunk}
 \begin{Sinput}
-R> bs_p <- bootstrap_p(pl_m)
+R> bs_p <- bootstrap_p(pl_m, no_of_sims = 5000, threads = 4, seed = 1)
 \end{Sinput}
 \end{Schunk}
 %
@@ -606,10 +614,10 @@ has the option to restrict the $\xmin$ search space. The output from the
 function. However, this function does return one additional element -- the
 $p$~value for the hypothesis test:
 \begin{align*}
-H_0\!\!:& \text{ the power law distribution can not be ruled out;}\\
-H_1\!\!:& \text{ the power law distribution can be ruled out.}
+H_0\!\!:& \text{ data is generated from a power law distribution;}\\
+H_1\!\!:& \text{ data is not generated from a power law distribution.}
 \end{align*}
-In this particular example, we estimate $p=0.682$, i.e., the
+In this particular example, we estimate $p=0.681$, i.e., the
 underlying distribution for generating the Moby Dick data set could be
 a power law distribution. Again, the output can be easily visualized with
 \begin{Schunk}
@@ -690,7 +698,7 @@ Other available distributions are given in Table~\ref{T2}.
     also inherits either the `\code{discrete\_distribution}' or `\code{ctn\_distribution}' class.}\label{T2}
 \end{table}
 
-\begin{figure}[t]
+\begin{figure}[t!]
 \centering 
 \includegraphics[width=0.8\textwidth]{figure5}
 \caption{The (a) probability mass function and (b) probability distribution
@@ -734,18 +742,18 @@ parameter values
 \begin{Sinput}
 R> x <- 1:20
 R> m$setPars(1.5)
-R> plot(x, dist_pdf(m, x), type="b")
+R> plot(x, dist_pdf(m, x), type = "b")
 R> m$setPars(2.0)
-R> lines(x, dist_pdf(m, x), type="b")
+R> lines(x, dist_pdf(m, x), type = "b")
 R> m$setPars(2.5)
-R> lines(x, dist_pdf(m, x), type="b")
+R> lines(x, dist_pdf(m, x), type = "b")
 \end{Sinput}
 \end{Schunk}
 This gives Figure~\ref{F5}a. Likewise, to obtain the CDF we use the
 \code{dist\_cdf} function, i.e.,
 \begin{Schunk}
 \begin{Sinput}
-R> plot(x, dist_cdf(m, x), type="b")
+R> plot(x, dist_cdf(m, x), type = "b")
 \end{Sinput}
 \end{Schunk}
 to obtain Figure~\ref{F5}b.
@@ -794,7 +802,6 @@ The author gratefully acknowledges Aaron Clauset and Jeff Friedman for their
 constructive comments on the manuscript and discussions on the implementation of
 the methodology.
 
-\bibliography{v61i10}
-
+\bibliography{v64i02}
 
 \end{document}
