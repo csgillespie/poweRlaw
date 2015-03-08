@@ -96,16 +96,15 @@ setMethod("dist_cdf",
           signature = signature(m="conpl"),
           definition = function(m, q=NULL, lower_tail=TRUE) {
             xmin = m$xmin;  pars = m$pars
-            if(is.null(pars)) stop("Model parameters not set.")  
-            
-            if(is.null(q)) {
-              q = m$dat
-              n = m$internal[["n"]]; N = length(q)
-              q = q[(N-n+1):N]
-              pplcon(q, xmin, pars, lower_tail)
-            } else {
-              pplcon(q[q >= xmin], xmin, pars, lower_tail)
-            }
+            if(is.null(pars)) stop("Model parameters not set.")
+            if(is.null(q))  q = m$dat
+             # n = m$internal[["n"]]; N = length(q)
+              #              q = q[(N-n+1):N]
+            #  cdf = pplcon(q, xmin, pars, lower_tail)
+#             } else {
+#               cdf = pplcon(q, xmin, pars, lower_tail)
+#             }
+            pplcon(q, xmin, pars, lower_tail)
           }
 )
 

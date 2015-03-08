@@ -68,18 +68,17 @@ setMethod("dist_pdf",
           signature = signature(m="conlnorm"),
           definition = function(m, q=NULL, log=FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
-            if(is.null(q)) {
-              q = m$dat
-              n = m$internal[["n"]]; N = length(q)
-              q = q[(N-n+1):N]
-            } else {
-              q[q >= m$xmin]
-            }
+            if(is.null(q)) q = m$dat
+
             pdf = dlnorm(q, pars[1], pars[2], log=TRUE) - 
               plnorm(xmin, pars[1], pars[2], lower.tail=FALSE, log.p=TRUE)
-            if(!log) pdf = exp(pdf)
+            if(!log) {
+              pdf = exp(pdf)
+              pdf[q < xmin] = 0
+            } else {
+              pdf[q < xmin] = -Inf
+            }
             pdf
-            
           }
 )
 
@@ -93,21 +92,19 @@ setMethod("dist_cdf",
           definition = function(m, q=NULL, lower_tail=TRUE) {
             pars = m$pars; xmin = m$xmin
             if(is.null(pars)) stop("Model parameters not set.")  
-            if(is.null(q)) {
-              q = m$dat
-              n = m$internal[["n"]]; N = length(q)
-              q = q[(N-n+1):N]
-            } 
+            if(is.null(q)) q = m$dat
             
             if(lower_tail) {
               p = plnorm(q, pars[1], pars[2], lower.tail=lower_tail) 
               C = plnorm(xmin, pars[1], pars[2], lower.tail=FALSE) 
-              (p/C-1/C+1)
+              pdf = (p/C-1/C+1)
             } else {
               log_p = plnorm(q, pars[1], pars[2], lower.tail=FALSE, log.p=TRUE)
               log_C = plnorm(xmin, pars[1], pars[2], lower.tail=FALSE, log.p=TRUE) 
-              exp(log_p - log_C)
+              pdf = exp(log_p - log_C)
             }
+            pdf[q < xmin] = 0
+            pdf
           }
 )
 

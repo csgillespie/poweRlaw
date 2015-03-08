@@ -25,15 +25,20 @@
 #' 
 #' plot(x, dpldis(x, xmin, alpha), type="l")
 dpldis = function(x, xmin, alpha, log=FALSE) {
-    x = x[round(x) >= round(xmin)]
-    xmin = floor(xmin)
-    constant = zeta(alpha)
-    if(xmin > 1) constant = constant - sum((1:(xmin-1))^(-alpha))
-    
-    if(log)
-        -alpha*log(x) - log(constant)
-    else
-        x^(-alpha)/constant
+  x = x[round(x) >= round(xmin)]
+  xmin = floor(xmin)
+  constant = zeta(alpha)
+  if(xmin > 1) constant = constant - sum((1:(xmin-1))^(-alpha))
+  
+  if(log) {
+    pdf = -alpha*log(x) - log(constant)
+    pdf[round(x) < round(xmin)] = -Inf
+  } else {
+    pdf = x^(-alpha)/constant
+    pdf[round(x) < round(xmin)] = 0
+  }
+  pdf
+  
 }
 
 #'@rdname dpldis
@@ -53,16 +58,16 @@ dpldis = function(x, xmin, alpha, log=FALSE) {
 #' plot(x, ppldis(x, xmin, alpha), type="l", main="Distribution function")
 #' dpldis(1, xmin, alpha)
 ppldis = function(q, xmin, alpha, lower.tail=TRUE) {
-    q = q[round(q) >= round(xmin)]
-    xmin = floor(xmin)
-    constant = zeta(alpha)
-    if(xmin > 1) 
-        constant = constant - sum((1:(xmin-1))^(-alpha))
-    cdf = 1-(constant - sapply(q, function(i) sum((xmin:i)^(-alpha))))/constant
-    if(lower.tail)
-        cdf
-    else
-        1 - (cdf - dpldis(q, xmin, alpha)) 
+  #    q = q[round(q) >= round(xmin)]
+  xmin = floor(xmin)
+  constant = zeta(alpha)
+  if(xmin > 1) 
+    constant = constant - sum((1:(xmin-1))^(-alpha))
+  cdf = 1-(constant - sapply(q, function(i) sum((xmin:i)^(-alpha))))/constant
+  if(!lower.tail)
+    cdf = 1 - (cdf - dpldis(q, xmin, alpha))
+  cdf[round(q) < round(xmin)] = 0
+  cdf
 }
 
 
@@ -95,7 +100,7 @@ rpldis = function(n, xmin, alpha, discrete_max = 10000) {
     constant = zeta(alpha)
     if(xmin > 1) constant = constant - sum((1:(xmin-1))^(-alpha))
     cdf = c(0, 1-(constant - cumsum((xmin:discrete_max)^(-alpha)))/constant)
-  
+    
     ## Due to numerical instability
     ## Not enough precision to exactly calculate the CDF
     dups = duplicated(cdf, fromLast=TRUE) 
@@ -103,7 +108,7 @@ rpldis = function(n, xmin, alpha, discrete_max = 10000) {
     
     ## Simulate using look up method 
     rngs = as.numeric(cut(u,cdf)) + xmin - 1
-  
+    
     ## Fill in blanks using Clausett approximation
     is_na = is.na(rngs)
     if(any(is_na)) rngs[is_na] = 

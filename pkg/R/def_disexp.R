@@ -80,15 +80,18 @@ setMethod("dist_pdf",
           definition = function(m, q=NULL, log=FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
             if(is.null(q)) q = m$dat
-            q = q[q >= m$xmin]
             
             l1 = pexp(q-0.5, pars, lower.tail=FALSE, log.p=TRUE)
             l2 = pexp(q+0.5, pars, lower.tail=FALSE, log.p=TRUE)
             
             pdf = l1 + log(1-exp(l2-l1)) - pexp(xmin-0.5, pars, lower.tail=FALSE, log.p=TRUE)
-            if(!log) pdf = exp(pdf)
+            if(!log) {
+              pdf = exp(pdf)
+              pdf[q < xmin] = 0
+            } else {
+              pdf[q < xmin] = -Inf
+            }
             pdf
-            
           }
 )
 #############################################################
@@ -101,19 +104,19 @@ setMethod("dist_cdf",
           definition = function(m, q=NULL, lower_tail=TRUE) {
             xmin = m$getXmin(); pars = m$getPars()
             if(is.null(pars)) stop("Model parameters not set.")  
+            if(is.null(q)) q = m$dat
+            # q = q[q>=xmin]
             
-            if(is.null(q)) {
-              q = m$dat
-              q = q[q>=xmin]
-            } 
             p = pexp(q + 0.5, pars, lower.tail=lower_tail) 
             if(lower_tail) {
-              C = pexp(xmin-0.5, lower.tail=FALSE) 
-              (p/C-1/C+1)
+              C = pexp(xmin-0.5, pars, lower.tail=FALSE) 
+              cdf = (p/C-1/C+1)
             } else {
               C = 1-pexp(xmin+0.5, pars) 
-              p/C
+              cdf = p/C
             }
+            cdf[q < xmin] = 0
+            cdf
           }
 )
 

@@ -80,7 +80,6 @@ setMethod("dist_pdf",
           definition = function(m, q=NULL, log=FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
             if(is.null(q)) q = m$dat
-            q = q[q >= m$xmin]
             
             l1 = plnorm(q-0.5, pars[1], pars[2], lower.tail=FALSE, log.p=TRUE)
             l2 = plnorm(q+0.5, pars[1], pars[2], lower.tail=FALSE, log.p=TRUE)
@@ -88,9 +87,13 @@ setMethod("dist_pdf",
             pdf = l1 + log(1-exp(l2-l1)) - 
               plnorm(xmin-0.5, pars[1], pars[2], lower.tail=FALSE, log.p=TRUE)
             
-            if(!log) pdf = exp(pdf)
+            if(!log) {
+              pdf = exp(pdf)
+              pdf[q < xmin] = 0
+            } else {
+              pdf[q < xmin] = -Inf
+            }
             pdf
-            
           }
 )
 
@@ -104,23 +107,21 @@ setMethod("dist_cdf",
           definition = function(m, q=NULL, lower_tail=TRUE) {
             xmin = m$getXmin(); pars = m$getPars()
             if(is.null(pars)) stop("Model parameters not set.")  
-            
-            if(is.null(q)) {
-              q = m$dat
-              q = q[q >= xmin]
-            } 
+            if(is.null(q)) q = m$dat
             
             ## lower_tail == TRUE numerical unstable
             ## Not sure how best to fix it
             if(lower_tail) {
               p = plnorm(q + 0.5, pars[1], pars[2], lower.tail=lower_tail) 
               C = plnorm(xmin-0.5, pars[1], pars[2], lower.tail=FALSE) 
-              (p/C-1/C+1)
+              cdf = (p/C-1/C+1)
             } else {
               log_p = plnorm(q + 0.5, pars[1], pars[2], lower.tail=FALSE, log.p=T) 
               log_C = plnorm(xmin+0.5, pars[1], pars[2], lower.tail=FALSE, log.p=T) 
-              exp(log_p-log_C)
+              cdf = exp(log_p-log_C)
             }
+            cdf[q < xmin] = 0
+            cdf
           }
 )
 
@@ -132,7 +133,7 @@ setMethod("dist_all_cdf",
             xmin = m$getXmin()
             xmax = max(m$dat[m$dat <= xmax])
             dist_cdf(m, q=xmin:xmax, lower_tail=lower_tail)
-
+            
           }
 )
 

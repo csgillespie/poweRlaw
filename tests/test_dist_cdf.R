@@ -18,7 +18,7 @@ test_that("Testing dist_cdf function", {
   expect_equal(dist_cdf(mt, c(1, 3)), c(0, 0.5599), tol=1e-4)
   
   mt$setXmin(3)
-  expect_equal(dist_cdf(mt), 0.2813, tol=1e-3)
+  expect_equal(dist_cdf(mt), c(0, 0, 0.2813), tol=1e-3)
   
   ##Discrete log-normal
   x = c(1, 1, 3)
@@ -32,12 +32,12 @@ test_that("Testing dist_cdf function", {
   
   mt$setXmin(2)
   cdf3 = (plnorm(3.5, 1, 1)-plnorm(1.5, 1, 1))/(1 - plnorm(1.5, 1, 1))
-  expect_equal(dist_cdf(mt), cdf3, tol=1e-4)
+  expect_equal(dist_cdf(mt), c(0, 0, cdf3), tol=1e-4)
   expect_equal(dist_cdf(mt, c(1, 3)), c(0, cdf3), tol=1e-4)
   
   mt$setXmin(3)
   cdf3 = cdf3 = (plnorm(3.5, 1, 1)-plnorm(2.5, 1, 1))/(1 - plnorm(2.5, 1, 1))
-  expect_equal(dist_cdf(mt), cdf3, tol=1e-4)
+  expect_equal(dist_cdf(mt), c(0, 0, cdf3), tol=1e-4)
   
   ##Discrete Poisson
   x = c(1, 1, 3)
@@ -51,12 +51,12 @@ test_that("Testing dist_cdf function", {
   
   mt$setXmin(2)
   cdf3 = sum(dpois(2:3, 1)/(1 - sum(dpois(0:1, 1))))
-  expect_equal(dist_cdf(mt), cdf3, tol=1e-4)
+  expect_equal(dist_cdf(mt), c(0, 0, cdf3), tol=1e-4)
   expect_equal(dist_cdf(mt, c(1, 3)), c(0, cdf3), tol=1e-4)
   
   mt$setXmin(3)
   cdf3 = sum(dpois(3, 1)/(1 - sum(dpois(0:2, 1))))
-  expect_equal(dist_cdf(mt), cdf3, tol=1e-4)
+  expect_equal(dist_cdf(mt), c(0, 0, cdf3), tol=1e-4)
   
   ##Discrete Exp
   x = c(1, 1, 3)
@@ -70,12 +70,12 @@ test_that("Testing dist_cdf function", {
   
   mt$setXmin(2)
   cdf3 = (pexp(3.5, 1, 1)-pexp(1.5, 1, 1))/(1 - pexp(1.5, 1, 1))
-  expect_equal(dist_cdf(mt), cdf3, tol=1e-4)
+  expect_equal(dist_cdf(mt), c(0, 0, cdf3), tol=1e-4)
   expect_equal(dist_cdf(mt, c(1, 3)), c(0, cdf3), tol=1e-4)
   
   mt$setXmin(3)
   cdf3 = cdf3 = (pexp(3.5, 1, 1)-pexp(2.5, 1, 1))/(1 - pexp(2.5, 1, 1))
-  expect_equal(dist_cdf(mt), cdf3, tol=1e-4)
+  expect_equal(dist_cdf(mt), c(0, 0, cdf3), tol=1e-4)
   
   
   
@@ -94,8 +94,8 @@ test_that("Testing dist_cdf function", {
   mt$setXmin(2)
   expect_equal(dist_cdf(mt), c(0, 0, 0.5), tol=1e-4)
   mt$setXmin(3)
-  expect_equal(dist_cdf(mt), 0.25, tol=1e-4)
-  expect_equal(dist_cdf(mt, c(1, 3)), 0.25, tol=1e-4)
+  expect_equal(dist_cdf(mt), c(0, 0, 0.25), tol=1e-4)
+  expect_equal(dist_cdf(mt, c(1, 4)), c(0, 0.25), tol=1e-4)
   
   ##Log normal  
   x = c(2, 2, 4)
@@ -114,8 +114,7 @@ test_that("Testing dist_cdf function", {
   expect_equal(dist_cdf(mt, c(1, 4)), c(0, cdf4), tol=1e-4)
   
   mt$setXmin(4)
-  expect_equal(dist_cdf(mt), 0, tol=1e-4)
-  
+  expect_equal(dist_cdf(mt), c(0,0,0), tol=1e-8)
   
   ##Exponential
   x = c(2, 2, 4)
@@ -134,7 +133,7 @@ test_that("Testing dist_cdf function", {
   expect_equal(dist_cdf(mt, c(0, 4)), c(0, cdf4), tol=1e-4)
   
   mt$setXmin(4)
-  expect_equal(dist_cdf(mt), 0, tol=1e-4)
+  expect_equal(dist_cdf(mt), c(0,0, 0), tol=1e-4)
   
 }
 )

@@ -14,10 +14,14 @@
 dplcon = function(x, xmin, alpha, log=FALSE) {
 #   tol = 1e-10
 #   x = x[(x+tol) >= xmin]
-  if(log)
-    log(alpha-1) - log(xmin) - alpha*(log(x/xmin))
-  else
-    (alpha-1)/xmin * (x/xmin)^(-alpha)
+  if(log){
+    pdf = log(alpha-1) - log(xmin) - alpha*(log(x/xmin))
+    pdf[x < xmin] = -Inf
+  } else {
+    pdf = (alpha-1)/xmin * (x/xmin)^(-alpha)
+    pdf[x < xmin] = 0
+  }
+  pdf
 }
 
 
@@ -29,10 +33,10 @@ pplcon = function(q, xmin, alpha, lower.tail=TRUE) {
 #   tol = 1e-10
 #   q = q[(q+tol) >= xmin]
   cdf = 1 - (q/xmin)^(-alpha + 1)
-  if(lower.tail)
-    cdf
-  else
-    1 - cdf#(cdf - dplcon(q, xmin, alpha)) 
+  if(!lower.tail)
+    cdf = 1 - cdf#(cdf - dplcon(q, xmin, alpha)) 
+  cdf[q < round(xmin)] = 0
+  cdf
 }
 
 
