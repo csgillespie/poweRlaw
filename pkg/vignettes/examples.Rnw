@@ -1,14 +1,8 @@
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{2. Examples using the poweRlaw package}
-
 \documentclass[11pt,BCOR2mm,DIV14]{scrartcl}
-
-%For fancy tables
-\usepackage{booktabs}
-% References
-\usepackage[round]{natbib}
-%For symbols in T1 encoding.
-
+\usepackage{booktabs}%Fancy tables
+\usepackage[round]{natbib}% References
 \usepackage{amsmath,amsfonts}
 \usepackage{xcomment,scrpage2}
 \usepackage{algorithmic, algorithm}
@@ -34,7 +28,6 @@ urlcolor={blue!80!black}
 \ofoot[\pagemark]{\pagemark}
 \newcommand{\cc}{\texttt}
 \newcommand{\xmin}{x_{\min}}
-
 
 <<echo=FALSE, message=FALSE>>=
 library(knitr)
@@ -63,14 +56,12 @@ palette(c(rgb(170,93,152, maxColorValue=255),
           rgb(205,71,103, maxColorValue=255),
           rgb(203,77,202, maxColorValue=255),
           rgb(115,113,206, maxColorValue=255)))
-
 @
 % 
 \begin{document}
 \date{Last updated: \today}  
 \title{The poweRlaw package: Examples}
 \author{Colin S. Gillespie}
-
 \maketitle
 
 <<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
@@ -278,10 +269,6 @@ gives the cumulative estimate of the $p\,$-value; the final value of the purple
 line corresponds to \texttt{bs\_p\$p}. Also given are approximate 95\%
 confidence intervals.
 
-
-
-
-
 \subsection{Comparing distributions}
 
 A second approach to test the power law hypothesis is a direct comparison of two
@@ -308,12 +295,11 @@ m_ln$setPars(est)
 <<cache=TRUE>>=
 comp = compare_distributions(m_pl, m_ln)
 @
-\noindent This comparison gives a $p$-value of \Sexpr{comp[["p_two_sided"]]}.
+\noindent This comparison gives a $p$-value of \Sexpr{signif(comp[["p_two_sided"]], 4)}.
 This $p\,$-value corresponds to the $p$-value on page 29 of the
 \citeauthor{clauset2009} paper (the paper gives 0.69).
 
 Overall these results suggest that one model can't be favoured over the other. 
-
 
 \subsection{Investigating the lower bound}
 
@@ -335,7 +321,7 @@ for(i in seq_along(xmins)){
 \begin{figure}[t]
 \centering
 <<echo=FALSE, cache=TRUE>>=
-plot(xmins, est_scan, type="l", 
+plot(xmins, est_scan, type="s", 
      panel.first=grid(), 
      xlab=expression(x[min]), ylab=expression(alpha), 
      ylim=c(1.6, 2.8), col=1)
@@ -354,14 +340,13 @@ conditional on the $\xmin$ value
 \noindent The results are plotted figure \ref{F1e}. For this data set, as the
 lower threshold increases, so does the point estimate of $\alpha$.
 
-
 \clearpage
 
 \section{Continuous data: electrical blackouts}
 
 In this example, we will investigate the numbers of customers affected in
 electrical blackouts in the United States between 1984 and 2002 (see
-\cite{newman2005} for further details).The data set can be downloaded from
+\cite{newman2005} for further details). The data set can be downloaded from
 Clauset's website
 \begin{center}
 \url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data/blackouts.txt}
@@ -444,7 +429,6 @@ plot(native_american$Date, native_american$Cas,
      ylim=c(1, 2000), 
      cex=0.5, panel.first=grid(col="grey70"), 
      xlab="Date", ylab="#Casualties")
-
 points(us_american$Date, us_american$Cas, 
        pch=24, bg=2, cex=0.5)
 @
@@ -501,7 +485,6 @@ However, for larger scale engagements, it is very likely that a record is made.
 # R compiles all vignettes in the same session, which can be bad
 rm(list = ls(all = TRUE))
 @
-
 
 \bibliography{poweRlaw}
 \bibliographystyle{plainnat}
