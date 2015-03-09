@@ -1,13 +1,8 @@
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{1. An introduction to the poweRlaw package}
 \documentclass[11pt,BCOR2mm,DIV14]{scrartcl}
-
-%For fancy tables
-\usepackage{booktabs}
-% References
-\usepackage[round]{natbib}
-%For symbols in T1 encoding.
-
+\usepackage{booktabs}%For fancy tables
+\usepackage[round]{natbib}% References
 \usepackage{amsmath,amsfonts}
 \usepackage{xcomment,scrpage2}
 \usepackage{algorithmic, algorithm}
@@ -33,7 +28,6 @@
 \ofoot[\pagemark]{\pagemark}
 \newcommand{\cc}{\texttt}
 \newcommand{\xmin}{x_{\min}}
-
 
 <<echo=FALSE, message=FALSE>>=
 library(knitr)
@@ -69,8 +63,6 @@ palette(c(rgb(170,93,152, maxColorValue=255),
 \date{Last updated: \today}  
 \title{The poweRlaw package: a general overview}
 \author{Colin S. Gillespie}
-
-
 
 \maketitle
 \begin{abstract}
@@ -183,7 +175,6 @@ m_m$setPars(2)
 @
 \noindent For the Moby Dick data set, when $\xmin=\Sexpr{m_m$getXmin()}$, we estimate $\alpha$ to be $\Sexpr{signif(est$pars,4)}$.
 
-
 To estimate the lower bound $\xmin$, we minimise the distance between the data and the fitted model CDF, that is
 \[
 D(x) = \max_{x \ge \xmin} \vert S(x) - P(x) \vert
@@ -213,7 +204,6 @@ plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3],
      xlab=expression(x[min]), ylab=expression(alpha), 
      xlim=c(0, 30), ylim=c(1.8, 2.1), cex=0.35, 
      pch=21, bg=1, panel.first=grid())
-
 @
 \caption{(a) Plot of the data CDF for the Moby Dick data set. This corresponds
   to figure 6.1(a) in \cite{clauset2009}. The line corresponds to a power-law
@@ -242,8 +232,6 @@ head(dd, 3)
 @
 \noindent This makes it straight forward to create graphics using other R packages, such as \cc{ggplot2}.
 
-
-
 \subsection{Uncertainty in $\xmin$}
 
 \citeauthor{clauset2009} recommend a bootstrap procedure to get a handle on
@@ -269,8 +257,6 @@ To run the bootstrapping procedure, we use the \texttt{bootstrap} function
 bs = bootstrap(m_m, no_of_sims=1000, threads=1)
 @
 
-
-
 \noindent this function runs in parallel, with the number of threads used determined by the \texttt{threads} argument. To detect the number of cores on your machine, you can run:
 <<>>=
 parallel::detectCores()
@@ -291,8 +277,6 @@ hist(bs$bootstraps[,3], breaks="fd")
 plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3])
 @
 \noindent These commands give figure \ref{F1}b--d..
-
-
 
 \subsection{Do we have a power-law?}
 
@@ -364,8 +348,6 @@ bs_p = bootstrap_p(m_m, no_of_sims=1000, threads=2)
 \end{itemize}
 The results of this procedure are shown in figure \ref{F4}.
 
-
-
 \section{Distribution objects}
 
 For the Moby Dick example, we created a \texttt{displ} object
@@ -434,9 +416,6 @@ if(!file.exists("blackouts.txt"))
 blackouts = read.table("blackouts.txt")
 @
 
-
-
-
 \section{Loading data}
 
 Typically, data is stored in a csv or text file. To use this data, we load it in the usual way\footnote{The blackouts data set can be obtained from Clauset's website: \mbox{\url{http://goo.gl/BsqnP}}}
@@ -458,8 +437,6 @@ lines(m_bl, col=2)
 @
 \caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more efficient.}\label{F6}
 \end{figure}
-
-
 
 <<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
 if(!file.exists("plfit.R"))
@@ -497,7 +474,6 @@ plfit_res = plfit(moby)
 <<results='hide', eval=FALSE>>=
 estimate_xmin(m_m, pars=seq(1.5, 2.5, 0.01))
 @
-
 
 \subsection{The continuous case}
 
@@ -565,19 +541,6 @@ hist(bs$bootstraps[,3], xlab=expression(alpha),
      breaks="fd")
 grid()
 sink=dev.off()
-
-
 @    
        
        
-       
-       
-       
-       
-       
-       
-       
-       
-
-
-% eof
