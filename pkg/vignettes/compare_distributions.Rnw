@@ -101,7 +101,7 @@ x = rpldis(10000, xmin=2, alpha=2.1)
 m1 = displ$new(x)
 m1$setPars(estimate_pars(m1))
 @
-\noindent The estimated values of $\xmin$ and $\alpha$ are \Sexpr{m1$getXmin()} and \Sexpr{signif(m1$getPars(), 3}, respectively. As an alternative distribution, we will fit a discrete log-normal distribution\footnote{When comparing distributions, each model must have the same $\xmin$ value. In this example, both models have $\xmin=\Sexpr{m1$getXmin()}$.}
+\noindent The estimated values of $\xmin$ and $\alpha$ are \Sexpr{m1$getXmin()} and \Sexpr{signif(m1$getPars(), 3)}, respectively. As an alternative distribution, we will fit a discrete log-normal distribution\footnote{When comparing distributions, each model must have the same $\xmin$ value. In this example, both models have $\xmin=\Sexpr{m1$getXmin()}$.}
 <<>>=
 m2 = dislnorm$new(x)
 m2$setPars(estimate_pars(m2))
