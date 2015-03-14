@@ -16,6 +16,7 @@ r_packages:
 # System dependencies for HTTP calling
 apt_packages:
     - texlive-science
+    - latex-xcolor
 
 
 
