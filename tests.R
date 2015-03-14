@@ -5,4 +5,4 @@ library(testthat)
 
 y = test_dir("tests/")
 if(any(y$failed)) stop("Errors")
-
+devtools::check("pkg/")
