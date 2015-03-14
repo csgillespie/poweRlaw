@@ -1,7 +1,7 @@
 language: r
 
 script: 
-    - ./travis-tool.sh run_tests
+#    - ./travis-tool.sh run_tests
     - cd ../ && Rscript tests.R
 
 before_install:

@@ -124,7 +124,7 @@ if(file.exists("examples1.rds")) {
 }
 @
 
-\noindent which yields a lower threshold of $\xmin=\Sexpr{est_ln$xmin}$ and parameters $(\Sexpr{est_ln$pars[1]},$ $\Sexpr{est_ln$pars[2]})$. A similar procedure is applied to fit the Poisson distribution; we create a distribution object using \cc{dispois}, then fit as before.
+\noindent which yields a lower threshold of $\xmin=\Sexpr{est_ln$xmin$ and parameters $(\Sexpr{est_ln$pars[1]},$ $\Sexpr{est_ln$pars[2]})$. A similar procedure is applied to fit the Poisson distribution; we create a distribution object using \cc{dispois}, then fit as before.
 
 The data CDF and lines of best fit can be easily plotted
 <<fig.keep='none', cache=TRUE>>=
