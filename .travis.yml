@@ -1,4 +1,4 @@
-language: c
+language: r
 
 script: 
     - ./travis-tool.sh run_tests
@@ -6,12 +6,19 @@ script:
 
 before_install:
     - cd pkg
-    - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-    - chmod 755 ./travis-tool.sh
-    - ./travis-tool.sh bootstrap
-install:
-    - ./travis-tool.sh install_deps
-    - ./travis-tool.sh install_r testthat
+#    - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
+#    - chmod 755 ./travis-tool.sh
+#    - ./travis-tool.sh bootstrap
+
+r_packages:
+    - testthat
+
+
+
+
+#install:
+#    - ./travis-tool.sh install_deps
+#    - ./travis-tool.sh install_r testthat
 
 
 notifications:
