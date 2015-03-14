@@ -13,6 +13,9 @@ before_install:
 r_packages:
     - testthat
 
+# System dependencies for HTTP calling
+apt_packages:
+    - texlive-science
 
 
 
