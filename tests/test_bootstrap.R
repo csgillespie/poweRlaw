@@ -3,7 +3,7 @@ test_that("Testing bootstrap function", {
   mt = displ$new(x)
   bs = bootstrap(mt, no_of_sims=5)
   expect_is(bs, "bs_xmin")
-  expect_equal(dim(bs$bootstraps), c(5, 31))
+  expect_equal(dim(bs$bootstraps), c(5, 3))
   expect_equal(names(bs), c("gof", "bootstraps", "sim_time"))
   
   m = dislnorm$new(x)
