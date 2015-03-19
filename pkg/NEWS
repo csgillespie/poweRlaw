@@ -1,3 +1,9 @@
+Version 0.30.2
+--------------
+ * Bug fix: Plotting the data cdf failed when data values were larger than `xmax` 
+ (https://github.com/csgillespie/poweRlaw/issues/40). Thanks to @LaurentFranckx
+
+
 Version 0.30.1
 --------------
  * Bug fix: pdf and cdf functions should now handle values of q less than xmin in a 

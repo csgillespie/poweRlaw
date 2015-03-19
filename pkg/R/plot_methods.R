@@ -35,7 +35,7 @@ setMethod("plot",
             x_values = x$dat
             
             if(!cut) x$setXmin(min(x_values))
-            y = dist_data_cdf(x, FALSE)
+            y = dist_data_cdf(x, lower_tail = FALSE, xmax=max(x_values)+1)
             
             cut_off_seq = (x_values >= cut_off)
             x_axs = x_values[cut_off_seq]
