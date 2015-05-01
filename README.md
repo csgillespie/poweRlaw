@@ -1,6 +1,6 @@
-The poweRlaw package
+The poweRlaw package [![Build Status](https://travis-ci.org/csgillespie/poweRlaw.png?branch=master,dev)](https://travis-ci.org/csgillespie/poweRlaw) [![Downloads](http://cranlogs.r-pkg.org/badges/poweRlaw?color=brightgreen)](http://cran.rstudio.com/package=poweRlaw)
 ====================
-[![Build Status](https://travis-ci.org/csgillespie/poweRlaw.png?branch=master,dev)](https://travis-ci.org/csgillespie/poweRlaw)
+
 
 This package implements both the discrete and continuous maximum likelihood estimators for fitting the power-law distribution to data using the methods described in [Clauset et al, 2009](http://arxiv.org/abs/0706.1062). It also provides function to fit log-normal and Poisson distributions. Additionally, a goodness-of-fit based approach is used to estimate the lower cut-off for the scaling region. 
 
