@@ -45,7 +45,7 @@ setMethod("dist_data_cdf",
           definition = function(m, lower_tail=TRUE, xmax=1e5) {
             n = m$internal[["n"]]
             cdf = (0:(n-1))/n
-            cdf = cdf[1:min(n, xmax)]
+            #cdf = cdf[1:min(n, xmax)]
             if(lower_tail)
               cdf
             else

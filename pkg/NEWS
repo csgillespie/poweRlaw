@@ -1,3 +1,9 @@
+Version 0.32.1
+--------------
+ * Bug fix: Plotting the CTN data cdf failed when data values were larger than `xmax` 
+ (https://github.com/csgillespie/poweRlaw/issues/40). Thanks to @bfbraum
+
+
 Version 0.30.2
 --------------
  * Bug fix: Plotting the data cdf failed when data values were larger than `xmax` 

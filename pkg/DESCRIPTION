@@ -1,7 +1,7 @@
 Package: poweRlaw
 Type: Package
 Title: Analysis of Heavy Tailed Distributions
-Version: 0.30.2
+Version: 0.30.2.1
 Date: 2015-04-16
 Authors@R: person(given="Colin", family="Gillespie",
     email="csgillespie@gmail.com", role = c("aut", "cre"))
