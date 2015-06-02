@@ -54,7 +54,7 @@ test_that("Testing log-likelihood function", {
   load("ctn_data.RData")
   m = conpl$new(ctn_data)
   m$setPars(2.53282); m$setXmin(1.43628)
-  expect_equal(dist_ll(m), -9276.42, 1e-1);  
+  expect_equal(dist_ll(m), -9276.42, 1);  
   
   ##Lognormal
   x = c(1, 1)
