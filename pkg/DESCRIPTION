@@ -22,6 +22,7 @@ Imports:
 Suggests:
     knitr,
     R.matlab
+ByteCompile: true
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
 Collate:
