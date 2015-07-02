@@ -69,7 +69,7 @@ if(!file.exists("blackouts.txt"))
   download.file("http://goo.gl/BsqnP", destfile="blackouts.txt")
 @
 
-\section{Discrete data: Moby Dick}
+\section{Discrete data: The Moby Dick dataset}
 
 The Moby Dick dataset contains the frequency of unique words in the novel Moby Dick by Herman Melville. This data set can be downloaded from
 \begin{center}
@@ -78,15 +78,18 @@ The Moby Dick dataset contains the frequency of unique words in the novel Moby D
 \noindent or loaded directly
 <<dis_data>>=
 library("poweRlaw")
-data("moby")
+data("moby", package="poweRlaw")
 @
 \noindent To fit a discrete power law to this data\footnote{The object \texttt{moby} is a simple R vector.}, we use the \texttt{displ} constructor
 <<cache=TRUE>>=
 m_pl = displ$new(moby)
 @
-\noindent The resulting object, \cc{m\_pl}, is a \cc{displ}\footnote{\cc{displ}: discrete power law.} object. It also inherits the \cc{discrete\_distribution} class. After creating the \cc{displ} object, a typical first step would be to infer model parameters.\footnote{When the \cc{displ} object is first created, the default parameter values are \cc{NULL} and $\xmin$ is set to the minimum $x$-value.} We can estimate the lower threshold, via
+\noindent The resulting object, \cc{m\_pl}, is a \cc{displ}\footnote{\cc{displ}: discrete power law.} object. It also inherits the \cc{discrete\_distribution} class. After creating the \cc{displ} object, a typical first step would be to infer model parameters.\footnote{When the \cc{displ} object is first created, the default parameter values are \cc{NULL} and $\xmin$ is set to the minimum $x$-value.} We estimate the lower threshold via
 <<cache=TRUE>>=
 est = estimate_xmin(m_pl)
+@
+\noindent and update the power law object
+<<cache=TRUE>>=
 m_pl$setXmin(est)
 @
 \noindent For a given value $\xmin$, the scaling parameter is estimated by numerically optimising the log-likelihood. The optimiser is \textit{initialised} using the analytical MLE
