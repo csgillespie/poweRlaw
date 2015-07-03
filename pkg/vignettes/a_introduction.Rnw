@@ -56,7 +56,6 @@ palette(c(rgb(170,93,152, maxColorValue=255),
           rgb(205,71,103, maxColorValue=255),
           rgb(203,77,202, maxColorValue=255),
           rgb(115,113,206, maxColorValue=255)))
-
 @
 % 
 \begin{document}
@@ -81,8 +80,7 @@ install.packages("poweRlaw")
 \noindent The developmental version is hosted on github and  can be installed using the \cc{devtools} package\footnote{If you are using Windows, then you will need to install the \texttt{Rtools} package first.}
 <<eval=FALSE>>=
 install.packages("devtools")
-library("devtools")
-install_github("poweRlaw", "csgillespie", subdir="pkg")
+devtools::install_github("csgillespie/poweRlaw", subdir="pkg")
 @
 \noindent Once installed, the package can be loaded ready for use with the standard \cc{library} command
 <<>>=
@@ -116,17 +114,11 @@ example(displ)
 demo(package="poweRlaw")
 data(package="poweRlaw")
 @
-\noindent For example, the Moby dick data set can be load using\footnote{The package also contains the data set \texttt{moby\_sample}. This data set is two thousand randomly sampled values from the larger \cc{moby} data set.}
-<<>>=
-data("moby")
-@
-\noindent After running this command, the vector \cc{moby} will be accessible, and can be examined by typing
-<<results='hide'>>=
-moby
-@
-\noindent at the R command prompt.
-
-If you use this package, please cite it. The appropriate citation can be obtained via:
+\noindent If you use this package, please cite it. The appropriate citation is
+\begin{center}
+Colin S. Gillespie (2015). \textit{Fitting Heavy Tailed Distributions: The poweRlaw Package}. Journal of Statistical Software, \textbf{64(2)}, 1-16. URL http://www.jstatsoft.org/v64/i02/.
+\end{center}
+The bibtex version can be obtained via
 <<results='hide'>>=
 citation("poweRlaw")
 @
@@ -218,7 +210,7 @@ and $D(7) = \Sexpr{signif(est$KS, 3)}$. We can then set parameters of power-law
 distribution to these "optimal" values
 <<m_m, echo=2, eval=FALSE, results='hide'>>=
 @
-\noindent All distribution objects have generic plot methods\footnote{Generic \texttt{lines} and \texttt{points} functions are also available.}
+All distribution objects have generic plot methods\footnote{Generic \texttt{lines} and \texttt{points} functions are also available.}
 <<fig.keep='none'>>=
 ## Plot the data (from xmin)
 plot(m_m)
@@ -276,7 +268,7 @@ hist(bs$bootstraps[,3], breaks="fd")
 <<fig.keep='none'>>=
 plot(jitter(bs$bootstraps[,2], factor=1.2), bs$bootstraps[,3])
 @
-\noindent These commands give figure \ref{F1}b--d..
+\noindent These commands give figure \ref{F1}b--d.
 
 \subsection{Do we have a power-law?}
 
@@ -321,7 +313,7 @@ plot(jitter(bs_p$bootstraps[,2], factor=1.2), bs_p$bootstraps[,3],
 \caption{Histograms of the bootstrap results and bivariate scatter plot of the bootstrap results. The values of $\xmin$ and $\alpha$ are obviously strongly correlated.}\label{F4}
 \end{figure}
 
-When $\alpha$ is close to one, this algorithm can be particularly time consuming to run, for two reasons:
+When $\alpha$ is close to one, this algorithm can be particularly time consuming to run, for two reasons.
 \begin{enumerate}
 \item When generating random numbers from the discrete power-law distribution, large values are probable, i.e. values greater than $10^8$. To overcome this bottleneck, when generating the random numbers all numbers larger than $10^5$ are generated using a continuous approximation.
 \item To calculate the Kolmogorov-Smirnov statistic, we need explore the state space. It is computationally infeasible to explore the entire state space when $\max(x) >> 10^5$. To make this algorithm computational feasible, we split the state space into two sections. The first section is all values from
@@ -418,7 +410,7 @@ blackouts = read.table("blackouts.txt")
 
 \section{Loading data}
 
-Typically, data is stored in a csv or text file. To use this data, we load it in the usual way\footnote{The blackouts data set can be obtained from Clauset's website: \mbox{\url{http://goo.gl/BsqnP}}}
+Typically data is stored in a csv or text file. To use this data, we load it in the usual way\footnote{The blackouts data set can be obtained from Clauset's website: \mbox{\url{http://goo.gl/BsqnP}}}
 <<loading_data,eval=FALSE>>=
 blackouts = read.table("blackouts.txt")
 @
@@ -474,6 +466,12 @@ plfit_res = plfit(moby)
 <<results='hide', eval=FALSE>>=
 estimate_xmin(m_m, pars=seq(1.5, 2.5, 0.01))
 @
+Currently, there is a bug with the \cc{plfit} script when $\xmin = 1$. This is easily demostrated via a simulation 
+<<cache=TRUE>>=
+x = rpldis(1000, 1, 2)
+plfit(x)
+@
+
 
 \subsection{The continuous case}
 
