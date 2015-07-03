@@ -45,7 +45,9 @@ bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   l = list(p=sum(nof[1,] >= gof_v[["KS"]])/no_of_sims, 
            gof = gof_v[["KS"]], 
            bootstraps = as.data.frame(t(nof)), 
-           sim_time = total_time[[1]]/no_of_sims)
+           sim_time = total_time[[1]]/no_of_sims, 
+           seed=seed, 
+           package_version = packageVersion("poweRlaw"))
   class(l) = "bs_p_xmin"
   l
 }

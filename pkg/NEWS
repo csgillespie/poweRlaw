@@ -1,11 +1,7 @@
 Version 0.40.0
 --------------
  * Add ByteCompile flag. Testing suggests that bootstrapping is now around two times faster.
-
-Version 0.32.1
---------------
- * Bug fix: Plotting the CTN data cdf failed when data values were larger than `xmax` 
- (https://github.com/csgillespie/poweRlaw/issues/40). Thanks to @bfbraum
+ * Added seed and package_version to the output of bootstrap and bootstrap_p 
 
 Version 0.30.2
 --------------

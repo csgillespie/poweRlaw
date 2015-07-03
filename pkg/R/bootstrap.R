@@ -39,7 +39,9 @@ bootstrap = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   total_time = difftime(end_time, start_time, units="secs")*threads
   l = list(gof = gof_v[["KS"]], 
            bootstraps = as.data.frame(t(nof)), 
-           sim_time = total_time[[1]]/no_of_sims)
+           sim_time = total_time[[1]]/no_of_sims, 
+           seed=seed,
+           package_version = packageVersion("poweRlaw"))
   class(l) = "bs_xmin"
   l
 }
