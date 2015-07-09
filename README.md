@@ -1,4 +1,4 @@
-The poweRlaw package [![Build Status](https://travis-ci.org/csgillespie/poweRlaw.png?branch=master,dev)](https://travis-ci.org/csgillespie/poweRlaw) [![Downloads](http://cranlogs.r-pkg.org/badges/poweRlaw?color=brightgreen)](http://cran.rstudio.com/package=poweRlaw)
+The poweRlaw package [![Build Status](https://travis-ci.org/csgillespie/poweRlaw.png?branch=master,dev)](https://travis-ci.org/csgillespie/poweRlaw) [![Downloads](http://cranlogs.r-pkg.org/badges/poweRlaw?color=brightgreen)](http://cran.rstudio.com/package=poweRlaw)[![CRAN](http://www.r-pkg.org/badges/version/poweRlaw)](http://cran.rstudio.com/package=poweRlaw)
 ====================
 
 
@@ -8,7 +8,7 @@ The code developed in this package was influenced from the python and R code fou
 
 To cite this package in academic work, please use:
 
-Gillespie, C. S. "*Fitting heavy tailed distributions: the poweRlaw package.*" Journal of Statistical Software, 64(2) 2015. ([arXiv preprint](http://arxiv.org/abs/1407.3492)).
+Gillespie, C. S. "*Fitting heavy tailed distributions: the poweRlaw package.*" Journal of Statistical Software, 64(2) 2015. ([pdf](www.jstatsoft.org/v64/i02/paper)).
 
 Installation
 ------------
