@@ -20,7 +20,7 @@ install.packages("poweRlaw")
 Alternatively, the development version can be install from from github using the devtools package:
 ```r
 install.packages("devtools")
-devtools::install_github("poweRlaw", "csgillespie", subdir="pkg")
+devtools::install_github("csgillespie/poweRlaw", sub="pkg")
 ```
 
 Note Windows users have to first install [Rtools](http://cran.rstudio.com/bin/windows/Rtools/).
