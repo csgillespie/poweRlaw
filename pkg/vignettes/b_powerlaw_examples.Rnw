@@ -69,9 +69,9 @@ if(!file.exists("blackouts.txt"))
   download.file("http://goo.gl/BsqnP", destfile="blackouts.txt")
 @
 
-\section{Discrete data: The Moby Dick dataset}
+\section{Discrete data: The Moby Dick data set}
 
-The Moby Dick dataset contains the frequency of unique words in the novel Moby Dick by Herman Melville. This data set can be downloaded from
+The Moby Dick data set contains the frequency of unique words in the novel Moby Dick by Herman Melville. This data set can be downloaded from
 \begin{center}
 \url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm}
 \end{center}
@@ -345,6 +345,59 @@ lower threshold increases, so does the point estimate of $\alpha$.
 
 \clearpage
 
+
+\section{Discrete data: Swiss prot}
+
+
+UniProtKB/Swiss-Prot is a manually annotated, non-redundant protein sequence database. It combines information extracted from scientific literature and biocurator-evaluated computational analysis. In a recent paper, \citet{Bell2012} used the power law distribution to investigate the evolution of the database over time. 
+
+A single version of the data set is available with the package and can be accessed via
+<<>>=
+data("swiss_prot", package="poweRlaw")
+head(swiss_prot, 3)
+@
+
+\noindent This dataset contains all the words extracted from the Swiss-Prot version 9 data (with the resulting frequency for each word). Other datasets for other database versions can be obtained by contacting Michael Bell
+\begin{center}
+\url{http://homepages.cs.ncl.ac.uk/m.j.bell1/annotationQualityPaper.php}
+\end{center}
+The first column gives the word/symbol, while the second column gives the number of times that particular word occurs.
+
+We can fit a discrete power law in the usual way
+
+<<>>=
+m_sp = displ$new(swiss_prot$Value)
+est_sp = estimate_xmin(m_sp)
+m_sp$setXmin(est_sp)
+@
+
+\begin{figure}[t]
+\centering
+<<sp_plot, echo=FALSE, cache=TRUE, fig.width=4, fig.height=4>>=
+plot(m_sp, pch=21, bg=2, panel.first=grid(col="grey80"), 
+     xlab="Word Occurance", ylab="CDF")
+lines(m_sp, col=3, lwd=3)
+@
+\caption{Log-log plot for the Swiss-Prot data sets.}\label{sp1}
+\end{figure}
+
+\noindent which gives estimates of $\xmin = \Sexpr{est_sp$xmin}$ and $\alpha = \Sexpr{signif(est_sp$pars, 3)}$. 
+
+We can spice up the base graphics plot by changing the plotting defaults. First, we change the graphical parameters
+<<>>=
+par(mar=c(3, 3, 2, 1), mgp=c(2, 0.4, 0), tck=-.01, 
+    cex.axis=0.9, las=1)
+@
+
+\noindent Then plot data and model, but adding in a background grid, and changing the symbol
+
+<<sp_plot, fig.keep="none", eval=FALSE>>=
+@
+
+\noindent to get figure \ref{sp1}.
+
+\clearpage
+
 \section{Continuous data: electrical blackouts}
 
 In this example, we will investigate the numbers of customers affected in
@@ -393,7 +446,7 @@ lines(m_bl, col=2, lwd=3)
 lines(m_bl_ln, col=3, lwd=3)
 @
 
-\caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power law as this is more it efficient. The power law fit is the green line, the discrete log-normal is the red line.}\label{F2a}
+\caption{CDF plot of the blackout data set with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power law as this is more it efficient. The power law fit is the green line, the discrete log-normal is the red line.}\label{F2a}
 \end{figure}
 <<m_bl_ln, eval=FALSE>>=
 @
