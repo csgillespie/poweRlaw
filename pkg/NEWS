@@ -2,6 +2,7 @@ Version 0.40.0
 --------------
  * Add ByteCompile flag. Testing suggests that bootstrapping is now around two times faster.
  * Added seed and package_version to the output of bootstrap and bootstrap_p 
+ * Added poisson random number generator
 
 Version 0.30.2
 --------------
