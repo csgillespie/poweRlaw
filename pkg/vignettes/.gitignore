@@ -1,8 +1,8 @@
 graphics/
 blackouts.txt
 *-concordance.tex
-poweRlaw.pdf
-poweRlaw.tex
+a_introduction.pdf
+a_introduction.tex
 knitr_*
 *.acn
 *.acr
@@ -36,11 +36,14 @@ knitr_*
 *.vrb
 *.xdy
 *.tdo
-examples.tex
-examples.pdf
+b_powerlaw_examples.tex
+b_powerlaw_examples.pdf
 cache
 knitr_*
 compare_distributions.md
 compare_distributions.html
 compare_distributions.pdf
 compare_distributions.tex
+Rplots.pdf
+a_introduction.pdf
+tmp.html
