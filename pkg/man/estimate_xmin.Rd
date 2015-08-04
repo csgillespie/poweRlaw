@@ -68,14 +68,14 @@ computationally brutal. In particular, when bootstrapping
 we generate random numbers from the power law distribution,
 which has a long tail.
 
-To speed up computations for discrete distributions, it is sensible to put an
+To speed up computations for discrete distributions it is sensible to put an
 upper bound, i.e. \code{xmax} or explicitly give values of where to search, i.e. \code{xmin}.
 When calculating the kolmogorov-smirnov, the CDF is caculate up to the
 maximum value of the data. However, for some data sets and during bootstrapping, very large
 values can be generated. This may cause both speed and memory problems.
 
-Occassionally, bootstrapping can generate strange situations. For example,
-all values in the simulated data set less then the \code{xmin} value. In this case,
+Occassionally bootstrapping can generate strange situations. For example,
+all values in the simulated data set are less then \code{xmin}. In this case,
 the estimated KS statistic will be \code{Inf} and the parameter values, \code{NA}.
 }
 \note{

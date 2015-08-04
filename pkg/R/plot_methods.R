@@ -140,7 +140,7 @@ plot.bs_xmin = function(x, trim=0.1, ...){
     d = x$bootstraps[, i+1]
     l[[i]] = get_cum_summary(d, trim)
   }
-  names(l) = c("Xmin", paste("Par", 1:(no_plots-1)))
+  names(l) = c("Xmin", paste("Par", 1:(no_plots-2)), "ntail")
   create_plots(l, no_plots)
 }
 
@@ -160,7 +160,7 @@ plot.bs_p_xmin = function(x, trim=0.1, ...){
   }
   l[[no_plots]] = get_cum_summary(x$gof < x$bootstraps$KS, trim)
   
-  names(l) = c("Xmin", paste("Par", 1:(no_plots-2)), "p-value")
+  names(l) = c("Xmin", paste("Par", 1:(no_plots-3)), "ntail", "p-value")
   #no_plots = ncol(x$bootstraps) - 1
   create_plots(l, no_plots)  
 }

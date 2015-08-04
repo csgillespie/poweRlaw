@@ -60,14 +60,14 @@ get_KS_statistic = function(m, xmax=1e5) {
 #' we generate random numbers from the power law distribution, 
 #' which has a long tail. 
 #' 
-#' To speed up computations for discrete distributions, it is sensible to put an 
+#' To speed up computations for discrete distributions it is sensible to put an 
 #' upper bound, i.e. \code{xmax} or explicitly give values of where to search, i.e. \code{xmin}.
 #' When calculating the kolmogorov-smirnov, the CDF is caculate up to the
 #' maximum value of the data. However, for some data sets and during bootstrapping, very large 
 #' values can be generated. This may cause both speed and memory problems. 
 #' 
-#' Occassionally, bootstrapping can generate strange situations. For example, 
-#' all values in the simulated data set less then the \code{xmin} value. In this case, 
+#' Occassionally bootstrapping can generate strange situations. For example, 
+#' all values in the simulated data set are less then \code{xmin}. In this case, 
 #' the estimated KS statistic will be \code{Inf} and the parameter values, \code{NA}.
 #' @importFrom parallel makeCluster parSapply 
 #' @importFrom parallel clusterExport stopCluster
@@ -103,11 +103,7 @@ estimate_xmin = function (m, xmins = NULL, pars=NULL, xmax=1e5) {
   if(estimate) {
     m_cpy = m$getRefClass()$new(m$dat)
     m_cpy$pars = pars
-    if(is.null(xmins)) {
-      xmins = unique(m$dat)
-#      space = space[space <= xmins]
-#      xmins = space
-    }
+    if(is.null(xmins))  xmins = unique(m$dat)
     xmins = xmins[xmins <= xmax]
   }
  
@@ -126,13 +122,14 @@ estimate_xmin = function (m, xmins = NULL, pars=NULL, xmax=1e5) {
   }
   
   ## Bootstrapping may generate strange data
+  ## Columns: KS, Pars, xmin, ntail
   if(!estimate || nr < 1) {
     ## Insufficient data to estimate parameters
-    dat = matrix(0, nrow=1, ncol=(1 + m$no_pars))
-    dat[1, ] = c(Inf, rep(NA, m$no_pars))
+    dat = matrix(0, nrow=1, ncol=(2 + m$no_pars))
+    dat[1, ] = c(Inf, rep(NA, m$no_pars + 1))
     estimate = FALSE
   } else {
-    dat = matrix(0, nrow=nr, ncol=(1 + m_cpy$no_pars))   
+    dat = matrix(0, nrow=nr, ncol=(2 + m_cpy$no_pars))   
     est = estimate_pars(m_cpy)$pars
   }
   
@@ -149,7 +146,7 @@ estimate_xmin = function (m, xmins = NULL, pars=NULL, xmax=1e5) {
       m_cpy$pars = m_cpy$pars[I]
     }
     gof = get_KS_statistic(m_cpy, xmax)
-    dat[xm <- xm + 1L,] = c(gof, m_cpy$pars)
+    dat[xm <- xm + 1L,] = c(gof, m_cpy$pars, get_ntail(m_cpy))
   }
   
   row = which.min(dat[,1L])
@@ -160,13 +157,14 @@ estimate_xmin = function (m, xmins = NULL, pars=NULL, xmax=1e5) {
     dat[row,] = NA_real_
     xmins[row] = NA_real_
     warning("Unable to estimate xmin. This may be due to numerical instabilities. 
-            For example, the parameter estimates are in the distribution tails.")
+            For example the parameter estimates are in the distribution tails.")
   }
   
   xmin = xmins[row]
-  pars = dat[row, 2:ncol(dat)]
+  pars = dat[row, 2:(ncol(dat)-1)]
+  ntail = dat[row, ncol(dat)]
   
-  l = list(KS=dat[row, 1L], xmin=xmin, pars=pars)
+  l = list(KS=dat[row, 1L], xmin=xmin, pars=pars, ntail=ntail)
   class(l) = "estimate_xmin"
   return(l)
 }
