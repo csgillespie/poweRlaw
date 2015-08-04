@@ -44,8 +44,7 @@ and xmin values found in the associated reference object.
 }
 \note{
 This method does *not* alter the internal state of
-the distribubtion object. This method is only available for
-discrete and continuous power law objects.
+the distribubtion object.
 }
 \examples{
 ##########################################
