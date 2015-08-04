@@ -1,12 +1,15 @@
-bootstrap_p_helper = function (i, m, N, y, xmins, pars, xmax) {
-  ny = length(y);  nz = N - ny; pz = nz/N
-  n1 = sum(runif(N) > pz)
-  q = dist_rand(m, N-n1)
+bootstrap_p_helper = function (i, m, x_lower, xmins, pars, xmax) {
+  ## Total sample size
+  N = get_n(m)
+  ## sum(x >= xmin)/N
+  ntail_prop = get_ntail(m, prop=TRUE)
   
-  if(inherits(m, "discrete_distribution"))
-    q = c(y[sample(N-nz, n1, replace=TRUE)], q)
-  else 
-    q = c(runif(n1, 0, N-nz), q)
+  ## Proportion to sample
+  n1 = sum(runif(N) > ntail_prop) # less than xmin
+
+  # q should be of length N
+  q = c(sample(x_lower, n1, replace=TRUE), #less than xmin
+        dist_rand(m, N - n1))
   
   m_cpy = m$getRefClass()$new(q)
   unlist(estimate_xmin(m_cpy, xmins=xmins, pars=pars, xmax=xmax))
@@ -22,9 +25,7 @@ bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   m_cpy$setXmin(gof_v)
   
   x = m_cpy$dat
-  N = length(x)
-  z = x[x >= m_cpy$xmin]
-  y = x[x < m_cpy$xmin]
+  x_lower = x[x < m_cpy$xmin]
   
   ## Start clock and parallel boostrap
   start_time = Sys.time()
@@ -36,7 +37,7 @@ bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   clusterExport(cl, c("dist_rand", "estimate_xmin"))
   nof = parSapply(cl, 1:no_of_sims,
                   bootstrap_p_helper,  m_cpy, 
-                  N, y, xmins, pars, xmax)
+                  x_lower, xmins, pars, xmax)
   ## Stop clock and cluster
   end_time = Sys.time()
   stopCluster(cl)
