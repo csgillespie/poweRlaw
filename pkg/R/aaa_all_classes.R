@@ -20,6 +20,13 @@ distribution = setRefClass("distribution",
 
 distribution$accessors(c("xmin", "pars", "dat", "no_pars"))
 
+distribution$methods( 
+  get_ntail = function() {
+    internal[["n"]]
+  }
+  
+)
+
 discrete_distribution = setRefClass("discrete_distribution", contains="distribution")
 
 ctn_distribution = setRefClass("ctn_distribution", contains="distribution")
