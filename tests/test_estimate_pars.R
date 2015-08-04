@@ -1,7 +1,7 @@
 test_that("Testing estimate_pars function", {
   
   ##Discrete Power-law
-  load("discrete_data.RData")
+  discrete_data = readRDS("discrete_data.RData")
   mt = displ$new(discrete_data)
   mt$setXmin(2)
   est = estimate_pars(mt, pars=seq(2, 3, 0.01))
@@ -30,7 +30,7 @@ test_that("Testing estimate_pars function", {
   expect_equal(est$pars, c(1.20, 0.85), tol=1e-3)
   
   ##CTN Power-law
-  load("ctn_data.RData")
+  ctn_data = readRDS("ctn_data.RData")
   mt = conpl$new(ctn_data)
   mt$setXmin(1.43628)
   

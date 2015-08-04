@@ -1,7 +1,7 @@
 test_that("Testing log-likelihood function", {
   
   ##Discrete Power-law
-  load("discrete_data.RData")
+  discrete_data = readRDS("discrete_data.RData")
   m = displ$new(discrete_data)
   m$setPars(2.58); m$setXmin(2)
   expect_equal(dist_ll(m), -9155.62809, tol=1e-4)
@@ -51,10 +51,10 @@ test_that("Testing log-likelihood function", {
   #######################################
   #######################################  
   ##CTN Power-law
-  load("ctn_data.RData")
+  ctn_data = readRDS("ctn_data.RData")
   m = conpl$new(ctn_data)
   m$setPars(2.53282); m$setXmin(1.43628)
-  expect_equal(dist_ll(m), -9276.42, 1);  
+  expect_equal(dist_ll(m), -9276.4, tolerance=0.00001);  
   
   ##Lognormal
   x = c(1, 1)

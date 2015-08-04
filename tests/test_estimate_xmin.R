@@ -1,7 +1,7 @@
 test_that("Testing estimate_xmin function", {
   
   ##Discrete Power-law
-  load("discrete_data.RData")
+  discrete_data = readRDS("discrete_data.RData")
   mt = displ$new(discrete_data)
   est = estimate_xmin(mt, pars=seq(2, 3, 0.01))
   expect_equal(est$pars, 2.58, tol=1e-1)
@@ -33,7 +33,7 @@ test_that("Testing estimate_xmin function", {
   ##CTN Power-law
   ##Takes a while
   if(interactive()) {
-    load("ctn_data.RData")
+    ctn_data = readRDS("ctn_data.RData")
     mt = conpl$new(ctn_data)
     est = estimate_xmin(mt)
     expect_equal(est$pars, 2.53255, tol=1e-3)
