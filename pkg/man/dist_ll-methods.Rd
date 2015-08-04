@@ -29,7 +29,7 @@ dist_ll(m)
 \S4method{dist_ll}{dispois}(m)
 }
 \arguments{
-\item{m}{The distribution reference object.}
+\item{m}{a distribution object.}
 }
 \value{
 The log-likelihood

@@ -18,17 +18,23 @@ distribution = setRefClass("distribution",
                              pars="ANY",
                              no_pars="numeric"))
 
+###############################
+# Set get and set methods
+# This will be inherited
+###############################
 distribution$accessors(c("xmin", "pars", "dat", "no_pars"))
 
 distribution$methods( 
   get_ntail = function() {
     internal[["n"]]
   }
-  
 )
 
+#############################################################
+# In the bootstrapping & plotting, we do slightly 
+# different things for continuous and discrete distributions
+#############################################################
 discrete_distribution = setRefClass("discrete_distribution", contains="distribution")
-
 ctn_distribution = setRefClass("ctn_distribution", contains="distribution")
 
 

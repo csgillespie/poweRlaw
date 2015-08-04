@@ -29,7 +29,7 @@ dist_rand(m, n)
 \S4method{dist_rand}{dispois}(m, n = "numeric")
 }
 \arguments{
-\item{m}{a distribution reference object.}
+\item{m}{a distribution object.}
 
 \item{n}{number of observations to be generated.}
 }
