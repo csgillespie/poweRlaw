@@ -1,7 +1,7 @@
 Package: poweRlaw
 Type: Package
 Title: Analysis of Heavy Tailed Distributions
-Version: 0.40.1
+Version: 0.40.2
 Date: 2015-08-04
 Authors@R: person(given="Colin", family="Gillespie",
     email="csgillespie@gmail.com", role = c("aut", "cre"))
@@ -45,6 +45,8 @@ Collate:
     'dist_data_cdf_methods.R'
     'estimate_pars.R'
     'estimate_xmin.R'
+    'get_n.R'
+    'get_ntail.R'
     'lines_methods.R'
     'plcon.R'
     'pldis.R'

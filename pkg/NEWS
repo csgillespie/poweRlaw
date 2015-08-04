@@ -1,12 +1,14 @@
 Version 0.50.0 (not on CRAN)
 ----------------------------
  * Added get_ntail function which returns the number of points  greater than or equal to xmin.
+ * Added get_n function which returns the sample size.
+ * Bug fix: bootstrap_p was incorrect for CTN models (https://github.com/csgillespie/poweRlaw/issues/52). Thanks to @lsaravia for reporting and diagnosing the problem.
 
 Version 0.40.0 (not on CRAN)
 ----------------------------
  * Add ByteCompile flag. Testing suggests that bootstrapping is now around twice as fast.
- * Added seed and package_version to the output of bootstrap and bootstrap_p 
- * Added poisson random number generator
+ * Added seed and package_version to the output of bootstrap and bootstrap_p. 
+ * Added poisson random number generator.
 
 Version 0.30.2
 --------------
