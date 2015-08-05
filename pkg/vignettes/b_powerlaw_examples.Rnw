@@ -28,6 +28,7 @@ urlcolor={blue!80!black}
 \ofoot[\pagemark]{\pagemark}
 \newcommand{\cc}{\texttt}
 \newcommand{\xmin}{x_{\min}}
+\newcommand{\ntail}{n_{\text{tail}}}
 
 <<echo=FALSE, message=FALSE>>=
 library(knitr)
@@ -179,11 +180,13 @@ bootstrap(m_pl, xmins = seq(2, 20, 2))
 \]
 A similar argument exists for the parameters.\footnote{For single parameter models, \cc{pars} should be a vector. For the log-normal distribution, \cc{pars} should be a matrix of values.}
 
-The bootstrap function, returns \cc{bs\_xmin} object that has three components:
+The bootstrap function, returns \cc{bs\_xmin} object that has a number of components:
 \begin{enumerate}
 \item The goodness of fit statistic obtained from the Kolmogorov-Smirnoff test. This value should correspond to the value obtained from the \mbox{\cc{estimate\_xmin}} function.
 \item A data frame containing the results for the bootstrap procedure. 
 \item The average simulation time, in seconds, for a single bootstrap.
+\item The random number seed.
+\item The package version.
 \end{enumerate}
 The boostrap results can be explored in a variety way. First we can estimate the standard deviation of the parameter uncertainty, i.e.
 
@@ -192,7 +195,7 @@ The boostrap results can be explored in a variety way. First we can estimate the
 <<echo=FALSE, fig.width=8, fig.height=8, out.width='0.7\\textwidth'>>=
 plot(bs)
 @
-\caption{Results from the standard bootstrap procedure (for the power law model) using the Moby Dick data set: \mbox{\texttt{bootstrap(m\_pl)}}. The top row shows the mean estimate of parameters $\xmin$ and $\alpha$. The bottom row shows the estimate of standard deviation for each parameter. The dashed-lines give approximate 95\% confidence intervals. After 5,000 iterations, the standard deviation of $\xmin$ and $\alpha$ is estimated to be 2.1 and 0.03 respectively.}\label{F1b}
+\caption{Results from the standard bootstrap procedure (for the power law model) using the Moby Dick data set: \mbox{\texttt{bootstrap(m\_pl)}}. The top row shows the mean estimate of parameters $\xmin$, $\alpha$ and $\ntail$. The bottom row shows the estimate of standard deviation for each parameter. The dashed-lines give approximate 95\% confidence intervals. After 5,000 iterations, the standard deviation of $\xmin$ and $\alpha$ is estimated to be 2.1 and 0.03 respectively.}\label{F1b}
 \end{figure}
 <<>>=
 sd(bs$bootstraps[,2])
@@ -535,7 +538,7 @@ The lines of best fit are also given.}\label{F3b}
 \noindent The result is given in figure \ref{F3b}. The tails of the
 distributions appear to follow a power law. This is consistent with the
 expectation that smaller-scale engagements are less likely to be recorded.
-However, for larger scale engagements, it is very likely that a record is made.
+However, for larger scale engagements it is likely that the event was recorded.
 
 <<clean-up, include=FALSE>>=
 # R compiles all vignettes in the same session, which can be bad

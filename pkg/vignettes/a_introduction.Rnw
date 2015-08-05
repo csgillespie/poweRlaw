@@ -258,6 +258,8 @@ parallel::detectCores()
 \item The original Kolmogorov-Smirnov statistic.
 \item The results of the bootstrapping procedure.
 \item The average time (in seconds) for a single bootstrap.
+\item The random number seed.
+\item The package version.
 \end{itemize}
 \noindent The results of the bootstrap procedure can be investigated with histograms
 <<fig.keep='none'>>=
@@ -281,15 +283,15 @@ Since it is possible to fit a power-law distribution to \textit{any} data set, i
     \hline
     {\small 1:} & Calculate point estimates of $\xmin$ and the scaling parameter $\alpha$. \\
     {\small 2:} & Calculate the KS statistic, $KS_d$, for the original data set.\\
-    {\small 3:} & Set $n_1$ equal to the number of values below \texttt{xmin}. \\
-    {\small 4:} & Set $n_2 = n - n_1$ and $P = 0$.\\
-    {\small 5:} & \textbf{for} \texttt{i} in \texttt{1:B}:\\
-    {\small 6:} & $\quad$ Simulate $n_1$ values from a discrete uniform distribution: $U(1, \xmin)$ and \\
-    & $\quad$ $n_2$ values from a discrete power-law distribution (with parameter $\alpha$).\\
-    {\small 7:} & $\quad$ Calculate the associated KS statistic, $KS_{sim}$.\\
-    {\small 8:} & $\quad$ If $KS_d > KS_{sim}$, then $P = P + 1$.\\
-    {\small 9:} & \textbf{end for} \\
-    {\small 10:} & p = P/B.\\
+    {\small 3:} & Set $n_{\text{tail}}$ equal to the number of values above or equal to \texttt{xmin}.\\
+    {\small 4:} & \textbf{for} \texttt{i} in \texttt{1:B}:\\
+    {\small 5:} & $\quad$ Simulate a value $n_1$ from a binomial distribution with parameters $n$ and $n_{\text{tail}}/n$.\\
+    {\small 6:} & $\quad$ Sample, with replacement, $n - n_1$ values from the data set that is less than $\xmin$.\\
+    {\small 7:} & $\quad$ Sample $n_1$ values from a discrete power-law distribution (with parameter $\alpha$).\\
+    {\small 8:} & $\quad$ Calculate the associated KS statistic, $KS_{sim}$.\\
+    {\small 9:} & $\quad$ If $KS_d > KS_{sim}$, then $P = P + 1$.\\
+    {\small 10:} & \textbf{end for} \\
+    {\small 11:} & p = P/B.\\
     \hline
   \end{tabular}
 \end{table}  
@@ -335,8 +337,10 @@ bs_p = bootstrap_p(m_m, no_of_sims=1000, threads=2)
 \begin{itemize}
 \item A $p$-value - \verb|bs_p$p|. For this example, $p=\Sexpr{bs_p[["p"]]}$ which indicates that we can not rule out the power law model. See section 4.2 of the Clauset paper for further details.
 \item The original goodness of fit statistic  - \verb|bs_p$gof|.
-\item The result of the bootstrap procedure - a data frame with three columns.
+\item The result of the bootstrap procedure (a data frame).
 \item The average time (in seconds) for a single bootstrap realisation.
+\item The simulator seed.
+\item The package version.
 \end{itemize}
 The results of this procedure are shown in figure \ref{F4}.
 
@@ -360,6 +364,7 @@ m_m = displ$new(moby)
   \\
   CTN Power-law & \texttt{conpl} & 1 \\
   CTN Log-normal & \texttt{conlnorm} & 2 \\
+  CTN Exponential & \texttt{conlnorm} & 1 \\
   \bottomrule
   \end{tabular}
   \caption{Available distributions in the \cc{poweRlaw} package. These objects are all reference classes.}\label{T1}
@@ -389,7 +394,7 @@ All distribution objects have a number of methods available. A list of methods i
     Method Name & Description \\
     \midrule
     \texttt{dist\_cdf} & Cumulative density/mass function (CDF)\\
-    \texttt{dist\_pdf} & Probability density/mass function (pdf)\\
+    \texttt{dist\_pdf} & Probability density/mass function (PDF)\\
     \texttt{dist\_rand}& Random number generator\\
     \texttt{dist\_data\_cdf} & Data CDF \\
     \texttt{dist\_ll} & Log-likelihood\\
@@ -397,6 +402,8 @@ All distribution objects have a number of methods available. A list of methods i
     \texttt{estimate\_pars} & Point estimates of the parameters (conditional on the current $\xmin$ value)\\
     \texttt{bootstrap} & Bootstrap procedure (uncertainty in $\xmin$)\\
     \texttt{bootstrap\_p} & Bootstrap procedure to test whether we have a power-law\\
+    \texttt{get\_n} & The sample size\\
+    \texttt{get\_ntail} & The number of values greater than or equal to $\xmin$
     \bottomrule
   \end{tabular}
   \caption{A list of functions for \texttt{distribution} functions. These objects do not change the object states. However, they may not be thread safe. }\label{T2}
