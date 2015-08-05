@@ -403,7 +403,7 @@ All distribution objects have a number of methods available. A list of methods i
     \texttt{bootstrap} & Bootstrap procedure (uncertainty in $\xmin$)\\
     \texttt{bootstrap\_p} & Bootstrap procedure to test whether we have a power-law\\
     \texttt{get\_n} & The sample size\\
-    \texttt{get\_ntail} & The number of values greater than or equal to $\xmin$
+    \texttt{get\_ntail} & The number of values greater than or equal to $\xmin$\\
     \bottomrule
   \end{tabular}
   \caption{A list of functions for \texttt{distribution} functions. These objects do not change the object states. However, they may not be thread safe. }\label{T2}
