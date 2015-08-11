@@ -1,8 +1,8 @@
 Package: poweRlaw
 Type: Package
 Title: Analysis of Heavy Tailed Distributions
-Version: 0.40.2
-Date: 2015-08-04
+Version: 0.50.0
+Date: 2015-08-12
 Authors@R: person(given="Colin", family="Gillespie",
     email="csgillespie@gmail.com", role = c("aut", "cre"))
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
@@ -14,15 +14,16 @@ URL: https://github.com/csgillespie/poweRlaw
 BugReports: https://github.com/csgillespie/poweRlaw/issues
 Roxygen: list(wrap = FALSE)
 Depends:
-    R (>= 3.0.0),
-    methods
+    R (>= 3.0.0)
 Imports:
     VGAM,
-    parallel
+    parallel,
+    methods,
+    utils,
+    stats
 Suggests:
     knitr,
     R.matlab
-ByteCompile: true
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
 Collate:
@@ -54,3 +55,4 @@ Collate:
     'points_methods.R'
     'poweRlaw-package.R'
     'show_methods.R'
+ByteCompile: true
