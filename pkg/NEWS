@@ -1,4 +1,8 @@
-Version 0.50.0 (not on CRAN)
+Version 0.50.1
+----------------------------
+ * Bug fix: Export get_n in bootstrap_p. Fix for https://github.com/csgillespie/poweRlaw/issues/53. Thanks to @AnaCG for reporting.
+
+Version 0.50.0
 ----------------------------
  * Added get_ntail function which returns the number of points  greater than or equal to xmin.
  * Added get_n function which returns the sample size.

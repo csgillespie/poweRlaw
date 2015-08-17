@@ -34,7 +34,7 @@ bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   ## Set cluster seed
   clusterSetRNGStream(cl, seed)
   
-  clusterExport(cl, c("dist_rand", "estimate_xmin"))
+  clusterExport(cl, c("dist_rand", "estimate_xmin", "get_ntail"))
   nof = parSapply(cl, 1:no_of_sims,
                   bootstrap_p_helper,  m_cpy, 
                   x_lower, xmins, pars, xmax)
