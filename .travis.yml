@@ -1,19 +1,33 @@
-language: r
-
-script: 
-    - cd ../ && Rscript tests.R
+language: c
+sudo: required
 
 before_install:
-    - cd pkg
+  - curl -OL https://raw.githubusercontent.com/metacran/r-builder/master/pkg-build.sh
+  - chmod 755 pkg-build.sh
+  - ./pkg-build.sh bootstrap
+  - sudo apt-get install -y texlive-science latex-xcolor
+  - cd pkg
 
-r_packages:
-    - testthat
+install:
+  - ./pkg-build.sh install_r covr
+  - ./pkg-build.sh install_deps
 
-apt_packages:
-    - texlive-science
-    - latex-xcolor
+script:
+  - ./pkg-build.sh run_tests
+
+after_success:
+   - if [[ ! -z "$COVERAGE" ]];then ./pkg-build.sh run_script -e 'covr::codecov()'; fi
+  
+after_failure:
+  - ./pkg-build.sh dump_logs
 
 notifications:
-    email:
-      on_success: change
-      on_failure: change
+  email:
+    on_success: change
+    on_failure: change
+
+env:
+  matrix:
+    - RVERSION=devel
+    - RVERSION=release COVERAGE=true
+    - RVERSION=oldrel
