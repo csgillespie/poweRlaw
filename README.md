@@ -1,4 +1,9 @@
-The poweRlaw package [![Build Status](https://travis-ci.org/csgillespie/poweRlaw.png?branch=master,dev)](https://travis-ci.org/csgillespie/poweRlaw) [![Downloads](http://cranlogs.r-pkg.org/badges/poweRlaw?color=brightgreen)](http://cran.rstudio.com/package=poweRlaw)[![CRAN](http://www.r-pkg.org/badges/version/poweRlaw)](http://cran.rstudio.com/package=poweRlaw)
+The poweRlaw package 
+[![Build Status](https://travis-ci.org/csgillespie/poweRlaw.png?branch=master,dev)](https://travis-ci.org/csgillespie/poweRlaw) 
+[![codecov.io](https://codecov.io/github/csgillespie/poweRlaw/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/poweRlaw?branch=master)
+[![Downloads](http://cranlogs.r-pkg.org/badges/poweRlaw?color=brightgreen)](http://cran.rstudio.com/package=poweRlaw)
+[![CRAN](http://www.r-pkg.org/badges/version/poweRlaw)](http://cran.rstudio.com/package=poweRlaw)
+
 ====================
 
 
