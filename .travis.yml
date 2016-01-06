@@ -2,11 +2,11 @@ language: c
 sudo: required
 
 before_install:
+  - cd pkg
   - curl -OL https://raw.githubusercontent.com/metacran/r-builder/master/pkg-build.sh
   - chmod 755 pkg-build.sh
   - ./pkg-build.sh bootstrap
   - sudo apt-get install -y texlive-science latex-xcolor
-  - cd pkg
 
 install:
   - ./pkg-build.sh install_r covr
