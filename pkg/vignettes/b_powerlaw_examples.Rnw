@@ -316,9 +316,9 @@ with the \cc{poweRlaw} package. First, we create a vector of thresholds to scan
 xmins = seq(1, 1001, 5)
 @
 
-<<est_scan, echo=FALSE, cache=TRUE>>=
+<<est_scan, echo=FALSE>>=
 est_scan = 0*xmins
-for(i in seq_along(xmins)){
+for(i in seq_along(xmins)) {
   m_pl$setXmin(xmins[i])
   est_scan[i] = estimate_pars(m_pl)$pars
 }
@@ -341,7 +341,7 @@ horizontal line corresponds to $\alpha=1.95$.}\label{F1e}
 @
 \noindent Next, we loop over the $\xmin$ values and estimate the parameter value
 conditional on the $\xmin$ value
-<<est_scan, echo=2:4, eval=FALSE>>=
+<<est_scan, echo=-1, eval=FALSE>>=
 @
 \noindent The results are plotted figure \ref{F1e}. For this data set, as the
 lower threshold increases, so does the point estimate of $\alpha$.
