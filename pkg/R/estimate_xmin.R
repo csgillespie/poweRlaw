@@ -1,4 +1,5 @@
 #' @rdname estimate_xmin
+#' @importFrom methods is
 #' @export
 get_KS_statistic = function(m, xmax=1e5) {
   if(is(m, "discrete_distribution")) {

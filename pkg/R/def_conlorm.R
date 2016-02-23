@@ -4,6 +4,7 @@
 #' @rdname displ
 #' @aliases conlnorm-class conlnorm
 #' @exportClass conlnorm
+#' @importFrom stats dlnorm plnorm
 #' @export conlnorm
 conlnorm = 
   setRefClass("conlnorm", 

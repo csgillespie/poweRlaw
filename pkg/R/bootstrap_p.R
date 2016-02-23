@@ -1,3 +1,4 @@
+#' @importFrom  stats runif
 bootstrap_p_helper = function (i, m, x_lower, xmins, pars, xmax) {
   ## Total sample size
   N = get_n(m)

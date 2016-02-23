@@ -9,6 +9,7 @@ bootstrap_helper = function (i, m, xmins, pars, xmax) {
 #' @param seed default \code{NULL}. An integer to be supplied to \code{set.seed}, or \code{NULL}
 #' not to set reproducible seeds. This argument is passed \code{clusterSetRNGStream}.
 #' @importFrom parallel clusterSetRNGStream
+#' @importFrom utils packageVersion
 #' @export
 bootstrap = function (m, xmins=NULL, pars=NULL, xmax=1e5,
                       no_of_sims=100, threads=1, 

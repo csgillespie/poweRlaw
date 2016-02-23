@@ -4,6 +4,7 @@
 #' Using the default \code{show} method gives the illusion of duplicate values. 
 #' This show method aims to avoid this confusion.
 #' @param object A distribution object.
+#' @importFrom methods classLabel
 #' @export
 setMethod("show", 
           signature = signature(object="distribution"),

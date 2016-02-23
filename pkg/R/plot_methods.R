@@ -75,6 +75,7 @@ get_cum_summary = function(x,trim=0.1) {
   return(dd)
 }
 
+#' @importFrom graphics par grid
 create_plots = function(l, no_plots) {
   ##Set margins for optimal viewing
   old_par = par(no.readonly = TRUE)

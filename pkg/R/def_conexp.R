@@ -4,6 +4,8 @@
 #' @rdname displ
 #' @aliases conexp-class conexp
 #' @exportClass conexp
+#' @importFrom methods new
+#' @importFrom stats dexp pexp
 #' @export conexp
 conexp = 
   setRefClass("conexp", 

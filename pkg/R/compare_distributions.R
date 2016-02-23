@@ -42,6 +42,7 @@
 #' @references Vuong, Quang H. (1989): 
 #' "Likelihood Ratio Tests for Model Selection and Non-Nested Hypotheses", 
 #' Econometrica 57: 307--333.
+#' @importFrom stats sd pnorm
 #' @export
 #' @examples
 #' ########################################################

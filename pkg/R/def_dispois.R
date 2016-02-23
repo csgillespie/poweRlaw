@@ -4,6 +4,7 @@
 #' @rdname displ
 #' @aliases dispois-class dispois
 #' @exportClass dispois
+#' @importFrom stats dpois ppois
 #' @export dispois
 dispois = 
   setRefClass("dispois", 
