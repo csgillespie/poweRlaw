@@ -23,7 +23,8 @@ Imports:
     stats
 Suggests:
     knitr,
-    R.matlab, testthat
+    R.matlab,
+    testthat
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
 Collate:
@@ -56,3 +57,4 @@ Collate:
     'poweRlaw-package.R'
     'show_methods.R'
 ByteCompile: true
+RoxygenNote: 5.0.1
