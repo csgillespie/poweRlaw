@@ -52,6 +52,7 @@ setMethod("plot",
 ######################################
 ######################################
 ######################################
+#' @importFrom stats qchisq qpois qt rlnorm
 get_cum_summary = function(x,trim=0.1) {
   n = length(x)
   m = cumsum(x)/1:n
@@ -166,7 +167,7 @@ plot.bs_p_xmin = function(x, trim=0.1, ...){
   create_plots(l, no_plots)  
 }
 
-
+#' @importFrom utils modifyList
 #' @rdname plot.bs_xmin
 #' @method plot compare_distributions
 #' @export
