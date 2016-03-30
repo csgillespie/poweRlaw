@@ -2,6 +2,7 @@ Version 0.60.0
 --------------
   * New distance argument for estimate_xmin and bootstrap functions. No longer limited
   to the KS distance measure.
+  * Better error handling in the bootstrap function. Fix for https://github.com/csgillespie/poweRlaw/issues/60. Thanks to @lsaravia for reporting.
 
 Version 0.50.1 (not on CRAN)
 ----------------------------

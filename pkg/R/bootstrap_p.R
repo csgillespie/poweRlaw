@@ -22,6 +22,11 @@ bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
                         seed=NULL, distance="ks") {
   m_cpy = m$copy()
   gof_v = estimate_xmin(m_cpy, xmins=xmins, pars=pars, xmax=xmax, distance=distance)
+  if(is.na(gof_v$gof)) {
+    stop("Unable to estimate initial xmin using estimate_xmin, so we can't bootstrap.")
+  }
+  
+  
   m_cpy$setXmin(gof_v)
   
   x = m_cpy$dat
