@@ -20,6 +20,18 @@ bootstrap = function (m, xmins=NULL, pars=NULL, xmax=1e5,
     stop("Unable to estimate initial xmin using estimate_xmin, so we can't bootstrap.")
   }
   
+  if(min(m_cpy$dat) > xmax) {
+    stop("The smallest value in your data set is larger than xmax. The xmax
+         parameter is the upper limit of the xmin search space.")
+  }
+  
+  if(max(m_cpy$dat) > xmax) {
+    message("Some of your data is larger than xmax. The xmax parameter is
+            the upper bound of the xmin search space. You could try increasing
+            it. If the estimated values are below xmax, it's probably OK not to 
+            worry about this.")
+  }
+  
   
   
   m_cpy$setXmin(gof_v)

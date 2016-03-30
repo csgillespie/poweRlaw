@@ -105,16 +105,13 @@ get_distance_statistic = function(m, xmax=1e5, distance="ks") {
 #' which has a long tail. 
 #' 
 #' To speed up computations for discrete distributions it is sensible to put an 
-#' upper bound, i.e. \code{xmax} or explicitly give values of where to search, i.e. \code{xmin}.
-#' When calculating the kolmogorov-smirnov, the CDF is caculate up to the
-#' maximum value of the data. However, for some data sets and during bootstrapping, very large 
-#' values can be generated. This may cause both speed and memory problems. 
+#' upper bound, i.e. \code{xmax} and/or explicitly give values of where to search, i.e. \code{xmin}.
 #' 
 #' Occassionally bootstrapping can generate strange situations. For example, 
 #' all values in the simulated data set are less then \code{xmin}. In this case, 
 #' the estimated distance measure will be \code{Inf} and the parameter values, \code{NA}.
 #' 
-#' There are many possible distance measures that can be calculated. The default is the
+#' There are other possible distance measures that can be calculated. The default is the
 #' Kolomogorov Smirnoff statistic (\code{KS}). This is equation 3.9 in the CSN paper. The
 #' other measure currently available is \code{reweight}, which is equation 3.11.
 #' @importFrom parallel makeCluster parSapply 
