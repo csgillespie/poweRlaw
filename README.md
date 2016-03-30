@@ -1,4 +1,4 @@
-The poweRlaw package 
+# The poweRlaw package 
 [![Build Status](https://travis-ci.org/csgillespie/poweRlaw.png?branch=master,dev)](https://travis-ci.org/csgillespie/poweRlaw) 
 [![codecov.io](https://codecov.io/github/csgillespie/poweRlaw/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/poweRlaw?branch=master)
 [![Downloads](http://cranlogs.r-pkg.org/badges/poweRlaw?color=brightgreen)](http://cran.rstudio.com/package=poweRlaw)
@@ -39,9 +39,10 @@ library("poweRlaw")
 ```
 then work the through the four vignettes (links to the current CRAN version): 
 
- * [Getting started](http://cran.r-project.org/web/packages/poweRlaw/vignettes/poweRlaw.pdf)
- * [Worked examples](http://cran.r-project.org/web/packages/poweRlaw/vignettes/examples.pdf)
- * [Comparing distributions](http://cran.r-project.org/web/packages/poweRlaw/vignettes/compare_distributions.pdf)
+ * [Getting started](https://cran.r-project.org/web/packages/poweRlaw/vignettes/a_introduction.pdf)
+ * [Worked examples](https://cran.r-project.org/web/packages/poweRlaw/vignettes/b_powerlaw_examples.pdf)
+ * [Comparing distributions](https://cran.r-project.org/web/packages/poweRlaw/vignettes/c_comparing_distributions.pdf)
+ * [JSS paper](https://cran.r-project.org/web/packages/poweRlaw/vignettes/d_jss_paper.pdf)
 
 Alternatively, you can access the vignettes from within the package:
 ```r
