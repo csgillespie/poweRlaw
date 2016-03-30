@@ -56,5 +56,6 @@ Collate:
     'points_methods.R'
     'poweRlaw-package.R'
     'show_methods.R'
+    'timer.R'
 ByteCompile: true
 RoxygenNote: 5.0.1
