@@ -4,10 +4,7 @@
 \alias{dplcon}
 \alias{pplcon}
 \alias{rplcon}
-\title{The continuous powerlaw distribution
-
-Density and distribution function of the continuous power-law distribution, with
-parameters xmin and alpha.}
+\title{The continuous powerlaw distribution}
 \usage{
 dplcon(x, xmin, alpha, log = FALSE)
 
@@ -35,6 +32,10 @@ otherwise, \eqn{P[X > x]}.}
 }
 \value{
 dplcon gives the denisty and pplcon gives the distribution function.
+}
+\description{
+Density and distribution function of the continuous power-law distribution, with
+parameters xmin and alpha.
 }
 \note{
 The discrete random number generator is very inefficient

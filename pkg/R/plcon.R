@@ -1,6 +1,6 @@
 #' @title The continuous powerlaw distribution
 #' 
-#' Density and distribution function of the continuous power-law distribution, with
+#' @description Density and distribution function of the continuous power-law distribution, with
 #' parameters xmin and alpha.
 #' @inheritParams ppldis
 #' @param x,q vector of quantiles. The discrete 
