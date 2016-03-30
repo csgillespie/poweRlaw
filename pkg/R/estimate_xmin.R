@@ -77,8 +77,9 @@ get_distance_statistic = function(m, xmax=1e5, distance="ks") {
 #' the bulk of the distribution and cannot calculate the tails to enough
 #' accuracy.}
 #' \item{\code{bootstrap}}{Estimates the unncertainity in the xmin and parameter values via bootstraping.}
-#' \item{\code{bootstrap_p}}{Performs a bootstrapping hypothesis test to determine whether a power law
-#' distribution is plausible. This function only available for power law distribution objects.}}
+#' \item{\code{bootstrap_p}}{Performs a bootstrapping hypothesis test to determine whether a suggested
+#' (typically power law) distribution is plausible. This is only available for distributions that 
+#' have \code{dist_rand} methods available.}}
 #' @param m A reference class object that contains the data.
 #' @param distance A string containing the distance measure (or measures) to calculate. 
 #' Possible values are \code{ks} or \code{reweight}. See details for further information. 

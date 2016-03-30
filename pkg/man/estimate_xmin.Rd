@@ -60,8 +60,9 @@ warnings occur for large values of \code{xmin}. Essentially, we are discarding
 the bulk of the distribution and cannot calculate the tails to enough
 accuracy.}
 \item{\code{bootstrap}}{Estimates the unncertainity in the xmin and parameter values via bootstraping.}
-\item{\code{bootstrap_p}}{Performs a bootstrapping hypothesis test to determine whether a power law
-distribution is plausible. This function only available for power law distribution objects.}}
+\item{\code{bootstrap_p}}{Performs a bootstrapping hypothesis test to determine whether a suggested
+(typically power law) distribution is plausible. This is only available for distributions that 
+have \code{dist_rand} methods available.}}
 }
 \details{
 When estimating \code{xmin} for discrete distributions, the search space when 
