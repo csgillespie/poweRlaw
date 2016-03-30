@@ -1,4 +1,4 @@
-test_that("Testing estimate_xmin function", {
+test_that("Testing estimate_xmin accuracy", {
   
   ##Discrete Power-law
   discrete_data = readRDS("discrete_data.RData")
@@ -68,14 +68,30 @@ test_that("Testing estimate_xmin function", {
   x = c(2, 2,2)
   mt = displ$new(x)
   est = estimate_xmin(mt)
-  expect_true(is.infinite(est$KS))
+  expect_true(is.infinite(est$gof))
   expect_true(is.na(est$pars))
 
   ## Empty object
   mt = displ$new()
   est = estimate_xmin(mt)
-  expect_true(is.infinite(est$KS))
+  expect_true(is.infinite(est$gof))
   expect_true(is.na(est$pars))
 
 }
 )
+
+test_that("Testing estimate_xmin distance measures", {
+  skip_on_cran() 
+  discrete_data = 1:10
+  mt = displ$new(discrete_data)
+  est = estimate_xmin(mt, pars=seq(2, 3, 0.01), distance="ks")
+  expect_equal(est$pars, 3, tol=1e-1)
+  expect_equal(est$xmin, 5, tol=1e-3)
+
+  est = estimate_xmin(mt, pars=seq(2, 3, 0.01), distance="reweight")
+  expect_equal(est$pars, 2.57, tol=1e-1)
+  expect_equal(est$xmin, 4, tol=1e-3)
+  
+}
+)
+

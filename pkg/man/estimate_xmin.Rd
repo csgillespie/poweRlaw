@@ -4,18 +4,19 @@
 \alias{bootstrap}
 \alias{bootstrap_p}
 \alias{estimate_xmin}
-\alias{get_KS_statistic}
+\alias{get_distance_statistic}
 \title{Estimating the lower bound (xmin)}
 \usage{
 bootstrap(m, xmins = NULL, pars = NULL, xmax = 1e+05, no_of_sims = 100,
-  threads = 1, seed = NULL)
+  threads = 1, seed = NULL, distance = "ks")
 
 bootstrap_p(m, xmins = NULL, pars = NULL, xmax = 1e+05,
-  no_of_sims = 100, threads = 1, seed = NULL)
+  no_of_sims = 100, threads = 1, seed = NULL, distance = "ks")
 
-get_KS_statistic(m, xmax = 1e+05)
+get_distance_statistic(m, xmax = 1e+05, distance = "ks")
 
-estimate_xmin(m, xmins = NULL, pars = NULL, xmax = 1e+05)
+estimate_xmin(m, xmins = NULL, pars = NULL, xmax = 1e+05,
+  distance = "ks")
 }
 \arguments{
 \item{m}{A reference class object that contains the data.}
@@ -40,6 +41,9 @@ take a while to run.}
 
 \item{seed}{default \code{NULL}. An integer to be supplied to \code{set.seed}, or \code{NULL}
 not to set reproducible seeds. This argument is passed \code{clusterSetRNGStream}.}
+
+\item{distance}{A string containing the distance measure (or measures) to calculate. 
+Possible values are \code{ks} or \code{reweight}. See details for further information.}
 }
 \description{
 When fitting heavy tailed distributions, sometimes it 
@@ -76,7 +80,11 @@ values can be generated. This may cause both speed and memory problems.
 
 Occassionally bootstrapping can generate strange situations. For example, 
 all values in the simulated data set are less then \code{xmin}. In this case, 
-the estimated KS statistic will be \code{Inf} and the parameter values, \code{NA}.
+the estimated distance measure will be \code{Inf} and the parameter values, \code{NA}.
+
+There are many possible distance measures that can be calculated. The default is the
+Kolomogorov Smirnoff statistic (\code{KS}). This is equation 3.9 in the CSN paper. The
+other measure currently available is \code{reweight}, which is equation 3.11.
 }
 \note{
 Adapted from Laurent Dubroca's code found at

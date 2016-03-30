@@ -1,8 +1,8 @@
-bootstrap_helper = function (i, m, xmins, pars, xmax) {
+bootstrap_helper = function (i, m, xmins, pars, xmax, distance) {
   x = sample(m$dat, length(m$dat), replace=TRUE)
   
   m_cpy = m$getRefClass()$new(x)
-  unlist(estimate_xmin(m_cpy, xmins=xmins, pars=pars, xmax=xmax))
+  unlist(estimate_xmin(m_cpy, xmins=xmins, pars=pars, xmax=xmax, distance=distance))
 }
 
 #' @rdname estimate_xmin
@@ -13,36 +13,39 @@ bootstrap_helper = function (i, m, xmins, pars, xmax) {
 #' @export
 bootstrap = function (m, xmins=NULL, pars=NULL, xmax=1e5,
                       no_of_sims=100, threads=1, 
-                      seed=NULL) {
+                      seed=NULL, distance="ks") {
   m_cpy = m$copy()
-  gof_v = estimate_xmin(m_cpy, xmins=xmins, pars=pars, xmax=xmax)
+  gof_v = estimate_xmin(m_cpy, xmins=xmins, pars=pars, xmax=xmax, distance=distance)
   
   m_cpy$setXmin(gof_v)
-  x = m_cpy$dat
-  N = length(x)
+  # x = m_cpy$dat
+  # N = length(x)
   
   ## Start clock and parallel boostrap
+  cl = parallel::makeCluster(threads)
   start_time = Sys.time()
-  cl = makeCluster(threads)
   
   ## Set cluster seed
-  clusterSetRNGStream(cl, seed)
+  parallel::clusterSetRNGStream(cl, seed)
   
-  clusterExport(cl, c("estimate_xmin"))
-  nof = parSapply(cl, 1:no_of_sims,
+  parallel::clusterExport(cl, c("estimate_xmin"))
+  nof = parallel::parSapply(cl, 1:no_of_sims,
                   bootstrap_helper,  m_cpy, 
-                  xmins, pars, xmax)
+                  xmins, pars, xmax, distance)
   
   ## Stop clock and cluster
   end_time = Sys.time()
-  stopCluster(cl)
+  parallel::stopCluster(cl)
   
   total_time = difftime(end_time, start_time, units="secs")*threads
-  l = list(gof = gof_v[["KS"]], 
-           bootstraps = as.data.frame(t(nof)), 
+  bootstraps = as.data.frame(t(nof))
+  bootstraps = bootstraps[, colnames(bootstraps) != "distance"]
+  l = list(gof = gof_v[["gof"]], 
+           bootstraps=bootstraps, 
            sim_time = total_time[[1]]/no_of_sims, 
            seed=seed,
-           package_version = packageVersion("poweRlaw"))
+           package_version = packageVersion("poweRlaw"), 
+           distance=distance)
   class(l) = "bs_xmin"
   l
 }

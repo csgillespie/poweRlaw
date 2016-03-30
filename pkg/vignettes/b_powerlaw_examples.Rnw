@@ -104,7 +104,7 @@ Alternatively, we could perform a parameter scan for each value of $\xmin$
 estimate_xmin(m_pl, pars=seq(1.8, 2.3, 0.1))
 @
 
-To fit a discrete log-normal distribution, we follow a similar procedure, except
+\noindent To fit a discrete log-normal distribution, we follow a similar procedure, except
 we begin by creating a \cc{dislnorm} object\footnote{\cc{dislnorm}: discrete log
 normal object}
 

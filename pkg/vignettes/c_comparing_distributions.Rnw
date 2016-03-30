@@ -88,7 +88,7 @@ function\footnote{The \cc{compare\_distributions} function also returns a one
   first model is better than the second, i.e. a \textbf{one} sided test.} and
 examine the \cc{p\_two\_sided} value.
 
-\section{Example: Simulated data}
+\section{Example: Simulated data 1}
 
 First let's generate some data from a power-law distribution
 <<>>=
@@ -127,6 +127,29 @@ comp = compare_distributions(m1, m2)
 comp$p_two_sided
 @
 \noindent means we can reject $H_0$ since $p=\Sexpr{signif(comp$p_two_sided, 4)}$ and conclude that one model is closer to the true distribution.
+
+\subsection*{One or two-sided $p$-value}
+
+The two-sided $p$-value does not depend on the order of the model comparison
+
+<<echo=FALSE>>=
+compare_distributions(m1, m2)$p_two_sided
+compare_distributions(m2, m1)$p_two_sided
+@
+
+\noindent However, the one-sided $p$-value is order dependent 
+
+<<echo=FALSE>>=
+## We only care if m1 is better than m2
+## m1 is clearly better
+compare_distributions(m1, m2)$p_one_sided
+## m2 isn't better than m1
+compare_distributions(m2, m1)$p_one_sided
+@
+
+
+
+
 
 \section{Example: Moby Dick data set}
 
