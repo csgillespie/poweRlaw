@@ -197,14 +197,8 @@ setMethod("dist_all_cdf",
             xmax = max(m$dat[m$dat <= xmax])
             v = ifelse(xmin==1, 0, sum((1:(xmin-1))^-pars))
             cumsum((((xmin:xmax)^-pars))/(inter[["constant"]] - v))                
-            
           }
 )
-
-
-
-
-
 
 #############################################################
 #ll method
