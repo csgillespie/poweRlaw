@@ -119,7 +119,7 @@ data(package="poweRlaw")
 Colin S. Gillespie (2015). \textit{Fitting Heavy Tailed Distributions: The poweRlaw Package}. Journal of Statistical Software, \textbf{64(2)}, 1-16. URL http://www.jstatsoft.org/v64/i02/.
 \end{center}
 The bibtex version can be obtained via
-<<results='hide'>>=
+<<results='hide', eval=FALSE>>=
 citation("poweRlaw")
 @
 
