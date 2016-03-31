@@ -45,6 +45,7 @@ bootstrap = function (m, xmins=NULL, pars=NULL, xmax=1e5,
 
   ## Start clock and parallel boostrap
   cl = parallel::makeCluster(threads)
+  on.exit(parallel::stopCluster(cl))
   time$start()
   
   ## Set cluster seed
@@ -57,7 +58,7 @@ bootstrap = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   
   ## Stop clock and cluster
   total_time = time$get(stop=TRUE)*threads
-  parallel::stopCluster(cl)
+  
 
   bootstraps = as.data.frame(t(nof), stringsAsFactors = FALSE)
   l = list(gof = gof_v[["gof"]], 
