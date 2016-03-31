@@ -1,4 +1,5 @@
 test_that("Testing bootstrap function", {
+  skip_on_cran()
   ## Avoid testthat hanging
   Sys.setenv("R_TESTS" = "") 
   x = 1:10

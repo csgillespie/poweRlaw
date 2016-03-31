@@ -1,5 +1,5 @@
 test_that("Test plotting", {
-  
+  skip_on_cran()  
   x = 1:4
   ##Discrete power-law
   mt = displ$new(x); mt$setPars(3); mt$setXmin(2)

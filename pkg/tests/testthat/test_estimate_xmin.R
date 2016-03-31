@@ -1,5 +1,5 @@
 test_that("Testing estimate_xmin accuracy", {
-  
+  skip_on_cran()  
   ##Discrete Power-law
   discrete_data = readRDS("discrete_data.RData")
   mt = displ$new(discrete_data)
