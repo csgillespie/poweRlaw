@@ -4,7 +4,7 @@
 #' @rdname displ
 #' @aliases conweibull-class conweibull
 #' @exportClass conweibull
-#' @importFrom stats dweibull pweibull
+#' @importFrom stats dweibull pweibull rweibull
 #' @export conweibull
 conweibull = 
   setRefClass("conweibull", 
