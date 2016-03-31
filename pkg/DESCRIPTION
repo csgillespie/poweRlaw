@@ -39,6 +39,7 @@ Collate:
     'def_conexp.R'
     'def_conlorm.R'
     'def_conpl.R'
+    'def_conweibull.R'
     'def_disexp.R'
     'def_dislnorm.R'
     'def_displ.R'

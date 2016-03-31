@@ -369,6 +369,7 @@ m_m = displ$new(moby)
   CTN Power-law & \texttt{conpl} & 1 \\
   CTN Log-normal & \texttt{conlnorm} & 2 \\
   CTN Exponential & \texttt{conlnorm} & 1 \\
+  CTN Weibull & \texttt{conweibull} & 2 \\
   \bottomrule
   \end{tabular}
   \caption{Available distributions in the \cc{poweRlaw} package. These objects are all reference classes.}\label{T1}
