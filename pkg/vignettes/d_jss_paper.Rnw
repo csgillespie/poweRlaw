@@ -1,6 +1,7 @@
 %\VignetteIndexEntry{4. Journal of Statistical Software Article}
 %\VignetteEngine{Sweave}
 \documentclass[article]{jss}
+\pdfoutput=1
 \usepackage{thumbpdf} 
 \graphicspath{{Figures/}}
 
