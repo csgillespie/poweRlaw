@@ -156,7 +156,7 @@ lines(m_pois, col=4, lwd=2)
 \subsection{Parameter uncertainty}
 
 <<par_uncertainty, echo=FALSE>>=
-data(bootstrap_moby)
+data(bootstrap_moby, package="poweRlaw")
 bs = bootstrap_moby
 @
 
@@ -235,7 +235,7 @@ bs1 = bootstrap(m_ln)
 \noindent in this case we would obtain uncertainty estimates for both of the log-normal parameters.
 
 <<echo=FALSE>>=
-data(bootstrap_p_moby)
+data(bootstrap_p_moby, package="poweRlaw")
 bs_p = bootstrap_p_moby
 @
 \begin{figure}[t]
@@ -472,8 +472,8 @@ inferred (\cite{Friedman2013}).
 
 The number of casualties observed in the American-Indian War can be obtained via
 <<>>=
-data("native_american")
-data("us_american")
+data("native_american", package="poweRlaw")
+data("us_american", package="poweRlaw")
 @
 \noindent Each data set is a data frame with two columns. The first column is number of casualties recorded, the second the conflict date
 <<>>=
