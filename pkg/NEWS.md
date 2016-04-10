@@ -1,6 +1,5 @@
-Version 0.60.1
+Version 0.60.2
 --------------
-
   * Incorrect p-value for bootstrap_p (fixes #64). Thanks to @lsaravia for reporting.
 
 Version 0.60.0
@@ -129,8 +128,9 @@ Version 0.15.0
 Version 0.14.4
 --------------
   * No visible changes - preparing for future R versions.
-  * Added discrete_xmax parameter to the discrete random number generator. This parameter controls where we change from using  
-    a (true) discrete random number generator to a CTN approximation.
+  * Added discrete_xmax parameter to the discrete random number generator. 
+  This parameter controls where we change from using a (true) discrete 
+  random number generator to a CTN approximation.
 
 Version 0.14.3
 --------------
