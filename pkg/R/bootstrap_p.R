@@ -56,6 +56,7 @@ bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   ## Start clock and parallel boostrap
   time$start()
   cl = makeCluster(threads)  
+  on.exit(stopCluster(cl))
   
   ## Set cluster seed
   clusterSetRNGStream(cl, seed)
@@ -66,10 +67,14 @@ bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
                   x_lower, xmins, pars, xmax, distance)
   ## Stop clock and cluster
   total_time = time$get(stop=TRUE)*threads
-  stopCluster(cl)
   
+  if(sum(is.na(nof[1,])) > 1) {
+    message(sum(is.na(nof[1,])), " bootstraps generated NA values. 
+            These have been removed when calculating the associated p-value.")
+  }
+
   bootstraps = as.data.frame(t(nof))
-  l = list(p=sum(nof[1,] >= gof_v[["gof"]])/no_of_sims, 
+  l = list(p=sum(nof[1,] >= gof_v[["gof"]], na.rm=TRUE)/no_of_sims, 
            gof = gof_v[["gof"]], 
            bootstraps = bootstraps, 
            sim_time = total_time[[1]]/no_of_sims, 
