@@ -168,7 +168,7 @@ estimate_xmin = function (m, xmins=NULL, pars=NULL,
   }
   
   ## Bootstrapping may generate strange data
-  ## Columns: KS, Pars, xmin, ntail
+  ## Columns: gof, Pars, xmin, ntail
   if(!estimate || nr < 1) {
     ## Insufficient data to estimate parameters
     dat = matrix(0, nrow=1, ncol=(2 + m$no_pars))
