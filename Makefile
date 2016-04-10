@@ -25,7 +25,7 @@ view:
 	acroread ../../www/$(PKG)/*.pdf
 
 build:
-	make clean
+	make cleaner
 	R CMD build $(PKG)
 
 .Rnw.pdf:
