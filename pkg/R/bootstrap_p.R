@@ -69,7 +69,7 @@ bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   stopCluster(cl)
   
   bootstraps = as.data.frame(t(nof))
-  l = list(p=sum(nof[1,] >= gof_v[["KS"]])/no_of_sims, 
+  l = list(p=sum(nof[1,] >= gof_v[["gof"]])/no_of_sims, 
            gof = gof_v[["gof"]], 
            bootstraps = bootstraps, 
            sim_time = total_time[[1]]/no_of_sims, 

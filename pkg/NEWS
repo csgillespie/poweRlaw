@@ -1,3 +1,8 @@
+Version 0.60.1
+--------------
+
+  * Incorrect p-value for bootstrap_p (fixes #64). Thanks to @lsaravia for reporting.
+
 Version 0.60.0
 --------------
   * New distance argument for estimate_xmin and bootstrap functions. No longer limited
