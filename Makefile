@@ -39,7 +39,7 @@ build:
 clean:
 	cd $(DIR) &&  \
 	rm -fv *.aux *.dvi *.log *.toc *.bak *~ *.blg *.bbl \
-		*.lot *.lof *.nav *.snm *.out *.pyc *.spl \
+		*.lot *.lof *.nav *.snm *.out *.pyc *.spl *.tpt \
 		*-concordance.tex *.synctex.gz  \
 		$(ALLPDF) $(ALLTEX) && \
 	rm -fvr knitr_cache*/ knitr_figure*/ auto/ 
@@ -50,4 +50,5 @@ cleaner:
 	make clean && \
 	rm -fvr auto/ && \
 	rm -fvr *.Rcheck $(PKG)_*.tar.gz && \
-	rm -fv README.html
+	rm -fv README.html 
+	cd $(DIR) && rm -fvr a_introduction.pdf b_power*.pdf c_compar*.pdf d_jss*.pdf *.tex
