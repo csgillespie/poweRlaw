@@ -1,4 +1,4 @@
-Version 0.60.2
+Version 0.60.3
 --------------
   * Incorrect p-value for bootstrap_p (fixes #64). Thanks to @lsaravia for reporting.
 
