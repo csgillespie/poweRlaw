@@ -43,6 +43,7 @@ clean:
 		*-concordance.tex *.synctex.gz  \
 		$(ALLPDF) $(ALLTEX) && \
 	rm -fvr knitr_cache*/ knitr_figure*/ auto/ 
+	rm -fvr poweRlaw_*.tar.gz
 
 
 
