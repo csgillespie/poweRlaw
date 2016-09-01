@@ -84,7 +84,7 @@ H_1: \text{One of the test distributions is closer to the true distribution.}
 \]
 To perform this test we use the \cc{compare\_distributions}
 function\footnote{The \cc{compare\_distributions} function also returns a one
-  sided $p$-value. Essentially, the one side $p$-value is testing whether the
+  sided $p$-value. Essentially, the one sided $p$-value is testing whether the
   first model is better than the second, i.e. a \textbf{one} sided test.} and
 examine the \cc{p\_two\_sided} value.
 
