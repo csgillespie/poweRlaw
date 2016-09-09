@@ -10,7 +10,7 @@
 #' The sign of \code{R} indicates which model is better. 
 #' Since the value of \code{R} is esimated, 
 #' we use the method proposed by Vuong, 1989 to select the model.
-
+#' 
 #' This function compares two models. 
 #' The null hypothesis is that both classes of distributions are 
 #' equally far from the true distribution.  If this is true, the
