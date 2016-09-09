@@ -1,3 +1,8 @@
+Version 0.70.0
+--------------
+  * Update documentation
+  * Bug fix: 1 sided p-value for Vuong's.
+
 Version 0.60.3
 --------------
   * Incorrect p-value for bootstrap_p (fixes #64). Thanks to @lsaravia for reporting.
@@ -15,7 +20,7 @@ Version 0.50.1 (not on CRAN)
 
 Version 0.50.0
 ----------------------------
- * Added get_ntail function which returns the number of points  greater than or equal to xmin.
+ * Added get_ntail function which returns the number of points greater than or equal to xmin.
  * Added get_n function which returns the sample size.
  * Bug fix: bootstrap_p was incorrect for CTN models (https://github.com/csgillespie/poweRlaw/issues/52). Thanks to @lsaravia for reporting and diagnosing the problem.
 

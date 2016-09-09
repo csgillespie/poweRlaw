@@ -88,7 +88,7 @@ compare_distributions = function(d1, d2) {
   if (p1 < 0.5) {p2 = 2*p1} else {p2 = 2*(1-p1)}
   
   l = list(test_statistic = v, 
-           p_one_sided = p1, p_two_sided=p2, 
+           p_one_sided = 1 - p1, p_two_sided=p2, 
            ratio = data.frame(x=q, ratio=ll_ratio_pts))
   class(l) = "compare_distributions"
   return(l)
