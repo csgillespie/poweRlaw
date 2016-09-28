@@ -65,7 +65,7 @@ get_distance_statistic = function(m, xmax=1e5, distance="ks") {
 #' 
 #' When fitting heavy tailed distributions, sometimes it 
 #' is necessary to estimate the lower threshold, xmin. The
-#' lower bound is estimated by calculating the minimising the
+#' lower bound is estimated by minimising the
 #' Kolmogorov-Smirnoff statistic 
 #' (as described in Clauset, Shalizi, Newman (2009)).
 #' \describe{
@@ -76,7 +76,7 @@ get_distance_statistic = function(m, xmax=1e5, distance="ks") {
 #' warnings occur for large values of \code{xmin}. Essentially, we are discarding 
 #' the bulk of the distribution and cannot calculate the tails to enough
 #' accuracy.}
-#' \item{\code{bootstrap}}{Estimates the unncertainity in the xmin and parameter values via bootstraping.}
+#' \item{\code{bootstrap}}{Estimates the unncertainty in the xmin and parameter values via bootstrapping.}
 #' \item{\code{bootstrap_p}}{Performs a bootstrapping hypothesis test to determine whether a suggested
 #' (typically power law) distribution is plausible. This is only available for distributions that 
 #' have \code{dist_rand} methods available.}}

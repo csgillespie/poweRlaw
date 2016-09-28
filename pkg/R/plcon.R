@@ -1,4 +1,4 @@
-#' @title The continuous powerlaw distribution
+#' @title The continuous power-law distribution
 #' 
 #' @description Density and distribution function of the continuous power-law distribution, with
 #' parameters xmin and alpha.

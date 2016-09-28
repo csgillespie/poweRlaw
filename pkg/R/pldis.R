@@ -1,4 +1,4 @@
-#' Discrete powerlaw distribution
+#' Discrete power-law distribution
 #' 
 #' Density, distribution function and random number generation 
 #' for the discrete power law distribution with parameters xmin and alpha.
@@ -12,7 +12,7 @@
 #' @param lower.tail logical; 
 #' if TRUE (default), probabilities are \eqn{P[X \le x]}, 
 #' otherwise, \eqn{P[X > x]}.
-#' @return dpldis returns the denisty, ppldis returns the distribution function 
+#' @return dpldis returns the density, ppldis returns the distribution function 
 #' and rpldis return random numbers.
 #' @note The naming of these functions mirrors standard R functions, i.e. dnorm.
 #' When alpha is close to one, generating random number can be very slow.
@@ -43,7 +43,7 @@ dpldis = function(x, xmin, alpha, log=FALSE) {
 
 #'@rdname dpldis
 #'@export
-#'@details The Clausett, 2009 paper provides an algorithm for generating discrete random numbers. However, if this
+#'@details The Clauset, 2009 paper provides an algorithm for generating discrete random numbers. However, if this
 #'algorithm is implemented in R, it gives terrible performance. This is because the algorithm involves "growing vectors". 
 #'Another problem is when alpha is close to 1, this can result in very large random number being generated (which means we need 
 #'to calculate the discrete CDF for very large values). 
@@ -109,7 +109,7 @@ rpldis = function(n, xmin, alpha, discrete_max = 10000) {
     ## Simulate using look up method 
     rngs = as.numeric(cut(u,cdf)) + xmin - 1
     
-    ## Fill in blanks using Clausett approximation
+    ## Fill in blanks using Clauset approximation
     is_na = is.na(rngs)
     if(any(is_na)) rngs[is_na] = 
       floor((xmin-0.5)*(1-u[is_na])^(-1/(alpha-1))+0.5)

@@ -23,7 +23,7 @@ lseq = function(from, to, length.out) {
 #' for plotting the fitted lines.
 #' @docType methods
 #' @note This method does *not* alter the internal state of
-#' the distribubtion objects.
+#' the distribution objects.
 #' @export
 setMethod("plot",
           signature = signature(x="distribution"),
@@ -124,7 +124,7 @@ create_plots = function(l, no_plots) {
 #' The values plotted are returned as an invisible object.
 #' 
 #' @param x an object of class \code{bs_xmin} or \code{bs_p_xmin}
-#' @param trim When plotting the cummulative means and standard deviation, the first trim percentage of values are not displayed.
+#' @param trim When plotting the cumulative means and standard deviation, the first trim percentage of values are not displayed.
 #' default \code{trim=0.1}
 #' @param ...  graphics parameters to be passed to the plotting routines.
 #' @method plot bs_xmin

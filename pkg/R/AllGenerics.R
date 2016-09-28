@@ -27,7 +27,7 @@ setGeneric("points")
 #' @docType methods
 #' @exportMethod dist_cdf
 #' @note This method does *not* alter the internal state of
-#' the distribubtion objects.
+#' the distribution objects.
 #' @rdname dist_cdf-methods
 #' @export
 #' @examples
@@ -66,7 +66,7 @@ setGeneric("dist_all_cdf",
 #' @docType methods
 #' @exportMethod dist_data_cdf
 #' @note This method does *not* alter the internal state of
-#' the distribubtion objects.
+#' the distribution objects.
 #' @rdname dist_data_cdf-methods
 #' @export
 #' @examples
@@ -88,7 +88,7 @@ setGeneric("dist_data_cdf",
 #' @export
 #' @rdname dist_data_cdf-methods
 #' @description The functions \code{dist_data_all_cdf} and \code{dist_all_cdf} are only available for discrete distributions.
-#' Theremain purpose is to optimise the bootstrap procedure, where generating a vector \code{xmin:xmax} is
+#' Their main purpose is to optimise the bootstrap procedure, where generating a vector \code{xmin:xmax} is
 #' very quick. Also, when bootstrapping very large values can be generated. 
 setGeneric("dist_data_all_cdf", 
            function(m, lower_tail=TRUE, xmax=1e5) 
@@ -107,7 +107,7 @@ setGeneric("dist_data_all_cdf",
 #' @seealso \code{\link{dist_cdf}}, \code{\link{dist_ll}} 
 #' and \code{\link{dist_rand}}
 #' @note This method does *not* alter the internal state of
-#' the distribubtion objects.
+#' the distribution objects.
 #' @exportMethod dist_pdf
 #' @export
 #' @docType methods
@@ -174,7 +174,7 @@ setGeneric("dist_ll",
 #' @seealso \code{\link{dist_cdf}}, \code{\link{dist_pdf}} 
 #' and \code{\link{dist_ll}}
 #' @note This method does *not* alter the internal state of
-#' the distribubtion object. 
+#' the distribution object. 
 #' @exportMethod dist_rand
 #' @export
 #' @docType methods
