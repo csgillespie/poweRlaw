@@ -4,7 +4,7 @@
 \alias{dplcon}
 \alias{pplcon}
 \alias{rplcon}
-\title{The continuous powerlaw distribution}
+\title{The continuous power-law distribution}
 \usage{
 dplcon(x, xmin, alpha, log = FALSE)
 

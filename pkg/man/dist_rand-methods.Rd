@@ -47,7 +47,7 @@ and xmin values found in the associated reference object.
 }
 \note{
 This method does *not* alter the internal state of
-the distribubtion object.
+the distribution object.
 }
 \examples{
 ##########################################

@@ -39,6 +39,6 @@ with all distribution objects.
 }
 \note{
 This method does *not* alter the internal state of
-the distribubtion objects.
+the distribution objects.
 }
 

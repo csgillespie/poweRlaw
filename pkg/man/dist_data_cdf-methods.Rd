@@ -38,12 +38,12 @@ This is generic function for distribution objects.
 This function calculates the data or empirical cdf.
 
 The functions \code{dist_data_all_cdf} and \code{dist_all_cdf} are only available for discrete distributions.
-Theremain purpose is to optimise the bootstrap procedure, where generating a vector \code{xmin:xmax} is
+Their main purpose is to optimise the bootstrap procedure, where generating a vector \code{xmin:xmax} is
 very quick. Also, when bootstrapping very large values can be generated.
 }
 \note{
 This method does *not* alter the internal state of
-the distribubtion objects.
+the distribution objects.
 }
 \examples{
 ##########################################
