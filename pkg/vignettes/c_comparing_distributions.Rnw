@@ -94,16 +94,16 @@ First let's generate some data from a power-law distribution
 <<>>=
 library("poweRlaw")
 set.seed(1)
-x = rpldis(10000, xmin=2, alpha=2.1)
+x = rpldis(1000, xmin=2, alpha=3)
 @
 \noindent and fit a discrete power-law distribution
 <<>>=
 m1 = displ$new(x)
 m1$setPars(estimate_pars(m1))
 @
-\noindent The estimated values of $\xmin$ and $\alpha$ are \Sexpr{m1$getXmin()} and \Sexpr{signif(m1$getPars(), 3)}, respectively. As an alternative distribution, we will fit a discrete log-normal distribution\footnote{When comparing distributions, each model must have the same $\xmin$ value. In this example, both models have $\xmin=\Sexpr{m1$getXmin()}$.}
+\noindent The estimated values of $\xmin$ and $\alpha$ are \Sexpr{m1$getXmin()} and \Sexpr{signif(m1$getPars(), 3)}, respectively. As an alternative distribution, we will fit a discrete Poisson distribution\footnote{When comparing distributions, each model must have the same $\xmin$ value. In this example, both models have $\xmin=\Sexpr{m1$getXmin()}$.}
 <<>>=
-m2 = dislnorm$new(x)
+m2 = dispois$new(x)
 m2$setPars(estimate_pars(m2))
 @
 \noindent Plotting both models
@@ -118,7 +118,7 @@ grid()
 \centering
 <<F1,echo=FALSE>>=
 @
-\caption{Plot of the simulated data CDF, with power law and log normal lines
+\caption{Plot of the simulated data CDF, with power law and Poisson lines
 of best fit.}\label{F1}
 \end{figure}
 \noindent suggests that the power-law model gives a better fit (figure \ref{F1}). Investigating this formally 
@@ -132,23 +132,20 @@ comp$p_two_sided
 
 The two-sided $p$-value does not depend on the order of the model comparison
 
-<<echo=FALSE>>=
+<<echo=TRUE>>=
 compare_distributions(m1, m2)$p_two_sided
 compare_distributions(m2, m1)$p_two_sided
 @
 
 \noindent However, the one-sided $p$-value is order dependent 
 
-<<echo=FALSE>>=
+<<echo=TRUE>>=
 ## We only care if m1 is better than m2
 ## m1 is clearly better
 compare_distributions(m1, m2)$p_one_sided
 ## m2 isn't better than m1
 compare_distributions(m2, m1)$p_one_sided
 @
-
-
-
 
 
 \section{Example: Moby Dick data set}

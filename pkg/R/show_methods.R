@@ -9,10 +9,10 @@
 setMethod("show", 
           signature = signature(object="distribution"),
           definition = function(object) {
-            msg = paste("Reference class object of class", classLabel(class(object)))
-            message(msg)
-            message('Field "xmin": '); print(object$getXmin())
-            message('Field "pars": '); print(object$getPars())
-            message('Field "no_pars": '); print(object$no_pars)
+            msg = paste("Reference class object of class", classLabel(class(object)), "\n")
+            cat(msg)
+            cat('Field "xmin": \n'); print(object$getXmin())
+            cat('Field "pars": \n'); print(object$getPars())
+            cat('Field "no_pars": \n'); print(object$no_pars)
           }
 )

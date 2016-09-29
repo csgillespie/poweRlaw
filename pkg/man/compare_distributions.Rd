@@ -11,6 +11,20 @@ compare_distributions(d1, d2)
 
 \item{d2}{A distribution object}
 }
+\value{
+This function returns
+\describe{
+\item{\code{test_statistic}}{The test statistic.}
+\item{\code{p_one_sided}}{A one-sided p-value, which is an upper limit
+on getting that small a log-likelihood ratio if the 
+first distribution, \code{d1}, is actually true.}
+\item{\code{p_two_sided}}{A two-sided p-value, which is the probability 
+of getting a log-likelihood ratio which deviates that much from zero 
+in either direction, if the two distributions are actually equally good.}
+\item{\code{ratio}}{A data frame with two columns. The first column is 
+the \code{x} value and second column is the difference in 
+log-likelihoods.}}
+}
 \description{
 Since it is possible to fit power law models to any data set, 
 it is recommended that alternative distributions are considered. 
@@ -34,19 +48,6 @@ deviation.
 If the null hypothesis is false, and one class of distributions is 
 closer to the "truth", the test statistic goes to +/-infinity 
 with probability 1, indicating the better-fitting class of distributions.
-
-#' @return This function returns
-\describe{
-\item{\code{test_statistic}}{The test statistic.}
-\item{\code{p_one_sided}}{A one-sided p-value, which is an upper limit
-on getting that small a log-likelihood ratio if the 
-first distribution, \code{d1}, is actually true.}
-\item{\code{p_two_sided}}{A two-sided p-value, which is the probability 
-of getting a log-likelihood ratio which deviates that much from zero 
-in either direction, if the two distributions are actually equally good.}
-\item{\code{ratio}}{A data frame with two columns. The first column is 
-the \code{x} value and second column is the difference in 
-log-likelihoods.}}
 }
 \note{
 Code initially based on R code developed by 
