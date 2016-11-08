@@ -2,6 +2,8 @@ Version 0.70.0
 --------------
   * Update documentation
   * Bug fix: 1 sided p-value for Vuong's.
+  * Now pass a matrix of parameters when estimating xmin (fixes #68). Used for 
+  lognormal distribution.
 
 Version 0.60.3
 --------------

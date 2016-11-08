@@ -155,7 +155,7 @@ estimate_xmin = function (m, xmins=NULL, pars=NULL,
   
   ## Need to have at least no_pars + 1 data points
   ## to estimate parameters. 
-  ## Find (largest - no_pars) data point and subset xmins
+  ## Find (largest - no_pars)th data point and subset xmins
   if(estimate) {
     unique_dat = unique(m_cpy$dat)
     q_len = length(unique_dat)
@@ -186,11 +186,14 @@ estimate_xmin = function (m, xmins=NULL, pars=NULL,
     if(is.null(pars)) m_cpy$mle(initialise=est)
     else m_cpy$pars = pars
     
-    ## Doesn't work for lognormal - need par matrix    
     if(!is.null(pars)) {
       L = dist_ll(m_cpy)
       I = which.max(L)
-      m_cpy$pars = m_cpy$pars[I]
+      if(is.matrix(pars)) { # For multi-parameter models
+        m_cpy$pars = m_cpy$pars[I,]
+      } else {
+        m_cpy$pars = m_cpy$pars[I]
+      }
     }
     gof = get_distance_statistic(m_cpy, xmax, distance)
     dat[xm <- xm + 1L,] = c(gof, m_cpy$pars, get_ntail(m_cpy))
