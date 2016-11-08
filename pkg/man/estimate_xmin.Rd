@@ -26,8 +26,8 @@ of xmin to explore. When a single value is passed, this represents
 the maximum value to search, i.e. by default we search from
 (1, 1e5). See details for further information.}
 
-\item{pars}{default \code{NULL}. A vector of parameters used to 
-optimise over. 
+\item{pars}{default \code{NULL}. A vector or matrix (number of columns equal
+to the number of parameters) of parameters used to #' optimise over. 
 Otherwise, for each value of \code{xmin}, the mle will be used, i.e. \code{estimate_pars(m)}.
 For small samples, the mle may be biased.}
 

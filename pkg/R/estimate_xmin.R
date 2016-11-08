@@ -83,8 +83,8 @@ get_distance_statistic = function(m, xmax=1e5, distance="ks") {
 #' @param m A reference class object that contains the data.
 #' @param distance A string containing the distance measure (or measures) to calculate. 
 #' Possible values are \code{ks} or \code{reweight}. See details for further information. 
-#' @param pars default \code{NULL}. A vector of parameters used to 
-#' optimise over. 
+#' @param pars default \code{NULL}. A vector or matrix (number of columns equal
+#' to the number of parameters) of parameters used to #' optimise over. 
 #' Otherwise, for each value of \code{xmin}, the mle will be used, i.e. \code{estimate_pars(m)}.
 #' For small samples, the mle may be biased. 
 #' @param xmins default \code{1e5}. A vector of possible values 
