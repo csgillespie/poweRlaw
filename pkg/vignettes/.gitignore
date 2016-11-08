@@ -35,6 +35,8 @@ knitr_*
 *.vrb
 *.xdy
 *.tdo
+*.tpt
+b_powerlaw_examples.pdf
 b_powerlaw_examples.tex
 b_powerlaw_examples.R
 cache
@@ -43,3 +45,6 @@ Rplots.pdf
 tmp.html
 c_comparing_distributions.tex
 c_comparing_distributions.R
+c_comparing_distributions.pdf
+a_introduction.pdf
+d_jss_paper.tpt
