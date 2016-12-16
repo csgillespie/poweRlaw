@@ -23,7 +23,7 @@ Imports:
 Suggests:
     knitr,
     R.matlab,
-    testthat
+    testthat, codetools
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
 Collate:
