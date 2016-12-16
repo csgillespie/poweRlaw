@@ -47,4 +47,6 @@ c_comparing_distributions.tex
 c_comparing_distributions.R
 c_comparing_distributions.pdf
 a_introduction.pdf
-d_jss_paper.tpt
+*.tpt
+d_jss_paper.pdf
+d_jss_paper.tex
