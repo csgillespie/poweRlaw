@@ -4,8 +4,7 @@
 \usepackage{booktabs}%Fancy tables
 \usepackage[round]{natbib}% References
 \usepackage{amsmath,amsfonts}
-\usepackage{xcomment,scrpage2}
-\usepackage{algorithmic, algorithm}
+\usepackage{scrpage2}
 \usepackage[utf8]{inputenc} %unicode support
 \usepackage{color,hyperref}
 \urlstyle{rm}

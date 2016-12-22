@@ -7,9 +7,8 @@
 
 \newcommand{\xmin}{x_{\min}}
 \usepackage{amsmath}
-\usepackage{microtype}
 \usepackage[utf8]{inputenc} 
-\usepackage{algorithm}
+\usepackage{booktabs}
 
 \author{Colin S. Gillespie\\Newcastle University}
 \Plainauthor{Colin S. Gillespie}
@@ -205,16 +204,18 @@ where $S(x)$ and $P(x)$ are the CDFs of the data and model respectively (for $x
 This approach is completely general and can be used in conjunction with other
 distributions.
 
-\begin{algorithm}[t]
+\begin{table}[t]
   \caption{Estimating the uncertainty in $\xmin$ \citep{Clauset2007}}\label{A1}
  \begin{tabular}{@{}ll@{}}
+ \toprule
    {\small 1:} & Set $N$ equal to the number of values in the original data set. \\
    {\small 2:} & \textbf{for} \code{i} in \code{1:B}:\\
    {\small 3:} & $\quad$ Sample $N$ values (with replacement) from the original data set. \\
    {\small 4:} & $\quad$ Estimate $\xmin$ and $\alpha$ using the Kolmogorov-Smirnov statistic.\\
    {\small 5:} & \textbf{end for} \\
+   \bottomrule
   \end{tabular}
-\end{algorithm}
+\end{table}
 
 \subsection{Parameter uncertainty}\label{2.3}
 
@@ -258,9 +259,10 @@ random numbers for the discrete power law distributions involves
 partitioning the cumulative density this may make this approach
 unsuitable.
 
-\begin{algorithm}[t]
+\begin{table}[t]
   \caption{Testing the power law hypothesis \citep{Clauset2009}}\label{A2}
   \begin{tabular}{@{}ll@{}}
+  \toprule
     {\small 1:} & Calculate point estimates for $\xmin$ and the scaling parameter $\alpha$. \\
     {\small 2:} & Calculate the Kolmogorov-Smirnov statistic, $KS_d$, for the original data set.\\
     {\small 3:} & Set $n_1$ equal to the number of values below $\xmin$. \\
@@ -273,8 +275,9 @@ unsuitable.
     {\small 8:} & $\quad$ If $KS_d > KS_{sim}$, then $P = P + 1$.\\
     {\small 9:} & \textbf{end for} \\
     {\small 10:} & $P= P/B$.\\
+    \bottomrule
   \end{tabular}
-\end{algorithm}
+\end{table}
 
 An alternative  approach to assessing the power law model is a direct comparison with
 another model. A standard technique is to use Vuong's test, which is a
