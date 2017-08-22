@@ -2,9 +2,9 @@
 % Please edit documentation in R/data_help_files.R
 \docType{data}
 \name{native_american}
+\alias{native_american}
 \alias{NativeAmerican}
 \alias{USAmerican}
-\alias{native_american}
 \alias{us_american}
 \title{Casualties in the American Indian Wars (1776 and 1890)}
 \format{Data frame}
@@ -17,4 +17,3 @@ These data files contain the observed casualties in the American Indian Wars. Th
 sides respectively. Each data set is a data frame, with two columns: the number of casualties and the
 conflict date.
 }
-

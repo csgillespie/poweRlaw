@@ -3,11 +3,11 @@
 \docType{methods}
 \name{dist_all_cdf}
 \alias{dist_all_cdf}
-\alias{dist_data_all_cdf}
-\alias{dist_data_all_cdf,discrete_distribution-method}
 \alias{dist_data_cdf}
-\alias{dist_data_cdf,ctn_distribution-method}
+\alias{dist_data_all_cdf}
 \alias{dist_data_cdf,discrete_distribution-method}
+\alias{dist_data_all_cdf,discrete_distribution-method}
+\alias{dist_data_cdf,ctn_distribution-method}
 \title{The data cumulative distribution function}
 \usage{
 dist_all_cdf(m, lower_tail = TRUE, xmax = 1e+05)
@@ -58,4 +58,3 @@ m$setXmin(7);m$setPars(2)
 ##########################################
 dist_data_cdf(m)
 }
-

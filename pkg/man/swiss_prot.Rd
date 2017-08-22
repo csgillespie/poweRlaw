@@ -2,8 +2,8 @@
 % Please edit documentation in R/data_help_files.R
 \docType{data}
 \name{swiss_prot}
-\alias{Swiss_prot}
 \alias{swiss_prot}
+\alias{Swiss_prot}
 \title{Word frequency in the Swiss-Prot database}
 \format{data frame}
 \source{
@@ -21,4 +21,3 @@ Michael Bell
 
 Full details in http://arxiv.org/abs/arXiv:1208.2175v1
 }
-

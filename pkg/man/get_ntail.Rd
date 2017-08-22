@@ -31,4 +31,3 @@ m$setXmin(7)
 get_ntail(m)
 sum(moby_sample >= 7)
 }
-

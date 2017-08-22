@@ -85,4 +85,3 @@ Vuong, Quang H. (1989):
 "Likelihood Ratio Tests for Model Selection and Non-Nested Hypotheses", 
 Econometrica 57: 307--333.
 }
-

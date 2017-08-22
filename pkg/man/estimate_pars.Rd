@@ -29,4 +29,3 @@ estimate_xmin(m)
 m$setXmin(7)
 estimate_pars(m)
 }
-

@@ -52,4 +52,3 @@ p = rep(1/n, n)
 #Zipfs plot
 plot(con_rns, rev(cumsum(p)), log="xy", type="l")
 }
-

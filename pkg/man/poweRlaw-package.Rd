@@ -2,8 +2,8 @@
 % Please edit documentation in R/poweRlaw-package.R
 \docType{package}
 \name{poweRlaw-package}
-\alias{poweRlaw}
 \alias{poweRlaw-package}
+\alias{poweRlaw}
 \alias{powerlaw}
 \alias{powerlaw-package}
 \title{The poweRlaw package}
@@ -18,9 +18,6 @@ been heavily influenced from the python and R code found at:
 \url{http://tuvalu.santafe.edu/~aaronc/powerlaws/} . 
 In particular, the R code of Laurent Dubroca and Cosma Shalizi.
 }
-\author{
-\email{colin.gillespie@newcastle.ac.uk}
-}
 \references{
 A. Clauset, C.R. Shalizi, and M.E.J. Newman, 
 "Power-law distributions in empirical data" SIAM Review 51(4), 661-703 (2009).
@@ -28,5 +25,7 @@ A. Clauset, C.R. Shalizi, and M.E.J. Newman,
 \seealso{
 \url{https://github.com/csgillespie/poweRlaw}
 }
+\author{
+\email{colin.gillespie@newcastle.ac.uk}
+}
 \keyword{package}
-

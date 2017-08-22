@@ -3,8 +3,8 @@
 \name{bootstrap}
 \alias{bootstrap}
 \alias{bootstrap_p}
-\alias{estimate_xmin}
 \alias{get_distance_statistic}
+\alias{estimate_xmin}
 \title{Estimating the lower bound (xmin)}
 \usage{
 bootstrap(m, xmins = NULL, pars = NULL, xmax = 1e+05, no_of_sims = 100,
@@ -109,4 +109,3 @@ bootstrap(m, no_of_sims=1, threads=1)
 bootstrap_p(m, no_of_sims=1, threads=1)
 }
 }
-

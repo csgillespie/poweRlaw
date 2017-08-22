@@ -47,4 +47,3 @@ bs_p = bootstrap_p(m, no_of_sims=5000, threads=4, seed=1)
 \seealso{
 \code{moby}, \code{bootstrap}, \code{bootstrap_p}
 }
-

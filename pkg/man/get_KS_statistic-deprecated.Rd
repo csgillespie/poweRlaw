@@ -22,4 +22,3 @@ versions.
 \seealso{
 get_distance_statistic
 }
-

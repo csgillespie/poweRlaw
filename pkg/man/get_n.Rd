@@ -25,4 +25,3 @@ m = displ$new(moby_sample)
 get_n(m)
 length(moby_sample)
 }
-

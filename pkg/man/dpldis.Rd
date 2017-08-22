@@ -81,4 +81,3 @@ sum(x2==1)/n
 Clauset, Aaron, Cosma Rohilla Shalizi, and Mark EJ Newman. 
 "Power-law distributions in empirical data." SIAM review 51.4 (2009): 661-703.
 }
-

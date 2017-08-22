@@ -2,8 +2,8 @@
 % Please edit documentation in R/data_help_files.R
 \docType{data}
 \name{population}
-\alias{Population}
 \alias{population}
+\alias{Population}
 \title{City boundaries and the universality of scaling laws}
 \format{vector}
 \source{
@@ -14,4 +14,3 @@ arXiv preprint arXiv:1301.1674 (2013).
 This data set contains the population size of cities and towns in England. For further details
 on the algorithm used to determine city boundries, see the referenced paper.
 }
-
