@@ -21,8 +21,8 @@ bootstrap = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   time$start()
   gof_v = estimate_xmin(m_cpy, xmins=xmins, pars=pars, xmax=xmax, distance=distance)
   time$stop()
-  if(is.na(gof_v$gof)) {
-    stop("Unable to estimate initial xmin using estimate_xmin, so we can't bootstrap.")
+  if(is.na(gof_v$gof) || is.infinite(gof_v$gof)) {
+    stop("Unable to estimate initial parameters using estimate_xmin, so we can't bootstrap.")
   }
   
   if(min(m_cpy$dat) > xmax) {
@@ -59,7 +59,6 @@ bootstrap = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   ## Stop clock and cluster
   total_time = time$get(stop=TRUE)*threads
   
-
   bootstraps = as.data.frame(t(nof), stringsAsFactors = FALSE)
   l = list(gof = gof_v[["gof"]], 
            bootstraps=bootstraps, 

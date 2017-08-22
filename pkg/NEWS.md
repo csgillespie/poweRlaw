@@ -1,3 +1,7 @@
+Version 0.70.1
+--------------
+  * Bug fix: Very rarely bootstrapping results in singular datasets.
+
 Version 0.70.0
 --------------
   * Update documentation
