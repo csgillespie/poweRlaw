@@ -18,6 +18,6 @@ notifications:
 after_success:
   - Rscript -e "if(length(grep('2\$', ${TRAVIS_JOB_NUMBER}))) covr::codecov()";
 
-before_install:
-  - tlmgr install texlive-science latex-xcolor
+#before_install:
+#  - tlmgr install texlive-science latex-xcolor
 
