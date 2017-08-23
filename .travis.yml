@@ -1,33 +1,23 @@
-language: c
-sudo: required
+language: r
+cache: packages
 
-before_install:
-  - cd pkg
-  - curl -OL https://raw.githubusercontent.com/metacran/r-builder/master/pkg-build.sh
-  - chmod 755 pkg-build.sh
-  - ./pkg-build.sh bootstrap
-  - sudo apt-get install -y texlive-science latex-xcolor
+r:
+  - oldrel
+  - release
+  - devel
 
-install:
-  - ./pkg-build.sh install_r covr
-  - ./pkg-build.sh install_deps
-
-script:
-  - ./pkg-build.sh run_tests
-
-after_success:
-   - if [[ ! -z "$COVERAGE" ]];then ./pkg-build.sh run_script -e 'covr::codecov()'; fi
-  
-after_failure:
-  - ./pkg-build.sh dump_logs
+packages:
+  - covr
 
 notifications:
   email:
     on_success: change
     on_failure: change
 
-env:
-  matrix:
-    - RVERSION=devel
-    - RVERSION=release COVERAGE=true
-    - RVERSION=oldrel
+## Only run covr on release
+after_success:
+  - Rscript -e "if(length(grep('2\$', ${TRAVIS_JOB_NUMBER}))) covr::codecov()";
+
+before_install:
+  - tlmgr install texlive-science latex-xcolor
+
