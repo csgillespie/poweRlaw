@@ -174,8 +174,7 @@ estimate_xmin = function (m, xmins=NULL, pars=NULL,
     ## Insufficient data to estimate parameters
     dat = matrix(0, nrow=1, ncol=(2 + m$no_pars))
     dat[1, ] = c(rep(Inf, length(distance)), 
-                 min(m$dat), 
-                 rep(NA, m$no_pars))
+                 rep(NA, m$no_pars + 1))
     estimate = FALSE
   } else {
     dat = matrix(0, nrow=nr, ncol=(2 + m_cpy$no_pars))   
