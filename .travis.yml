@@ -8,6 +8,7 @@ r:
 
 packages:
   - covr
+  - VGAM
 
 notifications:
   email:
