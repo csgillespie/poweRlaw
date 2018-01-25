@@ -14,9 +14,13 @@
 #' estimate_pars(m)
 estimate_pars = function(m, pars=NULL) {
   p = m$getPars()
-  if(is.null(pars)) {
-    var = m$mle(set=FALSE)
-    return(var)
+  
+  if(is.null(m$getDat())) {
+    l = list(pars=NA, ll = NA)
+    class(l) = "estimate_pars"
+  } else if(is.null(pars)) {
+    l = m$mle(set = FALSE)
+    
   } else {
     m$pars = pars
     L = dist_ll(m)
@@ -27,6 +31,7 @@ estimate_pars = function(m, pars=NULL) {
     else par = unlist(pars[I,], use.names=FALSE)
     l = list(pars=par, ll = L[I])
     class(l) = "estimate_pars"
-    return(l)
+
   }
+  return(l)
 }
