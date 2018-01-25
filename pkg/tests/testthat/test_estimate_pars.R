@@ -1,5 +1,7 @@
 test_that("Testing estimate_pars function", {
   skip_on_cran()  
+  l = readRDS("estimate_pars.rds")
+  
   ##Discrete Power-law
   discrete_data = readRDS("discrete_data.RData")
   mt = displ$new(discrete_data)
@@ -8,7 +10,7 @@ test_that("Testing estimate_pars function", {
   expect_equal(est$pars, 2.58, tol=1e-3)
   est = estimate_pars(mt)
   expect_equal(est$pars, 2.583, tol=1e-3)
-  
+
   ##Discrete Poisson
   x = rep(2, 10000)
   mt = dispois$new(x)
@@ -19,8 +21,7 @@ test_that("Testing estimate_pars function", {
   expect_equal(est$pars, 2, tol=1e-3)
   
   ##Discrete Log normal
-  set.seed(1)
-  x = ceiling(rlnorm(1000,1, 1))
+  x = l[["dislnorm"]]
   mt = dislnorm$new(x)
   mt$setXmin(0)
   est = estimate_pars(mt)
@@ -42,8 +43,7 @@ test_that("Testing estimate_pars function", {
   
   
   ##Log normal
-  set.seed(1)
-  x = rlnorm(1000, 1, 1)
+  x = l[["conlnorm"]]
   mt = conlnorm$new(x)
   mt$setXmin(0)
   est = estimate_pars(mt)
