@@ -30,8 +30,9 @@ dpldis = function(x, xmin, alpha, log=FALSE) {
   if(xmin > 1) constant = constant - sum((1:(xmin-1))^(-alpha))
   
   if(log) {
-    pdf = -alpha*log(x) - log(constant)
-    pdf[round(x) < round(xmin)] = -Inf
+    pdf = rep (-Inf, length (x))
+    indx = which (round(x) >= round(xmin))
+    pdf[indx] = -alpha*log(x[indx]) - log(constant)
   } else {
     pdf = x^(-alpha)/constant
     pdf[round(x) < round(xmin)] = 0
