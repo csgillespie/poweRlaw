@@ -1,5 +1,7 @@
 test_that("Testing estimate_xmin accuracy", {
   skip_on_cran()  
+  
+  l = readRDS("estimate_xmin.rds")
   ##Discrete Power-law
   discrete_data = readRDS("discrete_data.RData")
   mt = displ$new(discrete_data)
@@ -8,10 +10,11 @@ test_that("Testing estimate_xmin accuracy", {
   expect_equal(est$xmin, 2, tol=1e-3)
   
   ##Poisson
-  set.seed(1)
-  x = rpois(10000, 10)
-  x = x[x >= 10]
-  x = c(x, sample(1:9, 10000-length(x), replace=TRUE))
+  # set.seed(1)
+  # x = rpois(10000, 10)
+  # x = x[x >= 10]
+  # x = c(x, sample(1:9, 10000-length(x), replace=TRUE))
+  x = l[["dispois"]]
   
   mt = dispois$new(x)
   est = estimate_xmin(mt)
@@ -19,17 +22,17 @@ test_that("Testing estimate_xmin accuracy", {
   expect_equal(est$xmin, 13, tol=1e-3)
   
   ##Discrete Log-normal
-  set.seed(1)
-  x = ceiling(rlnorm(10000, 3, 1))
-  x = x[x >= 10]
-  x = c(x, sample(1:9, 10000-length(x), replace=TRUE))
+  # set.seed(1)
+  # x = ceiling(rlnorm(10000, 3, 1))
+  # x = x[x >= 10]
+  # x = c(x, sample(1:9, 10000-length(x), replace=TRUE))
+  x = l[["dislnorm"]]
   
   mt = dislnorm$new(x)
   est = estimate_xmin(mt)
   expect_equal(est$pars, c(2.981, 1.012), tol=1e-3)
   expect_equal(est$xmin, 10, tol=1e-3)
-  
-  
+
   ##CTN Power-law
   ##Takes a while
   if(interactive()) {
@@ -40,10 +43,11 @@ test_that("Testing estimate_xmin accuracy", {
     expect_equal(est$xmin, 1.43628, tol=1e-3)
   }
   ##Log-normal
-  set.seed(1)
-  x = rlnorm(10000, 3, 1)
-  x = x[x >= 10]
-  x = c(x, runif(10000-length(x), 0, 10))
+  # set.seed(1)
+  # x = rlnorm(10000, 3, 1)
+  # x = x[x >= 10]
+  # x = c(x, runif(10000-length(x), 0, 10))
+  x = l[["conlnorm"]]
   
   mt = conlnorm$new(x)
   est = estimate_xmin(mt, xmins=1:50)
@@ -52,11 +56,11 @@ test_that("Testing estimate_xmin accuracy", {
   
   
   ##Exponential
-  set.seed(1)
-  x = rexp(10000, 0.01)
-  x = x[x >= 10]
-  x = c(x, runif(10000-length(x), 0, 10))
-  
+  # set.seed(1)
+  # x = rexp(10000, 0.01)
+  # x = x[x >= 10]
+  # x = c(x, runif(10000-length(x), 0, 10))
+  x = l[["conexp"]] 
   mt = conexp$new(x)
   est = estimate_xmin(mt, xmins=1:50)
   
@@ -65,11 +69,11 @@ test_that("Testing estimate_xmin accuracy", {
  
   #########################################
   ## Edge cases
-  x = c(2, 2,2)
+  x = c(2, 2, 2)
   mt = displ$new(x)
   est = estimate_xmin(mt)
   expect_true(is.infinite(est$gof))
-  expect_true(is.na(est$pars))
+  expect_true(is.na(est$xmin))
 
   ## Empty object
   mt = displ$new()

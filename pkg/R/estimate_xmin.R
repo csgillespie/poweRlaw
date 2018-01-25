@@ -144,7 +144,10 @@ estimate_xmin = function (m, xmins=NULL, pars=NULL,
                           xmax=1e5, distance="ks") {
   ## Flag. Go through a bunch of checks to test whether we 
   ## can estimate xmin 
-  estimate = length(unique(m$dat)) > m$no_pars + 1
+  estimate = !is.null(m$getDat())
+  if(length(unique(m$dat)) < m$no_pars + 1) {
+    estimate = FALSE
+  }
   
   ## Make thread safe
   if(estimate) {
@@ -173,8 +176,11 @@ estimate_xmin = function (m, xmins=NULL, pars=NULL,
   if(!estimate || nr < 1) {
     ## Insufficient data to estimate parameters
     dat = matrix(0, nrow=1, ncol=(2 + m$no_pars))
+    if(is.null(m$getDat())) min_xmin = NA
+    else min_xmin = min(m$getDat())
+    
     dat[1, ] = c(rep(Inf, length(distance)), 
-                 min(m$dat), 
+                 min_xmin, 
                  rep(NA, m$no_pars))
     estimate = FALSE
   } else {
