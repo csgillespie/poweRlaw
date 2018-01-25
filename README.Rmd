@@ -39,7 +39,7 @@ install.packages("poweRlaw")
 Alternatively, the development version can be install from from github using the devtools package:
 ```{r, eval = FALSE}
 install.packages("devtools")
-devtools::install_github("csgillespie/poweRlaw", sub = "pkg")
+devtools::install_github("csgillespie/poweRlaw")
 ```
 
 Note Windows users have to first install [Rtools](http://cran.rstudio.com/bin/windows/Rtools/).
@@ -65,7 +65,7 @@ browseVignettes("poweRlaw")
 The plots below show the line of best fit to the Moby Dick and blackout data sets (from Clauset et al, 2009).
 
 
-![Cumulative CDF of the Moby Dick and blackout data sets with line of best fit.](https://raw.github.com/csgillespie/poweRlaw/master/graphics/figure1.png)
+![Cumulative CDF of the Moby Dick and blackout data sets with line of best fit.](https://raw.github.com/csgillespie/poweRlaw/master/web_graphics/figure1.png)
 
 
 Other information
