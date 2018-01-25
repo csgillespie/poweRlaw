@@ -24,8 +24,7 @@
 #' x = xmin:100
 #' 
 #' plot(x, dpldis(x, xmin, alpha), type="l")
-dpldis = function(x, xmin, alpha, log=FALSE) {
-  x = x[round(x) >= round(xmin)]
+dpldis = function(x, xmin, alpha, log = FALSE) {
   xmin = floor(xmin)
   constant = zeta(alpha)
   if(xmin > 1) constant = constant - sum((1:(xmin-1))^(-alpha))
