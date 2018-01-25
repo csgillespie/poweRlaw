@@ -24,15 +24,14 @@
 #' x = xmin:100
 #' 
 #' plot(x, dpldis(x, xmin, alpha), type="l")
-dpldis = function(x, xmin, alpha, log=FALSE) {
+dpldis = function(x, xmin, alpha, log = FALSE) {
   xmin = floor(xmin)
   constant = zeta(alpha)
   if(xmin > 1) constant = constant - sum((1:(xmin-1))^(-alpha))
   
   if(log) {
-    pdf = rep (-Inf, length (x))
-    indx = which (round(x) >= round(xmin))
-    pdf[indx] = -alpha*log(x[indx]) - log(constant)
+    pdf = -alpha*log(x) - log(constant)
+    pdf[round(x) < round(xmin)] = -Inf
   } else {
     pdf = x^(-alpha)/constant
     pdf[round(x) < round(xmin)] = 0
