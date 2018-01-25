@@ -12,9 +12,6 @@ To cite this package in academic work, please use:
 
 Gillespie, C. S. "*Fitting heavy tailed distributions: the poweRlaw package.*" Journal of Statistical Software, 64(2) 2015. ([pdf](www.jstatsoft.org/v64/i02/paper)).
 
-
-
-
 Installation
 ------------
 
@@ -57,7 +54,7 @@ browseVignettes("poweRlaw")
 
 The plots below show the line of best fit to the Moby Dick and blackout data sets (from Clauset et al, 2009).
 
-![Cumulative CDF of the Moby Dick and blackout data sets with line of best fit.](https://raw.github.com/csgillespie/poweRlaw/master/graphics/figure1.png)
+![Cumulative CDF of the Moby Dick and blackout data sets with line of best fit.](https://raw.github.com/csgillespie/poweRlaw/master/web_graphics/figure1.png)
 
 Other information
 -----------------
