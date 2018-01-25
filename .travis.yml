@@ -2,9 +2,14 @@ language: r
 cache: packages
 
 r:
-  - oldrel
+#  - oldrel
   - release
   - devel
+
+addons:
+  apt:
+    packages:
+    - gs
 
 packages:
   - covr
@@ -16,6 +21,6 @@ notifications:
 
 ## Only run covr on release
 after_success:
-  - Rscript -e "if(length(grep('2\$', ${TRAVIS_JOB_NUMBER}))) covr::codecov()";
+  - Rscript -e "if(length(grep('1\$', ${TRAVIS_JOB_NUMBER}))) covr::codecov()";
 
 
