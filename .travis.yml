@@ -6,11 +6,6 @@ r:
   - release
   - devel
 
-addons:
-  apt:
-    packages:
-    - gs
-
 packages:
   - covr
 
