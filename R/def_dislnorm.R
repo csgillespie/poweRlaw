@@ -147,27 +147,30 @@ setMethod("dist_ll",
           definition = function(m) {
             xmin = m$getXmin()
             d = m$getDat()
-            dis_lnorm_tail_ll(d[d >= xmin], m$getPars(), xmin)
+            tab = table(d[d >= xmin])
+            dv = as.numeric(names(tab))
+            df = as.vector(tab)   
+            dis_lnorm_tail_ll(dv, df, m$getPars(), xmin)
           }
 )
 ########################################################
 #Log-likelihood 
 ########################################################
-dis_lnorm_tail_ll = function(x, pars, xmin) {
+dis_lnorm_tail_ll = function(xv, xf, pars, xmin) {
   if(is.vector(pars)) pars = t(as.matrix(pars))
-  n = length(x)
+  n = sum(xf)
   p = function(par){
     m_log = par[1]; sd_log = par[2]
-    plnorm(x-0.5, m_log, sd_log, lower.tail=FALSE) - 
-      plnorm(x+0.5, m_log, sd_log, lower.tail=FALSE)
+    plnorm(xv-0.5, m_log, sd_log, lower.tail=FALSE) - 
+      plnorm(xv+0.5, m_log, sd_log, lower.tail=FALSE)
   }
-  joint_prob = colSums(log(apply(pars, 1, p)))
+  joint_prob = colSums(xf * log(apply(pars, 1, p)))
   prob_over = apply(pars, 1, function(i) 
     plnorm(xmin-0.5, i[1], i[2], 
            lower.tail=FALSE, log.p=TRUE))
   
   return(joint_prob - n*prob_over)
-}
+}  
 
 ########################################################
 #Rand number generator
@@ -208,8 +211,10 @@ setMethod("dist_rand",
 dislnorm$methods(
   mle = function(set = TRUE, initialise=NULL) {
     n = internal[["n"]]
-    x = dat
-    x = x[x > (xmin-0.5)]
+    x = dat[dat > (xmin-0.5)]
+    tab = table(x)
+    xf = as.vector(tab)
+    xv = as.numeric(names(tab))
     x.log = log(x)
     if(is.null(initialise))
       theta_0 = c(mean(x.log), sd(x.log))
@@ -217,7 +222,7 @@ dislnorm$methods(
       theta_0 = initialise
     # Chop off values below 
     negloglike = function(par) {
-      r = -dis_lnorm_tail_ll(x, par, xmin)
+      r = -dis_lnorm_tail_ll(xv, xf, par, xmin)
       if(!is.finite(r)) r = 1e12
       r
     }
