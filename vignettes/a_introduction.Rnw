@@ -80,7 +80,7 @@ install.packages("poweRlaw")
 \noindent The developmental version is hosted on github and  can be installed using the \cc{devtools} package\footnote{If you are using Windows, then you will need to install the \texttt{Rtools} package first.}
 <<eval=FALSE>>=
 install.packages("devtools")
-devtools::install_github("csgillespie/poweRlaw", subdir="pkg")
+devtools::install_github("csgillespie/poweRlaw")
 @
 \noindent Once installed, the package can be loaded ready for use with the standard \cc{library} command
 <<>>=
@@ -124,7 +124,7 @@ citation("poweRlaw")
 @
 \noindent For a different way of handling powerlaw type distributions, see
 \begin{center}
-Colin S. Gillespie (2018). \textit{Estimating the number of casualties in the American Indian war: a Bayesian analysis using the power law distribution.} Annals of Applied Statistics, 2018. URL: https://arxiv.org/abs/1710.01662.
+Colin S. Gillespie (2017). \textit{Estimating the number of casualties in the American Indian war: a Bayesian analysis using the power law distribution.} Annals of Applied Statistics, 2018. URL: https://arxiv.org/abs/1710.01662.
 \end{center}
 
 <<echo=FALSE>>=

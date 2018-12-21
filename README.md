@@ -31,7 +31,7 @@ For a different way of handling powerlaw type distributions, see
 
 Gillespie, C.S. " *Estimating the number of casualties in the American
 Indian war: a Bayesian analysis using the power law distribution.*"
-Annals of Applied Statistics, 2018.
+Annals of Applied Statistics, 2017.
 ([pdf](https://arxiv.org/abs/1710.01662))
 
 Installation
