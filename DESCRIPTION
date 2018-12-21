@@ -58,4 +58,4 @@ Collate:
     'show_methods.R'
     'timer.R'
 ByteCompile: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1

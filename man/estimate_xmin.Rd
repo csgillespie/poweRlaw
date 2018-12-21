@@ -7,8 +7,8 @@
 \alias{estimate_xmin}
 \title{Estimating the lower bound (xmin)}
 \usage{
-bootstrap(m, xmins = NULL, pars = NULL, xmax = 1e+05, no_of_sims = 100,
-  threads = 1, seed = NULL, distance = "ks")
+bootstrap(m, xmins = NULL, pars = NULL, xmax = 1e+05,
+  no_of_sims = 100, threads = 1, seed = NULL, distance = "ks")
 
 bootstrap_p(m, xmins = NULL, pars = NULL, xmax = 1e+05,
   no_of_sims = 100, threads = 1, seed = NULL, distance = "ks")

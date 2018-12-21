@@ -122,6 +122,10 @@ The bibtex version can be obtained via
 <<results='hide', eval=FALSE>>=
 citation("poweRlaw")
 @
+\noindent For a different way of handling powerlaw type distributions, see
+\begin{center}
+Colin S. Gillespie (2018). \textit{Estimating the number of casualties in the American Indian war: a Bayesian analysis using the power law distribution.} Annals of Applied Statistics, 2018. URL: https://arxiv.org/abs/1710.01662.
+\end{center}
 
 <<echo=FALSE>>=
 data(bootstrap_moby)
