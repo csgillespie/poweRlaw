@@ -23,7 +23,9 @@ Imports:
 Suggests:
     knitr,
     R.matlab,
-    testthat, codetools
+    testthat,
+    codetools,
+    covr
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
 Collate:
