@@ -164,7 +164,7 @@ dis_lnorm_tail_ll = function(xv, xf, pars, xmin) {
     plnorm(xv-0.5, m_log, sd_log, lower.tail=FALSE) - 
       plnorm(xv+0.5, m_log, sd_log, lower.tail=FALSE)
   }
-  joint_prob = colSums(xf * log(apply(pars, 1, p)))
+  joint_prob = sum(xf * log(apply(pars, 1, p)))
   prob_over = apply(pars, 1, function(i) 
     plnorm(xmin-0.5, i[1], i[2], 
            lower.tail=FALSE, log.p=TRUE))
@@ -210,16 +210,18 @@ setMethod("dist_rand",
 #############################################################
 dislnorm$methods(
   mle = function(set = TRUE, initialise=NULL) {
-    n = internal[["n"]]
-    x = dat[dat > (xmin-0.5)]
-    tab = table(x)
-    xf = as.vector(tab)
-    xv = as.numeric(names(tab))
-    x.log = log(x)
-    if(is.null(initialise))
+    trunc = which.max(mm$internal$values > xmin - 0.5) 
+    xv = internal[["values"]]
+    trunc_seq = length(xv):trunc
+    xv = xv[trunc_seq]
+    xf = internal[["freq"]][trunc_seq]
+    if(is.null(initialise)) {
+      x = dat[dat > (xmin-0.5)]
+      x.log = log(x)
       theta_0 = c(mean(x.log), sd(x.log))
-    else 
+    } else { 
       theta_0 = initialise
+    }    
     # Chop off values below 
     negloglike = function(par) {
       r = -dis_lnorm_tail_ll(xv, xf, par, xmin)
