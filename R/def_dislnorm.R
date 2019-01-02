@@ -210,8 +210,8 @@ setMethod("dist_rand",
 #############################################################
 dislnorm$methods(
   mle = function(set = TRUE, initialise=NULL) {
-    trunc = which.max(mm$internal$values > xmin - 0.5) 
     xv = internal[["values"]]
+    trunc = which.max(xv > xmin - 0.5) 
     trunc_seq = length(xv):trunc
     xv = xv[trunc_seq]
     xf = internal[["freq"]][trunc_seq]
