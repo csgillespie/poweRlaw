@@ -164,7 +164,11 @@ dis_lnorm_tail_ll = function(xv, xf, pars, xmin) {
     plnorm(xv-0.5, m_log, sd_log, lower.tail=FALSE) - 
       plnorm(xv+0.5, m_log, sd_log, lower.tail=FALSE)
   }
-  joint_prob = colSums( as.matrix( rbind(xf * log(apply(pars, 1, p)), 0) ) )
+  if(length(xv) == 1){
+    joint_prob = sum(xf * log(apply(pars, 1, p)))
+  }else{
+    joint_prob = colSums(xf * log(apply(pars, 1, p)))
+  }
   prob_over = apply(pars, 1, function(i) 
     plnorm(xmin-0.5, i[1], i[2], 
            lower.tail=FALSE, log.p=TRUE))
