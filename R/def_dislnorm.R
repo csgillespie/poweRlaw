@@ -146,10 +146,11 @@ setMethod("dist_ll",
           signature = signature(m="dislnorm"),
           definition = function(m) {
             xmin = m$getXmin()
-            d = m$getDat()
-            tab = table(d[d >= xmin])
-            dv = as.numeric(names(tab))
-            df = as.vector(tab)   
+            
+            dv =  m$internal[["values"]]
+            cut_off = (dv >= xmin)
+            dv = dv[cut_off]
+            df = m$internal[["freq"]][cut_off]
             dis_lnorm_tail_ll(dv, df, m$getPars(), xmin)
           }
 )
@@ -159,19 +160,19 @@ setMethod("dist_ll",
 dis_lnorm_tail_ll = function(xv, xf, pars, xmin) {
   if(is.vector(pars)) pars = t(as.matrix(pars))
   n = sum(xf)
-  p = function(par){
+  p = function(par) {
     m_log = par[1]; sd_log = par[2]
     plnorm(xv-0.5, m_log, sd_log, lower.tail=FALSE) - 
       plnorm(xv+0.5, m_log, sd_log, lower.tail=FALSE)
   }
-  if(length(xv) == 1){
+  if(length(xv) == 1L) {
     joint_prob = sum(xf * log(apply(pars, 1, p)))
-  }else{
+  } else {
     joint_prob = colSums(xf * log(apply(pars, 1, p)))
   }
   prob_over = apply(pars, 1, function(i) 
     plnorm(xmin-0.5, i[1], i[2], 
-           lower.tail=FALSE, log.p=TRUE))
+           lower.tail = FALSE, log.p = TRUE))
   
   return(joint_prob - n*prob_over)
 }  
@@ -198,12 +199,11 @@ setMethod("dist_rand",
               x = rlnorm(N, pars[1L], pars[2L])
               x = x[x >= lower]
               if(length(x)) {
-                x = x[1:min(length(x), n-i)]
+                x = x[1:min(length(x), n - i)]
                 rns[(i+1L):(i+length(x))] = x
                 i = i + length(x)
               }
             }
-            
             ##Round at end (more efficient)
             round(rns)
           }
@@ -213,16 +213,19 @@ setMethod("dist_rand",
 #MLE method
 #############################################################
 dislnorm$methods(
-  mle = function(set = TRUE, initialise=NULL) {
+  mle = function(set = TRUE, initialise = NULL) {
     xv = internal[["values"]]
-    trunc = which.max(xv > xmin - 0.5) 
-    trunc_seq = length(xv):trunc
-    xv = xv[trunc_seq]
-    xf = internal[["freq"]][trunc_seq]
+    cut_off = (xv > xmin - 0.5)
+    xv = xv[cut_off]
+    xf = internal[["freq"]][cut_off]
+    
     if(is.null(initialise)) {
-      x = dat[dat > (xmin-0.5)]
-      x.log = log(x)
-      theta_0 = c(mean(x.log), sd(x.log))
+      n = sum(xf) # XXX: cum_sum?
+      x_log = log(xv)
+      expect2 = sum(x_log^2 * xf)/n
+      x_log_mean = sum(x_log*xf)/n
+      x_log_sd = sqrt((expect2 - x_log_mean^2))
+      theta_0 = c(x_log_mean, x_log_sd)
     } else { 
       theta_0 = initialise
     }    
@@ -233,10 +236,10 @@ dislnorm$methods(
       r
     }
     
-    mle = suppressWarnings(optim(par=theta_0, 
-                                 fn=negloglike, 
-                                 method="L-BFGS-B", 
-                                 lower=c(-Inf, .Machine$double.eps)))
+    mle = suppressWarnings(optim(par = theta_0, 
+                                 fn = negloglike, 
+                                 method = "L-BFGS-B", 
+                                 lower = c(-Inf, .Machine$double.eps)))
     if(set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
