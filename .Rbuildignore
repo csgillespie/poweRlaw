@@ -2,6 +2,7 @@
 ^\.Rproj\.user$
 ^.travis.yml$
 ^README\.Rmd$
+^README\.html$
 ^codecov\.yml$
 ^web_graphics$
 ^jss\.bst$
