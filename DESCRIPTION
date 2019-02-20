@@ -38,7 +38,7 @@ Collate:
     'ctn_helper_functions.R'
     'data_help_files.R'
     'def_conexp.R'
-    'def_conlorm.R'
+    'def_conlnorm.R'
     'def_conpl.R'
     'def_conweibull.R'
     'def_disexp.R'
