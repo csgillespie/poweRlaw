@@ -1,3 +1,7 @@
+Version 0.70.3
+--------------
+  * Fix typo in file name.
+
 Version 0.70.2
 --------------
   * Bug fix: Input and output of dpldis should be the same (thanks to @mpadge #73).
