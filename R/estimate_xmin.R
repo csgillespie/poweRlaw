@@ -145,7 +145,7 @@ estimate_xmin = function (m, xmins=NULL, pars=NULL,
   ## Flag. Go through a bunch of checks to test whether we 
   ## can estimate xmin 
   estimate = !is.null(m$getDat())
-  if(length(unique(m$dat)) < m$no_pars + 1) {
+  if(length(unique(m$dat)) <= m$no_pars + 1) {
     estimate = FALSE
   }
   

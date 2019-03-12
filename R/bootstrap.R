@@ -57,13 +57,13 @@ bootstrap = function (m, xmins=NULL, pars=NULL, xmax=1e5,
                   xmins, pars, xmax, distance)
   
   ## Stop clock and cluster
-  total_time = time$get(stop=TRUE)*threads
+  total_time = time$get(stop = TRUE) * threads
   
   bootstraps = as.data.frame(t(nof), stringsAsFactors = FALSE)
   l = list(gof = gof_v[["gof"]], 
-           bootstraps=bootstraps, 
-           sim_time = total_time[[1]]/no_of_sims, 
-           seed=seed,
+           bootstraps = bootstraps, 
+           sim_time = total_time[[1]] / no_of_sims, 
+           seed = seed,
            package_version = packageVersion("poweRlaw"), 
            distance=distance)
   class(l) = "bs_xmin"

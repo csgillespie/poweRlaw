@@ -105,9 +105,9 @@ displ =
                       x = x$xmin
                     }
                     internal[["xmin"]] <<- x
-                    internal[["v"]] <<- 1:(x-1)
-                    ##Check for empty data
-                    if(length(internal[["values"]])) {
+                    internal[["v"]] <<- 1:(x-1) # Not sure why I need this???
+                    ##Check for empty data or xmin = NA (happens when data is all equal)
+                    if(length(internal[["values"]]) && !is.na(x)) {
                       selection = min(which(internal[["values"]] >= x))
                       internal[["slx"]] <<- internal[["cum_slx"]][selection]
                       internal[["n"]] <<- internal[["cum_n"]][selection]    
