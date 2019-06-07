@@ -59,7 +59,7 @@ bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   on.exit(stopCluster(cl))
   
   ## Set cluster seed
-  clusterSetRNGStream(cl, seed)
+  if (!is.null(seed)) parallel::clusterSetRNGStream(cl, seed)
   
   clusterExport(cl, c("dist_rand", "estimate_xmin"))
   nof = parSapply(cl, 1:no_of_sims,

@@ -1,7 +1,9 @@
-Version 0.70.3
+Dev Version
 --------------
   * Fix typo in file name.
   * Better handling of extreme data. 
+  * Bug fix: Setting `seed = NULL` could lead to repeatable random numbers. This
+    is now avoided.
 
 Version 0.70.2
 --------------
