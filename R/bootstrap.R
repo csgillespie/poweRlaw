@@ -1,10 +1,24 @@
+sample_helper = function(i, dat) {
+  sample(dat, length(dat), replace = TRUE)
+}
+
 bootstrap_helper = function (i, m, xmins, pars, xmax, distance) {
-  x = sample(m$dat, length(m$dat), replace=TRUE)
-  
+  x = sample_helper(i, m$dat)
   m_cpy = m$getRefClass()$new(x)
   est = estimate_xmin(m_cpy, xmins=xmins, pars=pars, xmax=xmax, distance=distance)
   est["distance"] = NULL
   unlist(est)
+}
+
+#' @rdname estimate_xmin
+#' @export
+get_bootstrap_sims = function(m, no_of_sims, seed, threads = 1) {
+  cl = parallel::makeCluster(threads)
+  on.exit(parallel::stopCluster(cl))
+  
+  ## Set cluster seed
+  parallel::clusterSetRNGStream(cl, seed)
+  parallel::parSapply(cl, 1:no_of_sims, sample_helper, m$dat)
 }
 
 #' @rdname estimate_xmin

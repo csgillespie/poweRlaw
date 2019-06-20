@@ -4,6 +4,7 @@ Dev Version
   * Better handling of extreme data. 
   * Bug fix: Setting `seed = NULL` could lead to repeatable random numbers. This
     is now avoided.
+  * Retrieve simulations via `get_*_sims()` functions.
 
 Version 0.70.2
 --------------
