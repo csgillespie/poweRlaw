@@ -1,33 +1,42 @@
-Package: poweRlaw
 Type: Package
+Package: poweRlaw
 Title: Analysis of Heavy Tailed Distributions
 Version: 0.70.2.0003
-Authors@R: person(given="Colin", family="Gillespie",
-    email="csgillespie@gmail.com", role = c("aut", "cre"))
+Authors@R: 
+    person(given = "Colin",
+           family = "Gillespie",
+           role = c("aut", "cre"),
+           email = "csgillespie@gmail.com",
+           comment = c(ORCID = "0000-0003-1787-0275"))
 Maintainer: Colin Gillespie <csgillespie@gmail.com>
-Description: An implementation of maximum likelihood estimators for a variety
-    of heavy tailed distributions, including both the discrete and continuous
-    power law distributions. Additionally, a goodness-of-fit based approach is
-    used to estimate the lower cut-off for the scaling region.
+Description: An implementation of maximum likelihood estimators
+    for a variety of heavy tailed distributions, including both the
+    discrete and continuous power law distributions. Additionally, a
+    goodness-of-fit based approach is used to estimate the lower cut-off
+    for the scaling region.
+License: GPL-2 | GPL-3
 URL: https://github.com/csgillespie/poweRlaw
 BugReports: https://github.com/csgillespie/poweRlaw/issues
-Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.4.0)
 Imports:
-    VGAM,
-    parallel,
     methods,
+    parallel,
+    stats,
     utils,
-    stats
+    VGAM
 Suggests:
+    codetools,
+    covr,
     knitr,
     R.matlab,
-    testthat,
-    codetools,
-    covr
-VignetteBuilder: knitr
-License: GPL-2 | GPL-3
+    testthat
+VignetteBuilder: 
+    knitr
+ByteCompile: true
+Encoding: UTF-8
+Roxygen: list(wrap = FALSE)
+RoxygenNote: 6.1.1
 Collate:
     'aaa_all_classes.R'
     'AllGenerics.R'
@@ -59,5 +68,3 @@ Collate:
     'poweRlaw-package.R'
     'show_methods.R'
     'timer.R'
-ByteCompile: true
-RoxygenNote: 6.1.1
