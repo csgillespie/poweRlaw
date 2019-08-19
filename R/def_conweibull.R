@@ -204,7 +204,7 @@ conweibull$methods(
     mle = suppressWarnings(optim(par=theta_0, 
                                  fn=negloglike, 
                                  method="L-BFGS-B", 
-                                 lower=c(-Inf, .Machine$double.eps)))
+                                 lower=c(.Machine$double.eps, .Machine$double.eps)))
     if(set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
