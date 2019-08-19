@@ -5,6 +5,7 @@ Dev Version
   * Bug fix: Setting `seed = NULL` could lead to repeatable random numbers. This
     is now avoided.
   * Bug fix: Set correct lower bound for weibull optimiser
+  * Retrieve simulations via `get_*_sims()` functions.
 
 Version 0.70.2
 --------------
