@@ -6,6 +6,7 @@ Dev Version
     is now avoided.
   * Bug fix: Set correct lower bound for weibull optimiser
   * Retrieve simulations via `get_*_sims()` functions.
+  * Indicate when we have values of x larger than xmax.
 
 Version 0.70.2
 --------------

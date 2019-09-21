@@ -153,8 +153,18 @@ estimate_xmin = function (m, xmins=NULL, pars=NULL,
   if(estimate) {
     m_cpy = m$getRefClass()$new(m$dat)
     m_cpy$pars = pars
-    if(is.null(xmins))  xmins = unique(m$dat)
-    xmins = xmins[xmins <= xmax]
+    if(is.null(xmins))  {
+      xmins = unique(m$dat)
+      if (any(xmins > xmax)) {
+        msg = paste0("xmin search space truncated at ", xmax, "
+        You have three options
+                     1. Increase xmax in estimate_xmins
+                     2. Specify xmins explicitly
+                     3. Ignore and hope for the best (which may be OK)")
+        message(msg)
+      }
+      xmins = xmins[xmins <= xmax]
+    }
   }
   
   ## Need to have at least no_pars + 1 data points
