@@ -1,34 +1,34 @@
-get_xmin_est = function(dat, xmins){
-  row = which.min(dat[,1])
+get_xmin_est = function(dat, xmins) {
+  row = which.min(dat[, 1])
   ## Check for numerical instabilities
   ## Can happen in the tails of the LN
-  if(!length(row)) {
+  if (!length(row)) {
     row = 1L
-    dat[row,] = NA_real_
+    dat[row, ] = NA_real_
     xmins[row] = NA_real_
     warning("Unable to estimate xmin. This may be due to numerical instabilities. 
             For example the parameter estimates are in the distribution tails.")
   }
   
   xmin = xmins[row]
-  if(is.null(xmin)) xmin = NA
-  pars = dat[row, 2:(ncol(dat)-1L)]
+  if (is.null(xmin)) xmin = NA
+  pars = dat[row, 2:(ncol(dat) - 1L)]
   ntail = dat[row, ncol(dat)]
   
-  l = list(gof=dat[row, 1], xmin=xmin, pars=pars, ntail=ntail)
+  l = list(gof = dat[row, 1], xmin = xmin, pars = pars, ntail = ntail)
   class(l) = "estimate_xmin"
   l
 }
 
 get_gof = function(fit_cdf, data_cdf, distance) {
-  if(!(distance %in% c("ks", "reweight")) || length(distance) > 1)
+  if (!(distance %in% c("ks", "reweight")) || length(distance) > 1)
     stop("Unknown distance measure. The distance parameter should be either ks or reweight")
   
   
-  if(distance == "ks")
+  if (distance == "ks")
     gof = max(abs(data_cdf - fit_cdf))
-  if(distance == "reweight")
-    gof = max(abs(data_cdf - fit_cdf)/sqrt(fit_cdf*(1-fit_cdf)))
+  if (distance == "reweight")
+    gof = max(abs(data_cdf - fit_cdf) / sqrt(fit_cdf * (1 - fit_cdf)))
   gof 
 }
 
@@ -47,17 +47,17 @@ get_KS_statistic = function(m, xmax=1e5, distance="ks") {
 #' @rdname estimate_xmin
 #' @export
 get_distance_statistic = function(m, xmax=1e5, distance="ks") {
-  if(is(m, "discrete_distribution")) {
-    data_cdf = dist_data_all_cdf(m, xmax=xmax)
-    fit_cdf = dist_all_cdf(m, xmax=xmax)
+  if (is(m, "discrete_distribution")) {
+    data_cdf = dist_data_all_cdf(m, xmax = xmax)
+    fit_cdf = dist_all_cdf(m, xmax = xmax)
   } else {
     q = m$dat
     n = m$internal[["n"]]
     N = length(q)
-    q = q[(N-n+1):N]
+    q = q[(N - n + 1):N]
     q = q[q <= xmax]
     fit_cdf = dist_cdf(m, q)
-    data_cdf = ((0:(n-1))/n)[1:length(fit_cdf)]
+    data_cdf = ((0:(n - 1)) / n)[seq_along(fit_cdf)]
   }
   get_gof(fit_cdf, data_cdf, distance)
 }
@@ -77,8 +77,10 @@ get_distance_statistic = function(m, xmax=1e5, distance="ks") {
 #' warnings occur for large values of \code{xmin}. Essentially, we are discarding 
 #' the bulk of the distribution and cannot calculate the tails to enough
 #' accuracy.}
-#' \item{\code{bootstrap}}{Estimates the unncertainty in the xmin and parameter values via bootstrapping.}
-#' \item{\code{bootstrap_p}}{Performs a bootstrapping hypothesis test to determine whether a suggested
+#' \item{\code{bootstrap}}{Estimates the unncertainty in the xmin and parameter values 
+#' via bootstrapping.}
+#' \item{\code{bootstrap_p}}{Performs a bootstrapping hypothesis test to determine 
+#' whether a suggested
 #' (typically power law) distribution is plausible. This is only available for distributions that 
 #' have \code{dist_rand} methods available.}}
 #' @param m A reference class object that contains the data.
@@ -92,7 +94,8 @@ get_distance_statistic = function(m, xmax=1e5, distance="ks") {
 #' of xmin to explore. When a single value is passed, this represents
 #' the maximum value to search, i.e. by default we search from
 #' (1, 1e5). See details for further information.
-#' @param xmax default \code{1e5}. The maximum x value calculated when working out the CDF. See details for further 
+#' @param xmax default \code{1e5}. The maximum x value calculated when working out the CDF. 
+#' See details for further 
 #' information.
 #' @param threads number of concurrent threads used during the bootstrap.
 #' @param no_of_sims number of bootstrap simulations. When \code{no_of_sims} is large, this can 
@@ -140,41 +143,42 @@ get_distance_statistic = function(m, xmax=1e5, distance="ks") {
 #' bootstrap(m, no_of_sims=1, threads=1)
 #' bootstrap_p(m, no_of_sims=1, threads=1)
 #' }
-estimate_xmin = function (m, xmins=NULL, pars=NULL, 
-                          xmax=1e5, distance="ks") {
+estimate_xmin = function(m, xmins = NULL, pars = NULL, 
+                         xmax = 1e5, distance = "ks") {
   ## Flag. Go through a bunch of checks to test whether we 
   ## can estimate xmin 
   estimate = !is.null(m$getDat())
-  if(length(unique(m$dat)) <= m$no_pars + 1) {
+  if (length(unique(m$dat)) <= m$no_pars + 1) {
     estimate = FALSE
   }
   
+  if (is.null(xmins))  {
+    xmins = unique(m$dat)
+  }
   ## Make thread safe
-  if(estimate) {
+  if (estimate) {
     m_cpy = m$getRefClass()$new(m$dat)
     m_cpy$pars = pars
-    if(is.null(xmins))  {
-      xmins = unique(m$dat)
-      if (any(xmins > xmax)) {
-        msg = paste0("xmin search space truncated at ", xmax, "
+    
+    if (any(xmins > xmax)) {
+      msg = paste0("xmin search space truncated at ", xmax, "
         You have three options
                      1. Increase xmax in estimate_xmins
                      2. Specify xmins explicitly
                      3. Ignore and hope for the best (which may be OK)")
-        message(msg)
-      }
-      xmins = xmins[xmins <= xmax]
+      message(msg)
     }
+    xmins = xmins[xmins <= xmax]
   }
   
   ## Need to have at least no_pars + 1 data points
   ## to estimate parameters. 
   ## Find (largest - no_pars)th data point and subset xmins
-  if(estimate) {
+  if (estimate) {
     unique_dat = unique(m_cpy$dat)
     q_len = length(unique_dat)
     max_data_pt_needed = sort(unique_dat, 
-                              partial=q_len-m_cpy$no_pars-1)[q_len-m_cpy$no_pars-1]
+                              partial = q_len - m_cpy$no_pars - 1)[q_len - m_cpy$no_pars - 1]
     xmins = xmins[xmins <= max_data_pt_needed]
     
     ## Initialise xmin scan
@@ -183,10 +187,10 @@ estimate_xmin = function (m, xmins=NULL, pars=NULL,
   
   ## Bootstrapping may generate strange data
   ## Columns: gof, Pars, xmin, ntail
-  if(!estimate || nr < 1) {
+  if (!estimate || nr < 1) {
     ## Insufficient data to estimate parameters
-    dat = matrix(0, nrow=1, ncol=(2 + m$no_pars))
-    if(is.null(m$getDat())) min_xmin = NA
+    dat = matrix(0, nrow = 1, ncol = (2 + m$no_pars))
+    if (is.null(m$getDat())) min_xmin = NA
     else min_xmin = min(m$getDat())
     
     dat[1, ] = c(rep(Inf, length(distance)), 
@@ -194,27 +198,27 @@ estimate_xmin = function (m, xmins=NULL, pars=NULL,
                  rep(NA, m$no_pars))
     estimate = FALSE
   } else {
-    dat = matrix(0, nrow=nr, ncol=(2 + m_cpy$no_pars))   
+    dat = matrix(0, nrow = nr, ncol = (2 + m_cpy$no_pars))   
     est = estimate_pars(m_cpy)$pars
   }
   
   xm = 0L
-  while(estimate && xm < nr)   {
+  while (estimate && xm < nr)   {
     m_cpy$xmin = xmins[xm + 1L]
-    if(is.null(pars)) m_cpy$mle(initialise=est)
+    if (is.null(pars)) m_cpy$mle(initialise = est)
     else m_cpy$pars = pars
     
-    if(!is.null(pars)) {
+    if (!is.null(pars)) {
       L = dist_ll(m_cpy)
       I = which.max(L)
-      if(is.matrix(pars)) { # For multi-parameter models
-        m_cpy$pars = m_cpy$pars[I,]
+      if (is.matrix(pars)) { # For multi-parameter models
+        m_cpy$pars = m_cpy$pars[I, ]
       } else {
         m_cpy$pars = m_cpy$pars[I]
       }
     }
     gof = get_distance_statistic(m_cpy, xmax, distance)
-    dat[xm <- xm + 1L,] = c(gof, m_cpy$pars, get_ntail(m_cpy))
+    dat[xm <- xm + 1L, ] = c(gof, m_cpy$pars, get_ntail(m_cpy))
   }
   
   l = get_xmin_est(dat, xmins)

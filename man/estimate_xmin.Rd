@@ -60,7 +60,8 @@ to the number of parameters) of parameters used to #' optimise over.
 Otherwise, for each value of \code{xmin}, the mle will be used, i.e. \code{estimate_pars(m)}.
 For small samples, the mle may be biased.}
 
-\item{xmax}{default \code{1e5}. The maximum x value calculated when working out the CDF. See details for further 
+\item{xmax}{default \code{1e5}. The maximum x value calculated when working out the CDF. 
+See details for further 
 information.}
 
 \item{distance}{A string containing the distance measure (or measures) to calculate. 
@@ -80,8 +81,10 @@ when fitting lognormal, Poisson or Exponential distributions. The
 warnings occur for large values of \code{xmin}. Essentially, we are discarding 
 the bulk of the distribution and cannot calculate the tails to enough
 accuracy.}
-\item{\code{bootstrap}}{Estimates the unncertainty in the xmin and parameter values via bootstrapping.}
-\item{\code{bootstrap_p}}{Performs a bootstrapping hypothesis test to determine whether a suggested
+\item{\code{bootstrap}}{Estimates the unncertainty in the xmin and parameter values 
+via bootstrapping.}
+\item{\code{bootstrap_p}}{Performs a bootstrapping hypothesis test to determine 
+whether a suggested
 (typically power law) distribution is plausible. This is only available for distributions that 
 have \code{dist_rand} methods available.}}
 }

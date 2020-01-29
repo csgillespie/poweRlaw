@@ -7,10 +7,10 @@
 #' @export dislnorm
 dislnorm = 
   setRefClass("dislnorm", 
-              contains="discrete_distribution",
+              contains = "discrete_distribution",
               fields = list(
                 dat = function(x) {
-                  if(!missing(x) && !is.null(x)) {
+                  if (!missing(x) && !is.null(x)) {
                     check_discrete_data(x)
                     x = sort(x)
                     tab = table(x)
@@ -26,13 +26,13 @@ dislnorm =
                   } else internal[["dat"]]
                 },
                 xmin = function(x) {
-                  if(!missing(x) && !is.null(x)) {
-                    if("estimate_xmin" %in% class(x)) {
+                  if (!missing(x) && !is.null(x)) {
+                    if ("estimate_xmin" %in% class(x)) {
                       pars <<- x$pars
                       x = x$xmin
                     }
                     internal[["xmin"]] <<- x
-                    if(length(internal[["values"]])) {
+                    if (length(internal[["values"]])) {
                       selection = min(which(internal[["values"]] >= x))
                       internal[["n"]] <<- internal[["cum_n"]][selection]            
                     }
@@ -40,7 +40,7 @@ dislnorm =
                 }, 
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
-                    if("estimate_pars" %in% class(x)) x = x$pars            
+                    if ("estimate_pars" %in% class(x)) x = x$pars            
                     internal[["pars"]] <<- x            
                   } else internal[["pars"]]
                 }
@@ -50,12 +50,12 @@ dislnorm =
 #Initialisation
 #############################################################
 
-dislnorm$methods( 
+dislnorm$methods(
   list(
     initialize = function(dat) {
       no_pars <<- 2
       ##Use the internal attribute for copying
-      if(!missing(dat)) {
+      if (!missing(dat)) {
         check_discrete_data(dat)
         x = sort(dat)
         tab = table(x)
@@ -76,18 +76,18 @@ dislnorm$methods(
 #' @rdname dist_pdf-methods
 #' @aliases dist_pdf,dislnorm-method
 setMethod("dist_pdf",
-          signature = signature(m="dislnorm"),
-          definition = function(m, q=NULL, log=FALSE) {
+          signature = signature(m = "dislnorm"),
+          definition = function(m, q = NULL, log = FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
-            if(is.null(q)) q = m$dat
+            if (is.null(q)) q = m$dat
             
-            l1 = plnorm(q-0.5, pars[1], pars[2], lower.tail=FALSE, log.p=TRUE)
-            l2 = plnorm(q+0.5, pars[1], pars[2], lower.tail=FALSE, log.p=TRUE)
+            l1 = plnorm(q - 0.5, pars[1], pars[2], lower.tail = FALSE, log.p = TRUE)
+            l2 = plnorm(q + 0.5, pars[1], pars[2], lower.tail = FALSE, log.p = TRUE)
             
-            pdf = l1 + log(1-exp(l2-l1)) - 
-              plnorm(xmin-0.5, pars[1], pars[2], lower.tail=FALSE, log.p=TRUE)
+            pdf = l1 + log(1 - exp(l2 - l1)) - 
+              plnorm(xmin - 0.5, pars[1], pars[2], lower.tail = FALSE, log.p = TRUE)
             
-            if(!log) {
+            if (!log) {
               pdf = exp(pdf)
               pdf[q < xmin] = 0
             } else {
@@ -103,22 +103,22 @@ setMethod("dist_pdf",
 #' @rdname dist_cdf-methods
 #' @aliases dist_cdf,dislnorm-method
 setMethod("dist_cdf",
-          signature = signature(m="dislnorm"),
-          definition = function(m, q=NULL, lower_tail=TRUE) {
+          signature = signature(m = "dislnorm"),
+          definition = function(m, q = NULL, lower_tail = TRUE) {
             xmin = m$getXmin(); pars = m$getPars()
-            if(is.null(pars)) stop("Model parameters not set.")  
-            if(is.null(q)) q = m$dat
+            if (is.null(pars)) stop("Model parameters not set.")  
+            if (is.null(q)) q = m$dat
             
             ## lower_tail == TRUE numerical unstable
             ## Not sure how best to fix it
-            if(lower_tail) {
-              p = plnorm(q + 0.5, pars[1], pars[2], lower.tail=lower_tail) 
-              C = plnorm(xmin-0.5, pars[1], pars[2], lower.tail=FALSE) 
-              cdf = (p/C-1/C+1)
+            if (lower_tail) {
+              p = plnorm(q + 0.5, pars[1], pars[2], lower.tail = lower_tail) 
+              C = plnorm(xmin - 0.5, pars[1], pars[2], lower.tail = FALSE) 
+              cdf = (p / C - 1 / C + 1)
             } else {
-              log_p = plnorm(q + 0.5, pars[1], pars[2], lower.tail=FALSE, log.p=T) 
-              log_C = plnorm(xmin+0.5, pars[1], pars[2], lower.tail=FALSE, log.p=T) 
-              cdf = exp(log_p-log_C)
+              log_p = plnorm(q + 0.5, pars[1], pars[2], lower.tail = FALSE, log.p = TRUE) 
+              log_C = plnorm(xmin + 0.5, pars[1], pars[2], lower.tail = FALSE, log.p = TRUE) 
+              cdf = exp(log_p - log_C)
             }
             cdf[q < xmin] = 0
             cdf
@@ -128,12 +128,11 @@ setMethod("dist_cdf",
 #' @rdname dist_cdf-methods
 #' @aliases dist_all_cdf,dislnorm-method
 setMethod("dist_all_cdf",
-          signature = signature(m="dislnorm"),
-          definition = function(m, lower_tail=TRUE, xmax=1e5) {
+          signature = signature(m = "dislnorm"),
+          definition = function(m, lower_tail = TRUE, xmax = 1e5) {
             xmin = m$getXmin()
             xmax = max(m$dat[m$dat <= xmax])
-            dist_cdf(m, q=xmin:xmax, lower_tail=lower_tail)
-            
+            dist_cdf(m, q = xmin:xmax, lower_tail = lower_tail)
           }
 )
 
@@ -143,7 +142,7 @@ setMethod("dist_all_cdf",
 #' @rdname dist_ll-methods
 #' @aliases dist_ll,dislnorm-method
 setMethod("dist_ll",
-          signature = signature(m="dislnorm"),
+          signature = signature(m = "dislnorm"),
           definition = function(m) {
             xmin = m$getXmin()
             
@@ -158,23 +157,23 @@ setMethod("dist_ll",
 #Log-likelihood 
 ########################################################
 dis_lnorm_tail_ll = function(xv, xf, pars, xmin) {
-  if(is.vector(pars)) pars = t(as.matrix(pars))
+  if (is.vector(pars)) pars = t(as.matrix(pars))
   n = sum(xf)
   p = function(par) {
     m_log = par[1]; sd_log = par[2]
-    plnorm(xv-0.5, m_log, sd_log, lower.tail=FALSE) - 
-      plnorm(xv+0.5, m_log, sd_log, lower.tail=FALSE)
+    plnorm(xv - 0.5, m_log, sd_log, lower.tail = FALSE) - 
+      plnorm(xv + 0.5, m_log, sd_log, lower.tail = FALSE)
   }
-  if(length(xv) == 1L) {
+  if (length(xv) == 1L) {
     joint_prob = sum(xf * log(apply(pars, 1, p)))
   } else {
     joint_prob = colSums(xf * log(apply(pars, 1, p)))
   }
   prob_over = apply(pars, 1, function(i) 
-    plnorm(xmin-0.5, i[1], i[2], 
+    plnorm(xmin - 0.5, i[1], i[2], 
            lower.tail = FALSE, log.p = TRUE))
   
-  return(joint_prob - n*prob_over)
+  return(joint_prob - n * prob_over)
 }  
 
 ########################################################
@@ -183,24 +182,24 @@ dis_lnorm_tail_ll = function(xv, xf, pars, xmin) {
 #' @rdname dist_rand-methods
 #' @aliases dist_rand,dislnorm-method
 setMethod("dist_rand",
-          signature = signature(m="dislnorm"),
-          definition = function(m, n="numeric") {
+          signature = signature(m = "dislnorm"),
+          definition = function(m, n = "numeric") {
             xmin = m$getXmin(); pars = m$getPars()
             lower = xmin - 0.5
             rns = numeric(n)
             i = 0; N = 0
             ## n-0.5 to avoid floating point sillyness.
-            while (i < (n-0.5)) {
+            while (i < (n - 0.5)) {
               ## Since we reject RNs less than lower=xmin - 0.5 we should simulate >> n rns
               ## If we simulate N Rns (below), we will keep n-i (or reject N-(n-i))
-              N = ceiling((n-i)/plnorm(lower, pars[1L], pars[2L], lower.tail=FALSE))
+              N = ceiling((n - i) / plnorm(lower, pars[1L], pars[2L], lower.tail = FALSE))
               
               ## Simple rejection sampler
               x = rlnorm(N, pars[1L], pars[2L])
               x = x[x >= lower]
-              if(length(x)) {
+              if (length(x)) {
                 x = x[1:min(length(x), n - i)]
-                rns[(i+1L):(i+length(x))] = x
+                rns[(i + 1L):(i + length(x))] = x
                 i = i + length(x)
               }
             }
@@ -219,20 +218,20 @@ dislnorm$methods(
     xv = xv[cut_off]
     xf = internal[["freq"]][cut_off]
     
-    if(is.null(initialise)) {
+    if (is.null(initialise)) {
       n = sum(xf) # XXX: cum_sum?
       x_log = log(xv)
-      expect2 = sum(x_log^2 * xf)/n
-      x_log_mean = sum(x_log*xf)/n
+      expect2 = sum(x_log^2 * xf) / n
+      x_log_mean = sum(x_log * xf) / n
       x_log_sd = sqrt((expect2 - x_log_mean^2))
       theta_0 = c(x_log_mean, x_log_sd)
-    } else { 
+    } else {
       theta_0 = initialise
     }    
     # Chop off values below 
     negloglike = function(par) {
       r = -dis_lnorm_tail_ll(xv, xf, par, xmin)
-      if(!is.finite(r)) r = 1e12
+      if (!is.finite(r)) r = 1e12
       r
     }
     
@@ -240,7 +239,7 @@ dislnorm$methods(
                                  fn = negloglike, 
                                  method = "L-BFGS-B", 
                                  lower = c(-Inf, .Machine$double.eps)))
-    if(set)
+    if (set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
     names(mle)[1L] = "pars"

@@ -8,10 +8,10 @@
 #' @export dispois
 dispois = 
   setRefClass("dispois", 
-              contains="discrete_distribution",
+              contains = "discrete_distribution",
               fields = list(
                 dat = function(x)
-                  if(!missing(x) && !is.null(x)) {
+                  if (!missing(x) && !is.null(x)) {
                     check_discrete_data(x)
                     x = sort(x)
                     tab = table(x)
@@ -25,13 +25,13 @@ dispois =
                     xmin <<- min(values)
                   } else internal[["dat"]],
                 xmin = function(x) {
-                  if(!missing(x) && !is.null(x)) {
-                    if("estimate_xmin" %in% class(x)) {
+                  if (!missing(x) && !is.null(x)) {
+                    if ("estimate_xmin" %in% class(x)) {
                       pars <<- x$pars
                       x = x$xmin
                     }
                     internal[["xmin"]] <<- x
-                    if(length(internal[["values"]])) {
+                    if (length(internal[["values"]])) {
                       selection = min(which(internal[["values"]] >= x))
                       internal[["slx"]] <<- internal[["cum_slx"]][selection]
                       internal[["n"]] <<- internal[["cum_n"]][selection]            
@@ -40,7 +40,7 @@ dispois =
                 }, 
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
-                    if("estimate_pars" %in% class(x)) x = x$pars            
+                    if ("estimate_pars" %in% class(x)) x = x$pars            
                     internal[["pars"]] <<- x            
                   } else internal[["pars"]]
                 }
@@ -49,12 +49,12 @@ dispois =
 #############################################################
 #Initialisation
 #############################################################
-dispois$methods( 
+dispois$methods(
   list(
     initialize = function(dat) {
       no_pars <<- 1
       ##Use the internal attribute for copying
-      if(!missing(dat)) {
+      if (!missing(dat)) {
         check_discrete_data(dat)
         x = sort(dat)
         tab = table(x)
@@ -78,12 +78,13 @@ dispois$methods(
 #' @rdname dist_pdf-methods
 #' @aliases dist_pdf,dispois-method
 setMethod("dist_pdf",
-          signature = signature(m="dispois"),
-          definition = function(m, q=NULL, log=FALSE) {
+          signature = signature(m = "dispois"),
+          definition = function(m, q = NULL, log = FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
-            if(is.null(q)) q = m$dat
-            pdf = dpois(q, pars, log=TRUE) - ppois(xmin-0.5, pars, lower.tail=FALSE, log.p=TRUE)
-            if(!log) {
+            if (is.null(q)) q = m$dat
+            pdf = dpois(q, pars, log = TRUE) - 
+              ppois(xmin - 0.5, pars, lower.tail = FALSE, log.p = TRUE)
+            if (!log) {
               pdf = exp(pdf)
               pdf[q < xmin]  = 0
             } else {
@@ -98,19 +99,19 @@ setMethod("dist_pdf",
 #' @rdname dist_cdf-methods
 #' @aliases dist_cdf,dispois-method
 setMethod("dist_cdf",
-          signature = signature(m="dispois"),
-          definition = function(m, q=NULL, lower_tail=TRUE) {
+          signature = signature(m = "dispois"),
+          definition = function(m, q = NULL, lower_tail = TRUE) {
             xmin = m$getXmin(); pars = m$getPars()
-            if(is.null(pars)) stop("Model parameters not set.")  
-            if(is.null(q)) q = m$dat
+            if (is.null(pars)) stop("Model parameters not set.")  
+            if (is.null(q)) q = m$dat
 
-            p = ppois(q, pars, lower.tail=lower_tail) 
-            if(lower_tail){
-              C = ppois(xmin-0.5, pars, lower.tail=FALSE) 
-              cdf = (p/C-1/C+1)
+            p = ppois(q, pars, lower.tail = lower_tail) 
+            if (lower_tail) {
+              C = ppois(xmin - 0.5, pars, lower.tail = FALSE) 
+              cdf = (p / C - 1 / C + 1)
             } else {
-              C = 1-ppois(xmin, pars)
-              cdf = p/C
+              C = 1 - ppois(xmin, pars)
+              cdf = p / C
             }
             cdf[q < xmin] = 0
             cdf
@@ -120,18 +121,13 @@ setMethod("dist_cdf",
 #' @rdname dist_cdf-methods
 #' @aliases dist_all_cdf,dispois-method
 setMethod("dist_all_cdf",
-          signature = signature(m="dispois"),
-          definition = function(m, lower_tail=TRUE, xmax=1e5) {
+          signature = signature(m = "dispois"),
+          definition = function(m, lower_tail = TRUE, xmax = 1e5) {
             xmin = m$getXmin()
             xmax = max(m$dat[m$dat <= xmax])
-            dist_cdf(m, q=xmin:xmax, lower_tail=lower_tail)
+            dist_cdf(m, q = xmin:xmax, lower_tail = lower_tail)
           }
 )
-
-
-
-
-
 
 #############################################################
 #ll method
@@ -139,7 +135,7 @@ setMethod("dist_all_cdf",
 #' @rdname dist_ll-methods
 #' @aliases dist_ll,dispois-method
 setMethod("dist_ll",
-          signature = signature(m="dispois"),
+          signature = signature(m = "dispois"),
           definition = function(m) {
             xmin = m$getXmin()
             d = m$getDat()
@@ -153,10 +149,10 @@ setMethod("dist_ll",
 ########################################################
 pois_tail_ll = function(x, rate, xmin) {
   n = length(x)
-  joint_prob = colSums(sapply(rate, function(i) dpois(x, i, log=TRUE)))
-  prob_over = sapply(rate, function(i) ppois(xmin-1, i, 
-                                             lower.tail=FALSE, log.p=TRUE))
-  return(joint_prob - n*prob_over)
+  joint_prob = colSums(sapply(rate, function(i) dpois(x, i, log = TRUE)))
+  prob_over = sapply(rate, function(i) ppois(xmin - 1, i, 
+                                             lower.tail = FALSE, log.p = TRUE))
+  return(joint_prob - n * prob_over)
 }
 
 
@@ -167,10 +163,10 @@ pois_tail_ll = function(x, rate, xmin) {
 #' @rdname dist_rand-methods
 #' @aliases dist_rand,dispois-method
 setMethod("dist_rand",
-          signature = signature(m="dispois"),
-          definition = function(m, n="numeric") {
+          signature = signature(m = "dispois"),
+          definition = function(m, n = "numeric") {
             xmin = m$xmin; lambda = m$pars
-            qpois(runif(n, ppois(xmin-1, lambda, lower.tail=T), 1), lambda)
+            qpois(runif(n, ppois(xmin - 1, lambda, lower.tail = TRUE), 1), lambda)
           }
 )
 
@@ -179,21 +175,22 @@ setMethod("dist_rand",
 #MLE method
 #############################################################
 dispois$methods(
-  mle = function(set = TRUE, initialise=NULL) {
+  mle = function(set = TRUE, initialise = NULL) {
     x = dat
-    x = x[x > (xmin-0.5)]
-    if(is.null(initialise))
+    x = x[x > (xmin - 0.5)]
+    if (is.null(initialise))
       theta_0 = mean(x)
     else 
       theta_0 = initialise
     # Chop off values below 
     negloglike = function(par) {
       r = -pois_tail_ll(x, par, xmin)
-      if(!is.finite(r)) r = 1e12
+      if (!is.finite(r)) r = 1e12
       r
     }
-    mle = suppressWarnings(optim(par=theta_0, fn=negloglike, method="L-BFGS-B", lower=0))
-    if(set)
+    mle = suppressWarnings(optim(par = theta_0, fn = negloglike, 
+                                 method = "L-BFGS-B", lower = 0))
+    if (set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
     names(mle)[1L] = "pars"

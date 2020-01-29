@@ -7,7 +7,7 @@
 #' @importFrom methods classLabel show
 #' @export
 setMethod("show", 
-          signature = signature(object="distribution"),
+          signature = signature(object = "distribution"),
           definition = function(object) {
             msg = paste("Reference class object of class", classLabel(class(object)), "\n")
             cat(msg)

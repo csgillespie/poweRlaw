@@ -11,14 +11,12 @@
 #' xmin = 1; alpha = 1.5
 #' x = seq(xmin, 10, length.out=1000)
 #' plot(x, dplcon(x, xmin, alpha), type="l")
-dplcon = function(x, xmin, alpha, log=FALSE) {
-#   tol = 1e-10
-#   x = x[(x+tol) >= xmin]
-  if(log){
-    pdf = log(alpha-1) - log(xmin) - alpha*(log(x/xmin))
+dplcon = function(x, xmin, alpha, log = FALSE) {
+  if (log) {
+    pdf = log(alpha - 1) - log(xmin) - alpha * (log(x / xmin))
     pdf[x < xmin] = -Inf
   } else {
-    pdf = (alpha-1)/xmin * (x/xmin)^(-alpha)
+    pdf = (alpha - 1) / xmin * (x / xmin) ^ (-alpha)
     pdf[x < xmin] = 0
   }
   pdf
@@ -29,12 +27,10 @@ dplcon = function(x, xmin, alpha, log=FALSE) {
 #'@export
 #'@examples
 #' plot(x, pplcon(x, xmin, alpha), type="l", main="Distribution function")
-pplcon = function(q, xmin, alpha, lower.tail=TRUE) {
-#   tol = 1e-10
-#   q = q[(q+tol) >= xmin]
-  cdf = 1 - (q/xmin)^(-alpha + 1)
-  if(!lower.tail)
-    cdf = 1 - cdf#(cdf - dplcon(q, xmin, alpha)) 
+pplcon = function(q, xmin, alpha, lower.tail = TRUE) {
+  cdf = 1 - (q / xmin) ^ (-alpha + 1)
+  if (!lower.tail)
+    cdf = 1 - cdf 
   cdf[q < round(xmin)] = 0
   cdf
 }
@@ -51,9 +47,5 @@ pplcon = function(q, xmin, alpha, lower.tail=TRUE) {
 #' #Zipfs plot
 #' plot(con_rns, rev(cumsum(p)), log="xy", type="l")
 rplcon = function(n, xmin, alpha) {
-  xmin*(1-runif(n))^(-1/(alpha-1))
+  xmin * (1 - runif(n)) ^ (-1 / (alpha - 1))
 }
-
-
-
-

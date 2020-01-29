@@ -28,7 +28,8 @@ for the discrete distribution, xmin > 0.}
 if TRUE (default), probabilities are \eqn{P[X \le x]}, 
 otherwise, \eqn{P[X > x]}.}
 
-\item{n}{Number of observations. If \code{length(n) > 1}, the length is taken to be the number required.}
+\item{n}{Number of observations. If \code{length(n) > 1}, the length is 
+taken to be the number required.}
 }
 \value{
 dplcon gives the denisty and pplcon gives the distribution function.

@@ -54,7 +54,8 @@ setters and getters. See examples below
 \item{xmin}{The lower threshold, xmin. Typically set after initialisation. 
 For the continuous  power-law, xmin >= 0 for the discrete 
 distributions, xmin >0}
-\item{pars}{A parameter vector. Typically set after initialisation. Note the lognormal distribution has two parameters.}
+\item{pars}{A parameter vector. Typically set after initialisation. 
+Note the lognormal distribution has two parameters.}
 \item{internal}{A list. This list differs between objects and shouldn't be altered.}}
 }
 

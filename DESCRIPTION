@@ -1,7 +1,7 @@
 Type: Package
 Package: poweRlaw
 Title: Analysis of Heavy Tailed Distributions
-Version: 0.70.2.0003
+Version: 0.70.2.0004
 Authors@R: 
     person(given = "Colin",
            family = "Gillespie",
@@ -38,7 +38,7 @@ Encoding: UTF-8
 RoxygenNote: 7.0.2
 Collate:
     'aaa_all_classes.R'
-    'AllGenerics.R'
+    'all_generics.R'
     'bootstrap.R'
     'bootstrap_p.R'
     'checks.R'
@@ -64,6 +64,6 @@ Collate:
     'pldis.R'
     'plot_methods.R'
     'points_methods.R'
-    'poweRlaw-package.R'
+    'powerlaw-package.R'
     'show_methods.R'
     'timer.R'

@@ -71,24 +71,28 @@
 #' @export
 compare_distributions = function(d1, d2) {
   
-  if(!(inherits(d1, "discrete_distribution") == inherits(d2, "discrete_distribution")))
+  if (!(inherits(d1, "discrete_distribution") == inherits(d2, "discrete_distribution")))
     stop("You seem to be comparing a discrete distribution with a continuous distribution")
   
   xmin1 = d1$getXmin(); xmin2 = d2$getXmin()
-  if(xmin1 != xmin2)
+  if (xmin1 != xmin2)
     stop("Lower threshold, xmin, should be the same in both models")
   q = d1$getDat(); q = q[q >= d1$getXmin()]
-  ll_ratio_pts = dist_pdf(d1, q, log=TRUE) - dist_pdf(d2, q, log=TRUE)
+  ll_ratio_pts = dist_pdf(d1, q, log = TRUE) - dist_pdf(d2, q, log = TRUE)
   
   m = mean(ll_ratio_pts); s = sd(ll_ratio_pts)
-  v = sqrt(length(ll_ratio_pts))*m/s
+  v = sqrt(length(ll_ratio_pts)) * m / s
   p1 = pnorm(v)
   
-  if (p1 < 0.5) {p2 = 2*p1} else {p2 = 2*(1-p1)}
+  if (p1 < 0.5) {
+    p2 = 2 * p1
+  } else {
+    p2 = 2 * (1 - p1)
+  }
   
   l = list(test_statistic = v, 
-           p_one_sided = 1 - p1, p_two_sided=p2, 
-           ratio = data.frame(x=q, ratio=ll_ratio_pts))
+           p_one_sided = 1 - p1, p_two_sided = p2, 
+           ratio = data.frame(x = q, ratio = ll_ratio_pts))
   class(l) = "compare_distributions"
   return(l)
 }

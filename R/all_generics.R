@@ -87,8 +87,10 @@ setGeneric("dist_data_cdf",
 
 #' @export
 #' @rdname dist_data_cdf-methods
-#' @description The functions \code{dist_data_all_cdf} and \code{dist_all_cdf} are only available for discrete distributions.
-#' Their main purpose is to optimise the bootstrap procedure, where generating a vector \code{xmin:xmax} is
+#' @description The functions \code{dist_data_all_cdf} and \code{dist_all_cdf} are only 
+#' available for discrete distributions.
+#' Their main purpose is to optimise the bootstrap procedure, where generating a 
+#' vector \code{xmin:xmax} is
 #' very quick. Also, when bootstrapping very large values can be generated. 
 setGeneric("dist_data_all_cdf", 
            function(m, lower_tail=TRUE, xmax=1e5) 
@@ -193,4 +195,3 @@ setGeneric("dist_ll",
 setGeneric("dist_rand", 
            function(m, n) 
              standardGeneric("dist_rand"))
-

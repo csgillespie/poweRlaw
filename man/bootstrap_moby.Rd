@@ -8,22 +8,28 @@
 \format{A list}
 \source{
 M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law." 
-Contemporary Physics 46, 323 (2005). See http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm for further details.
+Contemporary Physics 46, 323 (2005). 
+See http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm for further details.
 }
 \description{
-To explore the uncertainity in the model fit, this package provides a \code{bootstrap} function.
+To explore the uncertainity in the model fit, this package provides a 
+\code{bootstrap} function.
 \describe{
-\item{bootstrap_moby}{The output from running 5000 bootstraps on the full Moby Dick data set (for a discrete power law) 
+\item{bootstrap_moby}{The output from running 5000 bootstraps on the full 
+Moby Dick data set (for a discrete power law) 
 using the \code{bootstrap} function. }
-\item{bootstrap_p_moby}{The output from running 5000 bootstraps on the full Moby Dick data set (for a discrete power law) 
+\item{bootstrap_p_moby}{The output from running 5000 bootstraps on the full
+Moby Dick data set (for a discrete power law) 
 using the \code{bootstrap_p} function.}}
 The \code{bootstrap_moby} values correspond to the first row of
 table 6.1 in the Clauset et al paper:
 \describe{
 \item{\code{bootstrap_moby$gof}}{the K-S statistic}
-\item{\code{bootstrap_moby$bootstraps}}{a data frame for the optimal values from the bootstrapping procedure. 
+\item{\code{bootstrap_moby$bootstraps}}{a data frame for the optimal 
+values from the bootstrapping procedure. 
 Column 1: K-S, Column 2: xmin, Column 3: alpha. 
-So standard deviation of column 2 and 3 is 2.2 and 0.033 (the paper gives 2 and 0.02 respectively).}
+So standard deviation of column 2 and 3 is 2.2 and 0.033 (the paper gives 2 
+and 0.02 respectively).}
 }
 
 The \code{bootstrap_p_moby} gives the p-value for the hypothesis

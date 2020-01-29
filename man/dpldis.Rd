@@ -28,9 +28,11 @@ for the discrete distribution, xmin > 0.}
 if TRUE (default), probabilities are \eqn{P[X \le x]}, 
 otherwise, \eqn{P[X > x]}.}
 
-\item{n}{Number of observations. If \code{length(n) > 1}, the length is taken to be the number required.}
+\item{n}{Number of observations. If \code{length(n) > 1}, the length is 
+taken to be the number required.}
 
-\item{discrete_max}{The value when we switch from the discrete random numbers to a CTN approximation.}
+\item{discrete_max}{The value when we switch from the discrete random 
+numbers to a CTN approximation.}
 }
 \value{
 dpldis returns the density, ppldis returns the distribution function 
@@ -41,9 +43,11 @@ Density, distribution function and random number generation
 for the discrete power law distribution with parameters xmin and alpha.
 }
 \details{
-The Clauset, 2009 paper provides an algorithm for generating discrete random numbers. However, if this
-algorithm is implemented in R, it gives terrible performance. This is because the algorithm involves "growing vectors". 
-Another problem is when alpha is close to 1, this can result in very large random number being generated (which means we need 
+The Clauset, 2009 paper provides an algorithm for generating discrete random numbers. 
+However, if this algorithm is implemented in R, it gives terrible performance. 
+This is because the algorithm involves "growing vectors". 
+Another problem is when alpha is close to 1, this can result in very large random 
+number being generated (which means we need 
 to calculate the discrete CDF for very large values). 
 
 The algorithm provided in this package generates true 
@@ -51,7 +55,8 @@ discrete random numbers up to 10,000 then switches to
 using continuous random numbers. This switching point can altered by 
 changing the \code{discrete_max} argument. 
 
-In order to get a efficient power-law discrete random number generator, the algorithm needs to be implemented in C.
+In order to get a efficient power-law discrete random number generator, the 
+algorithm needs to be implemented in C.
 }
 \note{
 The naming of these functions mirrors standard R functions, i.e. dnorm.

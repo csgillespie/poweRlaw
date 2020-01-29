@@ -1,7 +1,6 @@
 sample_p_helper = function(i, m, x_lower) {
   ## Total sample size
   N = get_n(m)
-  ## sum(x >= xmin)/N
   ntail_prop = get_ntail(m, prop = TRUE)
   
   ## Proportion to sample
@@ -12,13 +11,12 @@ sample_p_helper = function(i, m, x_lower) {
     dist_rand(m, N - n1))
 }
 
-
-bootstrap_p_helper = function (i, m, x_lower, xmins, pars, xmax, distance) {
+bootstrap_p_helper = function(i, m, x_lower, xmins, pars, xmax, distance) {
 
   q = sample_p_helper(i, m, x_lower)
   m_cpy = m$getRefClass()$new(q)
   
-  est = estimate_xmin(m_cpy, xmins=xmins, pars=pars, xmax=xmax, distance=distance)
+  est = estimate_xmin(m_cpy, xmins = xmins, pars = pars, xmax = xmax, distance = distance)
   ## Remove the character now, since we will change to data frame.
   est["distance"] = NULL
   unlist(est)
@@ -44,7 +42,7 @@ get_bootstrap_p_sims = function(m, no_of_sims, seed, threads = 1) {
 
 #' @rdname estimate_xmin
 #' @export
-bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
+bootstrap_p = function(m, xmins=NULL, pars=NULL, xmax=1e5,
                         no_of_sims=100, threads=1, 
                         seed=NULL, distance="ks") {
   
@@ -58,16 +56,16 @@ bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   gof_v = estimate_xmin(m_cpy, xmins = xmins, pars = pars, 
                         xmax = xmax, distance = distance)
   time$stop()
-  if(is.na(gof_v$gof) || is.infinite(gof_v$gof)) {
+  if (is.na(gof_v$gof) || is.infinite(gof_v$gof)) {
     stop("Unable to estimate initial xmin using estimate_xmin(), so we can't bootstrap.")
   }
   
-  if(min(m_cpy$dat) > xmax) {
+  if (min(m_cpy$dat) > xmax) {
     stop("The smallest value in your data set is larger than xmax. The xmax
          parameter is the upper limit of the xmin search space.")
   }
   
-  if(max(m_cpy$dat) > xmax) {
+  if (max(m_cpy$dat) > xmax) {
     message("Some of your data is larger than xmax. The xmax parameter is
             the upper bound of the xmin search space. You could try increasing
             it. If the estimated values are below xmax, it's probably OK not to 
@@ -76,9 +74,9 @@ bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   
   message("Expected total run time for ", no_of_sims, 
           " sims, using ", threads, " threads is ", 
-          signif(time$get() * no_of_sims / threads, 3), " seconds." )
+          signif(time$get() * no_of_sims / threads, 3), " seconds.")
   
-  if(is.null(m$getPars()) || is.null(m$getXmin())) m_cpy$setXmin(gof_v)
+  if (is.null(m$getPars()) || is.null(m$getXmin())) m_cpy$setXmin(gof_v)
   
   x = m_cpy$dat
   x_lower = x[x < m_cpy$xmin]
@@ -93,24 +91,24 @@ bootstrap_p = function (m, xmins=NULL, pars=NULL, xmax=1e5,
   
   clusterExport(cl, c("dist_rand", "estimate_xmin"))
   nof = parSapply(cl, 1:no_of_sims,
-                  bootstrap_p_helper,  m_cpy, 
+                  bootstrap_p_helper, m_cpy, 
                   x_lower, xmins, pars, xmax, distance)
   ## Stop clock and cluster
-  total_time = time$get(stop=TRUE)*threads
+  total_time = time$get(stop = TRUE) * threads
   
-  if(sum(is.na(nof[1,])) > 1) {
-    message(sum(is.na(nof[1,])), " bootstraps generated NA values. 
+  if (sum(is.na(nof[1, ])) > 1) {
+    message(sum(is.na(nof[1, ])), " bootstraps generated NA values. 
             These have been removed when calculating the associated p-value.")
   }
   
   bootstraps = as.data.frame(t(nof))
-  l = list(p=sum(nof[1,] >= gof_v[["gof"]], na.rm=TRUE)/no_of_sims, 
+  l = list(p = sum(nof[1, ] >= gof_v[["gof"]], na.rm = TRUE) / no_of_sims, 
            gof = gof_v[["gof"]], 
            bootstraps = bootstraps, 
-           sim_time = total_time[[1]]/no_of_sims, 
-           seed=seed, 
+           sim_time = total_time[[1]] / no_of_sims, 
+           seed = seed, 
            package_version = packageVersion("poweRlaw"), 
-           distance=distance)
+           distance = distance)
   class(l) = "bs_p_xmin"
   l
 }

@@ -6,13 +6,31 @@ r:
   - release
   - devel
 
-packages:
+env:
+  global:
+    - ALLOWED_NOTES=0
+
+r_packages:
+  - lintr
   - covr
+
+r_github_packages:
+  - jumpingrivers/inteRgrate
 
 notifications:
   email:
     on_success: change
     on_failure: change
+
+before_install:
+  - sudo apt-get install -y ghostscript
+
+script:
+  - Rscript -e "inteRgrate::check_pkg()"
+  - Rscript -e "inteRgrate::check_r_filenames()"
+  - Rscript -e "inteRgrate::check_tidy_description()"
+  - Rscript -e "inteRgrate::check_lintr()"
+  - Rscript -e "inteRgrate::check_namespace()"
 
 ## Only run covr on release
 after_success:

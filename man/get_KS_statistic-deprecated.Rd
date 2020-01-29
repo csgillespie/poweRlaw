@@ -9,7 +9,8 @@ get_KS_statistic(m, xmax = 1e+05, distance = "ks")
 \arguments{
 \item{m}{A reference class object that contains the data.}
 
-\item{xmax}{default \code{1e5}. The maximum x value calculated when working out the CDF. See details for further 
+\item{xmax}{default \code{1e5}. The maximum x value calculated when working out the CDF. 
+See details for further 
 information.}
 
 \item{distance}{A string containing the distance measure (or measures) to calculate. 

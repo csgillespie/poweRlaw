@@ -25,7 +25,8 @@
 #' \item{xmin}{The lower threshold, xmin. Typically set after initialisation. 
 #' For the continuous  power-law, xmin >= 0 for the discrete 
 #' distributions, xmin >0}
-#' \item{pars}{A parameter vector. Typically set after initialisation. Note the lognormal distribution has two parameters.}
+#' \item{pars}{A parameter vector. Typically set after initialisation. 
+#' Note the lognormal distribution has two parameters.}
 #' \item{internal}{A list. This list differs between objects and shouldn't be altered.}}
 #' @param ... The object is typically created by passing 
 #' data using the \code{dat} field. 
@@ -80,10 +81,10 @@
 #' m_cpy = m$copy()
 displ = 
   setRefClass("displ", 
-              contains="discrete_distribution",
+              contains = "discrete_distribution",
               fields = list(
                 dat = function(x) {
-                  if(!missing(x) && !is.null(x)) {
+                  if (!missing(x) && !is.null(x)) {
                     check_discrete_data(x)
                     x = sort(x)
                     tab = table(x)
@@ -92,22 +93,22 @@ displ =
                     internal[["freq"]] <<- freq
                     internal[["values"]] <<- values
                     internal[["cum_slx"]] <<-
-                      rev(cumsum(log(rev(values))*rev(freq)))
+                      rev(cumsum(log(rev(values)) * rev(freq)))
                     internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
                     internal[["dat"]] <<- x
                     xmin <<- min(values)
                   } else internal[["dat"]]
                 },
                 xmin = function(x) {
-                  if(!missing(x) && !is.null(x)) {
-                    if("estimate_xmin" %in% class(x)) {
+                  if (!missing(x) && !is.null(x)) {
+                    if ("estimate_xmin" %in% class(x)) {
                       pars <<- x$pars
                       x = x$xmin
                     }
                     internal[["xmin"]] <<- x
-                    internal[["v"]] <<- 1:(x-1) # Not sure why I need this???
+                    internal[["v"]] <<- 1:(x - 1) # Not sure why I need this???
                     ##Check for empty data or xmin = NA (happens when data is all equal)
-                    if(length(internal[["values"]]) && !is.na(x)) {
+                    if (length(internal[["values"]]) && !is.na(x)) {
                       selection = min(which(internal[["values"]] >= x))
                       internal[["slx"]] <<- internal[["cum_slx"]][selection]
                       internal[["n"]] <<- internal[["cum_n"]][selection]    
@@ -116,7 +117,7 @@ displ =
                 }, 
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
-                    if("estimate_pars" %in% class(x)) x = x$pars            
+                    if ("estimate_pars" %in% class(x)) x = x$pars            
                     internal[["pars"]] <<- x
                     internal[["constant"]] <<- zeta(x)
                   } else internal[["pars"]]
@@ -126,23 +127,21 @@ displ =
 #############################################################
 #Initialisation
 #############################################################
-displ$methods( 
+displ$methods(
   list(
     initialize = function(dat) {
-      #datatype <<- "discrete"
       no_pars <<- 1
-      ##Use the internal attribute for copying
-      if(!missing(dat)) {
+      ## Use the internal attribute for copying
+      if (!missing(dat)) {
         check_discrete_data(dat)
         x = sort(dat)
-        #x= round(sort(x))
         tab = table(x)
         values = as.numeric(names(tab))
         freq = as.vector(tab)
         internal[["freq"]] <<- freq
         internal[["values"]] <<- values
         internal[["cum_slx"]] <<-
-          rev(cumsum(log(rev(values))*rev(freq)))
+          rev(cumsum(log(rev(values)) * rev(freq)))
         internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
         internal[["dat"]] <<- x
         xmin <<- min(values)
@@ -157,13 +156,13 @@ displ$methods(
 #' @rdname dist_pdf-methods
 #' @aliases dist_pdf,displ-method
 setMethod("dist_pdf",
-          signature = signature(m="displ"),
-          definition = function(m, q=NULL, log=FALSE) {
+          signature = signature(m = "displ"),
+          definition = function(m, q = NULL, log = FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
-            if(is.null(q)) q = m$dat
+            if (is.null(q)) q = m$dat
             q = q[q >= m$xmin]
             pdf = dpldis(q[q >= m$xmin], m$xmin, m$pars, TRUE)
-            if(!log) pdf = exp(pdf)
+            if (!log) pdf = exp(pdf)
             pdf
           }
 )
@@ -173,13 +172,13 @@ setMethod("dist_pdf",
 #' @rdname dist_cdf-methods
 #' @aliases dist_cdf,displ-method
 setMethod("dist_cdf",
-          signature = signature(m="displ"),
-          definition = function(m, q=NULL, lower_tail=TRUE) {
+          signature = signature(m = "displ"),
+          definition = function(m, q = NULL, lower_tail = TRUE) {
             
             xmin = m$getXmin(); pars = m$getPars()
-            if(is.null(pars)) stop("Model parameters not set.")  
+            if (is.null(pars)) stop("Model parameters not set.")  
             
-            if(is.null(q)) q = m$dat
+            if (is.null(q)) q = m$dat
             ppldis(q, xmin, pars, lower_tail)
           }
 )
@@ -187,16 +186,16 @@ setMethod("dist_cdf",
 #' @rdname dist_cdf-methods
 #' @aliases dist_all_cdf,displ-method
 setMethod("dist_all_cdf",
-          signature = signature(m="displ"),
-          definition = function(m, lower_tail=TRUE, xmax=1e5) {
+          signature = signature(m = "displ"),
+          definition = function(m, lower_tail = TRUE, xmax = 1e5) {
             
             xmin = m$getXmin(); pars = m$getPars()
-            if(is.null(pars)) stop("Model parameters not set.")  
+            if (is.null(pars)) stop("Model parameters not set.")  
             
             inter = m$internal
             xmax = max(m$dat[m$dat <= xmax])
-            v = ifelse(xmin==1, 0, sum((1:(xmin-1))^-pars))
-            cumsum((((xmin:xmax)^-pars))/(inter[["constant"]] - v))                
+            v = ifelse(xmin == 1, 0, sum((1:(xmin - 1))^-pars))
+            cumsum((((xmin:xmax) ^ -pars)) / (inter[["constant"]] - v))                
           }
 )
 
@@ -206,19 +205,19 @@ setMethod("dist_all_cdf",
 #' @rdname dist_ll-methods
 #' @aliases dist_ll,displ-method
 setMethod("dist_ll",
-          signature = signature(m="displ"),
+          signature = signature(m = "displ"),
           definition = function(m) {
             inter = m$internal
             con = inter[["constant"]]
-            if(m$xmin > 2) 
+            if (m$xmin > 2) 
               con = con - 
               colSums(vapply(m$pars, 
-                             function(i) inter[["v"]]^(-i), double(m$xmin-1)))
-            else if(m$xmin > 1)
+                             function(i) inter[["v"]] ^ (-i), double(m$xmin - 1)))
+            else if (m$xmin > 1)
               con = con - 1
             
             log_con = log(con)
-            ll = -inter[["n"]]*log_con - inter[["slx"]]*m$pars
+            ll = -inter[["n"]] * log_con - inter[["slx"]] * m$pars
             ll[is.nan(log_con)] = -Inf
             ll
           }
@@ -229,15 +228,10 @@ setMethod("dist_ll",
 dis_pl_ll = function(x, pars, xmin) {
   n = length(x)
   joint_prob = colSums(sapply(pars, 
-                              function(i) dpldis(x, xmin, i, log=TRUE)))
+                              function(i) dpldis(x, xmin, i, log = TRUE)))
   #   ##Normalise due to xmax
   prob_over = 0
-  #   if(!is.null(xmax))
-  #       prob_over = sapply(pars, function(i) 
-  #         log(ppldis(xmax, i, lower.tail=TRUE)))
-  #   
-  
-  return(joint_prob - n*prob_over)
+  return(joint_prob - n * prob_over)
 }
 
 ########################################################
@@ -246,8 +240,8 @@ dis_pl_ll = function(x, pars, xmin) {
 #' @rdname dist_rand-methods
 #' @aliases dist_rand,displ-method
 setMethod("dist_rand",
-          signature = signature(m="displ"),
-          definition = function(m, n="numeric") {
+          signature = signature(m = "displ"),
+          definition = function(m, n = "numeric") {
             rpldis(n, m$xmin, m$pars)
           }
 )
@@ -256,39 +250,29 @@ setMethod("dist_rand",
 #MLE method
 #############################################################
 displ$methods(
-  mle = function(set = TRUE, initialise=NULL) {
+  mle = function(set = TRUE, initialise = NULL) {
     n = internal[["n"]]
     
-    if(is.null(initialise)) {
+    if (is.null(initialise)) {
       slx = internal[["slx"]]
-      theta_0 = 1 + n*sum(slx - log(xmin-1/2)*n)^(-1)
+      theta_0 = 1 + n * sum(slx - log(xmin - 1 / 2) * n) ^ (-1)
     } else {
       theta_0 = initialise
     }
     
-    x = dat[dat > (xmin-0.5)]
+    x = dat[dat > (xmin - 0.5)]
     negloglike = function(par) {
       r = -dis_pl_ll(x, par, xmin)
-      if(!is.finite(r)) r = 1e12
+      if (!is.finite(r)) r = 1e12
       r
     }
     
-    mle = suppressWarnings(optim(par=theta_0, fn=negloglike, 
-                                 method="L-BFGS-B", lower=1))
+    mle = suppressWarnings(optim(par = theta_0, fn = negloglike, 
+                                 method = "L-BFGS-B", lower = 1))
     
-    if(set)  pars <<- mle$par
+    if (set)  pars <<- mle$par
     class(mle) = "estimate_pars"
     names(mle)[1L] = "pars"
     mle
   }
 )
-
-
-
-
-
-
-
-
-
-

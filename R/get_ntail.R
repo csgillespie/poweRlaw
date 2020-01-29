@@ -19,15 +19,14 @@
 #' get_ntail(m)
 #' sum(moby_sample >= 7)
 #' @export
-get_ntail = function(m, prop=FALSE, lower=FALSE) {
+get_ntail = function(m, prop = FALSE, lower = FALSE) {
   ntail = m$internal[["n"]]
   n = get_n(m)
-  if(lower)
+  if (lower)
     ntail = n - ntail
   
-  if(prop)
-    return(ntail/n)
+  if (prop)
+    return(ntail / n)
   else
     return(ntail)
 }
-

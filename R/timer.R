@@ -4,9 +4,9 @@ timer = function() {
   start = function() start_time <<- Sys.time()
   stop = function() end_time <<- Sys.time()
   get = function(stop=FALSE)  {
-    if(stop)end_time <<- Sys.time()
-    difftime(end_time, start_time, units="secs")
+    if (stop) end_time <<- Sys.time()
+    difftime(end_time, start_time, units = "secs")
   }
   
-  list(start =start, stop = stop, get =get)
+  list(start = start, stop = stop, get = get)
 }

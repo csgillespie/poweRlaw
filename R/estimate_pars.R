@@ -13,23 +13,20 @@
 #' m$setXmin(7)
 #' estimate_pars(m)
 estimate_pars = function(m, pars=NULL) {
-  p = m$getPars()
-  
-  if(is.null(m$getDat())) {
-    l = list(pars=NA, ll = NA)
+  if (is.null(m$getDat())) {
+    l = list(pars = NA, ll = NA)
     class(l) = "estimate_pars"
-  } else if(is.null(pars)) {
+  } else if (is.null(pars)) {
     l = m$mle(set = FALSE)
-    
   } else {
     m$pars = pars
     L = dist_ll(m)
     I = which.max(L)
     
-    if(is.vector(pars) && m$no_pars == 1L) par = pars[I]
-    else if(is.vector(pars)) par = pars 
-    else par = unlist(pars[I,], use.names=FALSE)
-    l = list(pars=par, ll = L[I])
+    if (is.vector(pars) && m$no_pars == 1L) par = pars[I]
+    else if (is.vector(pars)) par = pars 
+    else par = unlist(pars[I, ], use.names = FALSE)
+    l = list(pars = par, ll = L[I])
     class(l) = "estimate_pars"
 
   }
