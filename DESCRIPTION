@@ -35,8 +35,7 @@ VignetteBuilder:
     knitr
 ByteCompile: true
 Encoding: UTF-8
-Roxygen: list(wrap = FALSE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Collate:
     'aaa_all_classes.R'
     'AllGenerics.R'

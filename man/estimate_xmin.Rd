@@ -11,18 +11,33 @@
 \usage{
 get_bootstrap_sims(m, no_of_sims, seed, threads = 1)
 
-bootstrap(m, xmins = NULL, pars = NULL, xmax = 1e+05,
-  no_of_sims = 100, threads = 1, seed = NULL, distance = "ks")
+bootstrap(
+  m,
+  xmins = NULL,
+  pars = NULL,
+  xmax = 1e+05,
+  no_of_sims = 100,
+  threads = 1,
+  seed = NULL,
+  distance = "ks"
+)
 
 get_bootstrap_p_sims(m, no_of_sims, seed, threads = 1)
 
-bootstrap_p(m, xmins = NULL, pars = NULL, xmax = 1e+05,
-  no_of_sims = 100, threads = 1, seed = NULL, distance = "ks")
+bootstrap_p(
+  m,
+  xmins = NULL,
+  pars = NULL,
+  xmax = 1e+05,
+  no_of_sims = 100,
+  threads = 1,
+  seed = NULL,
+  distance = "ks"
+)
 
 get_distance_statistic(m, xmax = 1e+05, distance = "ks")
 
-estimate_xmin(m, xmins = NULL, pars = NULL, xmax = 1e+05,
-  distance = "ks")
+estimate_xmin(m, xmins = NULL, pars = NULL, xmax = 1e+05, distance = "ks")
 }
 \arguments{
 \item{m}{A reference class object that contains the data.}

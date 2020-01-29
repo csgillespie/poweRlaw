@@ -16,14 +16,11 @@ dist_data_cdf(m, lower_tail = TRUE, xmax = 1e+05)
 
 dist_data_all_cdf(m, lower_tail = TRUE, xmax = 1e+05)
 
-\S4method{dist_data_cdf}{discrete_distribution}(m, lower_tail = TRUE,
-  xmax = 1e+05)
+\S4method{dist_data_cdf}{discrete_distribution}(m, lower_tail = TRUE, xmax = 1e+05)
 
-\S4method{dist_data_all_cdf}{discrete_distribution}(m, lower_tail = TRUE,
-  xmax = 1e+05)
+\S4method{dist_data_all_cdf}{discrete_distribution}(m, lower_tail = TRUE, xmax = 1e+05)
 
-\S4method{dist_data_cdf}{ctn_distribution}(m, lower_tail = TRUE,
-  xmax = 1e+05)
+\S4method{dist_data_cdf}{ctn_distribution}(m, lower_tail = TRUE, xmax = 1e+05)
 }
 \arguments{
 \item{m}{a distribution object.}

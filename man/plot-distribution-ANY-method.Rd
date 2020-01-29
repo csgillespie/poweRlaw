@@ -8,13 +8,11 @@
 \alias{points,distribution-method}
 \title{Generic plotting functions}
 \usage{
-\S4method{lines}{distribution}(x, cut = FALSE, draw = TRUE,
-  length.out = 100, ...)
+\S4method{lines}{distribution}(x, cut = FALSE, draw = TRUE, length.out = 100, ...)
 
 \S4method{plot}{distribution,ANY}(x, cut = FALSE, draw = TRUE, ...)
 
-\S4method{points}{distribution}(x, cut = FALSE, draw = TRUE,
-  length.out = 100, ...)
+\S4method{points}{distribution}(x, cut = FALSE, draw = TRUE, length.out = 100, ...)
 }
 \arguments{
 \item{x}{a distribution reference object.}
