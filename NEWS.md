@@ -1,4 +1,4 @@
-Dev Version
+Version 0.70.3
 --------------
   * Fix typo in file name.
   * Better handling of extreme data. 

@@ -152,7 +152,7 @@ estimate_xmin = function(m, xmins = NULL, pars = NULL,
     estimate = FALSE
   }
   
-  if (is.null(xmins))  {
+  if (estimate && is.null(xmins))  {
     xmins = unique(m$dat)
   }
   ## Make thread safe
