@@ -10,7 +10,7 @@ test_that("Test plotting", {
   expect_equal(d2$x, 2:4, tol = 1e-4)
   y = c(0.7500, 0.2860, 0.1485)
   expect_equal(d2$y, y, tol = 1e-4)
-
+  
   ##Poisson
   m = dispois$new(x); m$setPars(1); m$setXmin(2)
   
@@ -65,4 +65,4 @@ test_that("Test plotting", {
   
   
 }
-          )
+)
