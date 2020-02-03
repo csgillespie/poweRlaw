@@ -44,7 +44,6 @@ Collate:
     'checks.R'
     'compare_distributions.R'
     'conlnorm.R'
-    'ctn_helper_functions.R'
     'data_help_files.R'
     'def_conexp.R'
     'def_conpl.R'
