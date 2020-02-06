@@ -1,3 +1,7 @@
+Version 0.70.4
+---------------
+  * As v0.70.3, but README URL tweaked for CRAN (www. -> https://www.)
+
 Version 0.70.3
 --------------
   * Fix typo in file name.

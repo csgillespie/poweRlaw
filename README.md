@@ -25,7 +25,7 @@ To cite this package in academic work, please use:
 
 Gillespie, C. S. “*Fitting heavy tailed distributions: the poweRlaw
 package.*” Journal of Statistical Software, 64(2) 2015.
-([pdf](www.jstatsoft.org/v64/i02/paper)).
+([pdf](https://www.jstatsoft.org/v64/i02/paper)).
 
 For a different way of handling powerlaw type distributions, see
 

@@ -26,7 +26,7 @@ The code developed in this package was influenced from the python and R code fou
 
 To cite this package in academic work, please use:
 
-Gillespie, C. S. "*Fitting heavy tailed distributions: the poweRlaw package.*" Journal of Statistical Software, 64(2) 2015. ([pdf](www.jstatsoft.org/v64/i02/paper)).
+Gillespie, C. S. "*Fitting heavy tailed distributions: the poweRlaw package.*" Journal of Statistical Software, 64(2) 2015. ([pdf](https://www.jstatsoft.org/v64/i02/paper)).
 
 For a different way of handling powerlaw type distributions, see
 
