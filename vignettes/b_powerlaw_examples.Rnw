@@ -132,20 +132,20 @@ if(file.exists("examples1.rds")) {
 The data CDF and lines of best fit can be easily plotted
 <<fig.keep='none', cache=TRUE>>=
 plot(m_pl)
-lines(m_pl, col=2)
-lines(m_ln, col=3)
-lines(m_pois, col=4)
+lines(m_pl, col = 2)
+lines(m_ln, col = 3)
+lines(m_pois, col = 4)
 @
 \begin{figure}[t]
 \centering
 <<echo=FALSE, cache=TRUE>>=
-plot(m_pl, xlab="x", ylab="CDF", 
-     panel.first=grid(col="grey80"), 
-     pch=21, bg=1)
+plot(m_pl, xlab = "x", ylab = "CDF", 
+     panel.first = grid(col = "grey80"), 
+     pch = 21, bg = 1)
 
-lines(m_pl, col=2, lwd=2)
-lines(m_ln, col=3, lwd=2)
-lines(m_pois, col=4, lwd=2)
+lines(m_pl, col = 2, lwd = 2)
+lines(m_ln, col = 3, lwd = 2)
+lines(m_pois, col = 4, lwd = 2)
 @
 \caption{Data CDF of the Moby Dick data set. The fitted power law (green line), log-normal (red line) and poisson (blue) distributions are also given.}\label{F1a}
 \end{figure}
@@ -155,7 +155,7 @@ lines(m_pois, col=4, lwd=2)
 \subsection{Parameter uncertainty}
 
 <<par_uncertainty, echo=FALSE>>=
-data(bootstrap_moby, package="poweRlaw")
+data(bootstrap_moby, package = "poweRlaw")
 bs = bootstrap_moby
 @
 
@@ -167,7 +167,7 @@ multiple CPU cores to speed up inference.\footnote{The output of this
 bootstrapping procedure can be obtained via \cc{data(bootstrap\_moby)}.}
 <<eval=FALSE, tidy=FALSE>>=
 ## 5000 bootstraps using two cores
-bs = bootstrap(m_pl, no_of_sims=5000, threads=2)
+bs = bootstrap(m_pl, no_of_sims = 5000, threads = 2)
 @
 \noindent By default, the \cc{bootstrap} function will use the maximum likelihood estimate to estimate the parameter and check all values of $\xmin$. When possible $\xmin$ values are large, then it is recommend that the search space is reduced. For example, this function call
 <<eval=FALSE>>=
@@ -197,24 +197,24 @@ plot(bs)
 \caption{Results from the standard bootstrap procedure (for the power law model) using the Moby Dick data set: \mbox{\texttt{bootstrap(m\_pl)}}. The top row shows the mean estimate of parameters $\xmin$, $\alpha$ and $\ntail$. The bottom row shows the estimate of standard deviation for each parameter. The dashed-lines give approximate 95\% confidence intervals. After 5,000 iterations, the standard deviation of $\xmin$ and $\alpha$ is estimated to be 2.1 and 0.03 respectively.}\label{F1b}
 \end{figure}
 <<>>=
-sd(bs$bootstraps[,2])
-sd(bs$bootstraps[,3])
+sd(bs$bootstraps[, 2])
+sd(bs$bootstraps[, 3])
 @
 \noindent Alternatively, we can visualise the results using the \cc{plot} function:
 <<fig.keep='none'>>=
 ## trim=0.1 only displays the final 90% of iterations 
-plot(bs, trim=0.1)
+plot(bs, trim = 0.1)
 @
 \noindent to obtain figure \ref{F1b}. This top row of graphics in figure \ref{F1b} give a 95\% confidence interval for the mean estimate of the parameters. The bottom row of graphics give a 95\% confidence for the standard deviation of the parameters. The parameter \texttt{trim} in the \texttt{plot} function controls the percentage of samples displayed.\footnote{When \cc{trim=0}, all iterations are displayed.} When \texttt{trim=0.1}, we only display the final 90\% of data. 
 \begin{figure}[t]
 \centering
 <<echo=FALSE, fig.width=6, fig.height=3, cache=TRUE, out.width='0.8\\textwidth'>>=
-par(mfrow=c(1, 2))
-hist(bs$bootstraps[,2], xlab=expression(x[min]), ylim=c(0, 1600), 
-     xlim=c(0, 20), main=NULL, breaks="fd")
+par(mfrow = c(1, 2))
+hist(bs$bootstraps[, 2], xlab = expression(x[min]), ylim = c(0, 1600), 
+     xlim = c(0, 20), main = NULL, breaks = "fd")
 grid()
-hist(bs$bootstraps[,3], xlab=expression(alpha), 
-     ylim=c(0, 500), xlim=c(1.80, 2.05), main=NULL, breaks="fd")
+hist(bs$bootstraps[, 3], xlab = expression(alpha), 
+     ylim = c(0, 500), xlim = c(1.80, 2.05), main = NULL, breaks = "fd")
 grid()
 @
 \caption{Characterising uncertainty in parameter values. (a) $\xmin$ uncertainty (standard deviation 2) (b) $\alpha$ uncertainty (std dev. 0.03)}\label{F1c}
@@ -222,8 +222,8 @@ grid()
 
 We can also construct histograms. 
 <<fig.keep='none'>>=
-hist(bs$bootstraps[,2])
-hist(bs$bootstraps[,3]) 
+hist(bs$bootstraps[, 2])
+hist(bs$bootstraps[, 3]) 
 @
 \noindent to get figure \ref{F1c}. 
 
@@ -234,7 +234,7 @@ bs1 = bootstrap(m_ln)
 \noindent in this case we would obtain uncertainty estimates for both of the log-normal parameters.
 
 <<echo=FALSE>>=
-data(bootstrap_p_moby, package="poweRlaw")
+data(bootstrap_p_moby, package = "poweRlaw")
 bs_p = bootstrap_p_moby
 @
 \begin{figure}[t]
@@ -316,7 +316,7 @@ xmins = seq(1, 1001, 5)
 @
 
 <<est_scan, echo=FALSE>>=
-est_scan = 0*xmins
+est_scan = 0 * xmins
 for(i in seq_along(xmins)) {
   m_pl$setXmin(xmins[i])
   est_scan[i] = estimate_pars(m_pl)$pars
@@ -326,11 +326,11 @@ for(i in seq_along(xmins)) {
 \begin{figure}[t]
 \centering
 <<echo=FALSE, cache=TRUE>>=
-plot(xmins, est_scan, type="s", 
-     panel.first=grid(), 
-     xlab=expression(x[min]), ylab=expression(alpha), 
-     ylim=c(1.6, 2.8), col=1)
-abline(h=1.95, col=2, lty=2)
+plot(xmins, est_scan, type = "s", 
+     panel.first = grid(), 
+     xlab = expression(x[min]), ylab = expression(alpha), 
+     ylim = c(1.6, 2.8), col = 1)
+abline(h = 1.95, col = 2, lty = 2)
 @
 \caption{Estimated parameter values conditional on the threshold, $\xmin$. The
 horizontal line corresponds to $\alpha=1.95$.}\label{F1e}
@@ -471,8 +471,8 @@ inferred (\cite{Friedman2013}).
 
 The number of casualties observed in the American-Indian War can be obtained via
 <<>>=
-data("native_american", package="poweRlaw")
-data("us_american", package="poweRlaw")
+data("native_american", package = "poweRlaw")
+data("us_american", package = "poweRlaw")
 @
 \noindent Each data set is a data frame with two columns. The first column is number of casualties recorded, the second the conflict date
 <<>>=
@@ -503,8 +503,8 @@ m_us = displ$new(us_american$Cas)
 @
 \noindent then we estimate $\xmin$ for each data set
 <<cache=TRUE>>=
-est_na = estimate_xmin(m_na, pars=seq(1.5, 2.5, 0.01))
-est_us = estimate_xmin(m_us, pars=seq(1.5, 2.5, 0.01))
+est_na = estimate_xmin(m_na, pars = seq(1.5, 2.5, 0.01))
+est_us = estimate_xmin(m_us, pars = seq(1.5, 2.5, 0.01))
 @
 \noindent and update the power law objects
 <<cache=TRUE>>=
@@ -516,13 +516,13 @@ m_us$setXmin(est_us)
 plot(m_na)
 lines(m_na)
 ## Don't create a new plot, just store the output
-d = plot(m_us, draw=FALSE)
-points(d$x, d$y, col=2)
-lines(m_us, col=2)
+d = plot(m_us, draw = FALSE)
+points(d$x, d$y, col = 2)
+lines(m_us, col = 2)
 @
 \begin{figure}[t]
 <<echo=FALSE>>=
-plot(m_na, bg=1, pch=21, cex=0.5,  
+plot(m_na, bg = 1, pch=21, cex=0.5,  
      panel.first=grid(col="grey70"), 
      xlab="#Casualties", ylab="CDF")
 lines(m_na, lwd=2, col=1)

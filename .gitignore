@@ -7,7 +7,6 @@
 README.html
 *.Rcheck
 poweRlaw_0.*
-blackouts.txt
 plpva.r
 tests.Rout
 examples1.rds
