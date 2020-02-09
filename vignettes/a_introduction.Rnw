@@ -18,7 +18,7 @@
     urlcolor={blue!80!black}
 }
 
-\pagestyle{scrheadings}  
+\pagestyle{scrheadings}
 \setheadsepline{.4pt}
 \ihead[]{An overview of the \cc{poweRlaw} package}
 \chead[]{}
@@ -34,10 +34,10 @@ library(knitr)
 library(poweRlaw)
 options(replace.assign = FALSE)
 
-opts_chunk$set(fig.path = "knitr_figure_poweRlaw/graphics-", 
-               cache.path = "knitr_cache_poweRlaw/", 
-               fig.align = "center", 
-               dev = "pdf", fig.width = 5, fig.height = 5, 
+opts_chunk$set(fig.path = "knitr_figure_poweRlaw/graphicsa-",
+               cache.path = "knitr_cache_poweRlaw_a/",
+               fig.align = "center",
+               dev = "pdf", fig.width = 5, fig.height = 5,
                fig.show = "hold", cache = FALSE, par = TRUE,
                out.width = "0.4\\textwidth")
 knit_hooks$set(crop = hook_pdfcrop)
@@ -57,9 +57,9 @@ palette(c(rgb(170, 93, 152, maxColorValue = 255),
           rgb(203, 77, 202, maxColorValue = 255),
           rgb(115, 113, 206, maxColorValue = 255)))
 @
-% 
+%
 \begin{document}
-\date{Last updated: \today}  
+\date{Last updated: \today}
 \title{The poweRlaw package: a general overview}
 \author{Colin S. Gillespie}
 
@@ -132,7 +132,7 @@ data(bootstrap_moby)
 bs = bootstrap_moby
 data(bootstrap_p_moby)
 bs_p = bootstrap_p_moby
-@ 
+@
 
 \section{Example: Word frequency in Moby Dick}
 
@@ -187,19 +187,19 @@ m_m$setXmin(est)
 \centering
 <<echo=FALSE, fig.width=8, fig.height=8, out.width="0.8\\textwidth">>=
 par(mfrow = c(2, 2))
-plot(m_m, xlab = "x", ylab = "CDF", 
-     pch = 21, bg = 1, cex = 0.6, 
+plot(m_m, xlab = "x", ylab = "CDF",
+     pch = 21, bg = 1, cex = 0.6,
      panel.first = grid())
 lines(m_m, col = 2, lwd = 2)
-hist(bs$bootstraps[, 2], xlab = expression(x[min]), ylim = c(0, 1600), 
+hist(bs$bootstraps[, 2], xlab = expression(x[min]), ylim = c(0, 1600),
      xlim = c(0, 30), main = NULL, breaks = "fd")
 grid()
-hist(bs$bootstraps[, 3], xlab = expression(alpha), 
+hist(bs$bootstraps[, 3], xlab = expression(alpha),
      ylim = c(0, 500), xlim = c(1.8, 2.1), main = NULL, breaks = "fd")
 grid()
-plot(jitter(bs$bootstraps[, 2], factor = 1.2), bs$bootstraps[, 3], 
-     xlab = expression(x[min]), ylab = expression(alpha), 
-     xlim = c(0, 30), ylim = c(1.8, 2.1), cex = 0.35, 
+plot(jitter(bs$bootstraps[, 2], factor = 1.2), bs$bootstraps[, 3],
+     xlab = expression(x[min]), ylab = expression(alpha),
+     xlim = c(0, 30), ylim = c(1.8, 2.1), cex = 0.35,
      pch = 21, bg = 1, panel.first = grid())
 @
 \caption{(a) Plot of the data CDF for the Moby Dick data set. This corresponds
@@ -248,7 +248,7 @@ and then re-infer the parameters (algorithm 1).
     {\small 5:} & \textbf{end for} \\
     \hline
   \end{tabular}
-\end{table}  
+\end{table}
 
 To run the bootstrapping procedure, we use the \texttt{bootstrap} function
 <<uncertainty, eval=FALSE>>=
@@ -301,21 +301,21 @@ Since it is possible to fit a power-law distribution to \textit{any} data set, i
     {\small 11:} & p = P/B.\\
     \hline
   \end{tabular}
-\end{table}  
+\end{table}
 \begin{figure}[t]
 \centering
 <<do_we_have_a_power,echo=FALSE, fig.width=8, fig.height=4, out.width="\\textwidth">>=
 par(mfrow = c(1, 3))
-hist(bs_p$bootstraps[, 2], xlab = expression(x[min]), ylim = c(0, 1600), 
+hist(bs_p$bootstraps[, 2], xlab = expression(x[min]), ylim = c(0, 1600),
      xlim = c(0, 45), main = NULL, breaks = "fd")
 grid()
-hist(bs_p$bootstraps[, 3], xlab = expression(alpha), 
+hist(bs_p$bootstraps[, 3], xlab = expression(alpha),
      ylim = c(0, 500), xlim = c(1.80, 2.05), main = NULL, breaks = "fd")
 grid()
 
-plot(jitter(bs_p$bootstraps[, 2], factor = 1.2), bs_p$bootstraps[, 3], 
-     xlab = expression(x[xmin]), ylab = expression(alpha), 
-     xlim = c(0, 40), ylim = c(1.8, 2.05), cex = 0.35, 
+plot(jitter(bs_p$bootstraps[, 2], factor = 1.2), bs_p$bootstraps[, 3],
+     xlab = expression(x[xmin]), ylab = expression(alpha),
+     xlim = c(0, 40), ylim = c(1.8, 2.05), cex = 0.35,
      pch = 21, bg = 1,
      panel.first = grid())
 @
@@ -358,7 +358,7 @@ For the Moby Dick example, we created a \texttt{displ} object
 <<distribution_objects>>=
 m_m = displ$new(moby)
 @
-\noindent The object \cc{m\_m} has class \cc{displ} and inherits the \texttt{discrete\_distribution} class. A list of available distributions are given in table \ref{T1}. 
+\noindent The object \cc{m\_m} has class \cc{displ} and inherits the \texttt{discrete\_distribution} class. A list of available distributions are given in table \ref{T1}.
 \begin{table}[h]
   \centering
   \begin{tabular}{@{} lll @{}}
@@ -393,7 +393,7 @@ By using the mutable states of reference objects, we are able to create efficien
 \[
 \sum_{i=\xmin}^n \log(x_i)
 \]
-This value is calculated once for all values of $\xmin$, then iterated over when estimating $\xmin$. 
+This value is calculated once for all values of $\xmin$, then iterated over when estimating $\xmin$.
 
 All distribution objects have a number of methods available. A list of methods is given in table \ref{T2}. See the associated help files for further details.
 \begin{table}[h]
@@ -420,17 +420,34 @@ All distribution objects have a number of methods available. A list of methods i
 
 <<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
 #download.file("http://goo.gl/BsqnP", destfile="blackouts.txt")
+blackouts = c(570, 210.882, 190, 46, 17, 360, 74, 19, 460, 65, 18.351, 25,
+25, 63.5, 1, 9, 50, 114.5, 350, 25, 50, 25, 242.91, 55, 164.5,
+877, 43, 1140, 464, 90, 2100, 385, 95.63, 166, 71, 100, 234,
+300, 258, 130, 246, 114, 120, 24.506, 36.073, 10, 160, 600, 12,
+203, 50.462, 40, 59, 15, 1.646, 500, 60, 133, 62, 173, 81, 20,
+112, 600, 24, 37, 238, 50, 50, 147, 32, 40.911, 30.5, 14.273,
+160, 230, 92, 75, 130, 124, 120, 11, 235, 50, 94.285, 240, 870,
+70, 50, 50, 18, 51, 51, 145, 557.354, 219, 191, 2.9, 163, 257.718,
+1660, 1600, 1300, 80, 500, 10, 290, 375, 95, 725, 128, 148, 100,
+2, 48, 18, 5.3, 32, 250, 45, 38.5, 126, 284, 70, 400, 207.2,
+39.5, 363.476, 113.2, 1500, 15, 7500, 8, 56, 88, 60, 29, 75,
+80, 7.5, 82.5, 272, 272, 122, 145, 660, 50, 92, 60, 173, 106.85,
+25, 146, 158, 1500, 40, 100, 300, 1.8, 300, 70, 70, 29, 18.819,
+875, 100, 50, 1500, 650, 58, 142, 350, 71, 312, 25, 35, 315,
+500, 404, 246, 43.696, 71, 65, 29.9, 30, 20, 899, 10.3, 490,
+115, 2085, 206, 400, 26.334, 598, 160, 91, 33, 53, 300, 60, 55,
+60, 66.005, 11.529, 56, 4.15, 40, 320.831, 30.001, 200) * 1000
 @
 
 \section{Loading data}
 
 Typically data is stored in a csv or text file. To use this data, we load it in the usual way\footnote{The blackouts data set can be obtained from Clauset's website: \mbox{\url{http://goo.gl/BsqnP}}}
-<<loading_data,eval=TRUE>>=
-blackouts = read.table("blackouts.txt")
+<<loading_data,eval=FALSE>>=
+blackouts = read.table("blackouts.txt")$V1
 @
 \noindent Distribution objects take vectors as inputs, so
 <<>>=
-m_bl = conpl$new(blackouts$V1)
+m_bl = conpl$new(blackouts)
 @
 \noindent will create a continuous power law object.
 \begin{figure}[t]
@@ -451,7 +468,7 @@ source("plfit.R")
 if (file.exists("plfit_res.rds")) {
   plfit_res = readRDS("plfit_res.rds")
 } else {
-  plfit_res = plfit(moby)  
+  plfit_res = plfit(moby)
   saveRDS(plfit_res, file = "plfit_res.rds")
 }
 @
@@ -480,7 +497,7 @@ plfit_res = plfit(moby)
 <<results='hide', eval=FALSE>>=
 estimate_xmin(m_m, pars = seq(1.5, 2.5, 0.01))
 @
-\noindent Currently, there is a bug with the \cc{plfit} script when $\xmin = 1$. This is easily demostrated via a simulation 
+\noindent Currently, there is a bug with the \cc{plfit} script when $\xmin = 1$. This is easily demostrated via a simulation
 <<cache=TRUE>>=
 x = rpldis(1000, 1, 2)
 plfit(x)
@@ -512,14 +529,14 @@ lines(m_r, col = 2)
 \begin{figure}[t]
 \centering
 <<echo=FALSE>>=
-plot(m_r, ylab = "CDF", 
-     pch = 21, bg = 1, cex = 0.5, 
+plot(m_r, ylab = "CDF",
+     pch = 21, bg = 1, cex = 0.5,
      panel.first = grid(), xlim = c(10, 1000))
 lines(m_r, col = 2, lwd = 2)
 @
 \caption{CDF plot of one thousand random numbers generated from a power-law with parameters $\alpha=2.5$ and $\xmin = 10$. The line of best fit is also shown.}\label{F7}
 \end{figure}
- 
+
 \bibliography{poweRlaw}
 \bibliographystyle{plainnat}
 
@@ -545,14 +562,14 @@ sink = dev.off()
 
 png("../graphics/figure2.png", width = 6 * ppi, height = 4 * ppi, res = ppi)
 setnicepar(mfrow = c(1, 2))
-hist(bs$bootstraps[, 2], xlab = expression(x[min]), ylim = c(0, 2000), 
+hist(bs$bootstraps[, 2], xlab = expression(x[min]), ylim = c(0, 2000),
      xlim = c(0, 30), main = NULL, breaks = "fd")
 grid()
-hist(bs$bootstraps[, 3], xlab = expression(alpha), 
-     ylim = c(0, 500), xlim = c(1.8, 2.1), main = NULL, 
+hist(bs$bootstraps[, 3], xlab = expression(alpha),
+     ylim = c(0, 500), xlim = c(1.8, 2.1), main = NULL,
      breaks = "fd")
 grid()
 sink = dev.off()
-@    
-       
-       
+@
+
+
