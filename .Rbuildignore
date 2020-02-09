@@ -8,3 +8,5 @@
 ^jss\.bst$
 ^\.gitignore$
 ^\.lintr$
+^doc$
+^Meta$
