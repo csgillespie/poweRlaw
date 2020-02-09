@@ -1,6 +1,7 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-The poweRlaw package
-====================
+
+# The poweRlaw package
 
 [![Build
 Status](https://travis-ci.org/csgillespie/poweRlaw.png?branch=master,dev)](https://travis-ci.org/csgillespie/poweRlaw)
@@ -10,11 +11,11 @@ Status](https://travis-ci.org/csgillespie/poweRlaw.png?branch=master,dev)](https
 
 This package implements both the discrete and continuous maximum
 likelihood estimators for fitting the power-law distribution to data
-using the methods described in [Clauset et al,
-2009](http://arxiv.org/abs/0706.1062). It also provides function to fit
-log-normal and Poisson distributions. Additionally, a goodness-of-fit
-based approach is used to estimate the lower cut-off for the scaling
-region.
+using the methods described in [Clauset et
+al, 2009](http://arxiv.org/abs/0706.1062). It also provides function to
+fit log-normal and Poisson distributions. Additionally, a
+goodness-of-fit based approach is used to estimate the lower cut-off for
+the scaling region.
 
 The code developed in this package was influenced from the python and R
 code found at [Aaron Clauset’s
@@ -34,8 +35,7 @@ Indian war: a Bayesian analysis using the power law distribution.*"
 Annals of Applied Statistics, 2017.
 ([pdf](https://arxiv.org/abs/1710.01662))
 
-Installation
-------------
+## Installation
 
 This package is hosted on
 [CRAN](https://cran.r-project.org/package=poweRlaw) and can be installed
@@ -53,8 +53,7 @@ install.packages("devtools")
 devtools::install_github("csgillespie/poweRlaw")
 ```
 
-Getting Started
----------------
+## Getting Started
 
 To get started, load the package
 
@@ -65,13 +64,13 @@ library("poweRlaw")
 then work through the four vignettes (links to the current CRAN
 version):
 
--   [Getting
+  - [Getting
     started](https://cran.r-project.org/package=poweRlaw/vignettes/a_introduction.pdf)
--   [Worked
+  - [Worked
     examples](https://cran.r-project.org/package=poweRlaw/vignettes/b_powerlaw_examples.pdf)
--   [Comparing
+  - [Comparing
     distributions](https://cran.r-project.org/package=poweRlaw/vignettes/c_comparing_distributions.pdf)
--   [JSS
+  - [JSS
     paper](https://cran.r-project.org/package=poweRlaw/vignettes/d_jss_paper.pdf)
 
 Alternatively, you can access the vignettes from within the package:
@@ -81,20 +80,16 @@ browseVignettes("poweRlaw")
 ```
 
 The plots below show the line of best fit to the Moby Dick and blackout
-data sets (from Clauset et al, 2009).
+data sets (from Clauset et al, 2009). ![Cumulative CDF of the Moby Dick
+and blackout data sets with line of best fit.](man/figures/figure1.png)
 
-![Cumulative CDF of the Moby Dick and blackout data sets with line of
-best
-fit.](https://raw.github.com/csgillespie/poweRlaw/master/web_graphics/figure1.png)
+## Other information
 
-Other information
------------------
-
--   If you have any suggestions or find bugs, please use the github
+  - If you have any suggestions or find bugs, please use the github
     [issue tracker](https://github.com/csgillespie/poweRlaw/issues)
--   Feel free to submit pull requests
+  - Feel free to submit pull requests
 
-------------------------------------------------------------------------
+-----
 
 Development of this package was supported by [Jumping
 Rivers](https://www.jumpingrivers.com)

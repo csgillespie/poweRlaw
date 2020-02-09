@@ -1,16 +1,15 @@
 ---
-output:
-  md_document:
-    variant: markdown_github
+output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "man/figures/README-",
+  out.width = "100%"
 )
 ```
 
@@ -64,10 +63,8 @@ Alternatively, you can access the vignettes from within the package:
 ```{r, eval =FALSE}
 browseVignettes("poweRlaw")
 ```
-The plots below show the line of best fit to the Moby Dick and blackout data sets (from Clauset et al, 2009).
-
-![Cumulative CDF of the Moby Dick and blackout data sets with line of best fit.](https://raw.github.com/csgillespie/poweRlaw/master/web_graphics/figure1.png)
-
+The plots below show the line of best fit to the Moby Dick and blackout data sets (from Clauset et al, 2009). 
+![Cumulative CDF of the Moby Dick and blackout data sets with line of best fit.](man/figures/figure1.png)
 
 Other information
 -----------------
