@@ -22,9 +22,9 @@ Depends:
 Imports:
     methods,
     parallel,
+    pracma,
     stats,
-    utils,
-    pracma
+    utils
 Suggests:
     codetools,
     covr,
