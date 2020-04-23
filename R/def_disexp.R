@@ -5,8 +5,8 @@
 #' @aliases disexp-class disexp
 #' @exportClass disexp
 #' @export disexp
-disexp = 
-  setRefClass("disexp", 
+disexp =
+  setRefClass("disexp",
               contains = "discrete_distribution",
               fields = list(
                 dat = function(x)
@@ -16,7 +16,7 @@ disexp =
                     tab = table(x)
                     values = as.numeric(names(tab))
                     freq = as.vector(tab)
-                    
+
                     internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
                     internal[["freq"]] <<- freq
                     internal[["values"]] <<- values
@@ -34,13 +34,13 @@ disexp =
                       selection = min(which(internal[["values"]] >= x))
                       internal[["n"]] <<- internal[["cum_n"]][selection]
                     }
-                    
+
                   } else  internal[["xmin"]]
-                }, 
+                },
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
-                    if ("estimate_pars" %in% class(x)) x = x$pars            
-                    internal[["pars"]] <<- x            
+                    if ("estimate_pars" %in% class(x)) x = x$pars
+                    internal[["pars"]] <<- x
                   } else internal[["pars"]]
                 }
               ))
@@ -59,7 +59,7 @@ disexp$methods(
         tab = table(x)
         values = as.numeric(names(tab))
         freq = as.vector(tab)
-        
+
         internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
         internal[["freq"]] <<- freq
         internal[["values"]] <<- values
@@ -80,11 +80,11 @@ setMethod("dist_pdf",
           definition = function(m, q = NULL, log = FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
             if (is.null(q)) q = m$dat
-            
+
             l1 = pexp(q - 0.5, pars, lower.tail = FALSE, log.p = TRUE)
             l2 = pexp(q + 0.5, pars, lower.tail = FALSE, log.p = TRUE)
-            
-            pdf = l1 + log(1 - exp(l2 - l1)) - 
+
+            pdf = l1 + log(1 - exp(l2 - l1)) -
               pexp(xmin - 0.5, pars, lower.tail = FALSE, log.p = TRUE)
             if (!log) {
               pdf = exp(pdf)
@@ -104,15 +104,15 @@ setMethod("dist_cdf",
           signature = signature(m = "disexp"),
           definition = function(m, q = NULL, lower_tail = TRUE) {
             xmin = m$getXmin(); pars = m$getPars()
-            if (is.null(pars)) stop("Model parameters not set.")  
+            if (is.null(pars)) stop("Model parameters not set.")
             if (is.null(q)) q = m$dat
 
-            p = pexp(q + 0.5, pars, lower.tail = lower_tail) 
+            p = pexp(q + 0.5, pars, lower.tail = lower_tail)
             if (lower_tail) {
-              C = pexp(xmin - 0.5, pars, lower.tail = FALSE) 
+              C = pexp(xmin - 0.5, pars, lower.tail = FALSE)
               cdf = (p / C - 1 / C + 1)
             } else {
-              C = 1 - pexp(xmin + 0.5, pars) 
+              C = 1 - pexp(xmin + 0.5, pars)
               cdf = p / C
             }
             cdf[q < xmin] = 0
@@ -147,16 +147,16 @@ setMethod("dist_ll",
           }
 )
 ########################################################
-#Log-likelihood 
+#Log-likelihood
 ########################################################
 dis_exp_tail_ll = function(x, pars, xmin) {
   n = length(x)
-  joint_prob = colSums(sapply(pars, function(i) 
-    log(pexp(x - 0.5, i, lower.tail = FALSE) - 
+  joint_prob = colSums(sapply(pars, function(i)
+    log(pexp(x - 0.5, i, lower.tail = FALSE) -
           pexp(x + 0.5, i, lower.tail = FALSE))))
-  prob_over = sapply(pars, function(i) 
+  prob_over = sapply(pars, function(i)
     pexp(xmin - 0.5, i, lower.tail = FALSE, log.p = TRUE))
-  
+
   return(joint_prob - n * prob_over)
 }
 
@@ -184,15 +184,15 @@ disexp$methods(
     x = x[x > (xmin - 0.5)]
     if (is.null(initialise))
       theta_0 = mean(1 / x)
-    else 
+    else
       theta_0 = initialise
-    # Chop off values below 
+    # Chop off values below
     negloglike = function(par) {
       r = -dis_exp_tail_ll(x, par, xmin)
       if (!is.finite(r)) r = 1e12
       r
     }
-    mle = suppressWarnings(optim(par = theta_0, fn = negloglike, 
+    mle = suppressWarnings(optim(par = theta_0, fn = negloglike,
                                  method = "L-BFGS-B", lower = 0))
     if (set)
       pars <<- mle$par

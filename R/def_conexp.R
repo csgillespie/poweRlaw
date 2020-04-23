@@ -7,8 +7,8 @@
 #' @importFrom methods new
 #' @importFrom stats dexp pexp
 #' @export conexp
-conexp = 
-  setRefClass("conexp", 
+conexp =
+  setRefClass("conexp",
               contains = "ctn_distribution",
               fields = list(
                 dat = function(x) {
@@ -29,11 +29,11 @@ conexp =
                     internal[["xmin"]] <<- x
                     if (length(internal[["dat"]])) {
                       selection = min(which(internal[["dat"]] >= (x - .Machine$double.eps ^ 0.5)))
-                      internal[["n"]] <<- internal[["cum_n"]][selection]      
+                      internal[["n"]] <<- internal[["cum_n"]][selection]
                     }
-                    
+
                   } else  internal[["xmin"]]
-                }, 
+                },
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
                     if ("estimate_pars" %in% class(x)) x = x$pars
@@ -70,7 +70,7 @@ setMethod("dist_pdf",
           signature = signature(m = "conexp"),
           definition = function(m, q = NULL, log = FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
-            
+
             if (is.null(q)) q = m$dat
             pdf = dexp(q, pars, log = TRUE) - pexp(xmin, pars, lower.tail = FALSE, log.p = TRUE)
             if (!log) {
@@ -92,15 +92,15 @@ setMethod("dist_cdf",
           signature = signature(m = "conexp"),
           definition = function(m, q = NULL, lower_tail = TRUE) {
             pars = m$pars; xmin = m$xmin
-            if (is.null(pars)) stop("Model parameters not set.")  
+            if (is.null(pars)) stop("Model parameters not set.")
             if (is.null(q)) q = m$dat
 
             if (lower_tail) {
-              p = pexp(q, pars, lower.tail = lower_tail) 
-              C = pexp(xmin, pars, lower.tail = FALSE) 
+              p = pexp(q, pars, lower.tail = lower_tail)
+              C = pexp(xmin, pars, lower.tail = FALSE)
               cdf = (p / C - 1 / C + 1)
             } else {
-              log_p = pexp(q, pars, lower.tail = FALSE, log.p = TRUE) 
+              log_p = pexp(q, pars, lower.tail = FALSE, log.p = TRUE)
               log_C = pexp(xmin, pars, lower.tail = FALSE, log.p = TRUE)
               cdf = exp(log_p - log_C)
             }
@@ -137,16 +137,16 @@ setMethod("dist_ll",
 )
 
 ########################################################
-#Log-likelihood 
+#Log-likelihood
 ########################################################
 conexp_tail_ll = function(x, rate, xmin) {
   n = length(x)
   joint_prob = colSums(
                   matrix(## Needed for edge cases
                     sapply(rate, function(i) dexp(x, i, log = TRUE)), nrow = length(x)))
-  prob_over = sapply(rate, 
-                     function(i) 
-                       pexp(xmin, i, 
+  prob_over = sapply(rate,
+                     function(i)
+                       pexp(xmin, i,
                             lower.tail = FALSE, log.p = TRUE))
   return(joint_prob - n * prob_over)
 }
@@ -165,7 +165,7 @@ setMethod("dist_rand",
             u = runif(n, 0, exp(-m$pars * m$xmin))
             -log(u) / m$pars
           }
-)  
+)
 
 #############################################################
 #MLE method
@@ -176,21 +176,21 @@ conexp$methods(
     x = x[x > xmin]
     if (is.null(initialise))
       theta_0 = mean(x)
-    else 
+    else
       theta_0 = initialise
-    # Chop off values below 
+    # Chop off values below
     negloglike = function(par) {
       r = -conexp_tail_ll(x, par, xmin)
       if (!is.finite(r)) r = 1e12
       r
     }
-    mle = suppressWarnings(optim(par = theta_0, fn = negloglike, 
+    mle = suppressWarnings(optim(par = theta_0, fn = negloglike,
                                  method = "L-BFGS-B", lower = 0))
     if (set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
     names(mle)[1L] = "pars"
     mle
-    
+
   }
 )

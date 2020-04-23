@@ -22,8 +22,8 @@
 \alias{dispois}
 \title{Heavy-tailed distributions}
 \arguments{
-\item{...}{The object is typically created by passing 
-data using the \code{dat} field. 
+\item{...}{The object is typically created by passing
+data using the \code{dat} field.
 Each field has standard setters and getters.}
 }
 \value{
@@ -45,16 +45,16 @@ Each object inherits the \code{discrete_distribution} or the \code{ctn_distribut
 \section{Fields}{
 
 
-Each distribution object has four fields. However, the object 
-is typically created by passing 
-data, to the \code{dat} field. Each field has standard 
+Each distribution object has four fields. However, the object
+is typically created by passing
+data, to the \code{dat} field. Each field has standard
 setters and getters. See examples below
 \describe{
 \item{dat}{The data set.}
-\item{xmin}{The lower threshold, xmin. Typically set after initialisation. 
-For the continuous  power-law, xmin >= 0 for the discrete 
+\item{xmin}{The lower threshold, xmin. Typically set after initialisation.
+For the continuous  power-law, xmin >= 0 for the discrete
 distributions, xmin >0}
-\item{pars}{A parameter vector. Typically set after initialisation. 
+\item{pars}{A parameter vector. Typically set after initialisation.
 Note the lognormal distribution has two parameters.}
 \item{internal}{A list. This list differs between objects and shouldn't be altered.}}
 }
@@ -62,7 +62,7 @@ Note the lognormal distribution has two parameters.}
 \section{Copying objects}{
 
 Distribution objects are reference classes. This means that when we copy
-objects, we need to use the \code{copy} method, i.e. \code{obj$copy()}. 
+objects, we need to use the \code{copy} method, i.e. \code{obj$copy()}.
 See the examples below for further details.
 }
 

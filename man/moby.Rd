@@ -5,7 +5,9 @@
 \alias{moby}
 \alias{moby_sample}
 \title{Moby Dick word count}
-\format{A vector}
+\format{
+A vector
+}
 \source{
 M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law." 
 Contemporary Physics 46, 323 (2005). 

@@ -6,8 +6,8 @@
 #' @exportClass dispois
 #' @importFrom stats dpois ppois
 #' @export dispois
-dispois = 
-  setRefClass("dispois", 
+dispois =
+  setRefClass("dispois",
               contains = "discrete_distribution",
               fields = list(
                 dat = function(x)
@@ -17,7 +17,7 @@ dispois =
                     tab = table(x)
                     values = as.numeric(names(tab))
                     freq = as.vector(tab)
-                    
+
                     internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
                     internal[["freq"]] <<- freq
                     internal[["values"]] <<- values
@@ -34,14 +34,14 @@ dispois =
                     if (length(internal[["values"]])) {
                       selection = min(which(internal[["values"]] >= x))
                       internal[["slx"]] <<- internal[["cum_slx"]][selection]
-                      internal[["n"]] <<- internal[["cum_n"]][selection]            
+                      internal[["n"]] <<- internal[["cum_n"]][selection]
                     }
                   } else  internal[["xmin"]]
-                }, 
+                },
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
-                    if ("estimate_pars" %in% class(x)) x = x$pars            
-                    internal[["pars"]] <<- x            
+                    if ("estimate_pars" %in% class(x)) x = x$pars
+                    internal[["pars"]] <<- x
                   } else internal[["pars"]]
                 }
               ))
@@ -60,7 +60,7 @@ dispois$methods(
         tab = table(x)
         values = as.numeric(names(tab))
         freq = as.vector(tab)
-        
+
         internal[["cum_n"]] <<- rev(cumsum(rev(freq)))
         internal[["freq"]] <<- freq
         internal[["values"]] <<- values
@@ -82,7 +82,7 @@ setMethod("dist_pdf",
           definition = function(m, q = NULL, log = FALSE) {
             xmin = m$getXmin(); pars = m$getPars()
             if (is.null(q)) q = m$dat
-            pdf = dpois(q, pars, log = TRUE) - 
+            pdf = dpois(q, pars, log = TRUE) -
               ppois(xmin - 0.5, pars, lower.tail = FALSE, log.p = TRUE)
             if (!log) {
               pdf = exp(pdf)
@@ -102,12 +102,12 @@ setMethod("dist_cdf",
           signature = signature(m = "dispois"),
           definition = function(m, q = NULL, lower_tail = TRUE) {
             xmin = m$getXmin(); pars = m$getPars()
-            if (is.null(pars)) stop("Model parameters not set.")  
+            if (is.null(pars)) stop("Model parameters not set.")
             if (is.null(q)) q = m$dat
 
-            p = ppois(q, pars, lower.tail = lower_tail) 
+            p = ppois(q, pars, lower.tail = lower_tail)
             if (lower_tail) {
-              C = ppois(xmin - 0.5, pars, lower.tail = FALSE) 
+              C = ppois(xmin - 0.5, pars, lower.tail = FALSE)
               cdf = (p / C - 1 / C + 1)
             } else {
               C = 1 - ppois(xmin, pars)
@@ -145,12 +145,12 @@ setMethod("dist_ll",
 
 
 ########################################################
-#Log-likelihood 
+#Log-likelihood
 ########################################################
 pois_tail_ll = function(x, rate, xmin) {
   n = length(x)
   joint_prob = colSums(sapply(rate, function(i) dpois(x, i, log = TRUE)))
-  prob_over = sapply(rate, function(i) ppois(xmin - 1, i, 
+  prob_over = sapply(rate, function(i) ppois(xmin - 1, i,
                                              lower.tail = FALSE, log.p = TRUE))
   return(joint_prob - n * prob_over)
 }
@@ -180,21 +180,21 @@ dispois$methods(
     x = x[x > (xmin - 0.5)]
     if (is.null(initialise))
       theta_0 = mean(x)
-    else 
+    else
       theta_0 = initialise
-    # Chop off values below 
+    # Chop off values below
     negloglike = function(par) {
       r = -pois_tail_ll(x, par, xmin)
       if (!is.finite(r)) r = 1e12
       r
     }
-    mle = suppressWarnings(optim(par = theta_0, fn = negloglike, 
+    mle = suppressWarnings(optim(par = theta_0, fn = negloglike,
                                  method = "L-BFGS-B", lower = 0))
     if (set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
     names(mle)[1L] = "pars"
     mle
-    
+
   }
 )

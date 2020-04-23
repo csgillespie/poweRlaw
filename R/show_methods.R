@@ -1,12 +1,12 @@
 #' Generic show method for distribution objects
-#' 
-#' The distribution objects have an internal structure that is used for caching purposes. 
-#' Using the default \code{show} method gives the illusion of duplicate values. 
+#'
+#' The distribution objects have an internal structure that is used for caching purposes.
+#' Using the default \code{show} method gives the illusion of duplicate values.
 #' This show method aims to avoid this confusion.
 #' @param object A distribution object.
 #' @importFrom methods classLabel show
 #' @export
-setMethod("show", 
+setMethod("show",
           signature = signature(object = "distribution"),
           definition = function(object) {
             msg = paste("Reference class object of class", classLabel(class(object)), "\n")

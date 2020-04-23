@@ -5,7 +5,9 @@
 \alias{swiss_prot}
 \alias{Swiss_prot}
 \title{Word frequency in the Swiss-Prot database}
-\format{data frame}
+\format{
+data frame
+}
 \source{
 Bell, MJ, Gillespie, CS, Swan, D, Lord, P. 
 An approach to describing and analysing bulk biological annotation 

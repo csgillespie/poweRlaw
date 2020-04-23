@@ -1,13 +1,13 @@
 #############################################################
 #Reference Class definition
 #############################################################
-#' @include aaa_all_classes.R 
+#' @include aaa_all_classes.R
 #' @rdname displ
 #' @aliases conpl-class conpl
 #' @exportClass conpl
 #' @export conpl
-conpl = 
-  setRefClass("conpl", 
+conpl =
+  setRefClass("conpl",
               contains = "ctn_distribution",
               fields = list(
                 dat = function(x) {
@@ -34,7 +34,7 @@ conpl =
                       internal[["n"]] <<- internal[["cum_n"]][selection]
                     }
                   } else  internal[["xmin"]]
-                }, 
+                },
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
                     if ("estimate_pars" %in% class(x)) x = x$pars
@@ -107,8 +107,8 @@ setMethod("dist_all_cdf",
           signature = signature(m = "conpl"),
           definition = function(m, lower_tail = TRUE, xmax = 1e5) {
             xmin = m$xmin; pars = m$pars
-            if (is.null(pars)) stop("Model parameters not set.")  
-            
+            if (is.null(pars)) stop("Model parameters not set.")
+
             xmax = min(max(m$dat), xmax)
             1 - (xmin:xmax / xmin) ^ (-pars + 1)
           }
@@ -129,19 +129,19 @@ setMethod("dist_ll",
 )
 
 ########################################################
-#Log-likelihood 
+#Log-likelihood
 ########################################################
 con_pl_ll = function(x, pars, xmin) {
   n = length(x)
-  joint_prob = colSums(sapply(pars, 
+  joint_prob = colSums(sapply(pars,
                               function(i) dplcon(x, xmin, i, log = TRUE)))
   #   ##Normalise due to xmax
   prob_over = 0
   #   if(!is.null(xmax))
-  #       prob_over = sapply(pars, function(i) 
+  #       prob_over = sapply(pars, function(i)
   #         log(ppldis(xmax, i, lower.tail=TRUE)))
-  #   
-  
+  #
+
   return(joint_prob - n * prob_over)
 }
 
@@ -164,25 +164,25 @@ setMethod("dist_rand",
 conpl$methods(
   mle = function(set = TRUE, initialise = NULL) {
     n = internal[["n"]]
-    
+
     if (is.null(initialise)) {
       slx = internal[["slx"]]
       theta_0 = 1 + n * (slx - log(xmin) * n) ^ (-1)
     } else {
       theta_0 = initialise
     }
-    
-    
+
+
     x = dat[dat >= xmin]
     negloglike = function(par) {
       r = -con_pl_ll(x, par, xmin)
       if (!is.finite(r)) r = 1e12
       r
     }
-    
-    mle = suppressWarnings(optim(par = theta_0, fn = negloglike, 
-                                 method = "L-BFGS-B", lower = 1))       
-    
+
+    mle = suppressWarnings(optim(par = theta_0, fn = negloglike,
+                                 method = "L-BFGS-B", lower = 1))
+
     if (set) pars <<- mle$par
     class(mle) = "estimate_pars"
     names(mle)[1L] = "pars"

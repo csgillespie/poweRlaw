@@ -7,7 +7,9 @@
 \alias{USAmerican}
 \alias{us_american}
 \title{Casualties in the American Indian Wars (1776 and 1890)}
-\format{Data frame}
+\format{
+Data frame
+}
 \source{
 Friedman, Jeffrey A. "Using Power Laws to Estimate Conflict Size." 
 The Journal of conflict resolution (2014).

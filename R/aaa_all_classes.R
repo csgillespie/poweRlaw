@@ -1,8 +1,8 @@
-distribution = setRefClass("distribution", 
+distribution = setRefClass("distribution",
                            fields = list(
                              dat = "ANY",
-                             internal = "list", 
-                             xmin = "ANY", 
+                             internal = "list",
+                             xmin = "ANY",
                              pars = "ANY",
                              no_pars = "numeric"))
 
@@ -13,7 +13,7 @@ distribution = setRefClass("distribution",
 distribution$accessors(c("xmin", "pars", "dat", "no_pars"))
 
 #############################################################
-# In the plotting functions we do slightly 
+# In the plotting functions we do slightly
 # different things for continuous and discrete distributions
 #############################################################
 discrete_distribution = setRefClass("discrete_distribution", contains = "distribution")

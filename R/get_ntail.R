@@ -1,7 +1,7 @@
 #' Values greater than or equal to xmin
 #'
-#' Returns the number of data points greater than or equal to 
-#' current value of xmin. In the Clauset et al, paper this is 
+#' Returns the number of data points greater than or equal to
+#' current value of xmin. In the Clauset et al, paper this is
 #' called `ntail`.
 #' @inheritParams dist_cdf
 #' @param prop default \code{FALSE}. Return the value as a proportion of the total sample size
@@ -24,7 +24,7 @@ get_ntail = function(m, prop = FALSE, lower = FALSE) {
   n = get_n(m)
   if (lower)
     ntail = n - ntail
-  
+
   if (prop)
     return(ntail / n)
   else

@@ -1,9 +1,9 @@
 #' @title The continuous power-law distribution
-#' 
+#'
 #' @description Density and distribution function of the continuous power-law distribution, with
 #' parameters xmin and alpha.
 #' @inheritParams ppldis
-#' @param x,q vector of quantiles. The discrete 
+#' @param x,q vector of quantiles. The discrete
 #' power-law distribution is defined for x > xmin
 #' @return dplcon gives the denisty and pplcon gives the distribution function.
 #' @export
@@ -30,7 +30,7 @@ dplcon = function(x, xmin, alpha, log = FALSE) {
 pplcon = function(q, xmin, alpha, lower.tail = TRUE) {
   cdf = 1 - (q / xmin) ^ (-alpha + 1)
   if (!lower.tail)
-    cdf = 1 - cdf 
+    cdf = 1 - cdf
   cdf[q < round(xmin)] = 0
   cdf
 }

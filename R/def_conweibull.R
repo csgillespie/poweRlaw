@@ -6,8 +6,8 @@
 #' @exportClass conweibull
 #' @importFrom stats dweibull pweibull rweibull
 #' @export conweibull
-conweibull = 
-  setRefClass("conweibull", 
+conweibull =
+  setRefClass("conweibull",
               contains = "ctn_distribution",
               fields = list(
                 dat = function(x) {
@@ -28,10 +28,10 @@ conweibull =
                     internal[["xmin"]] <<- x
                     if (length(internal[["dat"]])) {
                       selection = min(which(internal[["dat"]] >= (x - .Machine$double.eps ^ 0.5)))
-                      internal[["n"]] <<- internal[["cum_n"]][selection]      
+                      internal[["n"]] <<- internal[["cum_n"]][selection]
                     }
                   } else  internal[["xmin"]]
-                }, 
+                },
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
                     if ("estimate_pars" %in% class(x)) x = x$pars
@@ -71,7 +71,7 @@ setMethod("dist_pdf",
             xmin = m$getXmin(); pars = m$getPars()
             if (is.null(q)) q = m$dat
 
-            pdf = dweibull(q, pars[1], pars[2], log = TRUE) - 
+            pdf = dweibull(q, pars[1], pars[2], log = TRUE) -
               pweibull(xmin, pars[1], pars[2], lower.tail = FALSE, log.p = TRUE)
             if (!log) {
               pdf = exp(pdf)
@@ -92,16 +92,16 @@ setMethod("dist_cdf",
           signature = signature(m = "conweibull"),
           definition = function(m, q = NULL, lower_tail = TRUE) {
             pars = m$pars; xmin = m$xmin
-            if (is.null(pars)) stop("Model parameters not set.")  
+            if (is.null(pars)) stop("Model parameters not set.")
             if (is.null(q)) q = m$dat
-            
+
             if (lower_tail) {
-              p = pweibull(q, pars[1], pars[2], lower.tail = lower_tail) 
-              C = pweibull(xmin, pars[1], pars[2], lower.tail = FALSE) 
+              p = pweibull(q, pars[1], pars[2], lower.tail = lower_tail)
+              C = pweibull(xmin, pars[1], pars[2], lower.tail = FALSE)
               pdf = (p / C - 1 / C + 1)
             } else {
               log_p = pweibull(q, pars[1], pars[2], lower.tail = FALSE, log.p = TRUE)
-              log_C = pweibull(xmin, pars[1], pars[2], lower.tail = FALSE, log.p = TRUE) 
+              log_C = pweibull(xmin, pars[1], pars[2], lower.tail = FALSE, log.p = TRUE)
               pdf = exp(log_p - log_C)
             }
             pdf[q < xmin] = 0
@@ -131,24 +131,24 @@ setMethod("dist_ll",
             q = m$dat
             n = m$internal[["n"]]; N = length(q)
             q = q[(N - n + 1):N]
-            
+
             conweibull_tail_ll(q, m$getPars(), m$getXmin())
           }
 )
 
 ########################################################
-#Log-likelihood 
+#Log-likelihood
 ########################################################
 conweibull_tail_ll = function(x, pars, xmin) {
   if (is.vector(pars)) pars = t(as.matrix(pars))
   n = length(x)
-  joint_prob = colSums(apply(pars, 1, 
+  joint_prob = colSums(apply(pars, 1,
                              function(i) dweibull(x, i[1], i[2], log = TRUE)))
-  
-  prob_over = apply(pars, 1, function(i) 
+
+  prob_over = apply(pars, 1, function(i)
     pweibull(xmin, i[1], i[2], log.p = TRUE, lower.tail = FALSE))
   joint_prob - n * prob_over
-  
+
 }
 
 
@@ -168,7 +168,7 @@ setMethod("dist_rand",
               ## Since we reject RNs less than xmin we should simulate N > n rns
               ## If we simulate N Rns (below), we will keep n-i (or reject N-(n-i))
               N = ceiling((n - i) / pweibull(xmin, pars[1L], pars[2L], lower.tail = FALSE))
-              
+
               ## Simple rejection sampler
               x = rweibull(N, pars[1L], pars[2L])
               x = x[x > xmin]
@@ -191,23 +191,23 @@ conweibull$methods(
     x = x[x > xmin]
     if (is.null(initialise))
       theta_0 = c(mean(log(x)), sd(log(x)))
-    else 
+    else
       theta_0 = initialise
-    # Chop off values below 
+    # Chop off values below
     negloglike = function(par) {
       r = -conweibull_tail_ll(x, par, xmin)
       if (!is.finite(r)) r = 1e12
       r
     }
-    mle = suppressWarnings(optim(par = theta_0, 
-                                 fn = negloglike, 
-                                 method = "L-BFGS-B", 
+    mle = suppressWarnings(optim(par = theta_0,
+                                 fn = negloglike,
+                                 method = "L-BFGS-B",
                                  lower = c(.Machine$double.eps, .Machine$double.eps)))
     if (set)
       pars <<- mle$par
     class(mle) = "estimate_pars"
     names(mle)[1L] = "pars"
     mle
-    
+
   }
 )

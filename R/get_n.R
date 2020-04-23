@@ -1,6 +1,6 @@
 #' Sample size
 #'
-#' Returns the sample size of the data set contained within the 
+#' Returns the sample size of the data set contained within the
 #' distribution object.
 #' @inheritParams dist_cdf
 #' @export
@@ -17,6 +17,6 @@
 #' length(moby_sample)
 get_n = function(m) {
   n = m$internal$cum_n[1]
-  if (is.null(n)) n = 0 
+  if (is.null(n)) n = 0
   n
 }

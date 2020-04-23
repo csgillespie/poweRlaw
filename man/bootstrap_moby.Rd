@@ -5,7 +5,9 @@
 \alias{bootstrap_moby}
 \alias{bootstrap_p_moby}
 \title{Example bootstrap results for the full Moby Dick data set}
-\format{A list}
+\format{
+A list
+}
 \source{
 M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law." 
 Contemporary Physics 46, 323 (2005). 

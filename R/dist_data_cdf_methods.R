@@ -12,7 +12,7 @@ get_data_cdf_probs = function(occur, lower_tail) {
 setMethod("dist_data_cdf",
           signature = signature(m = "discrete_distribution"),
           definition = function(m, lower_tail = TRUE, xmax = 1e5) {
-            
+
             tab = table(m$dat[m$dat <= xmax])
             occur = as.vector(tab)
             occur = occur[as.numeric(names(tab)) >= m$xmin]

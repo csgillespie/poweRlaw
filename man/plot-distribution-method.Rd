@@ -4,13 +4,13 @@
 \docType{methods}
 \name{lines,distribution-method}
 \alias{lines,distribution-method}
-\alias{plot,distribution,ANY-method}
+\alias{plot,distribution-method}
 \alias{points,distribution-method}
 \title{Generic plotting functions}
 \usage{
 \S4method{lines}{distribution}(x, cut = FALSE, draw = TRUE, length.out = 100, ...)
 
-\S4method{plot}{distribution,ANY}(x, cut = FALSE, draw = TRUE, ...)
+\S4method{plot}{distribution}(x, cut = FALSE, draw = TRUE, ...)
 
 \S4method{points}{distribution}(x, cut = FALSE, draw = TRUE, length.out = 100, ...)
 }
