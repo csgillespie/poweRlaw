@@ -2,9 +2,9 @@ language: r
 cache: packages
 
 r:
-#  - oldrel
+  - oldrel
   - release
-    #  - devel
+  - devel
 
 env:
   global:
@@ -34,6 +34,6 @@ script:
 
 ## Only run covr on release
 after_success:
-  - Rscript -e "if(length(grep('1\$', ${TRAVIS_JOB_NUMBER}))) covr::codecov()";
+  - Rscript -e "if(length(grep('2\$', ${TRAVIS_JOB_NUMBER}))) covr::codecov()";
 
 
