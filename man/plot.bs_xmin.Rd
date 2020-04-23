@@ -15,12 +15,12 @@
 \arguments{
 \item{x}{an object of class \code{bs_xmin} or \code{bs_p_xmin}}
 
-\item{trim}{When plotting the cumulative means and standard deviation, 
+\item{trim}{When plotting the cumulative means and standard deviation,
 the first trim percentage of values are not displayed. default \code{trim=0.1}}
 
 \item{...}{graphics parameters to be passed to the plotting routines.}
 }
 \description{
-A simple wrapper around the plot function to aid with visualising the bootstrap results. 
+A simple wrapper around the plot function to aid with visualising the bootstrap results.
 The values plotted are returned as an invisible object.
 }

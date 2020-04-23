@@ -42,9 +42,9 @@ dist_rand(m, n)
 n random numbers
 }
 \description{
-This is generic function for generating random numbers 
+This is generic function for generating random numbers
 from the underlying distribution of the distribution reference objects.
-This function generates \code{n} random numbers using the parameters 
+This function generates \code{n} random numbers using the parameters
 and xmin values found in the associated reference object.
 }
 \note{
@@ -64,6 +64,6 @@ m$setXmin(7);m$setPars(2)
 dist_rand(m, 5)
 }
 \seealso{
-\code{\link{dist_cdf}}, \code{\link{dist_pdf}} 
+\code{\link{dist_cdf}}, \code{\link{dist_pdf}}
 and \code{\link{dist_ll}}
 }

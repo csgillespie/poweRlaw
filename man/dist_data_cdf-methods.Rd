@@ -25,7 +25,7 @@ dist_data_all_cdf(m, lower_tail = TRUE, xmax = 1e+05)
 \arguments{
 \item{m}{a distribution object.}
 
-\item{lower_tail}{logical; if \code{TRUE} (default), 
+\item{lower_tail}{logical; if \code{TRUE} (default),
 probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 
 \item{xmax}{default \code{1e5}. The maximum x value calculated when working out the CDF.}
@@ -34,9 +34,9 @@ probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 This is generic function for distribution objects.
 This function calculates the data or empirical cdf.
 
-The functions \code{dist_data_all_cdf} and \code{dist_all_cdf} are only 
+The functions \code{dist_data_all_cdf} and \code{dist_all_cdf} are only
 available for discrete distributions.
-Their main purpose is to optimise the bootstrap procedure, where generating a 
+Their main purpose is to optimise the bootstrap procedure, where generating a
 vector \code{xmin:xmax} is
 very quick. Also, when bootstrapping very large values can be generated.
 }

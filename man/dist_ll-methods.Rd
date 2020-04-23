@@ -41,7 +41,7 @@ The log-likelihood
 }
 \description{
 This is generic function for distribution objects.
-This function calculates the log-likelihood for the current 
+This function calculates the log-likelihood for the current
 parameters and xmin value.
 }
 \note{
@@ -62,6 +62,6 @@ m$setXmin(7); m$setPars(2)
 dist_ll(m)
 }
 \seealso{
-\code{\link{dist_cdf}},  \code{\link{dist_pdf}} 
+\code{\link{dist_cdf}},  \code{\link{dist_pdf}}
 and \code{\link{dist_rand}}
 }

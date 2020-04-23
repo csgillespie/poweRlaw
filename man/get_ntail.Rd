@@ -14,8 +14,8 @@ get_ntail(m, prop = FALSE, lower = FALSE)
 \item{lower}{default \code{FALSE}. If \code{TRUE} returns sample size  - ntail}
 }
 \description{
-Returns the number of data points greater than or equal to 
-current value of xmin. In the Clauset et al, paper this is 
+Returns the number of data points greater than or equal to
+current value of xmin. In the Clauset et al, paper this is
 called `ntail`.
 }
 \examples{

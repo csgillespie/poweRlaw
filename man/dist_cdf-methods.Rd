@@ -61,22 +61,22 @@ dist_cdf(m, q = NULL, lower_tail = FALSE)
 \arguments{
 \item{m}{a distribution object.}
 
-\item{q}{a vector values where the function will be evaluated. 
-If \code{q} is \code{NULL} (default), then the data values 
+\item{q}{a vector values where the function will be evaluated.
+If \code{q} is \code{NULL} (default), then the data values
 will be used.}
 
-\item{lower_tail}{logical; if \code{TRUE} (default), 
+\item{lower_tail}{logical; if \code{TRUE} (default),
 probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 
 \item{xmax}{default \code{1e5}. The maximum x value calculated when working out the CDF.}
 }
 \description{
 This is a generic function for calculating
-the cumulative distribution function (cdf) of 
-distribution objects. This is similar to base R's \code{pnorm} 
-for the normal distribution. 
-The \code{dist_cdf} function calculates the 
-cumulative probability distribution for the 
+the cumulative distribution function (cdf) of
+distribution objects. This is similar to base R's \code{pnorm}
+for the normal distribution.
+The \code{dist_cdf} function calculates the
+cumulative probability distribution for the
 current parameters and xmin value.
 }
 \note{
@@ -96,7 +96,7 @@ m$setXmin(7); m$setPars(2)
 ##########################################
 dist_cdf(m, 10:15)
 
-########################################## 
+##########################################
 #Calculate the CDF at the data values    #
 ##########################################
 dist_cdf(m)

@@ -36,8 +36,8 @@ dist_pdf(m, q = NULL, log = FALSE)
 \arguments{
 \item{m}{a distribution object.}
 
-\item{q}{a vector values where the function will be evaluated. 
-If \code{q} is \code{NULL} (default), then the data values 
+\item{q}{a vector values where the function will be evaluated.
+If \code{q} is \code{NULL} (default), then the data values
 will be used.}
 
 \item{log}{default \code{FALSE}. If \code{TRUE}, probabilities are given as log(p).}
@@ -47,7 +47,7 @@ The probability density (or mass) function
 }
 \description{
 This is generic function for distribution objects.
-This function calculates the probability density function (pdf) 
+This function calculates the probability density function (pdf)
 for the current parameters and xmin value.
 }
 \note{
@@ -67,6 +67,6 @@ m$setXmin(7); m$setPars(2)
 dist_pdf(m, 7:10)
 }
 \seealso{
-\code{\link{dist_cdf}}, \code{\link{dist_ll}} 
+\code{\link{dist_cdf}}, \code{\link{dist_ll}}
 and \code{\link{dist_rand}}
 }

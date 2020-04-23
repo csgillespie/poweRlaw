@@ -10,7 +10,7 @@
 \item{object}{A distribution object.}
 }
 \description{
-The distribution objects have an internal structure that is used for caching purposes. 
-Using the default \code{show} method gives the illusion of duplicate values. 
+The distribution objects have an internal structure that is used for caching purposes.
+Using the default \code{show} method gives the illusion of duplicate values.
 This show method aims to avoid this confusion.
 }

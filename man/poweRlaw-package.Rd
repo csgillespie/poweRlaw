@@ -8,18 +8,18 @@
 \alias{powerlaw-package}
 \title{The poweRlaw package}
 \description{
-The poweRlaw package aims to make fitting power laws and other heavy-tailed distributions 
+The poweRlaw package aims to make fitting power laws and other heavy-tailed distributions
 straightforward. This package contains R functions for fitting, comparing and visualising heavy
 tailed distributions. Overall, it provides a principled approach to fitting power laws to data.
 }
 \details{
-The code developed in this package has 
+The code developed in this package has
 been heavily influenced from the python and R code found at:
-\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/} . 
+\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/} .
 In particular, the R code of Laurent Dubroca and Cosma Shalizi.
 }
 \references{
-A. Clauset, C.R. Shalizi, and M.E.J. Newman, 
+A. Clauset, C.R. Shalizi, and M.E.J. Newman,
 "Power-law distributions in empirical data" SIAM Review 51(4), 661-703 (2009).
 }
 \seealso{

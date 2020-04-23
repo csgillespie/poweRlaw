@@ -10,7 +10,7 @@ estimate_pars(m, pars = NULL)
 \item{m}{A reference class object that contains the data.}
 
 \item{pars}{default \code{NULL}. A vector or matrix (number of columns equal
-to the number of parameters) of parameters used to #' optimise over. 
+to the number of parameters) of parameters used to #' optimise over.
 Otherwise, for each value of \code{xmin}, the mle will be used, i.e. \code{estimate_pars(m)}.
 For small samples, the mle may be biased.}
 }
@@ -18,7 +18,7 @@ For small samples, the mle may be biased.}
 returns list.
 }
 \description{
-\code{estimate_pars} estimates the distribution's 
+\code{estimate_pars} estimates the distribution's
 parameters using their maximum likelihood estimator. This estimate
 is conditional on the current xmin value.
 }

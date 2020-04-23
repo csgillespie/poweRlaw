@@ -10,7 +10,7 @@ get_n(m)
 \item{m}{a distribution object.}
 }
 \description{
-Returns the sample size of the data set contained within the 
+Returns the sample size of the data set contained within the
 distribution object.
 }
 \examples{
