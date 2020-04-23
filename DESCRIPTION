@@ -24,7 +24,7 @@ Imports:
     parallel,
     stats,
     utils,
-    VGAM
+    pracma
 Suggests:
     codetools,
     covr,
@@ -35,7 +35,7 @@ VignetteBuilder:
     knitr
 ByteCompile: true
 Encoding: UTF-8
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Collate:
     'aaa_all_classes.R'
     'all_generics.R'
