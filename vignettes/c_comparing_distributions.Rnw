@@ -5,9 +5,8 @@
 \usepackage[round]{natbib} % References
 \usepackage{textcomp}
 \usepackage{amsmath,amsfonts}
-\usepackage{scrpage2}
-% \usepackage{algorithmic, algorithm}
-% \usepackage[utf8]{inputenc} %unicode support
+\usepackage{scrlayer-scrpage}
+\usepackage[utf8]{inputenc} %unicode support
 \usepackage{color,hyperref}
 \urlstyle{rm}
 
