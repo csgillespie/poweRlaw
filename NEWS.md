@@ -1,3 +1,8 @@
+Version 0.70.6
+---------------
+  * Change `scrpage2` to `scrlayer-scrpage` in vignettes. `scrpage2` now obsolete.
+  * Removed unused `Suggests`.
+  
 Version 0.70.5
 ---------------
   * Use `pracma` for calculating `zeta()`. `VGAM` may be getting archived.
