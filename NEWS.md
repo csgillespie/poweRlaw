@@ -1,3 +1,7 @@
+Dev
+--------------
+  * Catch extreme tail situations for lognormal distribution #88.
+
 Version 0.70.6
 ---------------
   * Change `scrpage2` to `scrlayer-scrpage` in vignettes. `scrpage2` now obsolete.
