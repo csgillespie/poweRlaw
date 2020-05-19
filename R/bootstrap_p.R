@@ -42,9 +42,9 @@ get_bootstrap_p_sims = function(m, no_of_sims, seed, threads = 1) {
 
 #' @rdname estimate_xmin
 #' @export
-bootstrap_p = function(m, xmins=NULL, pars=NULL, xmax=1e5,
-                        no_of_sims=100, threads=1,
-                        seed=NULL, distance="ks") {
+bootstrap_p = function(m, xmins = NULL, pars = NULL, xmax = 1e5,
+                        no_of_sims = 100, threads = 1,
+                        seed = NULL, distance = "ks") {
 
   if (is.null(m$getPars())) {
     message("Parameters will be initially estimated via estimate_xmin")
