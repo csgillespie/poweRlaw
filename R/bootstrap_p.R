@@ -81,7 +81,7 @@ bootstrap_p = function(m, xmins=NULL, pars=NULL, xmax=1e5,
   x = m_cpy$dat
   x_lower = x[x < m_cpy$xmin]
 
-  ## Start clock and parallel boostrap
+  ## Start clock and parallel bootstrap
   time$start()
   cl = makeCluster(threads)
   on.exit(stopCluster(cl))
