@@ -161,11 +161,17 @@ setMethod("dist_rand",
             xmin = m$getXmin(); pars = m$getPars()
             rns = numeric(n)
             i = 0; N = 0
-            ## n-0.5 to avoid floating point sillyness.
+            tail_prob = plnorm(xmin, pars[1L], pars[2L], lower.tail = FALSE)
+            if ((1 / tail_prob) > 10e10) {
+              stop("It appears that your parameters put in you in the __very__ extreme tail
+                     of the lognormal distribution. This means it is impossible to generate
+                     random numbers in a finite amount of time.")
+            }
+            ## n-0.5 to avoid floating point silliness.
             while (i < (n - 0.5)) {
               ## Since we reject RNs less than xmin we should simulate N > n rns
               ## If we simulate N Rns (below), we will keep n-i (or reject N-(n-i))
-              N = ceiling((n - i) / plnorm(xmin, pars[1L], pars[2L], lower.tail = FALSE))
+              N = ceiling((n - i) / tail_prob)
 
               ## Simple rejection sampler
               x = rlnorm(N, pars[1L], pars[2L])
