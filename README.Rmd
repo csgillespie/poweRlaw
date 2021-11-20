@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 ```
 
 # The poweRlaw package 
-[![Build Status](https://travis-ci.org/csgillespie/poweRlaw.png?branch=master,dev)](https://travis-ci.org/csgillespie/poweRlaw) 
+[![R-CMD-check](https://github.com/csgillespie/poweRlaw/workflows/R-CMD-check/badge.svg)](https://github.com/csgillespie/poweRlaw/actions)
 [![codecov.io](https://codecov.io/github/csgillespie/poweRlaw/coverage.svg?branch=master)](https://codecov.io/github/csgillespie/poweRlaw?branch=master)
 [![Downloads](http://cranlogs.r-pkg.org/badges/poweRlaw?color=brightgreen)](https://cran.r-project.org/package=poweRlaw)
 [![CRAN](http://www.r-pkg.org/badges/version/poweRlaw)](https://cran.r-project.org/package=poweRlaw)
