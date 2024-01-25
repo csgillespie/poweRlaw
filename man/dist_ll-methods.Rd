@@ -45,7 +45,7 @@ This function calculates the log-likelihood for the current
 parameters and xmin value.
 }
 \note{
-This method does *not* alter the internal state of
+This method does \emph{not} alter the internal state of
 the distribution objects.
 }
 \examples{
@@ -62,6 +62,6 @@ m$setXmin(7); m$setPars(2)
 dist_ll(m)
 }
 \seealso{
-\code{\link{dist_cdf}},  \code{\link{dist_pdf}}
-and \code{\link{dist_rand}}
+\code{\link[=dist_cdf]{dist_cdf()}},  \code{\link[=dist_pdf]{dist_pdf()}}
+and \code{\link[=dist_rand]{dist_rand()}}
 }

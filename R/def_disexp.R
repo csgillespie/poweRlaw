@@ -9,7 +9,7 @@ disexp =
   setRefClass("disexp",
               contains = "discrete_distribution",
               fields = list(
-                dat = function(x)
+                dat = function(x) {
                   if (!missing(x) && !is.null(x)) {
                     check_discrete_data(x)
                     x = sort(x)
@@ -22,7 +22,10 @@ disexp =
                     internal[["values"]] <<- values
                     internal[["dat"]] <<- x
                     xmin <<- min(values)
-                  } else internal[["dat"]],
+                  } else {
+                    internal[["dat"]]
+                  }
+                },
                 xmin = function(x) {
                   if (!missing(x) && !is.null(x)) {
                     if ("estimate_xmin" %in% class(x)) {
@@ -35,7 +38,9 @@ disexp =
                       internal[["n"]] <<- internal[["cum_n"]][selection]
                     }
 
-                  } else  internal[["xmin"]]
+                  } else {
+                    internal[["xmin"]]
+                  }
                 },
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
@@ -78,7 +83,8 @@ disexp$methods(
 setMethod("dist_pdf",
           signature = signature(m = "disexp"),
           definition = function(m, q = NULL, log = FALSE) {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             if (is.null(q)) q = m$dat
 
             l1 = pexp(q - 0.5, pars, lower.tail = FALSE, log.p = TRUE)
@@ -103,7 +109,8 @@ setMethod("dist_pdf",
 setMethod("dist_cdf",
           signature = signature(m = "disexp"),
           definition = function(m, q = NULL, lower_tail = TRUE) {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             if (is.null(pars)) stop("Model parameters not set.")
             if (is.null(q)) q = m$dat
 
@@ -130,8 +137,6 @@ setMethod("dist_all_cdf",
             dist_cdf(m, q = xmin:xmax, lower_tail = lower_tail)
           }
 )
-
-
 
 #############################################################
 #ll method

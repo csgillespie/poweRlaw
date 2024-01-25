@@ -14,9 +14,7 @@ tailed distributions. Overall, it provides a principled approach to fitting powe
 }
 \details{
 The code developed in this package has
-been heavily influenced from the python and R code found at:
-\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/} .
-In particular, the R code of Laurent Dubroca and Cosma Shalizi.
+been heavily influenced  by the R code of Laurent Dubroca and Cosma Shalizi.
 }
 \references{
 A. Clauset, C.R. Shalizi, and M.E.J. Newman,

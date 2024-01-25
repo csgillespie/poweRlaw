@@ -69,7 +69,8 @@ conexp$methods(
 setMethod("dist_pdf",
           signature = signature(m = "conexp"),
           definition = function(m, q = NULL, log = FALSE) {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
 
             if (is.null(q)) q = m$dat
             pdf = dexp(q, pars, log = TRUE) - pexp(xmin, pars, lower.tail = FALSE, log.p = TRUE)
@@ -91,7 +92,8 @@ setMethod("dist_pdf",
 setMethod("dist_cdf",
           signature = signature(m = "conexp"),
           definition = function(m, q = NULL, lower_tail = TRUE) {
-            pars = m$pars; xmin = m$xmin
+            pars = m$pars
+            xmin = m$xmin
             if (is.null(pars)) stop("Model parameters not set.")
             if (is.null(q)) q = m$dat
 
@@ -150,7 +152,6 @@ conexp_tail_ll = function(x, rate, xmin) {
                             lower.tail = FALSE, log.p = TRUE))
   return(joint_prob - n * prob_over)
 }
-
 
 ########################################################
 #Rand number generator

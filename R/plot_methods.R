@@ -12,12 +12,12 @@ lseq = function(from, to, length.out) {
 #' objects. Standard plotting functions, i.e. plot, points, and lines work
 #' with all distribution objects.
 #'
-#' @param draw logical (default \code{TRUE}). Should the plot/lines/points function plot or
+#' @param draw logical (default `TRUE`). Should the plot/lines/points function plot or
 #' return the data (in a data frame object).
-#' @param cut logical (default \code{FALSE}) -
-#' Where should the plot begin. If \code{cut=FALSE}, then the
+#' @param cut logical (default `FALSE`) -
+#' Where should the plot begin. If `cut=FALSE`, then the
 #' plot will start at the minimum data value. Otherwise, the plot
-#' will start from \code{xmin}
+#' will start from `xmin`
 #' @param length.out numeric, default 100. How many points should the
 #' distribution be evaulated at. This argument is only
 #' for plotting the fitted lines.
@@ -123,9 +123,9 @@ create_plots = function(l, no_plots) {
 #' A simple wrapper around the plot function to aid with visualising the bootstrap results.
 #' The values plotted are returned as an invisible object.
 #'
-#' @param x an object of class \code{bs_xmin} or \code{bs_p_xmin}
+#' @param x an object of class `bs_xmin` or `bs_p_xmin`
 #' @param trim When plotting the cumulative means and standard deviation,
-#' the first trim percentage of values are not displayed. default \code{trim=0.1}
+#' the first trim percentage of values are not displayed. default `trim=0.1`
 #' @param ...  graphics parameters to be passed to the plotting routines.
 #' @method plot bs_xmin
 #' @export

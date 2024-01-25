@@ -1,14 +1,14 @@
 sample_p_helper = function(i, m, x_lower) {
   ## Total sample size
-  N = get_n(m)
+  n = get_n(m)
   ntail_prop = get_ntail(m, prop = TRUE)
 
   ## Proportion to sample
-  n1 = sum(runif(N) > ntail_prop) # less than xmin
+  n1 = sum(runif(n) > ntail_prop) # less than xmin
 
-  # q should be of length N
+  # q should be of length n
   c(sample(x_lower, n1, replace = TRUE), #less than xmin
-    dist_rand(m, N - n1))
+    dist_rand(m, n - n1))
 }
 
 bootstrap_p_helper = function(i, m, x_lower, xmins, pars, xmax, distance) {

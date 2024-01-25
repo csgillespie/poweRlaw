@@ -32,7 +32,7 @@
 <<echo=FALSE,message=FALSE>>=
 library(knitr)
 library(poweRlaw)
-options(replace.assign=FALSE,width=50)
+options(replace.assign = FALSE, width = 50)
 
 opts_chunk$set(fig.path = "knitr_figure_poweRlaw/graphicsc-",
                cache.path = "knitr_cache_poweRlaw_c/",

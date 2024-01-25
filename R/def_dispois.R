@@ -71,7 +71,6 @@ dispois$methods(
   )
 )
 
-
 #############################################################
 #PDF method
 #############################################################
@@ -80,7 +79,8 @@ dispois$methods(
 setMethod("dist_pdf",
           signature = signature(m = "dispois"),
           definition = function(m, q = NULL, log = FALSE) {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             if (is.null(q)) q = m$dat
             pdf = dpois(q, pars, log = TRUE) -
               ppois(xmin - 0.5, pars, lower.tail = FALSE, log.p = TRUE)
@@ -101,7 +101,8 @@ setMethod("dist_pdf",
 setMethod("dist_cdf",
           signature = signature(m = "dispois"),
           definition = function(m, q = NULL, lower_tail = TRUE) {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             if (is.null(pars)) stop("Model parameters not set.")
             if (is.null(q)) q = m$dat
 
@@ -143,7 +144,6 @@ setMethod("dist_ll",
           }
 )
 
-
 ########################################################
 #Log-likelihood
 ########################################################
@@ -155,7 +155,6 @@ pois_tail_ll = function(x, rate, xmin) {
   return(joint_prob - n * prob_over)
 }
 
-
 ########################################################
 #Rand number generator
 ########################################################
@@ -165,11 +164,11 @@ pois_tail_ll = function(x, rate, xmin) {
 setMethod("dist_rand",
           signature = signature(m = "dispois"),
           definition = function(m, n = "numeric") {
-            xmin = m$xmin; lambda = m$pars
+            xmin = m$xmin
+            lambda = m$pars
             qpois(runif(n, ppois(xmin - 1, lambda, lower.tail = TRUE), 1), lambda)
           }
 )
-
 
 #############################################################
 #MLE method

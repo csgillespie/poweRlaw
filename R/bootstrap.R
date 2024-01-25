@@ -22,8 +22,8 @@ get_bootstrap_sims = function(m, no_of_sims, seed, threads = 1) {
 }
 
 #' @rdname estimate_xmin
-#' @param seed default \code{NULL}. An integer to be supplied to \code{set.seed}, or \code{NULL}
-#' not to set reproducible seeds. This argument is passed \code{clusterSetRNGStream}.
+#' @param seed default `NULL`. An integer to be supplied to `set.seed`, or `NULL`
+#' not to set reproducible seeds. This argument is passed `clusterSetRNGStream`.
 #' @importFrom parallel clusterSetRNGStream
 #' @importFrom utils packageVersion
 #' @export

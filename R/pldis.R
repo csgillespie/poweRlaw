@@ -52,14 +52,14 @@ dpldis = function(x, xmin, alpha, log = FALSE) {
 #'The algorithm provided in this package generates true
 #'discrete random numbers up to 10,000 then switches to
 #'using continuous random numbers. This switching point can altered by
-#'changing the \code{discrete_max} argument.
+#'changing the `discrete_max` argument.
 #'
 #'In order to get a efficient power-law discrete random number generator, the
 #'algorithm needs to be implemented in C.
 #'@examples
 #' plot(x, ppldis(x, xmin, alpha), type="l", main="Distribution function")
 #' dpldis(1, xmin, alpha)
-ppldis = function(q, xmin, alpha, lower.tail = TRUE) {
+ppldis = function(q, xmin, alpha, lower.tail = TRUE) { #nolint
   xmin = floor(xmin)
   constant = zeta(alpha)
   if (xmin > 1)
@@ -71,8 +71,7 @@ ppldis = function(q, xmin, alpha, lower.tail = TRUE) {
   cdf
 }
 
-
-#' @param n Number of observations. If \code{length(n) > 1}, the length is
+#' @param n Number of observations. If `length(n) > 1`, the length is
 #' taken to be the number required.
 #' @param discrete_max The value when we switch from the discrete random
 #' numbers to a CTN approximation.

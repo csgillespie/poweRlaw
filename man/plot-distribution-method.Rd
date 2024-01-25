@@ -37,6 +37,6 @@ objects. Standard plotting functions, i.e. plot, points, and lines work
 with all distribution objects.
 }
 \note{
-This method does *not* alter the internal state of
+This method does \emph{not} alter the internal state of
 the distribution objects.
 }

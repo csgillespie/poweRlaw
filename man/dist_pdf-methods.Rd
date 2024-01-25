@@ -51,7 +51,7 @@ This function calculates the probability density function (pdf)
 for the current parameters and xmin value.
 }
 \note{
-This method does *not* alter the internal state of
+This method does \emph{not} alter the internal state of
 the distribution objects.
 }
 \examples{
@@ -67,6 +67,6 @@ m$setXmin(7); m$setPars(2)
 dist_pdf(m, 7:10)
 }
 \seealso{
-\code{\link{dist_cdf}}, \code{\link{dist_ll}}
-and \code{\link{dist_rand}}
+\code{\link[=dist_cdf]{dist_cdf()}}, \code{\link[=dist_ll]{dist_ll()}}
+and \code{\link[=dist_rand]{dist_rand()}}
 }

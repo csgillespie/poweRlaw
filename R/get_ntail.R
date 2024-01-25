@@ -4,8 +4,8 @@
 #' current value of xmin. In the Clauset et al, paper this is
 #' called `ntail`.
 #' @inheritParams dist_cdf
-#' @param prop default \code{FALSE}. Return the value as a proportion of the total sample size
-#' @param lower default \code{FALSE}. If \code{TRUE} returns sample size  - ntail
+#' @param prop default `FALSE`. Return the value as a proportion of the total sample size
+#' @param lower default `FALSE`. If `TRUE` returns sample size  - ntail
 #' @examples
 #' ################################################
 #' # Load data and create example object

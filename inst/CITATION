@@ -1,18 +1,19 @@
 citHeader("To cite poweRlaw in publications use:")
 
-citEntry(entry = "Article",
+bibentry(
+  bibtype = "Article",
   title        = "Fitting Heavy Tailed Distributions: The {poweRlaw} Package",
-  author       = personList(as.person("Colin S. Gillespie")),
+  author       = c(person(c("Colin", "S"), "Gillespie")),
   journal      = "Journal of Statistical Software",
   year         = "2015",
   volume       = "64",
   number       = "2",
   pages        = "1--16",
-  url          = "http://www.jstatsoft.org/v64/i02/",
+  url          = "https://doi.org/10.18637/jss.v064.i02",
 
   textVersion  =
   paste("Colin S. Gillespie (2015).",
         "Fitting Heavy Tailed Distributions: The poweRlaw Package.",
         "Journal of Statistical Software, 64(2), 1-16.",
-        "URL http://www.jstatsoft.org/v64/i02/.")
+        "URL https://doi.org/10.18637/jss.v064.i02/.")
 )

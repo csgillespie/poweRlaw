@@ -41,7 +41,6 @@ test_that("Testing estimate_pars function", {
   est = estimate_pars(mt, pars = seq(2.3, 2.7, 0.0001))
   expect_equal(est$pars, 2.53282, tol = 1e-3)
 
-
   ##Log normal
   x = l[["conlnorm"]]
   mt = conlnorm$new(x)

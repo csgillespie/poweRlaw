@@ -1,6 +1,6 @@
 #' @rdname plot-distribution-method
 #' @param x a distribution reference object.
-#' @param ... Further arguments passed to the \code{lines} functions.
+#' @param ... Further arguments passed to the `lines` functions.
 #' @importFrom methods is
 #' @importFrom stats runif
 #' @export

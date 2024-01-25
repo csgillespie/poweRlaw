@@ -1,7 +1,7 @@
 Type: Package
 Package: poweRlaw
 Title: Analysis of Heavy Tailed Distributions
-Version: 0.70.6.9001
+Version: 0.80.0
 Authors@R: 
     person(given = "Colin",
            family = "Gillespie",
@@ -33,7 +33,6 @@ VignetteBuilder:
     knitr
 ByteCompile: true
 Encoding: UTF-8
-RoxygenNote: 7.1.0
 Collate:
     'aaa_all_classes.R'
     'all_generics.R'
@@ -64,3 +63,5 @@ Collate:
     'powerlaw-package.R'
     'show_methods.R'
     'timer.R'
+RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)

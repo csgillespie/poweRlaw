@@ -11,7 +11,6 @@ A list
 \source{
 M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law."
 Contemporary Physics 46, 323 (2005).
-See http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm for further details.
 }
 \description{
 To explore the uncertainity in the model fit, this package provides a
