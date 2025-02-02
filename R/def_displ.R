@@ -42,7 +42,6 @@
 #' @aliases displ-class displ
 #' @docType class
 #' @aliases conpl
-#' @importFrom pracma zeta
 #' @exportClass displ
 #' @export displ
 #' @examples
@@ -119,7 +118,7 @@ displ =
                   if (!missing(x) && !is.null(x)) {
                     if ("estimate_pars" %in% class(x)) x = x$pars
                     internal[["pars"]] <<- x
-                    internal[["constant"]] <<- zeta(x)
+                    internal[["constant"]] <<- pracma::zeta(x)
                   } else internal[["pars"]]
                 }
               ))

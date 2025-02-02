@@ -117,8 +117,6 @@ get_distance_statistic = function(m, xmax = 1e5, distance = "ks") {
 #' There are other possible distance measures that can be calculated. The default is the
 #' Kolomogorov Smirnoff statistic (`KS`). This is equation 3.9 in the CSN paper. The
 #' other measure currently available is `reweight`, which is equation 3.11.
-#' @importFrom parallel makeCluster parSapply
-#' @importFrom parallel clusterExport stopCluster
 #' @note Adapted from Laurent Dubroca's code
 #' @export
 #' @examples

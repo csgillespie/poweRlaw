@@ -43,8 +43,8 @@ get_bootstrap_p_sims = function(m, no_of_sims, seed, threads = 1) {
 #' @rdname estimate_xmin
 #' @export
 bootstrap_p = function(m, xmins = NULL, pars = NULL, xmax = 1e5,
-                        no_of_sims = 100, threads = 1,
-                        seed = NULL, distance = "ks") {
+                       no_of_sims = 100, threads = 1,
+                       seed = NULL, distance = "ks") {
 
   if (is.null(m$getPars())) {
     message("Parameters will be initially estimated via estimate_xmin")
@@ -83,16 +83,16 @@ bootstrap_p = function(m, xmins = NULL, pars = NULL, xmax = 1e5,
 
   ## Start clock and parallel bootstrap
   time$start()
-  cl = makeCluster(threads)
-  on.exit(stopCluster(cl))
+  cl = parallel::makeCluster(threads)
+  on.exit(parallel::stopCluster(cl))
 
   ## Set cluster seed
   if (!is.null(seed)) parallel::clusterSetRNGStream(cl, seed)
 
-  clusterExport(cl, c("dist_rand", "estimate_xmin"))
-  nof = parSapply(cl, 1:no_of_sims,
-                  bootstrap_p_helper, m_cpy,
-                  x_lower, xmins, pars, xmax, distance)
+  parallel::clusterExport(cl, c("dist_rand", "estimate_xmin"))
+  nof = parallel::parSapply(cl, 1:no_of_sims,
+                            bootstrap_p_helper, m_cpy,
+                            x_lower, xmins, pars, xmax, distance)
   ## Stop clock and cluster
   total_time = time$get(stop = TRUE) * threads
 
@@ -107,7 +107,7 @@ bootstrap_p = function(m, xmins = NULL, pars = NULL, xmax = 1e5,
            bootstraps = bootstraps,
            sim_time = total_time[[1]] / no_of_sims,
            seed = seed,
-           package_version = packageVersion("poweRlaw"),
+           package_version = utils::packageVersion("poweRlaw"),
            distance = distance)
   class(l) = "bs_p_xmin"
   l

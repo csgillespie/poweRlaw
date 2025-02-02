@@ -34,7 +34,7 @@ bs1 = bootstrap(m, no_of_sims = 5000, threads = 4, pars = seq(1.6, 2.5, 0.01))
 bs2 = bootstrap(m, no_of_sims = 5000, threads = 4)
 
 ##Plot uncertainty in xmin and alpha
-par(mfrow = c(1, 2))
+graphics::par(mfrow = c(1, 2))
 hist(bs1$bootstraps[, 2], breaks = "fd")
 hist(bs1$bootstraps[, 3], breaks = "fd")
 
