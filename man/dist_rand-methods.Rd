@@ -48,7 +48,7 @@ This function generates \code{n} random numbers using the parameters
 and xmin values found in the associated reference object.
 }
 \note{
-This method does *not* alter the internal state of
+This method does \emph{not} alter the internal state of
 the distribution object.
 }
 \examples{
@@ -64,6 +64,6 @@ m$setXmin(7);m$setPars(2)
 dist_rand(m, 5)
 }
 \seealso{
-\code{\link{dist_cdf}}, \code{\link{dist_pdf}}
-and \code{\link{dist_ll}}
+\code{\link[=dist_cdf]{dist_cdf()}}, \code{\link[=dist_pdf]{dist_pdf()}}
+and \code{\link[=dist_ll]{dist_ll()}}
 }

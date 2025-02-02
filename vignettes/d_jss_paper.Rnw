@@ -1,20 +1,20 @@
 %\VignetteIndexEntry{4. Journal of Statistical Software Article}
-%\VignetteEngine{Sweave}
+%\VignetteEngine{utils::Sweave}
 \documentclass[article]{jss}
 \pdfoutput=1
-\usepackage{thumbpdf} 
+\usepackage{thumbpdf}
 \graphicspath{{Figures/}}
 
 \newcommand{\xmin}{x_{\min}}
 \usepackage{amsmath}
-\usepackage[utf8]{inputenc} 
+\usepackage[utf8]{inputenc}
 \usepackage{booktabs}
 
 \author{Colin S. Gillespie\\Newcastle University}
 \Plainauthor{Colin S. Gillespie}
 
 \title{Fitting Heavy Tailed Distributions: The \pkg{poweRlaw} Package}
-\Plaintitle{Fitting Heavy Tailed Distributions: The poweRlaw Package} 
+\Plaintitle{Fitting Heavy Tailed Distributions: The poweRlaw Package}
 \Shorttitle{\pkg{poweRlaw}: Fitting Heavy Tailed Distributions}
 
 \Abstract{
@@ -27,11 +27,11 @@
   functions for fitting, comparing and visualizing heavy tailed
   distributions. Overall, it provides a principled approach to power
   law fitting.
-} 
+}
 
 \Keywords{power laws, heavy tailed, fitting, estimation, \proglang{R}, Zipf, Pareto}
 \Plainkeywords{power laws, heavy tailed, fitting, estimation, R, Zipf, Pareto}
- 
+
 \Volume{64}
 \Issue{2}
 \Month{February}
@@ -102,7 +102,7 @@ the package provides an easy to use interface to the techniques proposed by
 \cite{Clauset2009}. Functions are provided for plotting, comparing distributions
 and estimating parameter uncertainty.
 
-\begin{figure}[t!] 
+\begin{figure}[t!]
   \centering
   \includegraphics[width=\textwidth, trim = 0 0 0 0, clip]{figure1}
   \vspace*{-0.5cm}
@@ -157,7 +157,7 @@ continuous power law we have
 \E[X^m] = \int_{\xmin}^{\infty} x^m p(x)\, dx = \frac{\alpha - 1}{\alpha - 1 -m}
 \xmin^m \;.
 \]
-So when 
+So when
 \begin{itemize}
 \item $1< \alpha \le 2$, all moments diverge, i.e., $\E[X] = \infty$;
 \item $2 < \alpha \le 3$, all second and higher-order moments diverge,
@@ -297,7 +297,7 @@ This example investigates the frequency of occurrence of unique words in the
 novel Moby Dick by Herman Melville \citep{Clauset2009,Newman2005}. The data can
 be downloaded from
 \url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm}
-or directly loaded from the \pkg{poweRlaw} package 
+or directly loaded from the \pkg{poweRlaw} package
 \begin{Schunk}
 \begin{Sinput}
 R> data("moby", package = "poweRlaw")
@@ -355,8 +355,8 @@ $value
 [1] 14873
 
 $counts
-function gradient 
-       5        5 
+function gradient
+       5        5
 
 $convergence
 [1] 0
@@ -420,7 +420,7 @@ R> lines(pl_m, col = 2)
 \end{Sinput}
 \end{Schunk}
 adds the fitted distribution (to get Figure~\ref{F1}a). When calling the
-\code{plot} and \code{lines} function, the data plotted is 
+\code{plot} and \code{lines} function, the data plotted is
 invisibly returned, i.e.,
 \begin{Schunk}
 \begin{Sinput}
@@ -460,12 +460,12 @@ and add the corresponding line to the plot
 R> lines(ln_m, col = 3)
 \end{Sinput}
 \end{Schunk}
-giving Figure~\ref{F1}a. 
+giving Figure~\ref{F1}a.
 
 Figure~\ref{F1} gives example data sets, with associated power law and log
 normal fits. Plotting the data in this manner has two clear benefits. First, it
 highlights how much data is being discarded when fitting $\xmin$. Second,
-it provides an easy comparison with other distributions. 
+it provides an easy comparison with other distributions.
 
 
 \subsection{Parameter uncertainty}
@@ -550,7 +550,7 @@ samples displayed. When \code{trim = 0}, all iterations are
 displayed. When \code{trim = 0.1}, we only display the final 90\% of
 data.
 \begin{figure}[t!]
-  \centering 
+  \centering
   \includegraphics[width=\textwidth, trim = 0 0 0 0, clip]{figure3}
   \vspace*{-0.5cm}
   \caption{Characterizing uncertainty in parameter values using five thousand
@@ -563,7 +563,7 @@ We can also construct histograms of the parameters
 \begin{Schunk}
 \begin{Sinput}
 R> hist(bs$bootstraps[, 2], breaks = "fd")
-R> hist(bs$bootstraps[, 3], breaks = "fd") 
+R> hist(bs$bootstraps[, 3], breaks = "fd")
 \end{Sinput}
 \end{Schunk}
 
@@ -593,7 +593,7 @@ heavy tailed distribution. The \pkg{poweRlaw} package provides two methods for
 testing the power law hypotheses.
 
 \begin{figure}[t!]
-\centering 
+\centering
 \includegraphics[width=\textwidth]{figure4}
  \vspace*{-0.5cm}
  \caption{Results from the bootstrap procedure for determining the plausibility
@@ -646,7 +646,7 @@ R> ln_m$setXmin(7)
 Next we estimate the parameters (conditional on $\xmin=7$)
 \begin{Schunk}
 \begin{Sinput}
-R> est <- estimate_pars(ln_m) 
+R> est <- estimate_pars(ln_m)
 \end{Sinput}
 \end{Schunk}
 and update the model
@@ -682,7 +682,7 @@ R> pl_m <- displ$new(moby)
 \end{Schunk}
 to represent the discrete power law distribution. This particular object has
 class `\code{displ}' and also inherits the `\code{discrete\_distribution}' class.
-Other available distributions are given in Table~\ref{T2}. 
+Other available distributions are given in Table~\ref{T2}.
 \begin{table}[t!]
    \centering
   \begin{tabular}{@{} llc @{}}
@@ -703,7 +703,7 @@ Other available distributions are given in Table~\ref{T2}.
 \end{table}
 
 \begin{figure}[t!]
-\centering 
+\centering
 \includegraphics[width=0.8\textwidth]{figure5}
 \caption{The (a) probability mass function and (b) probability distribution
   function for the discrete power law, where $\xmin=1$ and $\alpha$ as indicated.}\label{F5}
@@ -720,7 +720,7 @@ classes\footnote{See \code{\mbox{?setRefClass}} for further details on
   procedures. This will differ between distribution objects. In general, the
   user will not interact with the \code{internal} field.
 \end{itemize}
-Using this particular object orientated framework has three distinct benefits. 
+Using this particular object orientated framework has three distinct benefits.
 \begin{enumerate}
 \item After fitting a single distribution, fitting all other distributions
   follows an almost identical route.

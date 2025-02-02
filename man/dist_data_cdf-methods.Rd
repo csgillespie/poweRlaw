@@ -41,7 +41,7 @@ vector \code{xmin:xmax} is
 very quick. Also, when bootstrapping very large values can be generated.
 }
 \note{
-This method does *not* alter the internal state of
+This method does \emph{not} alter the internal state of
 the distribution objects.
 }
 \examples{

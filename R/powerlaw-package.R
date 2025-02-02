@@ -5,15 +5,12 @@
 #' tailed distributions. Overall, it provides a principled approach to fitting power laws to data.
 #'
 #' The code developed in this package has
-#' been heavily influenced from the python and R code found at:
-#' \url{http://tuvalu.santafe.edu/~aaronc/powerlaws/} .
-#' In particular, the R code of Laurent Dubroca and Cosma Shalizi.
+#' been heavily influenced  by the R code of Laurent Dubroca and Cosma Shalizi.
 #' @name poweRlaw-package
 #' @references A. Clauset, C.R. Shalizi, and M.E.J. Newman,
 #' "Power-law distributions in empirical data" SIAM Review 51(4), 661-703 (2009).
 #' @aliases poweRlaw powerlaw powerlaw-package
-#' @docType package
 #' @author \email{colin.gillespie@@newcastle.ac.uk}
 #' @keywords package
-#' @seealso \url{https://github.com/csgillespie/poweRlaw}
+#' @seealso <https://github.com/csgillespie/poweRlaw>
 NULL

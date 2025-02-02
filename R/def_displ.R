@@ -12,13 +12,13 @@
 #' \item{conpl}{Continuous power-law}
 #' \item{conlnorm}{Continuous log-normal}
 #' \item{conexp}{Continuous exponential}}
-#' Each object inherits the \code{discrete_distribution} or the \code{ctn_distribution} class.
+#' Each object inherits the `discrete_distribution` or the `ctn_distribution` class.
 #'
 #' @section Fields:
 #'
 #' Each distribution object has four fields. However, the object
 #' is typically created by passing
-#' data, to the \code{dat} field. Each field has standard
+#' data, to the `dat` field. Each field has standard
 #' setters and getters. See examples below
 #' \describe{
 #' \item{dat}{The data set.}
@@ -29,12 +29,12 @@
 #' Note the lognormal distribution has two parameters.}
 #' \item{internal}{A list. This list differs between objects and shouldn't be altered.}}
 #' @param ... The object is typically created by passing
-#' data using the \code{dat} field.
+#' data using the `dat` field.
 #' Each field has standard setters and getters.
 #'
 #' @section Copying objects:
 #' Distribution objects are reference classes. This means that when we copy
-#' objects, we need to use the \code{copy} method, i.e. \code{obj$copy()}.
+#' objects, we need to use the `copy` method, i.e. `obj$copy()`.
 #' See the examples below for further details.
 #'
 #' @return a reference object
@@ -158,7 +158,8 @@ displ$methods(
 setMethod("dist_pdf",
           signature = signature(m = "displ"),
           definition = function(m, q = NULL, log = FALSE) {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             if (is.null(q)) q = m$dat
             q = q[q >= m$xmin]
             pdf = dpldis(q[q >= m$xmin], m$xmin, m$pars, TRUE)
@@ -175,7 +176,8 @@ setMethod("dist_cdf",
           signature = signature(m = "displ"),
           definition = function(m, q = NULL, lower_tail = TRUE) {
 
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             if (is.null(pars)) stop("Model parameters not set.")
 
             if (is.null(q)) q = m$dat
@@ -189,7 +191,8 @@ setMethod("dist_all_cdf",
           signature = signature(m = "displ"),
           definition = function(m, lower_tail = TRUE, xmax = 1e5) {
 
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             if (is.null(pars)) stop("Model parameters not set.")
 
             inter = m$internal

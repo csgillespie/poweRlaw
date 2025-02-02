@@ -22,19 +22,17 @@ dplcon = function(x, xmin, alpha, log = FALSE) {
   pdf
 }
 
-
 #'@rdname dplcon
 #'@export
 #'@examples
 #' plot(x, pplcon(x, xmin, alpha), type="l", main="Distribution function")
-pplcon = function(q, xmin, alpha, lower.tail = TRUE) {
+pplcon = function(q, xmin, alpha, lower.tail = TRUE) { #nolint
   cdf = 1 - (q / xmin) ^ (-alpha + 1)
   if (!lower.tail)
     cdf = 1 - cdf
   cdf[q < round(xmin)] = 0
   cdf
 }
-
 
 #'@rdname dplcon
 #'@note The discrete random number generator is very inefficient

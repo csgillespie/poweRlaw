@@ -1,4 +1,5 @@
 Version: 1.0
+ProjectId: ca1af107-a4b0-4351-96f1-05f26ffac295
 
 RestoreWorkspace: Default
 SaveWorkspace: Default
@@ -16,6 +17,5 @@ AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
 
 BuildType: Package
-PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
 PackageRoxygenize: rd,collate,namespace

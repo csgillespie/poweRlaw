@@ -1,6 +1,6 @@
 #' @title Estimates the distributions using mle.
 #'
-#' @description \code{estimate_pars} estimates the distribution's
+#' @description `estimate_pars` estimates the distribution's
 #' parameters using their maximum likelihood estimator. This estimate
 #' is conditional on the current xmin value.
 #' @inheritParams estimate_xmin
@@ -12,7 +12,7 @@
 #' estimate_xmin(m)
 #' m$setXmin(7)
 #' estimate_pars(m)
-estimate_pars = function(m, pars=NULL) {
+estimate_pars = function(m, pars = NULL) {
   if (is.null(m$getDat())) {
     l = list(pars = NA, ll = NA)
     class(l) = "estimate_pars"
@@ -20,15 +20,14 @@ estimate_pars = function(m, pars=NULL) {
     l = m$mle(set = FALSE)
   } else {
     m$pars = pars
-    L = dist_ll(m)
-    I = which.max(L)
+    ll = dist_ll(m)
+    i = which.max(ll)
 
-    if (is.vector(pars) && m$no_pars == 1L) par = pars[I]
+    if (is.vector(pars) && m$no_pars == 1L) par = pars[i]
     else if (is.vector(pars)) par = pars
-    else par = unlist(pars[I, ], use.names = FALSE)
-    l = list(pars = par, ll = L[I])
+    else par = unlist(pars[i, ], use.names = FALSE)
+    l = list(pars = par, ll = ll[i])
     class(l) = "estimate_pars"
-
   }
   return(l)
 }

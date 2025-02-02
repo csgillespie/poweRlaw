@@ -11,19 +11,19 @@ setGeneric("points")
 #'
 #' This is a generic function for calculating
 #' the cumulative distribution function (cdf) of
-#' distribution objects. This is similar to base R's \code{pnorm}
+#' distribution objects. This is similar to base R's `pnorm`
 #' for the normal distribution.
-#' The \code{dist_cdf} function calculates the
+#' The `dist_cdf` function calculates the
 #' cumulative probability distribution for the
 #' current parameters and xmin value.
 #'
 #' @param m a distribution object.
 #' @param q a vector values where the function will be evaluated.
-#' If \code{q} is \code{NULL} (default), then the data values
+#' If `q` is `NULL` (default), then the data values
 #' will be used.
-#' @param lower_tail logical; if \code{TRUE} (default),
+#' @param lower_tail logical; if `TRUE` (default),
 #' probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.
-#' @param xmax default \code{1e5}. The maximum x value calculated when working out the CDF.
+#' @param xmax default `1e5`. The maximum x value calculated when working out the CDF.
 #' @docType methods
 #' @exportMethod dist_cdf
 #' @note This method does *not* alter the internal state of
@@ -48,13 +48,13 @@ setGeneric("points")
 #' ##########################################
 #' dist_cdf(m)
 setGeneric("dist_cdf",
-           function(m, q=NULL, lower_tail=FALSE)
+           function(m, q = NULL, lower_tail = FALSE)
              standardGeneric("dist_cdf"))
 
 #' @export
 #' @rdname dist_data_cdf-methods
 setGeneric("dist_all_cdf",
-           function(m, lower_tail=TRUE, xmax=1e5)
+           function(m, lower_tail = TRUE, xmax = 1e5)
              standardGeneric("dist_all_cdf"))
 
 #' The data cumulative distribution function
@@ -82,18 +82,18 @@ setGeneric("dist_all_cdf",
 #' ##########################################
 #' dist_data_cdf(m)
 setGeneric("dist_data_cdf",
-           function(m, lower_tail=TRUE, xmax=1e5)
+           function(m, lower_tail = TRUE, xmax = 1e5)
              standardGeneric("dist_data_cdf"))
 
 #' @export
 #' @rdname dist_data_cdf-methods
-#' @description The functions \code{dist_data_all_cdf} and \code{dist_all_cdf} are only
+#' @description The functions `dist_data_all_cdf` and `dist_all_cdf` are only
 #' available for discrete distributions.
 #' Their main purpose is to optimise the bootstrap procedure, where generating a
-#' vector \code{xmin:xmax} is
+#' vector `xmin:xmax` is
 #' very quick. Also, when bootstrapping very large values can be generated.
 setGeneric("dist_data_all_cdf",
-           function(m, lower_tail=TRUE, xmax=1e5)
+           function(m, lower_tail = TRUE, xmax = 1e5)
              standardGeneric("dist_data_all_cdf"))
 
 #' The probability density function (pdf)
@@ -103,11 +103,11 @@ setGeneric("dist_data_all_cdf",
 #' for the current parameters and xmin value.
 #'
 #' @inheritParams dist_cdf
-#' @param log default \code{FALSE}. If \code{TRUE}, probabilities are given as log(p).
+#' @param log default `FALSE`. If `TRUE`, probabilities are given as log(p).
 #' @return The probability density (or mass) function
 #'
-#' @seealso \code{\link{dist_cdf}}, \code{\link{dist_ll}}
-#' and \code{\link{dist_rand}}
+#' @seealso [dist_cdf()], [dist_ll()]
+#' and [dist_rand()]
 #' @note This method does *not* alter the internal state of
 #' the distribution objects.
 #' @exportMethod dist_pdf
@@ -126,7 +126,7 @@ setGeneric("dist_data_all_cdf",
 #' ##########################################
 #' dist_pdf(m, 7:10)
 setGeneric("dist_pdf",
-           function(m, q=NULL, log=FALSE)
+           function(m, q = NULL, log = FALSE)
              standardGeneric("dist_pdf"))
 
 #' The log-likelihood function
@@ -138,8 +138,8 @@ setGeneric("dist_pdf",
 #' @inheritParams dist_cdf
 #' @return The log-likelihood
 #'
-#' @seealso \code{\link{dist_cdf}},  \code{\link{dist_pdf}}
-#' and \code{\link{dist_rand}}
+#' @seealso [dist_cdf()],  [dist_pdf()]
+#' and [dist_rand()]
 #' @note This method does *not* alter the internal state of
 #' the distribution objects.
 #' @exportMethod dist_ll
@@ -166,15 +166,15 @@ setGeneric("dist_ll",
 #'
 #' This is generic function for generating random numbers
 #' from the underlying distribution of the distribution reference objects.
-#' This function generates \code{n} random numbers using the parameters
+#' This function generates `n` random numbers using the parameters
 #' and xmin values found in the associated reference object.
 #'
 #' @inheritParams dist_cdf
 #' @param n number of observations to be generated.
 #' @return n random numbers
 #'
-#' @seealso \code{\link{dist_cdf}}, \code{\link{dist_pdf}}
-#' and \code{\link{dist_ll}}
+#' @seealso [dist_cdf()], [dist_pdf()]
+#' and [dist_ll()]
 #' @note This method does *not* alter the internal state of
 #' the distribution object.
 #' @exportMethod dist_rand

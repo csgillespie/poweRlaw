@@ -109,8 +109,7 @@ Kolomogorov Smirnoff statistic (\code{KS}). This is equation 3.9 in the CSN pape
 other measure currently available is \code{reweight}, which is equation 3.11.
 }
 \note{
-Adapted from Laurent Dubroca's code found at
-\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r}
+Adapted from Laurent Dubroca's code
 }
 \examples{
 ###################################################

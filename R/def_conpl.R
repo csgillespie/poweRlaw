@@ -63,7 +63,6 @@ conpl$methods(
   )
 )
 
-
 #############################################################
 #PDF method
 #############################################################
@@ -72,10 +71,12 @@ conpl$methods(
 setMethod("dist_pdf",
           signature = signature(m = "conpl"),
           definition = function(m, q = NULL, log = FALSE) {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             if (is.null(q)) {
               q = m$dat
-              n = m$internal[["n"]]; N = length(q)
+              n = m$internal[["n"]]
+              N = length(q)
               q = q[(N - n + 1):N]
             } else {
               q[q >= xmin]
@@ -94,7 +95,8 @@ setMethod("dist_pdf",
 setMethod("dist_cdf",
           signature = signature(m = "conpl"),
           definition = function(m, q = NULL, lower_tail = TRUE) {
-            xmin = m$xmin;  pars = m$pars
+            xmin = m$xmin
+            pars = m$pars
             if (is.null(pars)) stop("Model parameters not set.")
             if (is.null(q))  q = m$dat
             pplcon(q, xmin, pars, lower_tail)
@@ -106,7 +108,8 @@ setMethod("dist_cdf",
 setMethod("dist_all_cdf",
           signature = signature(m = "conpl"),
           definition = function(m, lower_tail = TRUE, xmax = 1e5) {
-            xmin = m$xmin; pars = m$pars
+            xmin = m$xmin
+            pars = m$pars
             if (is.null(pars)) stop("Model parameters not set.")
 
             xmax = min(max(m$dat), xmax)
@@ -145,7 +148,6 @@ con_pl_ll = function(x, pars, xmin) {
   return(joint_prob - n * prob_over)
 }
 
-
 ########################################################
 #Rand number generator
 ########################################################
@@ -171,7 +173,6 @@ conpl$methods(
     } else {
       theta_0 = initialise
     }
-
 
     x = dat[dat >= xmin]
     negloglike = function(par) {

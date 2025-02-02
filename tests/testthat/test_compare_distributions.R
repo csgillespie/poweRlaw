@@ -3,7 +3,8 @@ test_that("Testing Vuong's", {
   data(moby)
   xmin = 2
   ##CTN PL vs Exp
-  m1 = conpl$new(moby); m1$setXmin(xmin)
+  m1 = conpl$new(moby)
+  m1$setXmin(xmin)
   m1$setPars(2.078)
 
   m2 = conexp$new(moby)
@@ -15,7 +16,6 @@ test_that("Testing Vuong's", {
   expect_equal(v$test_statistic, 20.3, tol = 1e-3)
   expect_equal(v$p_one_sided, 0, tol = 1e-4)
   expect_equal(v$p_two_sided, 0, tol = 1e-4)
-
 
   ##CTN PL vs lognormal
   m3 = conlnorm(moby)

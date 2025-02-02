@@ -1,6 +1,6 @@
 #' @rdname plot-distribution-method
 #' @param x a distribution reference object.
-#' @param ... Further arguments passed to the \code{lines} functions.
+#' @param ... Further arguments passed to the `lines` functions.
 #' @importFrom methods is
 #' @importFrom stats runif
 #' @export
@@ -29,12 +29,10 @@ setMethod("lines",
                 dif = x$internal[["values"]] - xmin
                 upper = which(dif > 0)[1]
                 lower = max(upper - 1, 1)
-                x_dif = x$internal[["values"]][lower] -
-                  x$internal[["values"]][upper]
+                x_dif = x$internal[["values"]][lower] - x$internal[["values"]][upper]
                 y_dif = d_cdf[lower] - d_cdf[upper]
 
-                scale = d_cdf[lower] +
-                  y_dif * (xmin - x$internal[["values"]][lower]) / x_dif
+                scale = d_cdf[lower] + y_dif * (xmin - x$internal[["values"]][lower]) / x_dif
               } else {
                 dif = x$internal[["dat"]] - xmin
                 upper = which(dif >= 0)[1]

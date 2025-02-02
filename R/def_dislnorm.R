@@ -78,7 +78,8 @@ dislnorm$methods(
 setMethod("dist_pdf",
           signature = signature(m = "dislnorm"),
           definition = function(m, q = NULL, log = FALSE) {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             if (is.null(q)) q = m$dat
 
             l1 = plnorm(q - 0.5, pars[1], pars[2], lower.tail = FALSE, log.p = TRUE)
@@ -105,7 +106,8 @@ setMethod("dist_pdf",
 setMethod("dist_cdf",
           signature = signature(m = "dislnorm"),
           definition = function(m, q = NULL, lower_tail = TRUE) {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             if (is.null(pars)) stop("Model parameters not set.")
             if (is.null(q)) q = m$dat
 
@@ -160,7 +162,8 @@ dis_lnorm_tail_ll = function(xv, xf, pars, xmin) {
   if (is.vector(pars)) pars = t(as.matrix(pars))
   n = sum(xf)
   p = function(par) {
-    m_log = par[1]; sd_log = par[2]
+    m_log = par[1]
+    sd_log = par[2]
     plnorm(xv - 0.5, m_log, sd_log, lower.tail = FALSE) -
       plnorm(xv + 0.5, m_log, sd_log, lower.tail = FALSE)
   }
@@ -184,10 +187,12 @@ dis_lnorm_tail_ll = function(xv, xf, pars, xmin) {
 setMethod("dist_rand",
           signature = signature(m = "dislnorm"),
           definition = function(m, n = "numeric") {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             lower = xmin - 0.5
             rns = numeric(n)
-            i = 0; N = 0
+            i = 0
+            N = 0
             ## n-0.5 to avoid floating point sillyness.
             while (i < (n - 0.5)) {
               ## Since we reject RNs less than lower=xmin - 0.5 we should simulate >> n rns

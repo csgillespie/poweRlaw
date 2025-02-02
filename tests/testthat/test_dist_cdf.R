@@ -2,7 +2,8 @@ test_that("Testing dist_cdf function", {
 
   ##Discrete power-law
   x = c(1, 1, 3)
-  mt = displ$new(x); mt$setPars(2)
+  mt = displ$new(x)
+  mt$setPars(2)
   expect_equal(dist_cdf(mt),
                c(0.6079, 0.6079, 0.8275),
                tol = 1e-4)
@@ -22,7 +23,8 @@ test_that("Testing dist_cdf function", {
 
   ##Discrete log-normal
   x = c(1, 1, 3)
-  mt = dislnorm$new(x); mt$setPars(c(1, 1))
+  mt = dislnorm$new(x)
+  mt$setPars(c(1, 1))
   cdf1 = (plnorm(1.5, 1, 1) - plnorm(0.5, 1, 1)) / (1 - plnorm(0.5, 1, 1))
   cdf2 = (plnorm(2.5, 1, 1) - plnorm(0.5, 1, 1)) / (1 - plnorm(0.5, 1, 1))
   cdf3 = (plnorm(3.5, 1, 1) - plnorm(0.5, 1, 1)) / (1 - plnorm(0.5, 1, 1))
@@ -41,7 +43,8 @@ test_that("Testing dist_cdf function", {
 
   ##Discrete Poisson
   x = c(1, 1, 3)
-  mt = dispois$new(x); mt$setPars(1)
+  mt = dispois$new(x)
+  mt$setPars(1)
   cdf1 = dpois(1, 1) / (1 - dpois(0, 1))
   cdf2 = sum(dpois(1:2, 1)) / (1 - dpois(0, 1))
   cdf3 = sum(dpois(1:3, 1)) / (1 - dpois(0, 1))
@@ -60,7 +63,8 @@ test_that("Testing dist_cdf function", {
 
   ##Discrete Exp
   x = c(1, 1, 3)
-  mt = disexp$new(x); mt$setPars(1)
+  mt = disexp$new(x)
+  mt$setPars(1)
   cdf1 = (pexp(1.5, 1, 1) - pexp(0.5, 1, 1)) / (1 - pexp(0.5, 1, 1))
   cdf2 = (pexp(2.5, 1, 1) - pexp(0.5, 1, 1)) / (1 - pexp(0.5, 1, 1))
   cdf3 = (pexp(3.5, 1, 1) - pexp(0.5, 1, 1)) / (1 - pexp(0.5, 1, 1))
@@ -77,15 +81,14 @@ test_that("Testing dist_cdf function", {
   cdf3 = cdf3 = (pexp(3.5, 1, 1) - pexp(2.5, 1, 1)) / (1 - pexp(2.5, 1, 1))
   expect_equal(dist_cdf(mt), c(0, 0, cdf3), tol = 1e-4)
 
-
-
   ################################
   #CTN Distributions
   ################################
   ##Power law
   x = c(2, 2, 4)
-  mt = conpl$new(x);
-  mt$setXmin(1); mt$setPars(2)
+  mt = conpl$new(x)
+  mt$setXmin(1)
+  mt$setPars(2)
   expect_equal(dist_cdf(mt), c(0.5, 0.5, 0.75), tol = 1e-4)
   expect_equal(dist_all_cdf(mt),
                c(0, 0.5, 2 / 3, 0.75), tol = 1e-4)
@@ -99,8 +102,9 @@ test_that("Testing dist_cdf function", {
 
   ##Log normal
   x = c(2, 2, 4)
-  mt = conlnorm$new(x);
-  mt$setXmin(1); mt$setPars(c(1, 1))
+  mt = conlnorm$new(x)
+  mt$setXmin(1)
+  mt$setPars(c(1, 1))
   cdf2 = (plnorm(2, 1, 1) - plnorm(1, 1, 1)) / (1 - plnorm(1, 1, 1))
   cdf3 = (plnorm(3, 1, 1) - plnorm(1, 1, 1)) / (1 - plnorm(1, 1, 1))
   cdf4 = (plnorm(4, 1, 1) - plnorm(1, 1, 1)) / (1 - plnorm(1, 1, 1))
@@ -118,8 +122,9 @@ test_that("Testing dist_cdf function", {
 
   ##Exponential
   x = c(2, 2, 4)
-  mt = conexp$new(x);
-  mt$setXmin(1); mt$setPars(c(1))
+  mt = conexp$new(x)
+  mt$setXmin(1)
+  mt$setPars(c(1))
   cdf2 = (pexp(2, 1) - pexp(1, 1)) / (1 - pexp(1, 1))
   cdf3 = (pexp(3, 1) - pexp(1, 1)) / (1 - pexp(1, 1))
   cdf4 = (pexp(4, 1) - pexp(1, 1)) / (1 - pexp(1, 1))

@@ -68,7 +68,8 @@ conweibull$methods(
 setMethod("dist_pdf",
           signature = signature(m = "conweibull"),
           definition = function(m, q = NULL, log = FALSE) {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             if (is.null(q)) q = m$dat
 
             pdf = dweibull(q, pars[1], pars[2], log = TRUE) -
@@ -91,7 +92,8 @@ setMethod("dist_pdf",
 setMethod("dist_cdf",
           signature = signature(m = "conweibull"),
           definition = function(m, q = NULL, lower_tail = TRUE) {
-            pars = m$pars; xmin = m$xmin
+            pars = m$pars
+            xmin = m$xmin
             if (is.null(pars)) stop("Model parameters not set.")
             if (is.null(q)) q = m$dat
 
@@ -129,7 +131,8 @@ setMethod("dist_ll",
           signature = signature(m = "conweibull"),
           definition = function(m) {
             q = m$dat
-            n = m$internal[["n"]]; N = length(q)
+            n = m$internal[["n"]]
+            N = length(q)
             q = q[(N - n + 1):N]
 
             conweibull_tail_ll(q, m$getPars(), m$getXmin())
@@ -151,7 +154,6 @@ conweibull_tail_ll = function(x, pars, xmin) {
 
 }
 
-
 ########################################################
 #Rand number generator
 ########################################################
@@ -160,9 +162,11 @@ conweibull_tail_ll = function(x, pars, xmin) {
 setMethod("dist_rand",
           signature = signature(m = "conweibull"),
           definition = function(m, n = "numeric") {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             rns = numeric(n)
-            i = 0; N = 0
+            i = 0
+            N = 0
             ## n-0.5 to avoid floating point sillyness.
             while (i < (n - 0.5)) {
               ## Since we reject RNs less than xmin we should simulate N > n rns

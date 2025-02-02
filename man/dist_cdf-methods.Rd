@@ -80,7 +80,7 @@ cumulative probability distribution for the
 current parameters and xmin value.
 }
 \note{
-This method does *not* alter the internal state of
+This method does \emph{not} alter the internal state of
 the distribution objects.
 }
 \examples{

@@ -67,7 +67,6 @@ palette(c(rgb(170, 93, 152, maxColorValue = 255),
 
 <<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
 #if(!file.exists("blackouts.txt"))
-#  download.file("http://goo.gl/BsqnP", destfile="blackouts.txt")
 blackouts = c(570, 210.882, 190, 46, 17, 360, 74, 19, 460, 65, 18.351, 25,
 25, 63.5, 1, 9, 50, 114.5, 350, 25, 50, 25, 242.91, 55, 164.5,
 877, 43, 1140, 464, 90, 2100, 385, 95.63, 166, 71, 100, 234,
@@ -89,10 +88,8 @@ blackouts = c(570, 210.882, 190, 46, 17, 360, 74, 19, 460, 65, 18.351, 25,
 
 \section{Discrete data: The Moby Dick data set}
 
-The Moby Dick data set contains the frequency of unique words in the novel Moby Dick by Herman Melville. This data set can be downloaded from
-\begin{center}
-\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm}
-\end{center}
+The Moby Dick data set contains the frequency of unique words in the novel Moby Dick by Herman Melville. This data set
+was originally downloaded from Clausett's website, but this no longer resolves.
 \noindent or loaded directly
 <<dis_data>>=
 library("poweRlaw")

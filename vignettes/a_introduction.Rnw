@@ -137,11 +137,7 @@ bs_p = bootstrap_p_moby
 
 This example investigates the frequency of occurrence of unique words in the
 novel Moby Dick by Herman Melville (see \cite{clauset2009,newman2005}). The data
-can be downloaded from
-\begin{center}
-\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/data.htm}
-\end{center}
-\noindent or loaded directly
+can be loaded directly
 <<example_word>>=
 data("moby")
 @
@@ -418,7 +414,7 @@ All distribution objects have a number of methods available. A list of methods i
 \end{table}
 
 <<echo=FALSE, results='hide', message=FALSE, warning=FALSE, error=FALSE>>=
-#download.file("http://goo.gl/BsqnP", destfile="blackouts.txt")
+# Downloaded from Clausetts webiste - no longer there
 blackouts = c(570, 210.882, 190, 46, 17, 360, 74, 19, 460, 65, 18.351, 25,
 25, 63.5, 1, 9, 50, 114.5, 350, 25, 50, 25, 242.91, 55, 164.5,
 877, 43, 1140, 464, 90, 2100, 385, 95.63, 166, 71, 100, 234,
@@ -440,7 +436,7 @@ blackouts = c(570, 210.882, 190, 46, 17, 360, 74, 19, 460, 65, 18.351, 25,
 
 \section{Loading data}
 
-Typically data is stored in a csv or text file. To use this data, we load it in the usual way\footnote{The blackouts data set can be obtained from Clauset's website: \mbox{\url{http://goo.gl/BsqnP}}}
+Typically data is stored in a csv or text file. To use this data, we load it in the usual way\footnote{The blackouts data set was obtained from Clauset's website, but that no longer works.}
 <<loading_data,eval=FALSE>>=
 blackouts = read.table("blackouts.txt")$V1
 @
@@ -459,57 +455,6 @@ lines(m_bl, col = 2)
 @
 \caption{CDF plot of the blackout dataset with line of best fit. Since the minimum value of $x$ is large, we fit a continuous power-law as this is more efficient.}\label{F6}
 \end{figure}
-
-\section{Comparison with the \texttt{plfit} script}
-
-\subsection{The discrete case}
-
-Other implementations of estimating the lower bound can be found at
-\begin{center}
-\url{http://tuvalu.santafe.edu/~aaronc/powerlaws/}
-\end{center}
-However, this depends on the \cc{VGAM} package, which is no longer available.
-
-The script for estimating $\xmin$ can be loaded using
-<<eval=FALSE>>=
-source("http://tuvalu.santafe.edu/~aaronc/powerlaws/plfit.r")
-@
-\noindent The results are directly comparable to the \cc{poweRlaw} package. For example, consider the Moby Dick data set again. Running
-<<eval=FALSE>>=
-plfit_res = plfit(moby)
-@
-\noindent gives slightly different than those obtained by the \cc{poweRlaw} package. This is because the \cc{plfit} by default does a parameter scan over the range
-\[
-1.50, 1.51, 1.52, \ldots, 2.49, 2.50
-\]
-\noindent To exactly replicate the results, we could use
-<<eval=FALSE>>=
-estimate_xmin(m_m, pars = seq(1.5, 2.5, 0.01))
-@
-\noindent Currently, there is a bug with the \cc{plfit} script when $\xmin = 1$. This is easily demonstrated via a simulation
-<<eval = FALSE>>=
-x = rpldis(1000, 1, 2)
-plfit(x)
-@
-
-
-\subsection{The continuous case}
-
-The \texttt{plfit} script also fits continuous power-laws. Again the results are comparable. For example, suppose we have one thousand random numbers from a continuous power-law distributions with parameters $\alpha = 2.5$ and $\xmin = 10.0$
-<<the_ctn_case, eval = FALSE>>=
-r = rplcon(1000, 10, 2.5)
-@
-\noindent The \texttt{plfit} automatically detects if the data is continuous
-<<eval = FALSE>>=
-plfit(r)
-@
-\noindent Fitting with the \texttt{poweRlaw} package gives approximately the same values
-<<eval = FALSE>>=
-m_r = conpl$new(r)
-(est = estimate_xmin(m_r))
-m_r$setXmin(est)
-@
-
 
 
 \bibliography{poweRlaw}

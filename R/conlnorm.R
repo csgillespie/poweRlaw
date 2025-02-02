@@ -17,7 +17,9 @@ conlnorm =
                     internal[["cum_n"]] <<- rev(seq_along(d))
                     internal[["dat"]] <<- d
                     xmin <<- d[1]
-                  } else internal[["dat"]]
+                  } else {
+                    internal[["dat"]]
+                  }
                 },
                 xmin = function(x) {
                   if (!missing(x) && !is.null(x)) {
@@ -36,7 +38,9 @@ conlnorm =
                   if (!missing(x) && !is.null(x)) {
                     if ("estimate_pars" %in% class(x)) x = x$pars
                     internal[["pars"]] <<- x
-                  } else internal[["pars"]]
+                  } else {
+                    internal[["pars"]]
+                  }
                 }
               )
   )
@@ -68,7 +72,8 @@ conlnorm$methods(
 setMethod("dist_pdf",
           signature = signature(m = "conlnorm"),
           definition = function(m, q = NULL, log = FALSE) {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             if (is.null(q)) q = m$dat
 
             pdf = dlnorm(q, pars[1], pars[2], log = TRUE) -
@@ -91,7 +96,8 @@ setMethod("dist_pdf",
 setMethod("dist_cdf",
           signature = signature(m = "conlnorm"),
           definition = function(m, q = NULL, lower_tail = TRUE) {
-            pars = m$pars; xmin = m$xmin
+            pars = m$pars
+            xmin = m$xmin
             if (is.null(pars)) stop("Model parameters not set.")
             if (is.null(q)) q = m$dat
 
@@ -129,7 +135,8 @@ setMethod("dist_ll",
           signature = signature(m = "conlnorm"),
           definition = function(m) {
             q = m$dat
-            n = m$internal[["n"]]; N = length(q)
+            n = m$internal[["n"]]
+            N = length(q)
             q = q[(N - n + 1):N]
 
             conlnorm_tail_ll(q, m$getPars(), m$getXmin())
@@ -158,9 +165,11 @@ conlnorm_tail_ll = function(x, pars, xmin) {
 setMethod("dist_rand",
           signature = signature(m = "conlnorm"),
           definition = function(m, n = "numeric") {
-            xmin = m$getXmin(); pars = m$getPars()
+            xmin = m$getXmin()
+            pars = m$getPars()
             rns = numeric(n)
-            i = 0; N = 0
+            i = 0
+            N = 0
             tail_prob = plnorm(xmin, pars[1L], pars[2L], lower.tail = FALSE)
             if ((1 / tail_prob) > 10e10) {
               stop("It appears that your parameters put in you in the __very__ extreme tail
