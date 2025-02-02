@@ -31,7 +31,7 @@ VignetteBuilder:
     knitr
 ByteCompile: true
 Encoding: UTF-8
-Language: en_GB
+Language: en-GB
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Collate:
