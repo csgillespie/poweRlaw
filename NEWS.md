@@ -1,7 +1,8 @@
-# poweRlaw 0.80.0
+# poweRlaw 0.80.0.9001
   * fix: Catch extreme tail situations for lognormal distribution #88.
   * fix: Package engine in vignette
   * fix: Some linting
+  * feat: Add pkgdown Website
 
 # poweRlaw 0.70.6
   * Change `scrpage2` to `scrlayer-scrpage` in vignettes. `scrpage2` now obsolete.

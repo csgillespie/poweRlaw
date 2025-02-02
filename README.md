@@ -6,7 +6,7 @@
 [![codecov.io](https://codecov.io/github/csgillespie/poweRlaw/coverage.svg?branch=master)](https://app.codecov.io/github/csgillespie/poweRlaw?branch=master)
 [![Downloads](https://cranlogs.r-pkg.org/badges/poweRlaw?color=brightgreen)](https://cran.r-project.org/package=poweRlaw)
 [![CRAN](https://www.r-pkg.org/badges/version/poweRlaw)](https://cran.r-project.org/package=poweRlaw)
-
+[![R-CMD-check](https://github.com/csgillespie/poweRlaw/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/csgillespie/poweRlaw/actions/workflows/R-CMD-check.yaml)
 This package implements both the discrete and continuous maximum
 likelihood estimators for fitting the power-law distribution to data
 using the methods described in [Clauset et al,
