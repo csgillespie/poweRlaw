@@ -19,7 +19,7 @@ lseq = function(from, to, length.out) {
 #' plot will start at the minimum data value. Otherwise, the plot
 #' will start from `xmin`
 #' @param length.out numeric, default 100. How many points should the
-#' distribution be evaulated at. This argument is only
+#' distribution be evaluated at. This argument is only
 #' for plotting the fitted lines.
 #' @docType methods
 #' @note This method does *not* alter the internal state of
@@ -61,7 +61,7 @@ get_cum_summary = function(x, trim = 0.1) {
 
   dd = data.frame(m = m, v = v)
   dd$x = seq_len(nrow(dd))
-  ## Remove the first row (no info on uncertainity)
+  ## Remove the first row (no info on uncertainty)
   dd = dd[-1, ]
 
   ## CI for mean is mu \pm qt(n-1*s/N)

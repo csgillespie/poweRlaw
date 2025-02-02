@@ -42,7 +42,7 @@ The \pkg{poweRlaw} package supports a number of distributions:
 Each object inherits the \code{discrete_distribution} or the \code{ctn_distribution} class.
 }
 \details{
-The log-normal parameteristion matches the base set-up, \code{?rlnorm}
+The log-normal parametrise matches the base set-up, \code{?rlnorm}
 }
 
 \section{Fields}{

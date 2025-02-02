@@ -34,7 +34,7 @@ Kullback-Leibler criteria.
 The test statistic, \code{R}, is the ratio of the
 log-likelihoods of the data between the two competing models.
 The sign of \code{R} indicates which model is better.
-Since the value of \code{R} is esimated,
+Since the value of \code{R} is estimated,
 we use the method proposed by Vuong, 1989 to select the model.
 }
 \details{

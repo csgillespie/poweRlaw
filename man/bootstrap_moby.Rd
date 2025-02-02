@@ -13,7 +13,7 @@ M. E. J. Newman, "Power laws, Pareto distributions and Zipf's law."
 Contemporary Physics 46, 323 (2005).
 }
 \description{
-To explore the uncertainity in the model fit, this package provides a
+To explore the uncertainty in the model fit, this package provides a
 \code{bootstrap} function.
 \describe{
 \item{bootstrap_moby}{The output from running 5000 bootstraps on the full

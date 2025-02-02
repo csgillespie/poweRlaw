@@ -4,8 +4,8 @@
 #' parameters xmin and alpha.
 #' @inheritParams ppldis
 #' @param x,q vector of quantiles. The discrete
-#' power-law distribution is defined for x > xmin
-#' @return dplcon gives the denisty and pplcon gives the distribution function.
+#' power-law distribution is defined for `x > xmin`
+#' @return `dplcon` gives the density and `pplcon` gives the distribution function.
 #' @export
 #' @examples
 #' xmin = 1; alpha = 1.5

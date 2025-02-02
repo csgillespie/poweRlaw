@@ -72,7 +72,7 @@
 # poweRlaw 0.30.1
 
  * Bug fix: pdf and cdf functions should now handle values of q less than xmin in a
-  sensible way (Thanks to Pierce Brookss)
+  sensible way (Thanks to Pierce Brooks)
 
 # poweRlaw 0.30.0
 
@@ -91,7 +91,7 @@
 
 # poweRlaw 0.20.4
 
- * Added tolerance to test suite comparison (Solaris-sparc failed to build)
+ * Added tolerance to test suite comparison (`Solaris-sparc` failed to build)
  * Removed tufte vignette styles
 
 # poweRlaw 0.20.3

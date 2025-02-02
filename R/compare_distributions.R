@@ -8,7 +8,7 @@
 #' The test statistic, `R`, is the ratio of the
 #' log-likelihoods of the data between the two competing models.
 #' The sign of `R` indicates which model is better.
-#' Since the value of `R` is esimated,
+#' Since the value of `R` is estimated,
 #' we use the method proposed by Vuong, 1989 to select the model.
 #'
 #' This function compares two models.
