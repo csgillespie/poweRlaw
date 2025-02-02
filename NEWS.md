@@ -3,6 +3,7 @@
   * fix: Package engine in vignette
   * fix: Some linting
   * feat: Add pkgdown Website
+  * docs: Improve lognormal docs #92
 
 # poweRlaw 0.70.6
   * Change `scrpage2` to `scrlayer-scrpage` in vignettes. `scrpage2` now obsolete.
