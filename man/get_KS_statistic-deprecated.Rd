@@ -4,7 +4,7 @@
 \alias{get_KS_statistic}
 \title{Deprecated function}
 \usage{
-get_KS_statistic(m, xmax = 100000, distance = "ks")
+get_KS_statistic(m, xmax = 1e+05, distance = "ks")
 }
 \arguments{
 \item{m}{A reference class object that contains the data.}

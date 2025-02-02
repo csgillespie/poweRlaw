@@ -28,35 +28,35 @@ dist_cdf(m, q = NULL, lower_tail = FALSE)
 
 \S4method{dist_cdf}{conlnorm}(m, q = NULL, lower_tail = TRUE)
 
-\S4method{dist_all_cdf}{conlnorm}(m, lower_tail = TRUE, xmax = 100000)
+\S4method{dist_all_cdf}{conlnorm}(m, lower_tail = TRUE, xmax = 1e+05)
 
 \S4method{dist_cdf}{conexp}(m, q = NULL, lower_tail = TRUE)
 
-\S4method{dist_all_cdf}{conexp}(m, lower_tail = TRUE, xmax = 100000)
+\S4method{dist_all_cdf}{conexp}(m, lower_tail = TRUE, xmax = 1e+05)
 
 \S4method{dist_cdf}{conpl}(m, q = NULL, lower_tail = TRUE)
 
-\S4method{dist_all_cdf}{conpl}(m, lower_tail = TRUE, xmax = 100000)
+\S4method{dist_all_cdf}{conpl}(m, lower_tail = TRUE, xmax = 1e+05)
 
 \S4method{dist_cdf}{conweibull}(m, q = NULL, lower_tail = TRUE)
 
-\S4method{dist_all_cdf}{conweibull}(m, lower_tail = TRUE, xmax = 100000)
+\S4method{dist_all_cdf}{conweibull}(m, lower_tail = TRUE, xmax = 1e+05)
 
 \S4method{dist_cdf}{disexp}(m, q = NULL, lower_tail = TRUE)
 
-\S4method{dist_all_cdf}{disexp}(m, lower_tail = TRUE, xmax = 100000)
+\S4method{dist_all_cdf}{disexp}(m, lower_tail = TRUE, xmax = 1e+05)
 
 \S4method{dist_cdf}{dislnorm}(m, q = NULL, lower_tail = TRUE)
 
-\S4method{dist_all_cdf}{dislnorm}(m, lower_tail = TRUE, xmax = 100000)
+\S4method{dist_all_cdf}{dislnorm}(m, lower_tail = TRUE, xmax = 1e+05)
 
 \S4method{dist_cdf}{displ}(m, q = NULL, lower_tail = TRUE)
 
-\S4method{dist_all_cdf}{displ}(m, lower_tail = TRUE, xmax = 100000)
+\S4method{dist_all_cdf}{displ}(m, lower_tail = TRUE, xmax = 1e+05)
 
 \S4method{dist_cdf}{dispois}(m, q = NULL, lower_tail = TRUE)
 
-\S4method{dist_all_cdf}{dispois}(m, lower_tail = TRUE, xmax = 100000)
+\S4method{dist_all_cdf}{dispois}(m, lower_tail = TRUE, xmax = 1e+05)
 }
 \arguments{
 \item{m}{a distribution object.}

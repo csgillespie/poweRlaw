@@ -158,8 +158,6 @@ displ$methods(
 setMethod("dist_pdf",
           signature = signature(m = "displ"),
           definition = function(m, q = NULL, log = FALSE) {
-            xmin = m$getXmin()
-            pars = m$getPars()
             if (is.null(q)) q = m$dat
             q = q[q >= m$xmin]
             pdf = dpldis(q[q >= m$xmin], m$xmin, m$pars, TRUE)

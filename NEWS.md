@@ -1,7 +1,7 @@
-# poweRlaw 0.80.0.9001
-  * fix: Catch extreme tail situations for lognormal distribution #88.
+# poweRlaw 1.0.0 _2025-02-02_
+  * fix: Catch extreme tail situations for log-normal distribution #88.
   * fix: Package engine in vignette
-  * fix: Some linting
+  * fix: Linting
   * feat: Add pkgdown Website
   * docs: Improve lognormal docs #92
 

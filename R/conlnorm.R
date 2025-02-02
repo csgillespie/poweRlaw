@@ -32,7 +32,9 @@ conlnorm =
                       selection = min(which(internal[["dat"]] >= (x - .Machine$double.eps ^ 0.5)))
                       internal[["n"]] <<- internal[["cum_n"]][selection]
                     }
-                  } else  internal[["xmin"]]
+                  } else {
+                    internal[["xmin"]]
+                  }
                 },
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
