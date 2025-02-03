@@ -19,7 +19,7 @@ lseq = function(from, to, length.out) {
 #' plot will start at the minimum data value. Otherwise, the plot
 #' will start from `xmin`
 #' @param length.out numeric, default 100. How many points should the
-#' distribution be evaulated at. This argument is only
+#' distribution be evaluated at. This argument is only
 #' for plotting the fitted lines.
 #' @docType methods
 #' @note This method does *not* alter the internal state of
@@ -61,7 +61,7 @@ get_cum_summary = function(x, trim = 0.1) {
 
   dd = data.frame(m = m, v = v)
   dd$x = seq_len(nrow(dd))
-  ## Remove the first row (no info on uncertainity)
+  ## Remove the first row (no info on uncertainty)
   dd = dd[-1, ]
 
   ## CI for mean is mu \pm qt(n-1*s/N)
@@ -76,13 +76,12 @@ get_cum_summary = function(x, trim = 0.1) {
   return(dd)
 }
 
-#' @importFrom graphics par grid
 create_plots = function(l, no_plots) {
   ##Set margins for optimal viewing
-  old_par = par(no.readonly = TRUE)
-  on.exit(par(old_par))
+  old_par = graphics::par(no.readonly = TRUE)
+  on.exit(graphics::par(old_par))
 
-  par(mfrow = c(2, no_plots),
+  graphics::par(mfrow = c(2, no_plots),
       mar = c(3, 3, 2, 1), mgp = c(2, 0.4, 0), tck = -.01,
       cex.axis = 0.9, las = 1)
 
@@ -93,7 +92,7 @@ create_plots = function(l, no_plots) {
     plot(l[[i]]$x, l[[i]]$m, type = "l", ylim = c(low_y, upp_y),
          ylab = names(l[i]),
          xlab = "Iteration",
-         panel.first = grid(), col = 1,
+         panel.first = graphics::grid(), col = 1,
          main = "Cumulative mean")
     lines(l[[i]]$x, l[[i]]$m_up, col = 2)
     lines(l[[i]]$x, l[[i]]$m_low, col = 2)
@@ -109,7 +108,7 @@ create_plots = function(l, no_plots) {
            type = "l", ylim = c(low_y, upp_y),
            ylab = names(l[i]),
            xlab = "Iteration",
-           panel.first = grid(), col = 1,
+           panel.first = graphics::grid(), col = 1,
            main = "Cumulative std dev")
       lines(l[[i]]$x, sqrt(l[[i]]$v_up), col = 2)
       lines(l[[i]]$x, sqrt(l[[i]]$v_low), col = 2)
@@ -166,14 +165,13 @@ plot.bs_p_xmin = function(x, trim = 0.1, ...) {
   create_plots(l, no_plots)
 }
 
-#' @importFrom utils modifyList
 #' @rdname plot.bs_xmin
 #' @method plot compare_distributions
 #' @export
 plot.compare_distributions = function(x, ...) {
   dd = x$ratio[!duplicated(x$ratio$x), ]
   defaults = list(xlab = "x", ylab = "Log-likelihood Ratio")
-  args = modifyList(defaults, list(x = dd$x, y = dd$ratio, ...))
+  args = utils::modifyList(defaults, list(x = dd$x, y = dd$ratio, ...))
   do.call("plot", args)
   invisible(data.frame(x = dd$x, y = dd$ratio))
 }

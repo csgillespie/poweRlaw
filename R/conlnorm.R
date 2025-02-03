@@ -32,7 +32,9 @@ conlnorm =
                       selection = min(which(internal[["dat"]] >= (x - .Machine$double.eps ^ 0.5)))
                       internal[["n"]] <<- internal[["cum_n"]][selection]
                     }
-                  } else  internal[["xmin"]]
+                  } else {
+                    internal[["xmin"]]
+                  }
                 },
                 pars = function(x) {
                   if (!missing(x) && !is.null(x)) {
@@ -203,7 +205,7 @@ conlnorm$methods(
     x = dat
     x = x[x > xmin]
     if (is.null(initialise))
-      theta_0 = c(mean(log(x)), sd(log(x)))
+      theta_0 = c(mean(log(x)), stats::sd(log(x)))
     else
       theta_0 = initialise
     # Chop off values below

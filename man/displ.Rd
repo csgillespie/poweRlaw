@@ -41,6 +41,9 @@ The \pkg{poweRlaw} package supports a number of distributions:
 \item{conexp}{Continuous exponential}}
 Each object inherits the \code{discrete_distribution} or the \code{ctn_distribution} class.
 }
+\details{
+The log-normal parametrise matches the base set-up, \code{?rlnorm}
+}
 
 \section{Fields}{
 

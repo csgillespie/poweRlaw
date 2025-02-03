@@ -4,6 +4,9 @@
 #' @rdname displ
 #' @aliases dislnorm-class dislnorm
 #' @exportClass dislnorm
+#' @details
+#' The log-normal parametrise matches the base set-up, `?rlnorm`
+#'
 #' @export dislnorm
 dislnorm =
   setRefClass("dislnorm",

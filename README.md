@@ -6,7 +6,7 @@
 [![codecov.io](https://codecov.io/github/csgillespie/poweRlaw/coverage.svg?branch=master)](https://app.codecov.io/github/csgillespie/poweRlaw?branch=master)
 [![Downloads](https://cranlogs.r-pkg.org/badges/poweRlaw?color=brightgreen)](https://cran.r-project.org/package=poweRlaw)
 [![CRAN](https://www.r-pkg.org/badges/version/poweRlaw)](https://cran.r-project.org/package=poweRlaw)
-[![R-CMD-check](https://github.com/csgillespie/poweRlaw/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/csgillespie/poweRlaw/actions/workflows/R-CMD-check.yaml)
+
 This package implements both the discrete and continuous maximum
 likelihood estimators for fitting the power-law distribution to data
 using the methods described in [Clauset et al,
@@ -77,12 +77,19 @@ browseVignettes("poweRlaw")
 ```
 
 The plots below show the line of best fit to the Moby Dick and blackout
-data sets (from Clauset et al, 2009). ![Cumulative CDF of the Moby Dick
-and blackout data sets with line of best fit.](man/figures/figure1.png)
+data sets (from Clauset et al, 2009).
+
+<figure>
+<img src="man/figures/figure1.png"
+alt="Cumulative CDF of the Moby Dick and blackout data sets with line of best fit." />
+<figcaption aria-hidden="true">Cumulative CDF of the Moby Dick and
+blackout data sets with line of best fit.</figcaption>
+</figure>
 
 ## Other information
 
-- If you have any suggestions or find bugs, please use the github [issue
+- Unfortunately, I can no longer commit time to adding new feature If
+  you find bugs, please use the github [issue
   tracker](https://github.com/csgillespie/poweRlaw/issues)
 - Feel free to submit pull requests
 - Data was originally obtained from Arron Clausett’s website. But this

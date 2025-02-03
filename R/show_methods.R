@@ -4,12 +4,12 @@
 #' Using the default `show` method gives the illusion of duplicate values.
 #' This show method aims to avoid this confusion.
 #' @param object A distribution object.
-#' @importFrom methods classLabel show
+#' @importFrom methods show
 #' @export
 setMethod("show",
           signature = signature(object = "distribution"),
           definition = function(object) {
-            msg = paste("Reference class object of class", classLabel(class(object)), "\n")
+            msg = paste("Reference class object of class", methods::classLabel(class(object)), "\n")
             cat(msg)
             cat('Field "xmin": \n')
             print(object$getXmin())

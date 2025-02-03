@@ -24,8 +24,6 @@ get_bootstrap_sims = function(m, no_of_sims, seed, threads = 1) {
 #' @rdname estimate_xmin
 #' @param seed default `NULL`. An integer to be supplied to `set.seed`, or `NULL`
 #' not to set reproducible seeds. This argument is passed `clusterSetRNGStream`.
-#' @importFrom parallel clusterSetRNGStream
-#' @importFrom utils packageVersion
 #' @export
 bootstrap = function(m, xmins = NULL, pars = NULL, xmax = 1e5,
                       no_of_sims = 100, threads = 1,
@@ -78,7 +76,7 @@ bootstrap = function(m, xmins = NULL, pars = NULL, xmax = 1e5,
            bootstraps = bootstraps,
            sim_time = total_time[[1]] / no_of_sims,
            seed = seed,
-           package_version = packageVersion("poweRlaw"),
+           package_version = utils::packageVersion("poweRlaw"),
            distance = distance)
   class(l) = "bs_xmin"
   l

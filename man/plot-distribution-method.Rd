@@ -26,7 +26,7 @@ will start from \code{xmin}}
 return the data (in a data frame object).}
 
 \item{length.out}{numeric, default 100. How many points should the
-distribution be evaulated at. This argument is only
+distribution be evaluated at. This argument is only
 for plotting the fitted lines.}
 
 \item{...}{Further arguments passed to the \code{lines} functions.}

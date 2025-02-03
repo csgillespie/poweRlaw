@@ -1,8 +1,10 @@
-# poweRlaw 0.80.0.9001
-  * fix: Catch extreme tail situations for lognormal distribution #88.
+# poweRlaw 1.0.0 _2025-02-02_
+  * fix: Catch extreme tail situations for log-normal distribution #88.
   * fix: Package engine in vignette
-  * fix: Some linting
+  * fix: Linting
   * feat: Add pkgdown Website
+  * docs: Improve lognormal docs #92
+  * tests: Fix partial argument warnings in test files
 
 # poweRlaw 0.70.6
   * Change `scrpage2` to `scrlayer-scrpage` in vignettes. `scrpage2` now obsolete.
@@ -71,7 +73,7 @@
 # poweRlaw 0.30.1
 
  * Bug fix: pdf and cdf functions should now handle values of q less than xmin in a
-  sensible way (Thanks to Pierce Brookss)
+  sensible way (Thanks to Pierce Brooks)
 
 # poweRlaw 0.30.0
 
@@ -90,7 +92,7 @@
 
 # poweRlaw 0.20.4
 
- * Added tolerance to test suite comparison (Solaris-sparc failed to build)
+ * Added tolerance to test suite comparison (`Solaris-sparc` failed to build)
  * Removed tufte vignette styles
 
 # poweRlaw 0.20.3

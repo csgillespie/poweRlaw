@@ -194,7 +194,7 @@ conweibull$methods(
     x = dat
     x = x[x > xmin]
     if (is.null(initialise))
-      theta_0 = c(mean(log(x)), sd(log(x)))
+      theta_0 = c(mean(log(x)), stats::sd(log(x)))
     else
       theta_0 = initialise
     # Chop off values below

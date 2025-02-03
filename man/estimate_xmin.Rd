@@ -81,7 +81,7 @@ when fitting lognormal, Poisson or Exponential distributions. The
 warnings occur for large values of \code{xmin}. Essentially, we are discarding
 the bulk of the distribution and cannot calculate the tails to enough
 accuracy.}
-\item{\code{bootstrap}}{Estimates the unncertainty in the xmin and parameter values
+\item{\code{bootstrap}}{Estimates the uncertainty in the xmin and parameter values
 via bootstrapping.}
 \item{\code{bootstrap_p}}{Performs a bootstrapping hypothesis test to determine
 whether a suggested
@@ -100,7 +100,7 @@ which has a long tail.
 To speed up computations for discrete distributions it is sensible to put an
 upper bound, i.e. \code{xmax} and/or explicitly give values of where to search, i.e. \code{xmin}.
 
-Occassionally bootstrapping can generate strange situations. For example,
+Occasionally bootstrapping can generate strange situations. For example,
 all values in the simulated data set are less then \code{xmin}. In this case,
 the estimated distance measure will be \code{Inf} and the parameter values, \code{NA}.
 

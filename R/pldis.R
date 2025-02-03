@@ -26,7 +26,7 @@
 #' plot(x, dpldis(x, xmin, alpha), type="l")
 dpldis = function(x, xmin, alpha, log = FALSE) {
   xmin = floor(xmin)
-  constant = zeta(alpha)
+  constant = pracma::zeta(alpha)
   if (xmin > 1) constant = constant - sum((1:(xmin - 1)) ^ (-alpha))
 
   if (log) {
@@ -61,7 +61,7 @@ dpldis = function(x, xmin, alpha, log = FALSE) {
 #' dpldis(1, xmin, alpha)
 ppldis = function(q, xmin, alpha, lower.tail = TRUE) { #nolint
   xmin = floor(xmin)
-  constant = zeta(alpha)
+  constant = pracma::zeta(alpha)
   if (xmin > 1)
     constant = constant - sum((1:(xmin - 1)) ^ (-alpha))
   cdf = 1 - (constant - sapply(q, function(i) sum((xmin:i) ^ (-alpha)))) / constant
@@ -99,7 +99,7 @@ rpldis = function(n, xmin, alpha, discrete_max = 10000) {
 
   ## Work out CDF
   if (discrete_max > 0.5) {
-    constant = zeta(alpha)
+    constant = pracma::zeta(alpha)
     if (xmin > 1) constant = constant - sum((1:(xmin - 1)) ^ (-alpha))
     cdf = c(0, 1 - (constant - cumsum((xmin:discrete_max) ^ (-alpha))) / constant)
 

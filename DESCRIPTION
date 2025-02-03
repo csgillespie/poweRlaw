@@ -1,7 +1,7 @@
 Type: Package
 Package: poweRlaw
 Title: Analysis of Heavy Tailed Distributions
-Version: 0.80.0.9001
+Version: 1.0.0
 Authors@R: 
     person("Colin", "Gillespie", , "csgillespie@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-1787-0275"))
@@ -12,7 +12,8 @@ Description: An implementation of maximum likelihood estimators for a
     based approach is used to estimate the lower cut-off for the scaling
     region.
 License: GPL-2 | GPL-3
-URL: https://github.com/csgillespie/poweRlaw, http://csgillespie.github.io/poweRlaw/
+URL: https://github.com/csgillespie/poweRlaw,
+    http://csgillespie.github.io/poweRlaw/
 BugReports: https://github.com/csgillespie/poweRlaw/issues
 Depends:
     R (>= 3.4.0)
@@ -30,6 +31,7 @@ VignetteBuilder:
     knitr
 ByteCompile: true
 Encoding: UTF-8
+Language: en-GB
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Collate:

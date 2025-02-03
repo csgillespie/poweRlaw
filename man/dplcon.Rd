@@ -14,7 +14,7 @@ rplcon(n, xmin, alpha)
 }
 \arguments{
 \item{x, q}{vector of quantiles. The discrete
-power-law distribution is defined for x > xmin}
+power-law distribution is defined for \code{x > xmin}}
 
 \item{xmin}{The lower bound of the power-law distribution.
 For the continuous power-law, xmin >= 0.
@@ -32,7 +32,7 @@ otherwise, \eqn{P[X > x]}.}
 taken to be the number required.}
 }
 \value{
-dplcon gives the denisty and pplcon gives the distribution function.
+\code{dplcon} gives the density and \code{pplcon} gives the distribution function.
 }
 \description{
 Density and distribution function of the continuous power-law distribution, with

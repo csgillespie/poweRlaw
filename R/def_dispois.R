@@ -4,7 +4,6 @@
 #' @rdname displ
 #' @aliases dispois-class dispois
 #' @exportClass dispois
-#' @importFrom stats dpois ppois
 #' @export dispois
 dispois =
   setRefClass("dispois",
@@ -82,8 +81,8 @@ setMethod("dist_pdf",
             xmin = m$getXmin()
             pars = m$getPars()
             if (is.null(q)) q = m$dat
-            pdf = dpois(q, pars, log = TRUE) -
-              ppois(xmin - 0.5, pars, lower.tail = FALSE, log.p = TRUE)
+            pdf = stats::dpois(q, pars, log = TRUE) -
+              stats::ppois(xmin - 0.5, pars, lower.tail = FALSE, log.p = TRUE)
             if (!log) {
               pdf = exp(pdf)
               pdf[q < xmin]  = 0
@@ -106,12 +105,12 @@ setMethod("dist_cdf",
             if (is.null(pars)) stop("Model parameters not set.")
             if (is.null(q)) q = m$dat
 
-            p = ppois(q, pars, lower.tail = lower_tail)
+            p = stats::ppois(q, pars, lower.tail = lower_tail)
             if (lower_tail) {
-              C = ppois(xmin - 0.5, pars, lower.tail = FALSE)
+              C = stats::ppois(xmin - 0.5, pars, lower.tail = FALSE)
               cdf = (p / C - 1 / C + 1)
             } else {
-              C = 1 - ppois(xmin, pars)
+              C = 1 - stats::ppois(xmin, pars)
               cdf = p / C
             }
             cdf[q < xmin] = 0
@@ -149,8 +148,8 @@ setMethod("dist_ll",
 ########################################################
 pois_tail_ll = function(x, rate, xmin) {
   n = length(x)
-  joint_prob = colSums(sapply(rate, function(i) dpois(x, i, log = TRUE)))
-  prob_over = sapply(rate, function(i) ppois(xmin - 1, i,
+  joint_prob = colSums(sapply(rate, function(i) stats::dpois(x, i, log = TRUE)))
+  prob_over = sapply(rate, function(i) stats::ppois(xmin - 1, i,
                                              lower.tail = FALSE, log.p = TRUE))
   return(joint_prob - n * prob_over)
 }
@@ -166,7 +165,7 @@ setMethod("dist_rand",
           definition = function(m, n = "numeric") {
             xmin = m$xmin
             lambda = m$pars
-            qpois(runif(n, ppois(xmin - 1, lambda, lower.tail = TRUE), 1), lambda)
+            qpois(runif(n, stats::ppois(xmin - 1, lambda, lower.tail = TRUE), 1), lambda)
           }
 )
 

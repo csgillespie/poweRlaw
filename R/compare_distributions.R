@@ -8,7 +8,7 @@
 #' The test statistic, `R`, is the ratio of the
 #' log-likelihoods of the data between the two competing models.
 #' The sign of `R` indicates which model is better.
-#' Since the value of `R` is esimated,
+#' Since the value of `R` is estimated,
 #' we use the method proposed by Vuong, 1989 to select the model.
 #'
 #' This function compares two models.
@@ -42,7 +42,6 @@
 #' @references Vuong, Quang H. (1989):
 #' "Likelihood Ratio Tests for Model Selection and Non-Nested Hypotheses",
 #' Econometrica 57: 307--333.
-#' @importFrom stats sd pnorm
 #' @examples
 #' ########################################################
 #' # Example data                                         #
@@ -83,9 +82,9 @@ compare_distributions = function(d1, d2) {
   ll_ratio_pts = dist_pdf(d1, q, log = TRUE) - dist_pdf(d2, q, log = TRUE)
 
   m = mean(ll_ratio_pts)
-  s = sd(ll_ratio_pts)
+  s = stats::sd(ll_ratio_pts)
   v = sqrt(length(ll_ratio_pts)) * m / s
-  p1 = pnorm(v)
+  p1 = stats::pnorm(v)
 
   if (p1 < 0.5) {
     p2 = 2 * p1

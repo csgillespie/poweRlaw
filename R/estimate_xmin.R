@@ -76,7 +76,7 @@ get_distance_statistic = function(m, xmax = 1e5, distance = "ks") {
 #' warnings occur for large values of `xmin`. Essentially, we are discarding
 #' the bulk of the distribution and cannot calculate the tails to enough
 #' accuracy.}
-#' \item{`bootstrap`}{Estimates the unncertainty in the xmin and parameter values
+#' \item{`bootstrap`}{Estimates the uncertainty in the xmin and parameter values
 #' via bootstrapping.}
 #' \item{`bootstrap_p`}{Performs a bootstrapping hypothesis test to determine
 #' whether a suggested
@@ -110,15 +110,13 @@ get_distance_statistic = function(m, xmax = 1e5, distance = "ks") {
 #' To speed up computations for discrete distributions it is sensible to put an
 #' upper bound, i.e. `xmax` and/or explicitly give values of where to search, i.e. `xmin`.
 #'
-#' Occassionally bootstrapping can generate strange situations. For example,
+#' Occasionally bootstrapping can generate strange situations. For example,
 #' all values in the simulated data set are less then `xmin`. In this case,
 #' the estimated distance measure will be `Inf` and the parameter values, `NA`.
 #'
 #' There are other possible distance measures that can be calculated. The default is the
 #' Kolomogorov Smirnoff statistic (`KS`). This is equation 3.9 in the CSN paper. The
 #' other measure currently available is `reweight`, which is equation 3.11.
-#' @importFrom parallel makeCluster parSapply
-#' @importFrom parallel clusterExport stopCluster
 #' @note Adapted from Laurent Dubroca's code
 #' @export
 #' @examples
