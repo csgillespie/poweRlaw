@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">poweRlaw</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.80.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +49,8 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="the-powerlaw-package">The poweRlaw package<a class="anchor" aria-label="anchor" href="#the-powerlaw-package"></a>
 </h1></div>
-<p><a href="https://app.codecov.io/github/csgillespie/poweRlaw?branch=master" class="external-link"><img src="https://codecov.io/github/csgillespie/poweRlaw/coverage.svg?branch=master" alt="codecov.io"></a> <a href="https://cran.r-project.org/package=poweRlaw" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/poweRlaw?color=brightgreen" alt="Downloads"></a> <a href="https://cran.r-project.org/package=poweRlaw" class="external-link"><img src="https://www.r-pkg.org/badges/version/poweRlaw" alt="CRAN"></a> <a href="https://github.com/csgillespie/poweRlaw/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/csgillespie/poweRlaw/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> This package implements both the discrete and continuous maximum likelihood estimators for fitting the power-law distribution to data using the methods described in <a href="http://arxiv.org/abs/0706.1062" class="external-link">Clauset et al, 2009</a>. It also provides function to fit log-normal and Poisson distributions. Additionally, a goodness-of-fit based approach is used to estimate the lower cut-off for the scaling region.</p>
+<p><a href="https://app.codecov.io/github/csgillespie/poweRlaw?branch=master" class="external-link"><img src="https://codecov.io/github/csgillespie/poweRlaw/coverage.svg?branch=master" alt="codecov.io"></a> <a href="https://cran.r-project.org/package=poweRlaw" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/poweRlaw?color=brightgreen" alt="Downloads"></a> <a href="https://cran.r-project.org/package=poweRlaw" class="external-link"><img src="https://www.r-pkg.org/badges/version/poweRlaw" alt="CRAN"></a></p>
+<p>This package implements both the discrete and continuous maximum likelihood estimators for fitting the power-law distribution to data using the methods described in <a href="http://arxiv.org/abs/0706.1062" class="external-link">Clauset et al, 2009</a>. It also provides function to fit log-normal and Poisson distributions. Additionally, a goodness-of-fit based approach is used to estimate the lower cut-off for the scaling region.</p>
 <p>The code developed in this package was influenced from the python and R code found at Aaron Clauset’s website. In particular, the R code of Laurent Dubroca and Cosma Shalizi.</p>
 <p>To cite this package in academic work, please use:</p>
 <p>Gillespie, C. S. “<em>Fitting heavy tailed distributions: the poweRlaw package.</em>” Journal of Statistical Software, 64(2) 2015. (<a href="https://doi.org/10.18637/jss.v064.i02" class="external-link">pdf</a>).</p>
@@ -82,13 +83,16 @@
 <p>Alternatively, you can access the vignettes from within the package:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/browseVignettes.html" class="external-link">browseVignettes</a></span><span class="op">(</span><span class="st">"poweRlaw"</span><span class="op">)</span></span></code></pre></div>
-<p>The plots below show the line of best fit to the Moby Dick and blackout data sets (from Clauset et al, 2009). <img src="reference/figures/figure1.png" alt="Cumulative CDF of the Moby Dick and blackout data sets with line of best fit."></p>
+<p>The plots below show the line of best fit to the Moby Dick and blackout data sets (from Clauset et al, 2009).</p>
+<figure><img src="reference/figures/figure1.png" alt="Cumulative CDF of the Moby Dick and blackout data sets with line of best fit."><figcaption aria-hidden="true">
+Cumulative CDF of the Moby Dick and blackout data sets with line of best fit.
+</figcaption></figure>
 </div>
 <div class="section level2">
 <h2 id="other-information">Other information<a class="anchor" aria-label="anchor" href="#other-information"></a>
 </h2>
 <ul>
-<li>If you have any suggestions or find bugs, please use the github <a href="https://github.com/csgillespie/poweRlaw/issues" class="external-link">issue tracker</a>
+<li>Unfortunately, I can no longer commit time to adding new feature If you find bugs, please use the github <a href="https://github.com/csgillespie/poweRlaw/issues" class="external-link">issue tracker</a>
 </li>
 <li>Feel free to submit pull requests</li>
 <li>Data was originally obtained from Arron Clausett’s website. But this site is no longer available.</li>

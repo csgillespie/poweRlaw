@@ -16,7 +16,7 @@ the bulk of the distribution and cannot calculate the tails to enough
 accuracy.
 
 bootstrap
-Estimates the unncertainty in the xmin and parameter values
+Estimates the uncertainty in the xmin and parameter values
 via bootstrapping.
 
 bootstrap_p
@@ -43,7 +43,7 @@ the bulk of the distribution and cannot calculate the tails to enough
 accuracy.
 
 bootstrap
-Estimates the unncertainty in the xmin and parameter values
+Estimates the uncertainty in the xmin and parameter values
 via bootstrapping.
 
 bootstrap_p
@@ -61,7 +61,7 @@ have dist_rand methods available.
 
     <a class="navbar-brand me-2" href="../index.html">poweRlaw</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.80.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,7 +104,7 @@ the bulk of the distribution and cannot calculate the tails to enough
 accuracy.</p></dd>
 
 <dt><code>bootstrap</code></dt>
-<dd><p>Estimates the unncertainty in the xmin and parameter values
+<dd><p>Estimates the uncertainty in the xmin and parameter values
 via bootstrapping.</p></dd>
 
 <dt><code>bootstrap_p</code></dt>
@@ -206,7 +206,7 @@ we generate random numbers from the power law distribution,
 which has a long tail.</p>
 <p>To speed up computations for discrete distributions it is sensible to put an
 upper bound, i.e. <code>xmax</code> and/or explicitly give values of where to search, i.e. <code>xmin</code>.</p>
-<p>Occassionally bootstrapping can generate strange situations. For example,
+<p>Occasionally bootstrapping can generate strange situations. For example,
 all values in the simulated data set are less then <code>xmin</code>. In this case,
 the estimated distance measure will be <code>Inf</code> and the parameter values, <code>NA</code>.</p>
 <p>There are other possible distance measures that can be calculated. The default is the
